@@ -1,13 +1,56 @@
-# Team 1 Job App Frontend
+# Team 1 Job App Frontend - 3-Tier Architecture
 
-A modern Node.js TypeScript project with Express.js, built with ES modules and modern development practices.
+A modern Node.js TypeScript project with Express.js, built with ES modules and 3-tier architecture using EJS, Tailwind CSS, and daisyUI.
 
 ## 🚀 Features
 
 - **TypeScript** - Full TypeScript support with strict type checking
 - **ES Modules** - Native ES module support 
 - **Express.js** - Fast, unopinionated web framework
+- **EJS** - Embedded JavaScript templating engine
+- **Tailwind CSS + daisyUI** - Utility-first CSS framework with component library
+- **Morgan** - HTTP request logger middleware
+- **3-Tier Architecture** - Separation of concerns with controllers, services, and repositories
 - **Hot Reload** - Development server with automatic restart using `tsx`
+
+## Architecture Overview
+
+### 3-Tier Architecture
+
+#### 1. Presentation Layer (Views & Controllers)
+- **Location**: `src/controllers/`, `views/`
+- **Purpose**: Handles user interface and HTTP request/response logic
+- **Technologies**: EJS templates, Express controllers
+
+#### 2. Business Logic Layer (Services)
+- **Location**: `src/services/`
+- **Purpose**: Contains business rules, validation, and application logic
+- **Technologies**: TypeScript classes and interfaces
+
+#### 3. Data Access Layer (Models & Repositories)
+- **Location**: `src/models/`, `src/repositories/`
+- **Purpose**: Handles data persistence and database operations
+- **Technologies**: TypeScript interfaces and repository pattern
+
+## Project Structure
+
+```
+├── src/
+│   ├── controllers/     # Presentation layer - HTTP handlers
+│   ├── services/        # Business logic layer
+│   ├── models/          # Data models and interfaces
+│   ├── repositories/    # Data access layer
+│   ├── routes/          # Express route definitions
+│   ├── middleware/      # Authentication and utilities
+│   └── index.ts         # Application entry point
+├── views/               # EJS templates
+├── public/              # Static assets
+│   ├── css/            # Stylesheets (includes Tailwind)
+│   └── js/             # Client-side JavaScript
+├── tailwind.config.js   # Tailwind CSS configuration
+├── postcss.config.js    # PostCSS configuration
+└── package.json         # Dependencies and scripts
+```
 - **Modern Build** - TypeScript compilation with source maps and declarations
 
 ## 📋 Prerequisites
