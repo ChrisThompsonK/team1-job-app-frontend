@@ -1,3 +1,5 @@
+[![Code Quality Checks](https://github.com/ChrisThompsonK/team1-job-app-frontend/actions/workflows/biome.yml/badge.svg)](https://github.com/ChrisThompsonK/team1-job-app-frontend/actions/workflows/biome.yml)
+
 # Team 1 Job App Frontend - 3-Tier Architecture
 
 A modern Node.js TypeScript project with Express.js, built with ES modules and 3-tier architecture using EJS, Tailwind CSS, and daisyUI.
