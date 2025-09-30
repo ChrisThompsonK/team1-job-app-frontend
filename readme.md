@@ -9,9 +9,6 @@ A modern Node.js TypeScript project with Express.js, built with ES modules and 3
 - **TypeScript** - Full TypeScript support with strict type checking
 - **ES Modules** - Native ES module support 
 - **Express.js** - Fast, unopinionated web framework
-- **EJS** - Embedded JavaScript templating engine
-- **Tailwind CSS + daisyUI** - Utility-first CSS framework with component library
-- **Morgan** - HTTP request logger middleware
 - **3-Tier Architecture** - Separation of concerns with controllers, services, and repositories
 - **Hot Reload** - Development server with automatic restart using `tsx`
 
