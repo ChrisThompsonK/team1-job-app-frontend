@@ -1,7 +1,7 @@
-import type { Request, Response } from "express";
-import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import type { Request, Response } from "express";
+import express from "express";
 
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
