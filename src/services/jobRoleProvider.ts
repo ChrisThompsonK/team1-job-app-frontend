@@ -1,6 +1,6 @@
-import type { IjobRole } from "../models/job-role";
+import type { JobRole } from "../models/job-role";
 
-export function provideJobRoles(): IjobRole[] {
+export function provideJobRoles(): JobRole[] {
   return [
     {
       name: "Software Engineer",

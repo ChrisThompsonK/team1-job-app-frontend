@@ -2,7 +2,7 @@ import path from "node:path";
 import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
-import { jobRole } from "./services/jobRoleMemoryService";
+import { JobRoleMemoryService } from "./services/jobRoleMemoryService";
 import { provideJobRoles } from "./services/jobRoleProvider";
 
 const app = express();
@@ -45,8 +45,8 @@ app.get("/health", (_req: Request, res: Response) => {
 
 app.get("/api/jobs", (_req: Request, res: Response) => {
   const jobs = provideJobRoles();
-  const jobService = new jobRole(jobs);
-  res.json(jobService.getAllJobs());
+  const jobRoleMemoryService = new JobRoleMemoryService(jobs);
+  res.json(jobRoleMemoryService.getAllJobs());
 });
 
 app.listen(port, () => {

@@ -1,5 +1,5 @@
-import type { IjobRole } from "../models/job-role";
+import type { JobRole } from "../models/job-role";
 
 export interface jobRoleservice {
-  getAllJobs(): IjobRole[];
+  getAllJobs(): JobRole[];
 }
