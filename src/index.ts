@@ -18,7 +18,7 @@ nunjucks.configure(path.join(__dirname, "../templates"), {
 });
 
 // Set Nunjucks as the view engine
-app.set("view engine", "html");
+app.set("view engine", "njk");
 
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, "../public")));
