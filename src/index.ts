@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
 import { JobRoleMemoryService } from "./services/jobRoleMemoryService";
-import { provideJobRoles } from "./services/jobRoleProvider";
+import { ProvideJobRoles } from "./services/jobRoleProvider";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,7 +44,7 @@ app.get("/health", (_req: Request, res: Response) => {
 });
 
 app.get("/api/jobs", (_req: Request, res: Response) => {
-  const jobs = provideJobRoles();
+  const jobs = ProvideJobRoles();
   const jobRoleMemoryService = new JobRoleMemoryService(jobs);
   res.json(jobRoleMemoryService.getAllJobs());
 });
