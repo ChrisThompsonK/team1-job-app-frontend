@@ -2,6 +2,8 @@ import path from "node:path";
 import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
+import { JobRoleMemoryService } from "./services/jobRoleMemoryService";
+import { ProvideJobRoles } from "./services/jobRoleProvider";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +41,12 @@ app.get("/api", (_req: Request, res: Response) => {
 // Health check endpoint
 app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+app.get("/api/jobs", (_req: Request, res: Response) => {
+  const jobs = ProvideJobRoles();
+  const jobRoleMemoryService = new JobRoleMemoryService(jobs);
+  res.json(jobRoleMemoryService.getAllJobs());
 });
 
 app.listen(port, () => {
