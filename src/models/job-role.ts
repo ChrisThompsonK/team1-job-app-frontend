@@ -1,7 +1,7 @@
 export interface JobRole {
   name: string;
   location: string;
-  capacity: number;
+  capability: number;
   band: string;
   closingDate: Date;
 }
