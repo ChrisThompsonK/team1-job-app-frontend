@@ -1,4 +1,4 @@
-import { Capability, type JobRole } from "../models/job-role";
+import { Capability, type JobRole } from "../models/job-role.js";
 export function ProvideJobRoles(): JobRole[] {
   return [
     {
