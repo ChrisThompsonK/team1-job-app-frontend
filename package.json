@@ -45,7 +45,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
     "express": "^5.1.0",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
     "nunjucks": "^3.2.4"
 
   }
