@@ -1,13 +1,13 @@
-import { IjobRole } from "../models/job-role";
-import { jobRoleservice } from "./interfaces";
+import type { IjobRole } from "../models/job-role";
+import type { jobRoleservice } from "./interfaces";
 
-export class jobRole implements jobRoleservice{
-    private jobRoles:IjobRole[]=[];
+export class jobRole implements jobRoleservice {
+  private jobRoles: IjobRole[] = [];
 
-    constructor(initialJobRoles:IjobRole[]){
-        this.jobRoles=[...initialJobRoles]
-    }
-    getAllJobs():IjobRole[]{
-        return this.jobRoles;
-    }
+  constructor(initialJobRoles: IjobRole[]) {
+    this.jobRoles = [...initialJobRoles];
+  }
+  getAllJobs(): IjobRole[] {
+    return this.jobRoles;
+  }
 }

@@ -2,8 +2,8 @@ import path from "node:path";
 import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
-import { provideJobRoles } from "./services/jobRoleProvider";
 import { jobRole } from "./services/jobRoleMemoryService";
+import { provideJobRoles } from "./services/jobRoleProvider";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,12 +44,10 @@ app.get("/health", (_req: Request, res: Response) => {
 });
 
 app.get("/api/jobs", (_req: Request, res: Response) => {
-  const jobs=provideJobRoles();
-  const jobService=new jobRole(jobs);
+  const jobs = provideJobRoles();
+  const jobService = new jobRole(jobs);
   res.json(jobService.getAllJobs());
-
 });
-
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
