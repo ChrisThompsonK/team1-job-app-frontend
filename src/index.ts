@@ -2,9 +2,9 @@ import path from "node:path";
 import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
+import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleMemoryService } from "./services/jobRoleMemoryService.js";
 import { ProvideJobRoles } from "./services/jobRoleProvider.js";
-import { JobRoleController } from "./controllers/jobRoleController.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
