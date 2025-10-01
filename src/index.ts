@@ -1,17 +1,22 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import type { Request, Response } from "express";
 import express from "express";
-
-// ES module equivalent of __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import nunjucks from "nunjucks";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Configure Nunjucks
+nunjucks.configure(path.join(process.cwd(), "views"), {
+  autoescape: true,
+  express: app,
+});
+
+// Set Nunjucks as the view engine
+app.set("view engine", "njk");
+
 // Serve static files from public directory
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(process.cwd(), "public")));
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -19,9 +24,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Hello World endpoint
 app.get("/", (_req: Request, res: Response) => {
-  res.json({
+  res.render("index", {
     title: "Job Application Frontend",
     message: "Welcome to the Job Application System",
+    timestamp: new Date().toISOString(),
   });
 });
 
