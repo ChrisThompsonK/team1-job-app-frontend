@@ -21,6 +21,7 @@ describe("JobRoleController", () => {
     // Setup mock data
     mockJobRoles = [
       {
+        id: 1,
         name: "Software Engineer",
         location: "London",
         capability: Capability.Engineering,
@@ -97,6 +98,8 @@ describe("JobRoleController", () => {
         getAllJobs: vi.fn().mockImplementation(() => {
           throw new Error("Service error");
         }),
+        getJobById: vi.fn().mockReturnValue(undefined),
+        getJobByName: vi.fn().mockReturnValue(undefined),
       } as JobRoleservice;
 
       const errorController = new JobRoleController(errorMockService);
