@@ -8,6 +8,7 @@ import {
 export function ProvideJobRoles(): JobRole[] {
   return [
     {
+      id: 1,
       name: "Software Engineer",
       location: "Bangalore",
       capability: Capability.Data,
@@ -26,6 +27,7 @@ export function ProvideJobRoles(): JobRole[] {
       ],
     },
     {
+      id: 2,
       name: "Data Scientist",
       location: "Hyderabad",
       capability: Capability.Workday,
@@ -44,6 +46,7 @@ export function ProvideJobRoles(): JobRole[] {
       ],
     },
     {
+      id: 3,
       name: "Product Manager",
       location: "Pune",
       capability: Capability.Engineering,

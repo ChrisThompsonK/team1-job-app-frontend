@@ -5,6 +5,10 @@ import nunjucks from "nunjucks";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleMemoryService } from "./services/jobRoleMemoryService.js";
 import { ProvideJobRoles } from "./services/jobRoleProvider.js";
+import {
+  sanitizeJobRoleData,
+  validateJobRoleData,
+} from "./utils/validation.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -51,6 +55,51 @@ app.get("/health", (_req: Request, res: Response) => {
 
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
+
+// API endpoints for job roles
+app.get("/api/jobs", (_req: Request, res: Response) => {
+  try {
+    const jobs = jobRoleService.getAllJobs();
+    res.json(jobs);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res.status(500).json({
+      error: "Internal server error",
+      message: "Unable to fetch job roles",
+    });
+  }
+});
+
+app.post("/api/jobs", (req: Request, res: Response) => {
+  try {
+    // Validate the request body
+    const validation = validateJobRoleData(req.body);
+
+    if (!validation.isValid) {
+      res.status(400).json({
+        error: "Validation failed",
+        details: validation.errors,
+      });
+      return;
+    }
+
+    // Sanitize and create the job role
+    const sanitizedData = sanitizeJobRoleData(req.body);
+    const newJob = jobRoleService.addJob(sanitizedData);
+
+    res.status(201).json({
+      message: "Job role created successfully",
+      job: newJob,
+    });
+  } catch (error) {
+    console.error("Error creating job role:", error);
+    res.status(500).json({
+      error: "Internal server error",
+      message:
+        error instanceof Error ? error.message : "Unable to create job role",
+    });
+  }
+});
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
