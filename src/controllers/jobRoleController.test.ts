@@ -1,7 +1,13 @@
 import type { Request, Response } from "express";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { Capability, type JobRole } from "../models/job-role.js";
+import {
+  Band,
+  Capability,
+  type JobRole,
+  JobStatus,
+} from "../models/job-role.js";
 import { JobRoleMemoryService } from "../services/jobRoleMemoryService.js";
+import type { JobRoleservice } from "../services/interfaces.js";
 import { JobRoleController } from "./jobRoleController.js";
 
 // Type for template render data
@@ -9,11 +15,6 @@ interface TemplateData {
   title: string;
   jobRoles: JobRole[];
   timestamp: string;
-}
-
-// Mock service interface
-interface MockJobRoleService {
-  getAllJobs: ReturnType<typeof vi.fn>;
 }
 
 describe("JobRoleController", () => {
@@ -30,8 +31,16 @@ describe("JobRoleController", () => {
         name: "Software Engineer",
         location: "London",
         capability: Capability.Engineering,
-        band: "E3",
+        band: Band.E3,
         closingDate: new Date("2024-12-31"),
+        numberOfOpenPositions: 2,
+        status: JobStatus.Open,
+        description: "Develop and maintain software applications",
+        responsibilities: [
+          "Write clean, maintainable code",
+          "Collaborate with team members",
+          "Participate in code reviews",
+        ],
       },
     ];
 
@@ -83,15 +92,13 @@ describe("JobRoleController", () => {
 
     it("should handle service errors gracefully", () => {
       // Mock service to throw error
-      const errorService: MockJobRoleService = {
+      const errorMockService = {
         getAllJobs: vi.fn().mockImplementation(() => {
           throw new Error("Service error");
         }),
-      };
+      } as JobRoleservice;
 
-      const errorController = new JobRoleController(
-        errorService as unknown as JobRoleMemoryService
-      );
+      const errorController = new JobRoleController(errorMockService);
       const consoleSpy = vi
         .spyOn(console, "error")
         .mockImplementation(() => {});
@@ -116,84 +123,11 @@ describe("JobRoleController", () => {
     });
   });
 
-  describe("getJobRolesApi", () => {
-    it("should return job roles as JSON", () => {
-      controller.getJobRolesApi(
-        mockRequest as Request,
-        mockResponse as Response
-      );
-
-      expect(mockResponse.json).toHaveBeenCalledWith(mockJobRoles);
-    });
-
-    it("should handle service errors with JSON error response", () => {
-      // Mock service to throw error
-      const errorService: MockJobRoleService = {
-        getAllJobs: vi.fn().mockImplementation(() => {
-          throw new Error("Service error");
-        }),
-      };
-
-      const errorController = new JobRoleController(
-        errorService as unknown as JobRoleMemoryService
-      );
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
-      errorController.getJobRolesApi(
-        mockRequest as Request,
-        mockResponse as Response
-      );
-
-      expect(mockResponse.status).toHaveBeenCalledWith(500);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        error: "Unable to fetch job roles",
-        message: "Service error",
-      });
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Error fetching job roles:",
-        expect.any(Error)
-      );
-
-      consoleSpy.mockRestore();
-    });
-
-    it("should handle unknown errors", () => {
-      // Mock service to throw non-Error object
-      const errorService: MockJobRoleService = {
-        getAllJobs: vi.fn().mockImplementation(() => {
-          throw "String error";
-        }),
-      };
-
-      const errorController = new JobRoleController(
-        errorService as unknown as JobRoleMemoryService
-      );
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
-      errorController.getJobRolesApi(
-        mockRequest as Request,
-        mockResponse as Response
-      );
-
-      expect(mockResponse.status).toHaveBeenCalledWith(500);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        error: "Unable to fetch job roles",
-        message: "Unknown error",
-      });
-
-      consoleSpy.mockRestore();
-    });
-  });
-
   describe("dependency injection", () => {
     it("should use the injected service", () => {
       const serviceSpy = vi.spyOn(mockJobRoleService, "getAllJobs");
 
-      controller.getJobRolesApi(
+      controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );

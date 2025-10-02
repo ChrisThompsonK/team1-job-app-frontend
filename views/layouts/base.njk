@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}Job Application System{% endblock %}
+        </title>
+        <!-- Base CSS -->
+        <link
+        rel="stylesheet" href="/css/style.css">
+        <!-- Page-specific CSS -->
+        {% block styles %}{% endblock %}
+        <!-- External CSS libraries -->
+        {% block external_styles %}{% endblock %}
+    </head>
+    <body{%endblock%} {% block body_attributes %}>
+        {% block navigation %}
+            <!-- Default Navigation (can be overridden) -->
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a href="/" class="navbar-logo">Job Application System</a>
+                    </div>
+                    <div class="navbar-menu">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="/" class="nav-link{% if currentPage === 'home' %} active{% endif %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/job-roles" class="nav-link{% if currentPage === 'job-roles' %} active{% endif %}">Job Roles</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+        <main{%endblock%} {% block main_attributes %}> {% block content %}{% endblock %}
+            </main>
+            {% block footer %}
+                <!-- Default Footer (can be overridden) -->
+                <footer class="footer">
+                    <div class="container">
+                        <p class="footer-text">© 2025 Job Application System. All rights reserved.</p>
+                    </div>
+                </footer>
+            {% endblock %}
+            <!-- Page-specific JavaScript -->
+            {% block scripts %}{% endblock %}
+        </body>
+    </html>
+</html>

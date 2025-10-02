@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Capability } from "../models/job-role.js";
+import { Band, Capability, JobStatus } from "../models/job-role.js";
 import { ProvideJobRoles } from "./jobRoleProvider.js";
 
 describe("ProvideJobRoles", () => {
@@ -20,12 +20,20 @@ describe("ProvideJobRoles", () => {
         expect(jobRole).toHaveProperty("capability");
         expect(jobRole).toHaveProperty("band");
         expect(jobRole).toHaveProperty("closingDate");
+        expect(jobRole).toHaveProperty("numberOfOpenPositions");
+        expect(jobRole).toHaveProperty("status");
+        expect(jobRole).toHaveProperty("description");
+        expect(jobRole).toHaveProperty("responsibilities");
 
         expect(typeof jobRole.name).toBe("string");
         expect(typeof jobRole.location).toBe("string");
         expect(Object.values(Capability)).toContain(jobRole.capability);
-        expect(typeof jobRole.band).toBe("string");
+        expect(Object.values(Band)).toContain(jobRole.band);
         expect(jobRole.closingDate).toBeInstanceOf(Date);
+        expect(typeof jobRole.numberOfOpenPositions).toBe("number");
+        expect(Object.values(JobStatus)).toContain(jobRole.status);
+        expect(typeof jobRole.description).toBe("string");
+        expect(Array.isArray(jobRole.responsibilities)).toBe(true);
       });
     });
 
@@ -59,6 +67,24 @@ describe("ProvideJobRoles", () => {
       });
     });
 
+    it("should have valid band values", () => {
+      const result = ProvideJobRoles();
+
+      result.forEach((jobRole) => {
+        expect([Band.E1, Band.E2, Band.E3, Band.E4, Band.E5]).toContain(
+          jobRole.band
+        );
+      });
+    });
+
+    it("should have valid job status values", () => {
+      const result = ProvideJobRoles();
+
+      result.forEach((jobRole) => {
+        expect([JobStatus.Open, JobStatus.Closed]).toContain(jobRole.status);
+      });
+    });
+
     it("should have valid date objects for closing dates", () => {
       const result = ProvideJobRoles();
 
@@ -80,7 +106,30 @@ describe("ProvideJobRoles", () => {
       result.forEach((jobRole) => {
         expect(jobRole.name.trim()).not.toBe("");
         expect(jobRole.location.trim()).not.toBe("");
-        expect(jobRole.band.trim()).not.toBe("");
+        expect(jobRole.description.trim()).not.toBe("");
+      });
+    });
+
+    it("should have valid number of open positions", () => {
+      const result = ProvideJobRoles();
+
+      result.forEach((jobRole) => {
+        expect(jobRole.numberOfOpenPositions).toBeGreaterThanOrEqual(0);
+        expect(Number.isInteger(jobRole.numberOfOpenPositions)).toBe(true);
+      });
+    });
+
+    it("should have responsibilities as a non-empty array", () => {
+      const result = ProvideJobRoles();
+
+      result.forEach((jobRole) => {
+        expect(Array.isArray(jobRole.responsibilities)).toBe(true);
+        expect(jobRole.responsibilities.length).toBeGreaterThan(0);
+
+        jobRole.responsibilities.forEach((responsibility) => {
+          expect(typeof responsibility).toBe("string");
+          expect(responsibility.trim()).not.toBe("");
+        });
       });
     });
 
@@ -88,6 +137,19 @@ describe("ProvideJobRoles", () => {
       const result = ProvideJobRoles();
 
       expect(result.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it("should have consistent data structure across all job roles", () => {
+      const result = ProvideJobRoles();
+
+      if (result.length > 1) {
+        const firstRole = result[0];
+        const propertyKeys = Object.keys(firstRole);
+
+        result.forEach((jobRole) => {
+          expect(Object.keys(jobRole).sort()).toEqual(propertyKeys.sort());
+        });
+      }
     });
   });
 });

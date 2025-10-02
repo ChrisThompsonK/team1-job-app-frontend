@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ title }}</title>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body
-        class="bg-base-100">
-        <!-- Navigation -->
+{% extends "layouts/base.njk" %}
+{% set currentPage = "job-roles" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block external_styles %}
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="/css/job-roles.css">
+    {% endblock %}
+    {% block body_attributes %}
+        class="job-roles-page"{% endblock %}
+    {% block navigation %}
+        <!-- Custom navigation for job roles page with DaisyUI styling -->
         <div class="navbar bg-primary text-primary-content">
             <div class="container mx-auto">
                 <div class="flex-1">
@@ -27,119 +31,120 @@
                 </div>
             </div>
         </div>
-        <!-- Main Content -->
-        <div
-            class="container mx-auto px-4 py-8">
-            <!-- Page Header -->
-            <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
-                <p class="text-base-content/70">Explore exciting career opportunities</p>
-            </div>
-            <!-- Job Roles Grid -->
-            {% if jobRoles and jobRoles.length > 0 %}
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {% for job in jobRoles %}
-                        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
+    {% endblock %}
+    {% block main_attributes %}
+        class="container mx-auto px-4 py-8"{% endblock %}
+    {% block content %}
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
+            <p class="text-base-content/70">Explore exciting career opportunities</p>
+        </div>
+        <!-- Job Roles Grid -->
+        {% if jobRoles and jobRoles.length > 0 %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for job in jobRoles %}
+                    <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div
+                            class="card-body">
+                            <!-- Job Title -->
+                            <h2 class="card-title text-xl font-semibold text-primary">
+                                {{ job.name }}
+                            </h2>
+                            <!-- Job Details -->
                             <div
-                                class="card-body">
-                                <!-- Job Title -->
-                                <h2 class="card-title text-xl font-semibold text-primary">
-                                    {{ job.name }}
-                                </h2>
-                                <!-- Job Details -->
-                                <div
-                                    class="space-y-3 mt-4">
-                                    <!-- Location -->
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        <span class="text-base-content/80">{{ job.location }}</span>
-                                    </div>
-                                    <!-- Capability Badge -->
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1
-                                                    1 0 011 1v5m-4 0h4"></path>
-                                        </svg>
-                                        <span class="badge badge-secondary">{{ job.capability }}</span>
-                                    </div>
-                                    <!-- Band -->
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138
-                                                    3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0
-                                                    00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42
-                                                    3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                                        </svg>
-                                        <span class="text-base-content/80">Band:
-                                            <span class="font-semibold">{{ job.band }}</span>
-                                        </span>
-                                    </div>
-                                    <!-- Closing Date -->
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <span class="text-base-content/80">
-                                            Closes:
-                                            <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
-                                        </span>
-                                    </div>
+                                class="space-y-3 mt-4">
+                                <!-- Location -->
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    <span class="text-base-content/80">{{ job.location }}</span>
                                 </div>
-                                <!-- Action Button -->
-                                <div class="card-actions justify-end mt-6">
-                                    <button class="btn btn-primary btn-sm">
-                                        View Details
-                                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </button>
+                                <!-- Capability Badge -->
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1
+                                                1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                    <span class="badge badge-secondary">{{ job.capability }}</span>
+                                </div>
+                                <!-- Band -->
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138
+                                                3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0
+                                                00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42
+                                                3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                    </svg>
+                                    <span class="text-base-content/80">Band:
+                                        <span class="font-semibold">{{ job.band }}</span>
+                                    </span>
+                                </div>
+                                <!-- Closing Date -->
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-base-content/80">
+                                        Closes:
+                                        <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
+                                    </span>
                                 </div>
                             </div>
+                            <!-- Action Button -->
+                            <div class="card-actions justify-end mt-6">
+                                <button class="btn btn-primary btn-sm">
+                                    View Details
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <!-- Empty State -->
-                <div class="text-center py-16">
-                    <div class="max-w-md mx-auto">
-                        <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2
-                                    2H10a2 2 0 00-2-2V6m8 0h2a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h2"></path>
-                        </svg>
-                        <h3 class="text-xl font-semibold text-base-content mb-2">No Job Roles Available</h3>
-                        <p class="text-base-content/60">There are currently no job roles to display. Please check back later.</p>
                     </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="max-w-md mx-auto">
+                    <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2
+                                2H10a2 2 0 00-2-2V6m8 0h2a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h2"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-base-content mb-2">No Job Roles Available</h3>
+                    <p class="text-base-content/60">There are currently no job roles to display. Please check back later.</p>
                 </div>
-            {% endif %}
-        </div>
-        <!-- Footer -->
+            </div>
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <!-- Custom footer for job roles page with DaisyUI styling -->
         <footer class="footer footer-center p-10 bg-base-200 text-base-content mt-16">
             <div>
                 <p class="text-sm">© 2025 Job Application System. All rights reserved.</p>
             </div>
         </footer>
-    </body>
-</html>
+    {% endblock %}
