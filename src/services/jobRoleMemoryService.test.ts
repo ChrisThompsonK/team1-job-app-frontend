@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { Capability, type JobRole } from "../models/job-role.js";
+import {
+  Band,
+  Capability,
+  type JobRole,
+  JobStatus,
+} from "../models/job-role.js";
 import { JobRoleMemoryService } from "./jobRoleMemoryService.js";
 
 describe("JobRoleMemoryService", () => {
@@ -12,15 +17,31 @@ describe("JobRoleMemoryService", () => {
         name: "Software Engineer",
         location: "London",
         capability: Capability.Engineering,
-        band: "E3",
+        band: Band.E3,
         closingDate: new Date("2024-12-31"),
+        numberOfOpenPositions: 2,
+        status: JobStatus.Open,
+        description: "Develop and maintain software applications",
+        responsibilities: [
+          "Write clean, maintainable code",
+          "Collaborate with team members",
+          "Participate in code reviews",
+        ],
       },
       {
         name: "Data Scientist",
         location: "Manchester",
         capability: Capability.Data,
-        band: "E4",
+        band: Band.E4,
         closingDate: new Date("2024-11-30"),
+        numberOfOpenPositions: 1,
+        status: JobStatus.Open,
+        description: "Analyze data and build predictive models",
+        responsibilities: [
+          "Develop machine learning models",
+          "Analyze large datasets",
+          "Present findings to stakeholders",
+        ],
       },
     ];
     service = new JobRoleMemoryService(mockJobRoles);
@@ -68,7 +89,7 @@ describe("JobRoleMemoryService", () => {
       expect(firstJob.name).toBe("Software Engineer");
       expect(firstJob.location).toBe("London");
       expect(firstJob.capability).toBe(Capability.Engineering);
-      expect(firstJob.band).toBe("E3");
+      expect(firstJob.band).toBe(Band.E3);
       expect(firstJob.closingDate).toBeInstanceOf(Date);
     });
 

@@ -14,7 +14,7 @@
         <!-- External CSS libraries -->
         {% block external_styles %}{% endblock %}
     </head>
-    <body{%endblock%} {% block body_attributes %}>
+    <body {% block body_attributes %} {% endblock %}>
         {% block navigation %}
             <!-- Default Navigation (can be overridden) -->
             <nav class="navbar">
@@ -35,7 +35,7 @@
                 </div>
             </nav>
         {% endblock %}
-        <main{%endblock%} {% block main_attributes %}> {% block content %}{% endblock %}
+        <main {% block main_attributes %} {% endblock %}> {% block content %}{% endblock %}
             </main>
             {% block footer %}
                 <!-- Default Footer (can be overridden) -->

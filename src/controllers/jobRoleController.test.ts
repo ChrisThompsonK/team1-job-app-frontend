@@ -10,13 +10,6 @@ import type { JobRoleservice } from "../services/interfaces.js";
 import { JobRoleMemoryService } from "../services/jobRoleMemoryService.js";
 import { JobRoleController } from "./jobRoleController.js";
 
-// Type for template render data
-interface TemplateData {
-  title: string;
-  jobRoles: JobRole[];
-  timestamp: string;
-}
-
 describe("JobRoleController", () => {
   let controller: JobRoleController;
   let mockJobRoleService: JobRoleMemoryService;
@@ -80,10 +73,18 @@ describe("JobRoleController", () => {
       );
 
       const renderMock = vi.mocked(mockResponse.render);
-      expect(renderMock).toHaveBeenCalled();
+      expect(renderMock).toHaveBeenCalledWith(
+        "job-role-list",
+        expect.objectContaining({
+          title: "Available Job Roles",
+          jobRoles: mockJobRoles,
+          timestamp: expect.any(String),
+        })
+      );
 
-      const renderArgs = renderMock?.mock.calls[0];
-      const templateData = renderArgs?.[1] as unknown as TemplateData;
+      // Extract timestamp for specific validation
+      const callArgs = renderMock?.mock.calls[0];
+      const templateData = callArgs?.[1] as { timestamp?: string };
 
       expect(templateData?.timestamp).toMatch(
         /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
