@@ -2,6 +2,7 @@ import path from "node:path";
 import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
+import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleMemoryService } from "./services/jobRoleMemoryService.js";
 import { ProvideJobRoles } from "./services/jobRoleProvider.js";
 
@@ -24,6 +25,11 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Initialize services and controllers with dependency injection
+const jobs = ProvideJobRoles();
+const jobRoleService = new JobRoleMemoryService(jobs);
+const jobRoleController = new JobRoleController(jobRoleService);
+
 // Hello World endpoint
 app.get("/", (_req: Request, res: Response) => {
   res.render("index", {
@@ -43,11 +49,8 @@ app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-app.get("/api/jobs", (_req: Request, res: Response) => {
-  const jobs = ProvideJobRoles();
-  const jobRoleMemoryService = new JobRoleMemoryService(jobs);
-  res.json(jobRoleMemoryService.getAllJobs());
-});
+// Job roles routes using dependency injection
+app.get("/job-roles", jobRoleController.getJobRolesList);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
