@@ -40,7 +40,8 @@
       "suspicious": {
         "noExplicitAny": "warn",
         "noArrayIndexKey": "warn",
-        "noConfusingVoidType": "warn"
+        "noConfusingVoidType": "warn",
+        "noUnknownAtRules": "off"
       },
       "performance": {
         "noDelete": "error"

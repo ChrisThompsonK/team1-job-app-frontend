@@ -2,37 +2,214 @@
 {% block title %}
     {{ title }}
 {% endblock %}
-{% block styles %}
-    <link rel="stylesheet" href="/css/home.css">
-    {% endblock %}
-    {% block content %}
-        <div class="container">
-            <div class="home-container">
-                <h1 class="home-title">{{ title }}</h1>
-                <div class="home-message">{{ message }}</div>
-                <div class="home-timestamp">Generated at: {{ timestamp }}</div>
-                <div class="feature-list">
-                    <h2>Available Features:</h2>
-                    <ul>
-                        <li>
-                            <strong>Nunjucks Templating:</strong>
-                            Dynamic HTML generation with template inheritance</li>
-                        <li>
-                            <strong>Express Server:</strong>
-                            Fast and lightweight web framework</li>
-                        <li>
-                            <strong>TypeScript:</strong>
-                            Type-safe development environment</li>
-                        <li>
-                            <strong>Static File Serving:</strong>
-                            CSS, JS, and asset management</li>
-                        <li>
-                            <strong>
-                                <a href="/job-roles" class="feature-link">Job Roles:</a>
-                            </strong>
-                            Browse available job opportunities</li>
-                    </ul>
+{% block content %}
+    <!-- Hero Section -->
+    <div class="hero min-h-screen bg-gradient-to-br from-primary to-secondary">
+        <div class="hero-overlay bg-opacity-20"></div>
+        <div class="hero-content text-center text-neutral-content">
+            <div class="max-w-lg">
+                <div class="mb-8">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0
+                                    01-2 2H10a2 2 0 01-2-2V6m8 0H8"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-6xl font-bold mb-4">{{ title }}</h1>
+                    <p class="text-xl leading-relaxed opacity-90">{{ message }}</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                    <a href="/job-roles" class="btn btn-accent btn-lg gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        Explore Job Roles
+                    </a>
+                    <div class="divider divider-horizontal hidden sm:flex">OR</div>
+                    <button class="btn btn-outline btn-lg">
+                        Learn More
+                    </button>
+                </div>
+                <div class="text-sm opacity-70 bg-white bg-opacity-10 rounded-lg p-3 inline-block">
+                    <span class="font-medium">Last Updated:</span>
+                    {{ timestamp }}
                 </div>
             </div>
         </div>
-    {% endblock %}
+    </div>
+    <!-- Features Section -->
+    <div class="py-20 bg-base-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Powerful Features</h2>
+                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
+                    Built with modern technologies to provide a seamless job application experience
+                </p>
+            </div>
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Nunjucks Card -->
+                <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300
+                        hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-primary"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-lg">Nunjucks Templating</h3>
+                        <p class="text-base-content/70">Dynamic HTML generation with powerful template inheritance and component reusability</p>
+                        <div class="badge badge-primary badge-outline mt-2">Template Engine</div>
+                    </div>
+                </div>
+                <!-- Express Card -->
+                <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300
+                        hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-lg mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-secondary"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0
+                                        002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-lg">Express Server</h3>
+                        <p class="text-base-content/70">Fast, unopinionated, minimalist web framework for Node.js applications</p>
+                        <div class="badge badge-secondary badge-outline mt-2">Backend</div>
+                    </div>
+                </div>
+                <!-- TypeScript Card -->
+                <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300
+                        hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="flex items-center justify-center w-12 h-12 bg-accent/10 rounded-lg mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-accent"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-lg">TypeScript</h3>
+                        <p class="text-base-content/70">Type-safe development with enhanced IDE support and error detection</p>
+                        <div class="badge badge-accent badge-outline mt-2">Language</div>
+                    </div>
+                </div>
+                <!-- Static Files Card -->
+                <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300
+                        hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="flex items-center justify-center w-12 h-12 bg-info/10 rounded-lg mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-lg">Asset Management</h3>
+                        <p class="text-base-content/70">Efficient serving of CSS, JavaScript, and static assets with optimization</p>
+                        <div class="badge badge-info badge-outline mt-2">Performance</div>
+                    </div>
+                </div>
+                <!-- Job Roles Card - Featured -->
+                <div class="card bg-gradient-to-br from-primary to-secondary text-primary-content shadow-xl hover:shadow-2xl transition-all
+                        duration-300 hover:-translate-y-2 md:col-span-2 lg:col-span-1">
+                    <div class="card-body">
+                        <div class="flex items-center justify-center w-12 h-12 bg-white/20 rounded-lg mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0
+                                        01-2 2H10a2 2 0 01-2-2V6m8 0H8"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-lg text-white">Job Opportunities</h3>
+                        <p class="text-white/90">Discover and apply for exciting career opportunities tailored to your skills</p>
+                        <div class="card-actions justify-between items-center mt-4">
+                            <div class="badge badge-accent">Featured</div>
+                            <a href="/job-roles" class="btn btn-accent btn-sm gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                                Browse Jobs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Daisy UI Card -->
+                <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300
+                        hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="flex items-center justify-center w-12 h-12 bg-success/10 rounded-lg mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-success"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2
+                                        0 002-2V5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-lg">DaisyUI Components</h3>
+                        <p class="text-base-content/70">Beautiful, semantic component library built on top of Tailwind CSS</p>
+                        <div class="badge badge-success badge-outline mt-2">UI Framework</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Call to Action Section -->
+    <div class="py-16 bg-gradient-to-r from-primary to-secondary">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto text-primary-content">
+                <h2 class="text-4xl font-bold mb-6">Ready to Start Your Career Journey?</h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Join thousands of professionals who have found their dream job through our platform
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/job-roles" class="btn btn-accent btn-lg gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        Find Your Perfect Job
+                    </a>
+                    <button class="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary">
+                        Contact Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
