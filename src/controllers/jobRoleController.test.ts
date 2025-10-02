@@ -6,8 +6,8 @@ import {
   type JobRole,
   JobStatus,
 } from "../models/job-role.js";
-import { JobRoleMemoryService } from "../services/jobRoleMemoryService.js";
 import type { JobRoleservice } from "../services/interfaces.js";
+import { JobRoleMemoryService } from "../services/jobRoleMemoryService.js";
 import { JobRoleController } from "./jobRoleController.js";
 
 // Type for template render data
