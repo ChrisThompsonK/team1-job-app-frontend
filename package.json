@@ -5,10 +5,12 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "dev": "concurrently \"npm run build:css\" \"tsx watch src/index.ts\"",
+    "build": "npm run build:css:prod && tsc",
+    "build:css": "tailwindcss -i ./src/styles/main.css -o ./public/css/style.css --watch",
+    "build:css:prod": "tailwindcss -i ./src/styles/main.css -o ./public/css/style.css --minify",
     "start": "node dist/index.js",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -f public/css/style.css",
     "type-check": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
@@ -34,7 +36,9 @@
     "@types/node": "^20.8.0",
     "@types/nunjucks": "^3.2.6",
     "@vitest/coverage-v8": "^3.2.4",
+    "concurrently": "^9.2.1",
     "daisyui": "^5.1.26",
+    "tailwindcss": "^3.4.18",
     "tsx": "^4.20.6",
     "typescript": "^5.2.0",
     "vitest": "^3.2.4"
@@ -43,9 +47,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.13",
     "express": "^5.1.0",
-    "nunjucks": "^3.2.4",
-    "tailwindcss": "^4.1.13"
+    "nunjucks": "^3.2.4"
   }
 }
