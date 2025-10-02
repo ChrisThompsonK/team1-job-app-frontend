@@ -7,7 +7,12 @@ export class JobRoleMemoryService implements JobRoleservice {
   constructor(initialJobRoles: JobRole[]) {
     this.jobRoles = [...initialJobRoles];
   }
+
   getAllJobs(): JobRole[] {
     return this.jobRoles;
+  }
+
+  getJobByName(name: string): JobRole | undefined {
+    return this.jobRoles.find((job) => job.name === name);
   }
 }
