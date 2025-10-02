@@ -123,7 +123,7 @@
                                     </svg>
                                     Delete
                                 </button>
-                                <a href="/job-roles/{{ job.name | urlencode }}" class="btn btn-primary btn-sm">
+                                <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
                                     View Details
                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -151,12 +151,4 @@
                 </div>
             </div>
         {% endif %}
-    {% endblock %}
-    {% block footer %}
-        <!-- Custom footer for job roles page with DaisyUI styling -->
-        <footer class="footer footer-center p-10 bg-base-200 text-base-content mt-16">
-            <div>
-                <p class="text-sm">© 2025 Job Application System. All rights reserved.</p>
-            </div>
-        </footer>
     {% endblock %}

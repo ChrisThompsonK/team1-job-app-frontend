@@ -12,6 +12,10 @@ export class JobRoleMemoryService implements JobRoleservice {
     return this.jobRoles;
   }
 
+  getJobById(id: number): JobRole | undefined {
+    return this.jobRoles.find((job) => job.id === id);
+  }
+
   getJobByName(name: string): JobRole | undefined {
     return this.jobRoles.find((job) => job.name === name);
   }

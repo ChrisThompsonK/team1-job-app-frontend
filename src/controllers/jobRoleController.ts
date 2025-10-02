@@ -29,25 +29,35 @@ export class JobRoleController {
 
   /**
    * Renders the job role detail page
-   * GET /job-roles/:name
+   * GET /job-roles/:id
    */
   public getJobRoleDetail = (req: Request, res: Response): void => {
     try {
-      const jobNameParam = req.params.name;
+      const jobIdParam = req.params.id;
 
-      if (!jobNameParam) {
+      if (!jobIdParam) {
         res.status(400).render("error", {
           title: "Invalid Request",
-          message: "Job name parameter is required",
-          error: "Missing job name in the request URL.",
+          message: "Job ID parameter is required",
+          error: "Missing job ID in the request URL.",
         });
       } else {
-        const jobName = decodeURIComponent(jobNameParam);
-        const jobRole = this.jobRoleService.getJobByName(jobName);
+        const jobId = parseInt(jobIdParam, 10);
+
+        if (isNaN(jobId)) {
+          res.status(400).render("error", {
+            title: "Invalid Request",
+            message: "Job ID must be a valid number",
+            error: "The provided job ID is not a valid number.",
+          });
+          return;
+        }
+
+        const jobRole = this.jobRoleService.getJobById(jobId);
         if (!jobRole) {
           res.status(404).render("error", {
             title: "Job Not Found",
-            message: `Job role "${jobName}" was not found`,
+            message: `Job role with ID "${jobId}" was not found`,
             error: "The requested job role does not exist or has been removed.",
           });
         } else {
