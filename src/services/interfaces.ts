@@ -7,5 +7,5 @@ export interface JobRoleservice {
 }
 
 export interface JobRoleAPIService {
-    getAllJobs(): Promise<JobRole[]>;
+  getAllJobs(): Promise<JobRole[]>;
 }
