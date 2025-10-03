@@ -25,8 +25,10 @@ export class JobRoleAPIService implements JobRoleservice {
 
   async getJobByName(name: string): Promise<JobRole | undefined> {
     try {
-      const jobs = await this.getAllJobs();
-      return jobs.find((job) => job.name === name);
+      const response = await axios.get<JobRole>(
+        `http://localhost:3001/api/jobs/${name}`
+      );
+      return response.data;
     } catch (_error) {
       return undefined;
     }
