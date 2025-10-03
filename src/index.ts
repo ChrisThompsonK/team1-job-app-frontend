@@ -52,6 +52,7 @@ app.get("/health", (_req: Request, res: Response) => {
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/:id", jobRoleController.getJobRoleDetail);
+app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);

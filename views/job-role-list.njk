@@ -117,12 +117,14 @@
                                     </svg>
                                     Edit
                                 </button>
-                                <button class="btn btn-sm btn-outline btn-error" title="Delete Job Role" onclick="deleteJob('{{ job.id }}', '{{ job.name }}')">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                    Delete
-                                </button>
+                                <form method="POST" action="/job-roles/{{ job.id }}/delete" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete {{ job.name }}?')">
+    <button type="submit" class="btn btn-sm btn-outline btn-error" title="Delete Job Role">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+        Delete
+    </button>
+</form>
                                 <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
                                     View Details
                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
@@ -152,37 +154,3 @@
             </div>
         {% endif %}
     {% endblock %}
-
-{% block scripts %}
-<script>
-async function deleteJob(jobId, jobName) {
-    // Show confirmation dialog
-    if (!confirm(`Are you sure you want to delete "${jobName}"?`)) {
-        return;
-    }
-    
-    try {
-        // Call backend API to delete the job
-        const response = await fetch(`http://localhost:3001/api/jobs/${jobId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        
-        if (response.ok) {
-            // Success - reload the page to update the job list
-            alert(`Job "${jobName}" has been deleted successfully.`);
-            window.location.reload();
-        } else {
-            // Handle error responses
-            const errorData = await response.json();
-            alert(`Failed to delete job: ${errorData.message || 'Unknown error'}`);
-        }
-    } catch (error) {
-        console.error('Error deleting job:', error);
-        alert('An error occurred while deleting the job. Please try again.');
-    }
-}
-</script>
-{% endblock %}

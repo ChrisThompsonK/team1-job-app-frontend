@@ -28,6 +28,54 @@ export class JobRoleController {
   };
 
   /**
+   * Handles job role deletion
+   * POST /job-roles/:id/delete
+   */
+  public deleteJobRole = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const jobId = req.params.id;
+
+      if (!jobId) {
+        res.status(400).render("error", {
+          title: "Error",
+          message: "Job ID is required",
+          error: "Invalid job ID provided",
+        });
+        return;
+      }
+
+      // Make HTTP request to backend API to delete the job role
+      const backendUrl = `http://localhost:3001/api/jobs/${jobId}`;
+      const response = await fetch(backendUrl, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // Success - redirect back to job roles list
+        res.redirect("/job-roles?message=Job deleted successfully");
+      } else {
+        // Error from backend
+        const errorData = await response.json();
+        res.status(500).render("error", {
+          title: "Delete Failed",
+          message: "Failed to delete job role",
+          error: errorData.message || "Unknown error occurred",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      res.status(500).render("error", {
+        title: "Error",
+        message: "An error occurred while deleting the job",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
+  /**
    * Renders the job role detail page
    * GET /job-roles/:id
    */
@@ -68,7 +116,7 @@ export class JobRoleController {
           });
         }
       }
-    } catch (error) {
+  } catch (error) {
       console.error("Error fetching job role detail:", error);
       res.status(500).render("error", {
         title: "Error",
@@ -77,4 +125,4 @@ export class JobRoleController {
       });
     }
   };
-}
+  }
