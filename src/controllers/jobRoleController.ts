@@ -49,8 +49,8 @@ export class JobRoleController {
       const response = await fetch(backendUrl, {
         method: "DELETE",
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
@@ -116,7 +116,7 @@ export class JobRoleController {
           });
         }
       }
-  } catch (error) {
+    } catch (error) {
       console.error("Error fetching job role detail:", error);
       res.status(500).render("error", {
         title: "Error",
@@ -125,4 +125,4 @@ export class JobRoleController {
       });
     }
   };
-  }
+}
