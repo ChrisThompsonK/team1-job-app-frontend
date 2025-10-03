@@ -8,15 +8,15 @@ export class JobRoleMemoryService implements JobRoleservice {
     this.jobRoles = [...initialJobRoles];
   }
 
-  getAllJobs(): JobRole[] {
+  async getAllJobs(): Promise<JobRole[]> {
     return this.jobRoles;
   }
 
-  getJobById(id: number): JobRole | undefined {
+  async getJobById(id: number): Promise<JobRole | undefined> {
     return this.jobRoles.find((job) => job.id === id);
   }
 
-  getJobByName(name: string): JobRole | undefined {
+  async getJobByName(name: string): Promise<JobRole | undefined> {
     return this.jobRoles.find((job) => job.name === name);
   }
 }

@@ -54,8 +54,8 @@ describe("JobRoleController", () => {
   });
 
   describe("getJobRolesList", () => {
-    it("should render job-role-list template with job roles", () => {
-      controller.getJobRolesList(
+    it("should render job-role-list template with job roles", async () => {
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -67,8 +67,8 @@ describe("JobRoleController", () => {
       });
     });
 
-    it("should include timestamp in ISO format", () => {
-      controller.getJobRolesList(
+    it("should include timestamp in ISO format", async () => {
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );

@@ -14,6 +14,7 @@ describe("JobRoleMemoryService", () => {
   beforeEach(() => {
     mockJobRoles = [
       {
+        id: 1,
         name: "Software Engineer",
         location: "London",
         capability: Capability.Engineering,
@@ -29,6 +30,7 @@ describe("JobRoleMemoryService", () => {
         ],
       },
       {
+        id: 2,
         name: "Data Scientist",
         location: "Manchester",
         capability: Capability.Data,
@@ -48,36 +50,36 @@ describe("JobRoleMemoryService", () => {
   });
 
   describe("constructor", () => {
-    it("should initialize with provided job roles", () => {
-      const result = service.getAllJobs();
+    it("should initialize with provided job roles", async () => {
+      const result = await service.getAllJobs();
       expect(result).toHaveLength(2);
       expect(result[0].name).toBe("Software Engineer");
       expect(result[1].name).toBe("Data Scientist");
     });
 
-    it("should create a copy of the initial job roles array", () => {
-      const result = service.getAllJobs();
+    it("should create a copy of the initial job roles array", async () => {
+      const result = await service.getAllJobs();
       expect(result).not.toBe(mockJobRoles);
       expect(result).toEqual(mockJobRoles);
     });
 
-    it("should handle empty job roles array", () => {
+    it("should handle empty job roles array", async () => {
       const emptyService = new JobRoleMemoryService([]);
-      const result = emptyService.getAllJobs();
+      const result = await emptyService.getAllJobs();
       expect(result).toHaveLength(0);
       expect(result).toEqual([]);
     });
   });
 
   describe("getAllJobs", () => {
-    it("should return all job roles", () => {
-      const result = service.getAllJobs();
+    it("should return all job roles", async () => {
+      const result = await service.getAllJobs();
       expect(result).toHaveLength(2);
       expect(result).toEqual(mockJobRoles);
     });
 
-    it("should return job roles with correct properties", () => {
-      const result = service.getAllJobs();
+    it("should return job roles with correct properties", async () => {
+      const result = await service.getAllJobs();
       const firstJob = result[0];
 
       expect(firstJob).toHaveProperty("name");
@@ -93,9 +95,9 @@ describe("JobRoleMemoryService", () => {
       expect(firstJob.closingDate).toBeInstanceOf(Date);
     });
 
-    it("should return the same array on multiple calls", () => {
-      const result1 = service.getAllJobs();
-      const result2 = service.getAllJobs();
+    it("should return the same array on multiple calls", async () => {
+      const result1 = await service.getAllJobs();
+      const result2 = await service.getAllJobs();
       expect(result1).toEqual(result2);
     });
   });
