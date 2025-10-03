@@ -28,6 +28,47 @@ export class JobRoleController {
   };
 
   /**
+   * Handles job role deletion
+   * POST /job-roles/:id/delete
+   */
+  public deleteJobRole = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const jobId = req.params.id;
+
+      if (!jobId) {
+        res.status(400).render("error", {
+          title: "Error",
+          message: "Job ID is required",
+          error: "Invalid job ID provided",
+        });
+        return;
+      }
+
+      // Call service to delete the job (service handles API communication)
+      const success = await this.jobRoleService.deleteJobById(jobId);
+
+      if (success) {
+        // Success - redirect back to job roles list
+        res.redirect("/job-roles?message=Job deleted successfully");
+      } else {
+        // Error from service
+        res.status(500).render("error", {
+          title: "Delete Failed",
+          message: "Failed to delete job role",
+          error: "Unable to delete the job role. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      res.status(500).render("error", {
+        title: "Error",
+        message: "An error occurred while deleting the job",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
+  /**
    * Renders the job role detail page
    * GET /job-roles/:id
    */
