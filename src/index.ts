@@ -2,7 +2,6 @@ import path from "node:path";
 import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
-import { JobRoleAPIController } from "./controllers/JobRoleAPIController.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleAPIService } from "./services/JobRoleAPIService.js";
 import { JobRoleMemoryService } from "./services/jobRoleMemoryService.js";
@@ -33,7 +32,7 @@ const jobRoleService = new JobRoleMemoryService(jobs);
 const jobRoleController = new JobRoleController(jobRoleService);
 
 const jobRoleAPIService = new JobRoleAPIService();
-const jobRoleAPIController = new JobRoleAPIController(jobRoleAPIService);
+const jobRoleAPIController = new JobRoleController(jobRoleAPIService);
 
 // Hello World endpoint
 app.get("/", (_req: Request, res: Response) => {
@@ -53,7 +52,7 @@ app.get("/api", (_req: Request, res: Response) => {
 app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
-app.get("/job-roles-from-api", jobRoleAPIController.getJobRoles);
+app.get("/job-roles-from-api", jobRoleAPIController.getJobRolesList);
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/:id", jobRoleController.getJobRoleDetail);
