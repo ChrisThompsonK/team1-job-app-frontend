@@ -27,8 +27,8 @@ export class JobRoleMemoryService implements JobRoleservice {
       const response = await fetch(backendUrl, {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
@@ -36,7 +36,10 @@ export class JobRoleMemoryService implements JobRoleservice {
         this.jobRoles = this.jobRoles.filter((job) => job.id.toString() !== id);
         return true;
       } else {
-        console.error("Failed to delete job from backend:", await response.text());
+        console.error(
+          "Failed to delete job from backend:",
+          await response.text()
+        );
         return false;
       }
     } catch (error) {
