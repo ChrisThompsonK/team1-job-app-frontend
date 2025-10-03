@@ -50,11 +50,113 @@
                 </button>
             </div>
         </div>
+
+        <!-- Search and Filter Controls -->
+        <div class="bg-base-100 rounded-lg shadow-md p-6 mb-8">
+            <div class="space-y-4">
+                <!-- Search Bar -->
+                <div class="form-control w-full">
+                    <label class="label">
+                        <span class="label-text font-semibold">Search Job Roles</span>
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            placeholder="Search by job title..." 
+                            class="input input-bordered input-primary w-full pl-10" 
+                            id="searchInput"
+                        />
+                        <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Capability Filter -->
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold">Capability</span>
+                        </label>
+                        <select class="select select-bordered select-primary w-full" id="capabilityFilter">
+                            <option value="">All Capabilities</option>
+                            <option value="Data">Data</option>
+                            <option value="Workday">Workday</option>
+                            <option value="Engineering">Engineering</option>
+                        </select>
+                    </div>
+
+                    <!-- Band Filter -->
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold">Band</span>
+                        </label>
+                        <select class="select select-bordered select-primary w-full" id="bandFilter">
+                            <option value="">All Bands</option>
+                            <option value="E1">E1</option>
+                            <option value="E2">E2</option>
+                            <option value="E3">E3</option>
+                            <option value="E4">E4</option>
+                            <option value="E5">E5</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Filter -->
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold">Location</span>
+                        </label>
+                        <select class="select select-bordered select-primary w-full" id="locationFilter">
+                            <option value="">All Locations</option>
+                            <!-- These will be populated dynamically based on available job locations -->
+                            <option value="London">London</option>
+                            <option value="Belfast">Belfast</option>
+                            <option value="Birmingham">Birmingham</option>
+                            <option value="Remote">Remote</option>
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold">Status</span>
+                        </label>
+                        <select class="select select-bordered select-primary w-full" id="statusFilter">
+                            <option value="">All Statuses</option>
+                            <option value="Open">Open</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Filter Actions -->
+                <div class="flex flex-wrap gap-2 justify-between items-center pt-4">
+                    <div class="flex gap-2">
+                        <button class="btn btn-outline btn-secondary" id="clearFilters">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            Clear Filters
+                        </button>
+                    </div>
+                    <div class="text-sm text-base-content/60" id="resultsCount">
+                        <!-- Results count will be updated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Job Roles Grid -->
         {% if jobRoles and jobRoles.length > 0 %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="jobRolesGrid">
                 {% for job in jobRoles %}
-                    <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 job-card" 
+                         data-job-name="{{ job.name | lower }}"
+                         data-job-capability="{{ job.capability }}"
+                         data-job-band="{{ job.band }}"
+                         data-job-location="{{ job.location }}"
+                         data-job-status="{{ job.status }}">
                         <div
                             class="card-body">
                             <!-- Job Title -->
@@ -161,4 +263,175 @@
                 </div>
             </div>
         {% endif %}
+
+        <!-- JavaScript for Search and Filtering -->
+        <script>
+            // DOM Elements
+            const searchInput = document.getElementById('searchInput');
+            const capabilityFilter = document.getElementById('capabilityFilter');
+            const bandFilter = document.getElementById('bandFilter');
+            const locationFilter = document.getElementById('locationFilter');
+            const statusFilter = document.getElementById('statusFilter');
+            const clearFiltersBtn = document.getElementById('clearFilters');
+            const resultsCount = document.getElementById('resultsCount');
+            const jobRolesGrid = document.getElementById('jobRolesGrid');
+
+            // Get all job cards
+            let allJobCards = [];
+            let filteredJobCards = [];
+
+            // Initialize the filtering system
+            function initializeFiltering() {
+                allJobCards = Array.from(document.querySelectorAll('.job-card'));
+                filteredJobCards = [...allJobCards];
+                updateResultsCount();
+                populateLocationFilter();
+            }
+
+            // Populate location filter with unique locations from job data
+            function populateLocationFilter() {
+                const locations = new Set();
+                allJobCards.forEach(card => {
+                    const location = card.getAttribute('data-job-location');
+                    if (location) locations.add(location);
+                });
+
+                // Clear existing options except "All Locations"
+                locationFilter.innerHTML = '<option value="">All Locations</option>';
+                
+                // Add unique locations
+                Array.from(locations).sort().forEach(location => {
+                    const option = document.createElement('option');
+                    option.value = location;
+                    option.textContent = location;
+                    locationFilter.appendChild(option);
+                });
+            }
+
+            // Filter job cards based on current filter values
+            function filterJobs() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedCapability = capabilityFilter.value;
+                const selectedBand = bandFilter.value;
+                const selectedLocation = locationFilter.value;
+                const selectedStatus = statusFilter.value;
+
+                filteredJobCards = allJobCards.filter(card => {
+                    // Search filter (job name)
+                    const jobName = card.getAttribute('data-job-name') || '';
+                    const matchesSearch = !searchTerm || jobName.includes(searchTerm);
+
+                    // Capability filter
+                    const jobCapability = card.getAttribute('data-job-capability') || '';
+                    const matchesCapability = !selectedCapability || jobCapability === selectedCapability;
+
+                    // Band filter
+                    const jobBand = card.getAttribute('data-job-band') || '';
+                    const matchesBand = !selectedBand || jobBand === selectedBand;
+
+                    // Location filter
+                    const jobLocation = card.getAttribute('data-job-location') || '';
+                    const matchesLocation = !selectedLocation || jobLocation === selectedLocation;
+
+                    // Status filter
+                    const jobStatus = card.getAttribute('data-job-status') || '';
+                    const matchesStatus = !selectedStatus || jobStatus === selectedStatus;
+
+                    return matchesSearch && matchesCapability && matchesBand && matchesLocation && matchesStatus;
+                });
+
+                // Show/hide job cards
+                allJobCards.forEach(card => {
+                    if (filteredJobCards.includes(card)) {
+                        card.style.display = 'block';
+                        card.classList.remove('hidden');
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.add('hidden');
+                    }
+                });
+
+                updateResultsCount();
+                showEmptyState();
+            }
+
+            // Update results counter
+            function updateResultsCount() {
+                const count = filteredJobCards.length;
+                const total = allJobCards.length;
+                
+                if (count === total) {
+                    resultsCount.textContent = `Showing all ${total} job role${total !== 1 ? 's' : ''}`;
+                } else {
+                    resultsCount.textContent = `Showing ${count} of ${total} job role${total !== 1 ? 's' : ''}`;
+                }
+            }
+
+            // Show empty state when no jobs match filters
+            function showEmptyState() {
+                const existingEmptyState = document.getElementById('emptyFilterState');
+                
+                if (filteredJobCards.length === 0) {
+                    if (!existingEmptyState) {
+                        const emptyState = document.createElement('div');
+                        emptyState.id = 'emptyFilterState';
+                        emptyState.className = 'col-span-full text-center py-16';
+                        emptyState.innerHTML = `
+                            <div class="max-w-md mx-auto">
+                                <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                                <h3 class="text-xl font-semibold text-base-content mb-2">No Jobs Found</h3>
+                                <p class="text-base-content/60 mb-4">No job roles match your current search and filter criteria.</p>
+                                <button class="btn btn-primary btn-sm" onclick="clearAllFilters()">Clear All Filters</button>
+                            </div>
+                        `;
+                        jobRolesGrid.appendChild(emptyState);
+                    }
+                } else {
+                    if (existingEmptyState) {
+                        existingEmptyState.remove();
+                    }
+                }
+            }
+
+            // Clear all filters
+            function clearAllFilters() {
+                searchInput.value = '';
+                capabilityFilter.value = '';
+                bandFilter.value = '';
+                locationFilter.value = '';
+                statusFilter.value = '';
+                filterJobs();
+            }
+
+            // Debounce function for search input
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            // Event Listeners
+            clearFiltersBtn.addEventListener('click', clearAllFilters);
+
+            // Real-time search
+            const debouncedFilter = debounce(filterJobs, 300);
+            searchInput.addEventListener('input', debouncedFilter);
+
+            // Real-time filter changes
+            capabilityFilter.addEventListener('change', filterJobs);
+            bandFilter.addEventListener('change', filterJobs);
+            locationFilter.addEventListener('change', filterJobs);
+            statusFilter.addEventListener('change', filterJobs);
+
+            // Initialize on page load
+            document.addEventListener('DOMContentLoaded', initializeFiltering);
+        </script>
     {% endblock %}
