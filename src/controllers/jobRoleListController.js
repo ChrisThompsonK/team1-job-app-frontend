@@ -53,6 +53,13 @@ class JobRoleListController {
       });
   }
 
+  // Helper method for filtering by attribute
+  matchesFilter(card, attribute, selectedValue) {
+    if (!selectedValue) return true;
+    const cardValue = card.getAttribute(attribute) || "";
+    return cardValue === selectedValue;
+  }
+
   // Filter job cards based on current filter values
   filterJobs() {
     const searchTerm = this.searchInput.value.toLowerCase().trim();
@@ -66,23 +73,11 @@ class JobRoleListController {
       const jobName = card.getAttribute("data-job-name") || "";
       const matchesSearch = !searchTerm || jobName.includes(searchTerm);
 
-      // Capability filter
-      const jobCapability = card.getAttribute("data-job-capability") || "";
-      const matchesCapability =
-        !selectedCapability || jobCapability === selectedCapability;
-
-      // Band filter
-      const jobBand = card.getAttribute("data-job-band") || "";
-      const matchesBand = !selectedBand || jobBand === selectedBand;
-
-      // Location filter
-      const jobLocation = card.getAttribute("data-job-location") || "";
-      const matchesLocation =
-        !selectedLocation || jobLocation === selectedLocation;
-
-      // Status filter
-      const jobStatus = card.getAttribute("data-job-status") || "";
-      const matchesStatus = !selectedStatus || jobStatus === selectedStatus;
+      // Use helper method for all other filters
+      const matchesCapability = this.matchesFilter(card, "data-job-capability", selectedCapability);
+      const matchesBand = this.matchesFilter(card, "data-job-band", selectedBand);
+      const matchesLocation = this.matchesFilter(card, "data-job-location", selectedLocation);
+      const matchesStatus = this.matchesFilter(card, "data-job-status", selectedStatus);
 
       return (
         matchesSearch &&
