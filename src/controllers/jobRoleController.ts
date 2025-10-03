@@ -44,11 +44,11 @@ export class JobRoleController {
       } else {
         const jobId = parseInt(jobIdParam, 10);
 
-        if (Number.isNaN(jobId)) {
+        if (Number.isNaN(jobId) || !Number.isInteger(Number(jobIdParam))) {
           res.status(400).render("error", {
             title: "Invalid Request",
-            message: "Job ID must be a valid number",
-            error: "The provided job ID is not a valid number.",
+            message: "Job ID must be a number",
+            error: "The provided job ID is not a valid integer.",
           });
           return;
         }
