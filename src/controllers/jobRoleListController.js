@@ -126,7 +126,7 @@ class JobRoleListController {
                         </svg>
                         <h3 class="text-xl font-semibold text-base-content mb-2">No Jobs Found</h3>
                         <p class="text-base-content/60 mb-4">No job roles match your current search and filter criteria.</p>
-                        <button class="btn btn-primary btn-sm" onclick="jobRoleListController.clearAllFilters()">Clear All Filters</button>
+                        <button class="btn btn-primary btn-sm" onclick="window.jobRoleListController.clearAllFilters()">Clear All Filters</button>
                     </div>
                 `;
                 this.jobRolesGrid.appendChild(emptyState);
@@ -192,18 +192,19 @@ class JobRoleListController {
 }
 
 // Initialize the controller when the script loads
-let jobRoleListController;
+// Making it global so it can be accessed by inline onclick handlers
+window.jobRoleListController = null;
 
 // Ensure the controller is initialized
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        jobRoleListController = new JobRoleListController();
+        window.jobRoleListController = new JobRoleListController();
     });
 } else {
-    jobRoleListController = new JobRoleListController();
+    window.jobRoleListController = new JobRoleListController();
 }
 
 // Export for use in other scripts if needed
-if (typeof module !== 'undefined' && module.exports) {
+if (module?.exports) {
     module.exports = JobRoleListController;
 }
