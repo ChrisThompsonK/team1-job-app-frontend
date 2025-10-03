@@ -1,4 +1,4 @@
-[![Code Quality Checks](https://github.com/ChrisThompsonK/team1-job-app-frontend/actions/workflows/biome.yml/badge.svg)](https://github.com/ChrisThompsonK/team1-job-app-frontend/actions/workflows/biome.yml)
+[![Code Quality Checks](https://github.com/ChrisThompsonK/team1-job-app-frontend/actions/workflows/code-quality.yml/badge.svg)](https://github.com/ChrisThompsonK/team1-job-app-frontend/actions/workflows/code-quality.yml)
 
 # Team 1 Job App Frontend - 3-Tier Architecture
 
