@@ -44,25 +44,18 @@ export class JobRoleController {
         return;
       }
 
-      // Make HTTP request to backend API to delete the job role
-      const backendUrl = `http://localhost:3001/api/jobs/${jobId}`;
-      const response = await fetch(backendUrl, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      // Call service to delete the job (service handles API communication)
+      const success = await this.jobRoleService.deleteJobById(jobId);
 
-      if (response.ok) {
+      if (success) {
         // Success - redirect back to job roles list
         res.redirect("/job-roles?message=Job deleted successfully");
       } else {
-        // Error from backend
-        const errorData = await response.json();
+        // Error from service
         res.status(500).render("error", {
           title: "Delete Failed",
           message: "Failed to delete job role",
-          error: errorData.message || "Unknown error occurred",
+          error: "Unable to delete the job role. Please try again.",
         });
       }
     } catch (error) {

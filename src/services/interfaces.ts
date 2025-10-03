@@ -4,4 +4,5 @@ export interface JobRoleservice {
   getAllJobs(): JobRole[];
   getJobById(id: number): JobRole | undefined;
   getJobByName(name: string): JobRole | undefined;
+  deleteJobById(id: string): Promise<boolean>;
 }
