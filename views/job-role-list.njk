@@ -39,6 +39,16 @@
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
             <p class="text-base-content/70">Explore exciting career opportunities</p>
+            
+            <!-- Admin Add Button -->
+            <div class="mt-6">
+                <button class="btn btn-primary btn-lg gap-2" title="Add New Job Role">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Add Job Role
+                </button>
+            </div>
         </div>
         <!-- Job Roles Grid -->
         {% if jobRoles and jobRoles.length > 0 %}
