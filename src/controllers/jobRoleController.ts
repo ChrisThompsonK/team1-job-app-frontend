@@ -8,7 +8,10 @@ export class JobRoleController {
    * Renders the job roles list page
    * GET /job-roles
    */
-  public getJobRolesList = async (_req: Request, res: Response): Promise<void> => {
+  public getJobRolesList = async (
+    _req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
       const jobRoles = await this.jobRoleService.getAllJobs();
 
@@ -31,7 +34,10 @@ export class JobRoleController {
    * Renders the job role detail page
    * GET /job-roles/:id
    */
-  public getJobRoleDetail = async (req: Request, res: Response): Promise<void> => {
+  public getJobRoleDetail = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
       const jobIdParam = req.params.id;
 
