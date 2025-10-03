@@ -5,3 +5,7 @@ export interface JobRoleservice {
   getJobById(id: number): JobRole | undefined;
   getJobByName(name: string): JobRole | undefined;
 }
+
+export interface JobRoleAPIService {
+    getAllJobs(): Promise<JobRole[]>;
+}
