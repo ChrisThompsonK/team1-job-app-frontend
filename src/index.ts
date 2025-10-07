@@ -3,9 +3,8 @@ import type { Request, Response } from "express";
 import express from "express";
 import nunjucks from "nunjucks";
 import { JobRoleController } from "./controllers/jobRoleController.js";
-import { JobRoleMemoryService } from "./services/jobRoleMemoryService.js";
-import { ProvideJobRoles } from "./services/jobRoleProvider.js";
-
+import { JobRoleApiService } from "./services/jobRoleApiService.js";
+import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -24,10 +23,11 @@ app.use(express.static(path.join(process.cwd(), "public")));
 // Middleware to parse JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors())
 // Initialize services and controllers with dependency injection
-const jobs = ProvideJobRoles();
-const jobRoleService = new JobRoleMemoryService(jobs);
+// SWITCHED TO API SERVICE TO CONNECT TO BACKEND
+const backendURL = process.env.BACKEND_URL || "http://localhost:3001/api";
+const jobRoleService = new JobRoleApiService(backendURL);
 const jobRoleController = new JobRoleController(jobRoleService);
 
 // Hello World endpoint
