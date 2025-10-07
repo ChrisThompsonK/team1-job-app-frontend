@@ -127,14 +127,6 @@ export class JobRoleApiService implements JobRoleservice {
         if (filters.location) params.append("location", filters.location);
         if (filters.status) params.append("status", filters.status);
         if (filters.search) params.append("search", filters.search);
-        if (filters.closingDateFrom)
-          params.append("closingDateFrom", filters.closingDateFrom);
-        if (filters.closingDateTo)
-          params.append("closingDateTo", filters.closingDateTo);
-        if (filters.minPositions !== undefined)
-          params.append("minPositions", filters.minPositions.toString());
-        if (filters.maxPositions !== undefined)
-          params.append("maxPositions", filters.maxPositions.toString());
         if (filters.page !== undefined)
           params.append("page", filters.page.toString());
         if (filters.limit !== undefined)

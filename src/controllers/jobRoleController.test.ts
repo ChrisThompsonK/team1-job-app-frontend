@@ -92,7 +92,7 @@ describe("JobRoleController", () => {
       );
     });
 
-    it("should handle service errors gracefully", async () => {
+    it("should handle service errors gracefully", () => {
       // Mock service to throw error
       const errorMockService = {
         getAllJobs: vi.fn().mockImplementation(() => {
@@ -100,6 +100,17 @@ describe("JobRoleController", () => {
         }),
         getJobById: vi.fn().mockReturnValue(undefined),
         getJobByName: vi.fn().mockReturnValue(undefined),
+        deleteJobById: vi.fn().mockResolvedValue(false),
+        getFilteredJobs: vi.fn().mockResolvedValue({
+          jobs: [],
+          pagination: {
+            currentPage: 1,
+            totalPages: 0,
+            totalItems: 0,
+            itemsPerPage: 10,
+          },
+          filters: {},
+        }),
       } as JobRoleservice;
 
       const errorController = new JobRoleController(errorMockService);
@@ -107,7 +118,7 @@ describe("JobRoleController", () => {
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      await errorController.getJobRolesList(
+      errorController.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -128,10 +139,10 @@ describe("JobRoleController", () => {
   });
 
   describe("dependency injection", () => {
-    it("should use the injected service", async () => {
+    it("should use the injected service", () => {
       const serviceSpy = vi.spyOn(mockJobRoleService, "getAllJobs");
 
-      await controller.getJobRolesList(
+      controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
