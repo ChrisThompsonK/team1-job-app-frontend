@@ -35,7 +35,8 @@
       "complexity": {
         "noExtraBooleanCast": "error",
         "noUselessCatch": "error",
-        "noUselessTypeConstraint": "error"
+        "noUselessTypeConstraint": "error",
+        "noImportantStyles": "off"
       },
       "suspicious": {
         "noExplicitAny": "warn",

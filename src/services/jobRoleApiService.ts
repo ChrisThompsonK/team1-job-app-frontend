@@ -7,13 +7,6 @@ import type {
   JobRoleservice,
 } from "./interfaces.js";
 
-interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T;
-  count?: number;
-}
-
 interface FilteredApiResponse {
   success: boolean;
   message: string;
