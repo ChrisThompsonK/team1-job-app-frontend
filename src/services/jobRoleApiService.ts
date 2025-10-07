@@ -7,13 +7,6 @@ import type {
   JobRoleservice,
 } from "./interfaces.js";
 
-interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T;
-  count?: number;
-}
-
 interface FilteredApiResponse {
   success: boolean;
   message: string;
@@ -25,6 +18,10 @@ interface FilteredApiResponse {
     itemsPerPage: number;
   };
   filters: Record<string, unknown>;
+}
+
+interface ApiResponse<T> {
+  data: T;
 }
 
 export class JobRoleApiService implements JobRoleservice {
@@ -66,13 +63,10 @@ export class JobRoleApiService implements JobRoleservice {
 
   async getAllJobs(): Promise<JobRole[]> {
     try {
-      const response = await axios.get<ApiResponse<unknown[]>>(
+      const response = await axios.get<ApiResponse<JobRole[]>>(
         `${this.baseURL}/jobs`
       );
-      const jobs = response.data.data || [];
-
-      // Map backend data structure to frontend structure
-      return jobs.map((job) => this.mapJobData(job));
+      return response.data.data || [];
     } catch (error) {
       console.error("Error fetching jobs from API:", error);
       return [];
@@ -81,13 +75,10 @@ export class JobRoleApiService implements JobRoleservice {
 
   async getJobById(id: number): Promise<JobRole | undefined> {
     try {
-      const response = await axios.get<ApiResponse<unknown>>(
+      const response = await axios.get<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`
       );
-      if (response.data.data) {
-        return this.mapJobData(response.data.data);
-      }
-      return undefined;
+      return response.data.data;
     } catch (error) {
       console.error("Error fetching job by ID from API:", error);
       return undefined;

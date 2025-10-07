@@ -47,7 +47,7 @@ export class JobRoleController {
         return;
       }
 
-      // Call service to delete the job (service handles API communication)
+      // Call service to delete the job
       const success = await this.jobRoleService.deleteJobById(jobId);
 
       if (success) {
@@ -101,6 +101,7 @@ export class JobRoleController {
         }
 
         const jobRole = await this.jobRoleService.getJobById(jobId);
+
         if (!jobRole) {
           res.status(404).render("error", {
             title: "Job Not Found",
