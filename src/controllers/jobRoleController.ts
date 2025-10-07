@@ -8,9 +8,12 @@ export class JobRoleController {
    * Renders the job roles list page
    * GET /job-roles
    */
-  public getJobRolesList = (_req: Request, res: Response): void => {
+  public getJobRolesList = async (
+    _req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
-      const jobRoles = this.jobRoleService.getAllJobs();
+      const jobRoles = await this.jobRoleService.getAllJobs();
 
       res.render("job-role-list", {
         title: "Available Job Roles",
@@ -72,7 +75,10 @@ export class JobRoleController {
    * Renders the job role detail page
    * GET /job-roles/:id
    */
-  public getJobRoleDetail = (req: Request, res: Response): void => {
+  public getJobRoleDetail = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
       const jobIdParam = req.params.id;
 
@@ -85,7 +91,7 @@ export class JobRoleController {
       } else {
         const jobId = parseInt(jobIdParam, 10);
 
-        if (isNaN(jobId)) {
+        if (Number.isNaN(jobId)) {
           res.status(400).render("error", {
             title: "Invalid Request",
             message: "Job ID must be a valid number",
@@ -94,7 +100,7 @@ export class JobRoleController {
           return;
         }
 
-        const jobRole = this.jobRoleService.getJobById(jobId);
+        const jobRole = await this.jobRoleService.getJobById(jobId);
         if (!jobRole) {
           res.status(404).render("error", {
             title: "Job Not Found",
