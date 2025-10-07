@@ -73,7 +73,10 @@ export class JobRoleController {
    * Renders the job role detail page
    * GET /job-roles/:id
    */
-  public getJobRoleDetail = async (req: Request, res: Response): Promise<void> => {
+  public getJobRoleDetail = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
       const jobIdParam = req.params.id;
 
@@ -96,7 +99,10 @@ export class JobRoleController {
         }
 
         const jobRoleResult = this.jobRoleService.getJobById(jobId);
-        const jobRole = jobRoleResult instanceof Promise ? await jobRoleResult : jobRoleResult;
+        const jobRole =
+          jobRoleResult instanceof Promise
+            ? await jobRoleResult
+            : jobRoleResult;
         if (!jobRole) {
           res.status(404).render("error", {
             title: "Job Not Found",
