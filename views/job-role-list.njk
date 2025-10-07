@@ -3,38 +3,14 @@
 {% block title %}
     {{ title }}
 {% endblock %}
-{% block external_styles %}
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="/css/job-roles.css">
-    {% endblock %}
-    {% block body_attributes %}
-        class="job-roles-page"{% endblock %}
-    {% block navigation %}
-        <!-- Custom navigation for job roles page with DaisyUI styling -->
-        <div class="navbar bg-primary text-primary-content">
-            <div class="container mx-auto">
-                <div class="flex-1">
-                    <a class="btn btn-ghost text-xl" href="/">Job Application System</a>
-                </div>
-                <div class="flex-none">
-                    <ul class="menu menu-horizontal px-1">
-                        <li>
-                            <a href="/" class="hover:bg-primary-focus">Home</a>
-                        </li>
-                        <li>
-                            <a href="/job-roles" class="bg-primary-focus">Job Roles</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-    {% block main_attributes %}
-        class="container mx-auto px-4 py-8"{% endblock %}
-    {% block content %}
+{% endblock %}
+{% block body_attributes %}
+    class="job-roles-page"{% endblock %}
+{% block main_attributes %}
+    class="container mx-auto px-4 py-8"{% endblock %}
+{% block content %}
         <!-- Page Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>

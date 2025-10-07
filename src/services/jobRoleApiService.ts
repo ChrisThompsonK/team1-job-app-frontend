@@ -2,6 +2,10 @@ import axios from "axios";
 import type { JobRole } from "../models/job-role.js";
 import type { JobRoleservice } from "./interfaces.js";
 
+interface ApiResponse<T> {
+  data: T;
+}
+
 export class JobRoleApiService implements JobRoleservice {
   private baseURL: string;
 
@@ -11,7 +15,9 @@ export class JobRoleApiService implements JobRoleservice {
 
   async getAllJobs(): Promise<JobRole[]> {
     try {
-      const response = await axios.get(`${this.baseURL}/jobs`);
+      const response = await axios.get<ApiResponse<JobRole[]>>(
+        `${this.baseURL}/jobs`
+      );
       return response.data.data || [];
     } catch (error) {
       console.error("Error fetching jobs from API:", error);
@@ -21,7 +27,9 @@ export class JobRoleApiService implements JobRoleservice {
 
   async getJobById(id: number): Promise<JobRole | undefined> {
     try {
-      const response = await axios.get(`${this.baseURL}/jobs/${id}`);
+      const response = await axios.get<ApiResponse<JobRole>>(
+        `${this.baseURL}/jobs/${id}`
+      );
       return response.data.data;
     } catch (error) {
       console.error("Error fetching job by ID from API:", error);
