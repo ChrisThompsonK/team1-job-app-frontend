@@ -54,8 +54,8 @@ describe("JobRoleController", () => {
   });
 
   describe("getJobRolesList", () => {
-    it("should render job-role-list template with job roles", () => {
-      controller.getJobRolesList(
+    it("should render job-role-list template with job roles", async () => {
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -67,8 +67,8 @@ describe("JobRoleController", () => {
       });
     });
 
-    it("should include timestamp in ISO format", () => {
-      controller.getJobRolesList(
+    it("should include timestamp in ISO format", async () => {
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -92,7 +92,7 @@ describe("JobRoleController", () => {
       );
     });
 
-    it("should handle service errors gracefully", () => {
+    it("should handle service errors gracefully", async () => {
       // Mock service to throw error
       const errorMockService = {
         getAllJobs: vi.fn().mockImplementation(() => {
@@ -107,7 +107,7 @@ describe("JobRoleController", () => {
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      errorController.getJobRolesList(
+      await errorController.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -128,10 +128,10 @@ describe("JobRoleController", () => {
   });
 
   describe("dependency injection", () => {
-    it("should use the injected service", () => {
+    it("should use the injected service", async () => {
       const serviceSpy = vi.spyOn(mockJobRoleService, "getAllJobs");
 
-      controller.getJobRolesList(
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
