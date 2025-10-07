@@ -54,8 +54,8 @@ describe("JobRoleController", () => {
   });
 
   describe("getJobRolesList", () => {
-    it("should render job-role-list template with job roles", () => {
-      controller.getJobRolesList(
+    it("should render job-role-list template with job roles", async () => {
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -67,8 +67,8 @@ describe("JobRoleController", () => {
       });
     });
 
-    it("should include timestamp in ISO format", () => {
-      controller.getJobRolesList(
+    it("should include timestamp in ISO format", async () => {
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
@@ -100,6 +100,17 @@ describe("JobRoleController", () => {
         }),
         getJobById: vi.fn().mockReturnValue(undefined),
         getJobByName: vi.fn().mockReturnValue(undefined),
+        deleteJobById: vi.fn().mockResolvedValue(false),
+        getFilteredJobs: vi.fn().mockResolvedValue({
+          jobs: [],
+          pagination: {
+            currentPage: 1,
+            totalPages: 0,
+            totalItems: 0,
+            itemsPerPage: 10,
+          },
+          filters: {},
+        }),
       } as JobRoleservice;
 
       const errorController = new JobRoleController(errorMockService);

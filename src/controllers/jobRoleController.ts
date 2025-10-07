@@ -8,9 +8,12 @@ export class JobRoleController {
    * Renders the job roles list page
    * GET /job-roles
    */
-  public getJobRolesList = (_req: Request, res: Response): void => {
+  public getJobRolesList = async (
+    _req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
-      const jobRoles = this.jobRoleService.getAllJobs();
+      const jobRoles = await this.jobRoleService.getAllJobs();
 
       res.render("job-role-list", {
         title: "Available Job Roles",
@@ -88,7 +91,7 @@ export class JobRoleController {
       } else {
         const jobId = parseInt(jobIdParam, 10);
 
-        if (isNaN(jobId)) {
+        if (Number.isNaN(jobId)) {
           res.status(400).render("error", {
             title: "Invalid Request",
             message: "Job ID must be a valid number",
