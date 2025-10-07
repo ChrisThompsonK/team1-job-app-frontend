@@ -44,8 +44,9 @@ export class JobRoleController {
         return;
       }
 
-      // Call service to delete the job (service handles API communication)
-      const success = await this.jobRoleService.deleteJobById(jobId);
+      // Call service to delete the job - handle both sync and async services
+      const result = this.jobRoleService.deleteJobById(jobId);
+      const success = result instanceof Promise ? await result : result;
 
       if (success) {
         // Success - redirect back to job roles list
@@ -72,7 +73,7 @@ export class JobRoleController {
    * Renders the job role detail page
    * GET /job-roles/:id
    */
-  public getJobRoleDetail = (req: Request, res: Response): void => {
+  public getJobRoleDetail = async (req: Request, res: Response): Promise<void> => {
     try {
       const jobIdParam = req.params.id;
 
@@ -94,7 +95,8 @@ export class JobRoleController {
           return;
         }
 
-        const jobRole = this.jobRoleService.getJobById(jobId);
+        const jobRoleResult = this.jobRoleService.getJobById(jobId);
+        const jobRole = jobRoleResult instanceof Promise ? await jobRoleResult : jobRoleResult;
         if (!jobRole) {
           res.status(404).render("error", {
             title: "Job Not Found",
