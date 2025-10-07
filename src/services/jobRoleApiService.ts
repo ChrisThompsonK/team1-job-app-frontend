@@ -1,7 +1,11 @@
 import axios from "axios";
 import type { JobRole } from "../models/job-role.js";
 import { JobStatus } from "../models/job-role.js";
-import type { JobRoleservice, FilteredJobsResponse, JobFilterParams } from "./interfaces.js";
+import type {
+  FilteredJobsResponse,
+  JobFilterParams,
+  JobRoleservice,
+} from "./interfaces.js";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -41,25 +45,34 @@ export class JobRoleApiService implements JobRoleservice {
   }
 
   // Helper method to map backend job data to frontend structure
-  private mapJobData(job: any): JobRole {
+  private mapJobData(job: unknown): JobRole {
+    const jobData = job as Partial<JobRole> & { jobRoleName?: string };
     return {
-      ...job,
-      name: job.name || job.jobRoleName || 'Untitled Job',
-      status: this.normalizeStatus(job.status),
-      closingDate: typeof job.closingDate === 'string' ? new Date(job.closingDate) : job.closingDate,
-      numberOfOpenPositions: job.numberOfOpenPositions || 1,
-      description: job.description || '',
-      responsibilities: job.responsibilities || [],
+      id: jobData.id ?? 0,
+      name: jobData.name ?? jobData.jobRoleName ?? "Untitled Job",
+      status: this.normalizeStatus((jobData.status as string) ?? ""),
+      closingDate:
+        typeof jobData.closingDate === "string"
+          ? new Date(jobData.closingDate)
+          : (jobData.closingDate ?? new Date()),
+      numberOfOpenPositions: jobData.numberOfOpenPositions ?? 1,
+      description: jobData.description ?? "",
+      responsibilities: jobData.responsibilities ?? [],
+      location: jobData.location ?? "",
+      capability: jobData.capability ?? ("" as never),
+      band: jobData.band ?? ("" as never),
     };
   }
 
   async getAllJobs(): Promise<JobRole[]> {
     try {
-      const response = await axios.get<ApiResponse<any[]>>(`${this.baseURL}/jobs`);
+      const response = await axios.get<ApiResponse<unknown[]>>(
+        `${this.baseURL}/jobs`
+      );
       const jobs = response.data.data || [];
-      
+
       // Map backend data structure to frontend structure
-      return jobs.map(job => this.mapJobData(job));
+      return jobs.map((job) => this.mapJobData(job));
     } catch (error) {
       console.error("Error fetching jobs from API:", error);
       return [];
@@ -68,7 +81,9 @@ export class JobRoleApiService implements JobRoleservice {
 
   async getJobById(id: number): Promise<JobRole | undefined> {
     try {
-      const response = await axios.get<ApiResponse<any>>(`${this.baseURL}/jobs/${id}`);
+      const response = await axios.get<ApiResponse<unknown>>(
+        `${this.baseURL}/jobs/${id}`
+      );
       if (response.data.data) {
         return this.mapJobData(response.data.data);
       }
@@ -99,34 +114,46 @@ export class JobRoleApiService implements JobRoleservice {
     }
   }
 
-  async getFilteredJobs(filters?: JobFilterParams): Promise<FilteredJobsResponse> {
+  async getFilteredJobs(
+    filters?: JobFilterParams
+  ): Promise<FilteredJobsResponse> {
     try {
       // Build query parameters
       const params = new URLSearchParams();
-      
+
       if (filters) {
-        if (filters.capability) params.append('capability', filters.capability);
-        if (filters.band) params.append('band', filters.band);
-        if (filters.location) params.append('location', filters.location);
-        if (filters.status) params.append('status', filters.status);
-        if (filters.search) params.append('search', filters.search);
-        if (filters.closingDateFrom) params.append('closingDateFrom', filters.closingDateFrom);
-        if (filters.closingDateTo) params.append('closingDateTo', filters.closingDateTo);
-        if (filters.minPositions !== undefined) params.append('minPositions', filters.minPositions.toString());
-        if (filters.maxPositions !== undefined) params.append('maxPositions', filters.maxPositions.toString());
-        if (filters.page !== undefined) params.append('page', filters.page.toString());
-        if (filters.limit !== undefined) params.append('limit', filters.limit.toString());
-        if (filters.sortBy) params.append('sortBy', filters.sortBy);
-        if (filters.sortOrder) params.append('sortOrder', filters.sortOrder);
+        if (filters.capability) params.append("capability", filters.capability);
+        if (filters.band) params.append("band", filters.band);
+        if (filters.location) params.append("location", filters.location);
+        if (filters.status) params.append("status", filters.status);
+        if (filters.search) params.append("search", filters.search);
+        if (filters.closingDateFrom)
+          params.append("closingDateFrom", filters.closingDateFrom);
+        if (filters.closingDateTo)
+          params.append("closingDateTo", filters.closingDateTo);
+        if (filters.minPositions !== undefined)
+          params.append("minPositions", filters.minPositions.toString());
+        if (filters.maxPositions !== undefined)
+          params.append("maxPositions", filters.maxPositions.toString());
+        if (filters.page !== undefined)
+          params.append("page", filters.page.toString());
+        if (filters.limit !== undefined)
+          params.append("limit", filters.limit.toString());
+        if (filters.sortBy) params.append("sortBy", filters.sortBy);
+        if (filters.sortOrder) params.append("sortOrder", filters.sortOrder);
       }
 
       const queryString = params.toString();
-      const url = queryString ? `${this.baseURL}/jobs/search?${queryString}` : `${this.baseURL}/jobs/search`;
-      
+      const url = queryString
+        ? `${this.baseURL}/jobs/search?${queryString}`
+        : `${this.baseURL}/jobs/search`;
+
       const response = await axios.get<FilteredApiResponse>(url);
-      
+
       return {
-        jobs: response.data.data ? response.data.data.map(job => this.mapJobData(job)) : [],
+        jobs: response.data.data
+          ? response.data.data.map((job) => this.mapJobData(job))
+          : [],
         pagination: response.data.pagination,
         filters: response.data.filters,
       };

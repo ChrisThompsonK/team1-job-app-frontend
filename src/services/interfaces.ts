@@ -13,7 +13,7 @@ export interface JobFilterParams {
   page?: number;
   limit?: number;
   sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
 }
 
 export interface PaginationInfo {
@@ -36,6 +36,7 @@ export interface JobRoleservice {
     name: string
   ): JobRole | undefined | Promise<JobRole | undefined>;
   deleteJobById(id: string): Promise<boolean>;
-  getFilteredJobs(filters?: JobFilterParams): Promise<FilteredJobsResponse> | FilteredJobsResponse;
+  getFilteredJobs(
+    filters?: JobFilterParams
+  ): Promise<FilteredJobsResponse> | FilteredJobsResponse;
 }
-

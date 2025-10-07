@@ -1,5 +1,9 @@
 import type { JobRole } from "../models/job-role.js";
-import type { JobRoleservice, FilteredJobsResponse, JobFilterParams } from "./interfaces.js";
+import type {
+  FilteredJobsResponse,
+  JobFilterParams,
+  JobRoleservice,
+} from "./interfaces.js";
 
 export class JobRoleMemoryService implements JobRoleservice {
   private jobRoles: JobRole[] = [];
@@ -35,7 +39,8 @@ export class JobRoleMemoryService implements JobRoleservice {
       // Filter by capability
       if (filters.capability) {
         filteredJobs = filteredJobs.filter(
-          (job) => job.capability.toLowerCase() === filters.capability?.toLowerCase()
+          (job) =>
+            job.capability.toLowerCase() === filters.capability?.toLowerCase()
         );
       }
 
@@ -49,7 +54,9 @@ export class JobRoleMemoryService implements JobRoleservice {
       // Filter by location (partial match)
       if (filters.location) {
         filteredJobs = filteredJobs.filter((job) =>
-          job.location.toLowerCase().includes(filters.location!.toLowerCase())
+          job.location
+            .toLowerCase()
+            .includes(filters.location?.toLowerCase() ?? "")
         );
       }
 
@@ -91,21 +98,21 @@ export class JobRoleMemoryService implements JobRoleservice {
       // Filter by number of positions
       if (filters.minPositions !== undefined) {
         filteredJobs = filteredJobs.filter(
-          (job) => job.numberOfOpenPositions >= filters.minPositions!
+          (job) => job.numberOfOpenPositions >= (filters.minPositions ?? 0)
         );
       }
 
       if (filters.maxPositions !== undefined) {
         filteredJobs = filteredJobs.filter(
-          (job) => job.numberOfOpenPositions <= filters.maxPositions!
+          (job) => job.numberOfOpenPositions <= (filters.maxPositions ?? 0)
         );
       }
 
       // Sorting
       if (filters.sortBy) {
         filteredJobs.sort((a, b) => {
-          let aValue: any;
-          let bValue: any;
+          let aValue: string | number | Date;
+          let bValue: string | number | Date;
 
           switch (filters.sortBy) {
             case "jobRoleName":
