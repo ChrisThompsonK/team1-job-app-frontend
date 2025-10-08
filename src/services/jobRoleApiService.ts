@@ -1,11 +1,11 @@
 import axios from "axios";
 import type { JobRole } from "../models/job-role.js";
-import { JobStatus } from "../models/job-role.js";
 import type {
   FilteredJobsResponse,
   JobFilterParams,
   JobRoleservice,
 } from "./interfaces.js";
+import { JobRoleMapper } from "./jobRoleMapper.js";
 
 interface FilteredApiResponse {
   success: boolean;
@@ -26,39 +26,11 @@ interface ApiResponse<T> {
 
 export class JobRoleApiService implements JobRoleservice {
   private baseURL: string;
+  private mapper: JobRoleMapper;
 
   constructor(baseURL: string = "http://localhost:3001/api") {
     this.baseURL = baseURL;
-  }
-
-  // Helper method to normalize status values between backend and frontend
-  private normalizeStatus(status: string): JobStatus {
-    if (!status) return JobStatus.Open;
-    const lowerStatus = status.toLowerCase();
-    if (lowerStatus === "open") return JobStatus.Open;
-    if (lowerStatus === "closed") return JobStatus.Closed;
-    if (lowerStatus === "draft") return JobStatus.Open; // Map draft to Open for frontend
-    return JobStatus.Open; // Default fallback
-  }
-
-  // Helper method to map backend job data to frontend structure
-  private mapJobData(job: unknown): JobRole {
-    const jobData = job as Partial<JobRole> & { jobRoleName?: string };
-    return {
-      id: jobData.id ?? 0,
-      name: jobData.name ?? jobData.jobRoleName ?? "Untitled Job",
-      status: this.normalizeStatus((jobData.status as string) ?? ""),
-      closingDate:
-        typeof jobData.closingDate === "string"
-          ? new Date(jobData.closingDate)
-          : (jobData.closingDate ?? new Date()),
-      numberOfOpenPositions: jobData.numberOfOpenPositions ?? 1,
-      description: jobData.description ?? "",
-      responsibilities: jobData.responsibilities ?? [],
-      location: jobData.location ?? "",
-      capability: jobData.capability ?? ("" as never),
-      band: jobData.band ?? ("" as never),
-    };
+    this.mapper = new JobRoleMapper();
   }
 
   async getAllJobs(): Promise<JobRole[]> {
@@ -66,7 +38,10 @@ export class JobRoleApiService implements JobRoleservice {
       const response = await axios.get<ApiResponse<JobRole[]>>(
         `${this.baseURL}/jobs`
       );
-      return response.data.data || [];
+      const jobs = response.data.data || [];
+      const { mappedJobs } = this.mapper.mapJobs(jobs);
+
+      return mappedJobs;
     } catch (error) {
       console.error("Error fetching jobs from API:", error);
       return [];
@@ -78,9 +53,23 @@ export class JobRoleApiService implements JobRoleservice {
       const response = await axios.get<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`
       );
-      return response.data.data;
+      if (!response.data.data) {
+        return undefined;
+      }
+
+      const mappedJob = this.mapper.mapJob(response.data.data);
+
+      // Return undefined if mapping failed
+      if (mappedJob === null) {
+        console.error(
+          `Failed to map job with ID ${id} due to invalid data format`
+        );
+        return undefined;
+      }
+
+      return mappedJob;
     } catch (error) {
-      console.error("Error fetching job by ID from API:", error);
+      console.error(`Error fetching job with ID ${id} from API:`, error);
       return undefined;
     }
   }
@@ -133,10 +122,11 @@ export class JobRoleApiService implements JobRoleservice {
 
       const response = await axios.get<FilteredApiResponse>(url);
 
+      const jobs = response.data.data || [];
+      const { mappedJobs } = this.mapper.mapJobs(jobs);
+
       return {
-        jobs: response.data.data
-          ? response.data.data.map((job) => this.mapJobData(job))
-          : [],
+        jobs: mappedJobs,
         pagination: response.data.pagination,
         filters: response.data.filters,
       };
