@@ -1,0 +1,141 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "jobRoles": "Roles de Trabajo",
+    "menu": "Menú",
+    "openMenu": "Abrir menú de navegación",
+    "toggleTheme": "Alternar modo oscuro",
+    "changeLanguage": "Cambiar idioma",
+    "siteTitle": "Sistema de Solicitud de Empleo"
+  },
+  "home": {
+    "title": "Portal de Empleo",
+    "welcome": "Bienvenido al Sistema de Solicitud de Empleo",
+    "timestamp": "Hora actual",
+    "exploreJobs": "Explorar Ofertas de Trabajo",
+    "learnMore": "Más Información",
+    "lastUpdated": "Última Actualización",
+    "featuresTitle": "Características Potentes",
+    "featuresSubtitle": "Construido con tecnologías modernas para proporcionar una experiencia de solicitud perfecta",
+    "ctaTitle": "¿Listo para Comenzar tu Viaje Profesional?",
+    "ctaSubtitle": "Únete a miles de profesionales que han encontrado el trabajo de sus sueños a través de nuestra plataforma",
+    "findJob": "Encuentra tu Trabajo Perfecto",
+    "contactSupport": "Contactar Soporte",
+    "browseJobs": "Explorar Trabajos",
+    "featured": "Destacado",
+    "features": {
+      "nunjucks": {
+        "title": "Plantillas Nunjucks",
+        "description": "Generación dinámica de HTML con herencia de plantillas y reutilización de componentes",
+        "badge": "Motor de Plantillas"
+      },
+      "express": {
+        "title": "Servidor Express",
+        "description": "Framework web minimalista, rápido y sin opiniones para aplicaciones Node.js",
+        "badge": "Backend"
+      },
+      "typescript": {
+        "title": "TypeScript",
+        "description": "Desarrollo con seguridad de tipos y soporte mejorado del IDE con detección de errores",
+        "badge": "Lenguaje"
+      },
+      "assets": {
+        "title": "Gestión de Recursos",
+        "description": "Servicio eficiente de CSS, JavaScript y recursos estáticos con optimización",
+        "badge": "Rendimiento"
+      },
+      "jobs": {
+        "title": "Oportunidades Laborales",
+        "description": "Descubre y aplica a emocionantes oportunidades profesionales adaptadas a tus habilidades"
+      },
+      "daisyui": {
+        "title": "Componentes DaisyUI",
+        "description": "Biblioteca de componentes semántica y hermosa construida sobre Tailwind CSS",
+        "badge": "Framework UI"
+      }
+    }
+  },
+  "jobRoles": {
+    "title": "Roles de Trabajo",
+    "list": "Posiciones Disponibles",
+    "details": "Detalles del Trabajo",
+    "notFound": "Rol de trabajo no encontrado",
+    "loading": "Cargando roles de trabajo...",
+    "explore": "Explora emocionantes oportunidades profesionales",
+    "addJobRole": "Agregar Rol de Trabajo",
+    "searchFilter": "Buscar y Filtrar Empleos",
+    "searchPlaceholder": "Buscar por título o palabras clave...",
+    "searchLabel": "Buscar Roles de Trabajo",
+    "filterBy": "Filtrar Por",
+    "allCapabilities": "Todas las Capacidades",
+    "allBands": "Todos los Niveles",
+    "allLocations": "Todas las Ubicaciones",
+    "allStatuses": "Todos los Estados",
+    "clearFilters": "Limpiar Filtros",
+    "applyFilters": "Aplicar Filtros",
+    "sortBy": "Ordenar Por",
+    "datePosted": "Fecha de Publicación",
+    "jobTitle": "Título del Trabajo",
+    "capability": "Capacidad",
+    "band": "Nivel",
+    "ascending": "Ascendente",
+    "descending": "Descendente",
+    "resultsFound": "Resultados Encontrados",
+    "noResults": "No se Encontraron Resultados",
+    "noResultsMessage": "No hay roles de trabajo que coincidan con tus criterios. Intenta ajustar tus filtros.",
+    "viewDetails": "Ver Detalles",
+    "location": "Ubicación",
+    "openPositions": "Posiciones Abiertas",
+    "status": "Estado",
+    "open": "Abierto",
+    "closed": "Cerrado",
+    "description": "Descripción",
+    "responsibilities": "Responsabilidades",
+    "requirements": "Requisitos",
+    "applyNow": "Aplicar Ahora",
+    "shareJob": "Compartir Trabajo",
+    "backToList": "Volver a la Lista",
+    "moreJobs": "Más Trabajos Similares",
+    "deleteJob": "Eliminar Trabajo",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar este rol de trabajo?",
+    "loading_details": "Cargando detalles del trabajo...",
+    "error_loading": "Error al cargar el rol de trabajo",
+    "jobRolesFound": "rol(es) de trabajo encontrado(s)",
+    "closes": "Cierra",
+    "positionAvailable": "posición disponible",
+    "positionsAvailable": "posiciones disponibles",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "noJobsAvailable": "No Hay Roles de Trabajo Disponibles",
+    "noJobsMessage": "Actualmente no hay roles de trabajo para mostrar. Por favor, vuelva más tarde.",
+    "noMatchFilters": "Ningún Trabajo Coincide con sus Filtros",
+    "noMatchMessage": "Intente ajustar sus criterios de búsqueda o eliminar algunos filtros para ver más resultados.",
+    "clearAllFilters": "Eliminar Todos los Filtros",
+    "confirmDeleteJob": "¿Estás seguro de que quieres eliminar"
+  },
+  "footer": {
+    "madeWith": "Hecho con ❤️ por Kainos",
+    "copyright": "© 2025 Sistema de Solicitud de Empleo. Todos los derechos reservados.",
+    "allRightsReserved": "Todos los derechos reservados"
+  },
+  "common": {
+    "error": "Error",
+    "loading": "Cargando...",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "apply": "Aplicar",
+    "clear": "Limpiar",
+    "yes": "Sí",
+    "no": "No",
+    "or": "O"
+  }
+}
