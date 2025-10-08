@@ -79,7 +79,9 @@ export class JobRoleApiService implements JobRoleservice {
       const response = await axios.get<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`
       );
-      return response.data.data ? this.mapJobData(response.data.data) : undefined;
+      return response.data.data
+        ? this.mapJobData(response.data.data)
+        : undefined;
     } catch (error) {
       console.error("Error fetching job by ID from API:", error);
       return undefined;
