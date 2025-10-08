@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="{% block lang %}{{ currentLanguage or 'en' }}{% endblock %}" data-theme="light">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
-            {% block title %}Job Application System{% endblock %}
+            {% block title %}{{ t('nav.siteTitle') }}{% endblock %}
         </title>
         <!-- Base CSS -->
         <link
@@ -29,31 +29,46 @@
                             tabindex="0"
                             class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li>
-                                <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">Home</a>
+                                <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">{{ t('nav.home') }}</a>
                             </li>
                             <li>
-                                <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">Job Roles</a>
+                                <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
                             </li>
                         </ul>
                     </div>
                     <a href="/" class="btn btn-ghost text-xl">
                         <img src="/images/kainos-logo.png" alt="Kainos Logo" class="h-8">
-                        <span class="ml-2">Job Application System</span>
+                        <span class="ml-2">{{ t('nav.siteTitle') }}</span>
                     </a>
                 </div>
                 <div class="navbar-center hidden lg:flex">
                     <ul class="menu menu-horizontal px-1">
                         <li>
-                            <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">Home</a>
+                            <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">{{ t('nav.home') }}</a>
                         </li>
                         <li>
-                            <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">Job Roles</a>
+                            <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
                         </li>
                     </ul>
                 </div>
-                <div class="navbar-end">
+                <div class="navbar-end gap-2">
+                    <!-- Language Selector -->
+                    <div class="dropdown dropdown-end">
+                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="{{ t('nav.changeLanguage') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                            </svg>
+                        </div>
+                        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-32 p-2 shadow">
+                            <li><a href="#" onclick="changeLanguage('en')" class="{% if currentLanguage === 'en' %}active{% endif %}">🇬🇧 English</a></li>
+                            <li><a href="#" onclick="changeLanguage('es')" class="{% if currentLanguage === 'es' %}active{% endif %}">🇪🇸 Español</a></li>
+                            <li><a href="#" onclick="changeLanguage('fr')" class="{% if currentLanguage === 'fr' %}active{% endif %}">🇫🇷 Français</a></li>
+                            <li><a href="#" onclick="changeLanguage('pl')" class="{% if currentLanguage === 'pl' %}active{% endif %}">🇵🇱 Polski</a></li>
+                        </ul>
+                    </div>
+                    
                     <!-- Theme Toggle Button -->
-                    <label class="swap swap-rotate btn btn-ghost btn-circle">
+                    <label class="swap swap-rotate btn btn-ghost btn-circle" aria-label="{{ t('nav.toggleTheme') }}">
                         <!-- Hidden checkbox controls the state -->
                         <input type="checkbox" id="theme-toggle" class="theme-controller" value="dark"/>
                         <!-- Sun icon (light mode) -->
@@ -74,7 +89,7 @@
                 <!-- Daisy UI Footer -->
                 <footer class="footer footer-center p-10 bg-base-200 text-base-content mt-16">
                     <div>
-                        <p class="text-sm">© 2025 Job Application System. All rights reserved.</p>
+                        <p class="text-sm">{{ t('footer.copyright') }}</p>
                     </div>
                 </footer>
             {% endblock %}
@@ -97,6 +112,25 @@
                         document.documentElement.setAttribute('data-theme', newTheme);
                         localStorage.setItem('theme', newTheme);
                     });
+                }
+                
+                // Language change function
+                function changeLanguage(language) {
+                    fetch('/change-language', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ language: language })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page to apply new language
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => console.error('Error changing language:', error));
                 }
             </script>
             

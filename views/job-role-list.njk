@@ -13,16 +13,16 @@
 {% block content %}
         <!-- Page Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
-            <p class="text-base-content/70">Explore exciting career opportunities</p>
+            <h1 class="text-4xl font-bold text-base-content mb-2">{{ t('jobRoles.title') }}</h1>
+            <p class="text-base-content/70">{{ t('jobRoles.explore') }}</p>
             
             <!-- Admin Add Button -->
             <div class="mt-6">
-                <button class="btn btn-primary btn-lg gap-2" title="Add New Job Role">
+                <button class="btn btn-primary btn-lg gap-2" title="{{ t('jobRoles.addJobRole') }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    Add Job Role
+                    {{ t('jobRoles.addJobRole') }}
                 </button>
             </div>
         </div>
@@ -34,16 +34,16 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    Search & Filter Jobs
+                    {{ t('jobRoles.searchFilter') }}
                 </h2>
                 
                 <!-- Search Bar -->
                 <div class="form-control w-full mb-4">
                     <label class="label">
-                        <span class="label-text font-medium">Search Job Roles</span>
+                        <span class="label-text font-medium">{{ t('jobRoles.searchLabel') }}</span>
                     </label>
                     <div class="relative">
-                        <input type="text" id="search-input" placeholder="Search by job title or keywords..." 
+                        <input type="text" id="search-input" placeholder="{{ t('jobRoles.searchPlaceholder') }}" 
                                class="input input-bordered w-full pr-10" />
                         <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/60" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,10 +57,10 @@
                     <!-- Location Filter -->
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text font-medium">Location</span>
+                            <span class="label-text font-medium">{{ t('jobRoles.location') }}</span>
                         </label>
                         <select id="location-filter" class="select select-bordered w-full">
-                            <option value="">All Locations</option>
+                            <option value="">{{ t('jobRoles.allLocations') }}</option>
                             <option value="London">London</option>
                             <option value="Manchester">Manchester</option>
                             <option value="Birmingham">Birmingham</option>
@@ -72,10 +72,10 @@
                     <!-- Capability Filter -->
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text font-medium">Capability</span>
+                            <span class="label-text font-medium">{{ t('jobRoles.capability') }}</span>
                         </label>
                         <select id="capability-filter" class="select select-bordered w-full">
-                            <option value="">All Capabilities</option>
+                            <option value="">{{ t('jobRoles.allCapabilities') }}</option>
                             <option value="Data">Data</option>
                             <option value="Workday">Workday</option>
                             <option value="Engineering">Engineering</option>
@@ -85,10 +85,10 @@
                     <!-- Band Filter -->
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text font-medium">Band Level</span>
+                            <span class="label-text font-medium">{{ t('jobRoles.band') }}</span>
                         </label>
                         <select id="band-filter" class="select select-bordered w-full">
-                            <option value="">All Bands</option>
+                            <option value="">{{ t('jobRoles.allBands') }}</option>
                             <option value="E1">E1</option>
                             <option value="E2">E2</option>
                             <option value="E3">E3</option>
@@ -100,12 +100,12 @@
                     <!-- Status Filter -->
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text font-medium">Status</span>
+                            <span class="label-text font-medium">{{ t('jobRoles.status') }}</span>
                         </label>
                         <select id="status-filter" class="select select-bordered w-full">
-                            <option value="">All Status</option>
-                            <option value="Open">Open</option>
-                            <option value="Closed">Closed</option>
+                            <option value="">{{ t('jobRoles.allStatuses') }}</option>
+                            <option value="Open">{{ t('jobRoles.open') }}</option>
+                            <option value="Closed">{{ t('jobRoles.closed') }}</option>
                         </select>
                     </div>
                 </div>
@@ -116,14 +116,14 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        Clear Filters
+                        {{ t('jobRoles.clearFilters') }}
                     </button>
                 </div>
 
                 <!-- Results Summary -->
                 <div class="divider"></div>
                 <div id="results-summary" class="text-sm text-base-content/60">
-                    <span id="results-count">{{ jobRoles.length if jobRoles else 0 }}</span> job role(s) found
+                    <span id="results-count">{{ jobRoles.length if jobRoles else 0 }}</span> {{ t('jobRoles.jobRolesFound') }}
                 </div>
             </div>
         </div>
@@ -199,7 +199,7 @@
                                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                     <span class="text-base-content/80">
-                                        Closes:
+                                        {{ t('jobRoles.closes') }}:
                                         <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
                                     </span>
                                 </div>
@@ -210,28 +210,28 @@
                                     </svg>
                                     <span class="text-base-content/80">
                                         <span class="font-semibold">{{ job.numberOfOpenPositions }}</span>
-                                        position{{ 's' if job.numberOfOpenPositions != 1 else '' }} available
+                                        {{ t('jobRoles.positionsAvailable') if job.numberOfOpenPositions != 1 else t('jobRoles.positionAvailable') }}
                                     </span>
                                 </div>
                             </div>
                             <!-- Action Buttons -->
                             <div class="card-actions justify-end mt-6 gap-2">
-                                <button class="btn btn-sm btn-outline btn-warning" title="Edit Job Role">
+                                <button class="btn btn-sm btn-outline btn-warning" title="{{ t('jobRoles.edit') }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
-                                    Edit
+                                    {{ t('jobRoles.edit') }}
                                 </button>
-                                <form method="POST" action="/job-roles/{{ job.id }}/delete" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete {{ job.name }}?')">
-    <button type="submit" class="btn btn-sm btn-outline btn-error" title="Delete Job Role">
+                                <form method="POST" action="/job-roles/{{ job.id }}/delete" style="display: inline;" onsubmit="return confirm('{{ t('jobRoles.confirmDeleteJob') }} {{ job.name }}?')">
+    <button type="submit" class="btn btn-sm btn-outline btn-error" title="{{ t('jobRoles.delete') }}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
         </svg>
-        Delete
+        {{ t('jobRoles.delete') }}
     </button>
 </form>
                                 <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
-                                    View Details
+                                    {{ t('jobRoles.viewDetails') }}
                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
@@ -253,8 +253,8 @@
                             d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2
                                 2H10a2 2 0 00-2-2V6m8 0h2a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h2"></path>
                     </svg>
-                    <h3 class="text-xl font-semibold text-base-content mb-2">No Job Roles Available</h3>
-                    <p class="text-base-content/60">There are currently no job roles to display. Please check back later.</p>
+                    <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noJobsAvailable') }}</h3>
+                    <p class="text-base-content/60">{{ t('jobRoles.noJobsMessage') }}</p>
                 </div>
             </div>
 
@@ -264,13 +264,13 @@
                     <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    <h3 class="text-xl font-semibold text-base-content mb-2">No Jobs Match Your Filters</h3>
-                    <p class="text-base-content/60 mb-4">Try adjusting your search criteria or clearing some filters to see more results.</p>
+                    <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noMatchFilters') }}</h3>
+                    <p class="text-base-content/60 mb-4">{{ t('jobRoles.noMatchMessage') }}</p>
                     <button id="clear-filters-empty" class="btn btn-primary btn-sm gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        Clear All Filters
+                        {{ t('jobRoles.clearAllFilters') }}
                     </button>
                 </div>
             </div>

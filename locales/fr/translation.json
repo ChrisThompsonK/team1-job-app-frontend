@@ -1,0 +1,141 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "jobRoles": "Postes",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu de navigation",
+    "toggleTheme": "Basculer le mode sombre",
+    "changeLanguage": "Changer de langue",
+    "siteTitle": "Système de Candidature"
+  },
+  "home": {
+    "title": "Portail d'Emploi",
+    "welcome": "Bienvenue sur le Système de Candidature",
+    "timestamp": "Heure actuelle",
+    "exploreJobs": "Explorer les Postes",
+    "learnMore": "En Savoir Plus",
+    "lastUpdated": "Dernière Mise à Jour",
+    "featuresTitle": "Fonctionnalités Puissantes",
+    "featuresSubtitle": "Construit avec des technologies modernes pour offrir une expérience de candidature fluide",
+    "ctaTitle": "Prêt à Commencer votre Parcours Professionnel?",
+    "ctaSubtitle": "Rejoignez des milliers de professionnels qui ont trouvé leur emploi de rêve grâce à notre plateforme",
+    "findJob": "Trouvez votre Emploi Parfait",
+    "contactSupport": "Contacter le Support",
+    "browseJobs": "Parcourir les Postes",
+    "featured": "En Vedette",
+    "features": {
+      "nunjucks": {
+        "title": "Modèles Nunjucks",
+        "description": "Génération HTML dynamique avec héritage de modèles et réutilisation de composants",
+        "badge": "Moteur de Modèles"
+      },
+      "express": {
+        "title": "Serveur Express",
+        "description": "Framework web minimaliste, rapide et sans opinion pour les applications Node.js",
+        "badge": "Backend"
+      },
+      "typescript": {
+        "title": "TypeScript",
+        "description": "Développement sûr avec support IDE amélioré et détection d'erreurs",
+        "badge": "Langage"
+      },
+      "assets": {
+        "title": "Gestion des Ressources",
+        "description": "Service efficace de CSS, JavaScript et ressources statiques avec optimisation",
+        "badge": "Performance"
+      },
+      "jobs": {
+        "title": "Opportunités d'Emploi",
+        "description": "Découvrez et postulez à des opportunités de carrière passionnantes adaptées à vos compétences"
+      },
+      "daisyui": {
+        "title": "Composants DaisyUI",
+        "description": "Belle bibliothèque de composants sémantique construite sur Tailwind CSS",
+        "badge": "Framework UI"
+      }
+    }
+  },
+  "jobRoles": {
+    "title": "Postes",
+    "list": "Postes Disponibles",
+    "details": "Détails du Poste",
+    "notFound": "Poste non trouvé",
+    "loading": "Chargement des postes...",
+    "explore": "Découvrez des opportunités de carrière passionnantes",
+    "addJobRole": "Ajouter un Poste",
+    "searchFilter": "Rechercher et Filtrer les Postes",
+    "searchPlaceholder": "Rechercher par titre ou mots-clés...",
+    "searchLabel": "Rechercher des Postes",
+    "filterBy": "Filtrer Par",
+    "allCapabilities": "Toutes les Capacités",
+    "allBands": "Tous les Niveaux",
+    "allLocations": "Tous les Emplacements",
+    "allStatuses": "Tous les Statuts",
+    "clearFilters": "Effacer les Filtres",
+    "applyFilters": "Appliquer les Filtres",
+    "sortBy": "Trier Par",
+    "datePosted": "Date de Publication",
+    "jobTitle": "Titre du Poste",
+    "capability": "Capacité",
+    "band": "Niveau",
+    "ascending": "Croissant",
+    "descending": "Décroissant",
+    "resultsFound": "Résultats Trouvés",
+    "noResults": "Aucun Résultat Trouvé",
+    "noResultsMessage": "Aucun poste ne correspond à vos critères. Essayez d'ajuster vos filtres.",
+    "viewDetails": "Voir les Détails",
+    "location": "Emplacement",
+    "openPositions": "Postes Ouverts",
+    "status": "Statut",
+    "open": "Ouvert",
+    "closed": "Fermé",
+    "description": "Description",
+    "responsibilities": "Responsabilités",
+    "requirements": "Exigences",
+    "applyNow": "Postuler Maintenant",
+    "shareJob": "Partager le Poste",
+    "backToList": "Retour à la Liste",
+    "moreJobs": "Plus de Postes Similaires",
+    "deleteJob": "Supprimer le Poste",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce poste?",
+    "loading_details": "Chargement des détails du poste...",
+    "error_loading": "Erreur lors du chargement du poste",
+    "jobRolesFound": "poste(s) trouvé(s)",
+    "closes": "Ferme",
+    "positionAvailable": "poste disponible",
+    "positionsAvailable": "postes disponibles",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "noJobsAvailable": "Aucun Poste Disponible",
+    "noJobsMessage": "Il n'y a actuellement aucun poste à afficher. Veuillez revenir plus tard.",
+    "noMatchFilters": "Aucun Poste ne Correspond à vos Filtres",
+    "noMatchMessage": "Essayez d'ajuster vos critères de recherche ou de supprimer certains filtres pour voir plus de résultats.",
+    "clearAllFilters": "Effacer Tous les Filtres",
+    "confirmDeleteJob": "Êtes-vous sûr de vouloir supprimer"
+  },
+  "footer": {
+    "madeWith": "Fait avec ❤️ par Kainos",
+    "copyright": "© 2025 Système de Candidature. Tous droits réservés.",
+    "allRightsReserved": "Tous droits réservés"
+  },
+  "common": {
+    "error": "Erreur",
+    "loading": "Chargement...",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "apply": "Appliquer",
+    "clear": "Effacer",
+    "yes": "Oui",
+    "no": "Non",
+    "or": "OU"
+  }
+}

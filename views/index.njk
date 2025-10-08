@@ -19,23 +19,23 @@
                                     01-2 2H10a2 2 0 01-2-2V6m8 0H8"/>
                         </svg>
                     </div>
-                    <h1 class="text-6xl font-bold mb-4">{{ title }}</h1>
-                    <p class="text-xl leading-relaxed opacity-90">{{ message }}</p>
+                    <h1 class="text-6xl font-bold mb-4">{{ t('home.title') }}</h1>
+                    <p class="text-xl leading-relaxed opacity-90">{{ t('home.welcome') }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
                     <a href="/job-roles" class="btn btn-accent btn-lg gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        Explore Job Roles
+                        {{ t('home.exploreJobs') }}
                     </a>
-                    <div class="divider divider-horizontal hidden sm:flex">OR</div>
+                    <div class="divider divider-horizontal hidden sm:flex">{{ t('common.or') }}</div>
                     <button class="btn btn-outline btn-lg">
-                        Learn More
+                        {{ t('home.learnMore') }}
                     </button>
                 </div>
                 <div class="text-sm opacity-70 bg-white bg-opacity-10 rounded-lg p-3 inline-block">
-                    <span class="font-medium">Last Updated:</span>
+                    <span class="font-medium">{{ t('home.lastUpdated') }}:</span>
                     {{ timestamp }}
                 </div>
             </div>
@@ -45,9 +45,9 @@
     <div class="py-20 bg-base-100">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Powerful Features</h2>
+                <h2 class="text-4xl font-bold mb-4">{{ t('home.featuresTitle') }}</h2>
                 <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
-                    Built with modern technologies to provide a seamless job application experience
+                    {{ t('home.featuresSubtitle') }}
                 </p>
             </div>
             <div
@@ -70,9 +70,9 @@
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <h3 class="card-title text-lg">Nunjucks Templating</h3>
-                        <p class="text-base-content/70">Dynamic HTML generation with powerful template inheritance and component reusability</p>
-                        <div class="badge badge-primary badge-outline mt-2">Template Engine</div>
+                        <h3 class="card-title text-lg">{{ t('home.features.nunjucks.title') }}</h3>
+                        <p class="text-base-content/70">{{ t('home.features.nunjucks.description') }}</p>
+                        <div class="badge badge-primary badge-outline mt-2">{{ t('home.features.nunjucks.badge') }}</div>
                     </div>
                 </div>
                 <!-- Express Card -->
@@ -94,9 +94,9 @@
                                         002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
                             </svg>
                         </div>
-                        <h3 class="card-title text-lg">Express Server</h3>
-                        <p class="text-base-content/70">Fast, unopinionated, minimalist web framework for Node.js applications</p>
-                        <div class="badge badge-secondary badge-outline mt-2">Backend</div>
+                        <h3 class="card-title text-lg">{{ t('home.features.express.title') }}</h3>
+                        <p class="text-base-content/70">{{ t('home.features.express.description') }}</p>
+                        <div class="badge badge-secondary badge-outline mt-2">{{ t('home.features.express.badge') }}</div>
                     </div>
                 </div>
                 <!-- TypeScript Card -->
@@ -113,9 +113,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                             </svg>
                         </div>
-                        <h3 class="card-title text-lg">TypeScript</h3>
-                        <p class="text-base-content/70">Type-safe development with enhanced IDE support and error detection</p>
-                        <div class="badge badge-accent badge-outline mt-2">Language</div>
+                        <h3 class="card-title text-lg">{{ t('home.features.typescript.title') }}</h3>
+                        <p class="text-base-content/70">{{ t('home.features.typescript.description') }}</p>
+                        <div class="badge badge-accent badge-outline mt-2">{{ t('home.features.typescript.badge') }}</div>
                     </div>
                 </div>
                 <!-- Static Files Card -->
@@ -131,9 +131,9 @@
                                     d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                             </svg>
                         </div>
-                        <h3 class="card-title text-lg">Asset Management</h3>
-                        <p class="text-base-content/70">Efficient serving of CSS, JavaScript, and static assets with optimization</p>
-                        <div class="badge badge-info badge-outline mt-2">Performance</div>
+                        <h3 class="card-title text-lg">{{ t('home.features.assets.title') }}</h3>
+                        <p class="text-base-content/70">{{ t('home.features.assets.description') }}</p>
+                        <div class="badge badge-info badge-outline mt-2">{{ t('home.features.assets.badge') }}</div>
                     </div>
                 </div>
                 <!-- Job Roles Card - Featured -->
@@ -150,15 +150,15 @@
                                         01-2 2H10a2 2 0 01-2-2V6m8 0H8"/>
                             </svg>
                         </div>
-                        <h3 class="card-title text-lg text-white">Job Opportunities</h3>
-                        <p class="text-white/90">Discover and apply for exciting career opportunities tailored to your skills</p>
+                        <h3 class="card-title text-lg text-white">{{ t('home.features.jobs.title') }}</h3>
+                        <p class="text-white/90">{{ t('home.features.jobs.description') }}</p>
                         <div class="card-actions justify-between items-center mt-4">
-                            <div class="badge badge-accent">Featured</div>
+                            <div class="badge badge-accent">{{ t('home.featured') }}</div>
                             <a href="/job-roles" class="btn btn-accent btn-sm gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                 </svg>
-                                Browse Jobs
+                                {{ t('home.browseJobs') }}
                             </a>
                         </div>
                     </div>
@@ -182,9 +182,9 @@
                                         0 002-2V5z"/>
                             </svg>
                         </div>
-                        <h3 class="card-title text-lg">DaisyUI Components</h3>
-                        <p class="text-base-content/70">Beautiful, semantic component library built on top of Tailwind CSS</p>
-                        <div class="badge badge-success badge-outline mt-2">UI Framework</div>
+                        <h3 class="card-title text-lg">{{ t('home.features.daisyui.title') }}</h3>
+                        <p class="text-base-content/70">{{ t('home.features.daisyui.description') }}</p>
+                        <div class="badge badge-success badge-outline mt-2">{{ t('home.features.daisyui.badge') }}</div>
                     </div>
                 </div>
             </div>
@@ -194,19 +194,19 @@
     <div class="py-16 bg-gradient-to-r from-primary to-secondary">
         <div class="container mx-auto px-4 text-center">
             <div class="max-w-3xl mx-auto text-primary-content">
-                <h2 class="text-4xl font-bold mb-6">Ready to Start Your Career Journey?</h2>
+                <h2 class="text-4xl font-bold mb-6">{{ t('home.ctaTitle') }}</h2>
                 <p class="text-xl mb-8 opacity-90">
-                    Join thousands of professionals who have found their dream job through our platform
+                    {{ t('home.ctaSubtitle') }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="/job-roles" class="btn btn-accent btn-lg gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        Find Your Perfect Job
+                        {{ t('home.findJob') }}
                     </a>
                     <button class="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary">
-                        Contact Support
+                        {{ t('home.contactSupport') }}
                     </button>
                 </div>
             </div>
