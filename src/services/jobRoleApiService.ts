@@ -75,14 +75,14 @@ export class JobRoleApiService implements JobRoleservice {
       const mappedJobs = jobs
         .map((job) => this.mapJobData(job))
         .filter((job): job is JobRole => job !== null);
-      
+
       // Log warning if some jobs failed to map
       if (mappedJobs.length < jobs.length) {
         console.warn(
           `Failed to map ${jobs.length - mappedJobs.length} out of ${jobs.length} jobs due to invalid data format`
         );
       }
-      
+
       return mappedJobs;
     } catch (error) {
       console.error("Error fetching jobs from API:", error);
@@ -98,13 +98,15 @@ export class JobRoleApiService implements JobRoleservice {
       const mappedJob = response.data.data
         ? this.mapJobData(response.data.data)
         : undefined;
-      
+
       // Return undefined if mapping failed
       if (mappedJob === null) {
-        console.error(`Failed to map job with ID ${id} due to invalid data format`);
+        console.error(
+          `Failed to map job with ID ${id} due to invalid data format`
+        );
         return undefined;
       }
-      
+
       return mappedJob;
     } catch (error) {
       console.error(`Error fetching job with ID ${id} from API:`, error);
@@ -165,7 +167,7 @@ export class JobRoleApiService implements JobRoleservice {
             .map((job) => this.mapJobData(job))
             .filter((job): job is JobRole => job !== null)
         : [];
-      
+
       // Log warning if some jobs failed to map
       if (response.data.data && mappedJobs.length < response.data.data.length) {
         console.warn(
