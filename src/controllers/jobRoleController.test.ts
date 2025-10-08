@@ -140,7 +140,7 @@ describe("JobRoleController", () => {
       const errorController = new JobRoleController(errorMockService);
       const consoleSpy = vi
         .spyOn(console, "error")
-        .mockImplementation(() => { });
+        .mockImplementation(() => {});
 
       // Create request with query object
       const errorRequest = {
