@@ -76,9 +76,7 @@ export class JobRoleMapper {
    * Map an array of jobs, filtering out any that fail to map
    * Returns an object with the successfully mapped jobs and a count of failures
    */
-  mapJobs(
-    jobs: unknown[]
-  ): { mappedJobs: JobRole[]; failedCount: number } {
+  mapJobs(jobs: unknown[]): { mappedJobs: JobRole[]; failedCount: number } {
     const mappedJobs = jobs
       .map((job) => this.mapJob(job))
       .filter((job): job is JobRole => job !== null);

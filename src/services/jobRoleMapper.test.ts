@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { JobRoleMapper } from "./jobRoleMapper.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { JobStatus } from "../models/job-role.js";
+import { JobRoleMapper } from "./jobRoleMapper.js";
 
 describe("JobRoleMapper", () => {
   let mapper: JobRoleMapper;
@@ -87,7 +87,9 @@ describe("JobRoleMapper", () => {
     });
 
     it("should handle null input", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const result = mapper.mapJob(null);
 
@@ -101,7 +103,9 @@ describe("JobRoleMapper", () => {
     });
 
     it("should handle undefined input", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const result = mapper.mapJob(undefined);
 
@@ -115,7 +119,9 @@ describe("JobRoleMapper", () => {
     });
 
     it("should handle non-object input", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const result = mapper.mapJob("not an object");
 
@@ -129,7 +135,9 @@ describe("JobRoleMapper", () => {
     });
 
     it("should handle array input", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const result = mapper.mapJob([1, 2, 3]);
 
@@ -218,7 +226,9 @@ describe("JobRoleMapper", () => {
         const afterTest = Date.now();
 
         expect(result?.closingDate).toBeInstanceOf(Date);
-        expect(result?.closingDate.getTime()).toBeGreaterThanOrEqual(beforeTest);
+        expect(result?.closingDate.getTime()).toBeGreaterThanOrEqual(
+          beforeTest
+        );
         expect(result?.closingDate.getTime()).toBeLessThanOrEqual(afterTest);
       });
 
@@ -228,7 +238,9 @@ describe("JobRoleMapper", () => {
         const afterTest = Date.now();
 
         expect(result?.closingDate).toBeInstanceOf(Date);
-        expect(result?.closingDate.getTime()).toBeGreaterThanOrEqual(beforeTest);
+        expect(result?.closingDate.getTime()).toBeGreaterThanOrEqual(
+          beforeTest
+        );
         expect(result?.closingDate.getTime()).toBeLessThanOrEqual(afterTest);
       });
     });
