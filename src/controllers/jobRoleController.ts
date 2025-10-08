@@ -1,23 +1,61 @@
 import type { Request, Response } from "express";
-import type { JobRoleservice } from "../services/interfaces.js";
+import type {
+  JobFilterParams,
+  JobRoleservice,
+} from "../services/interfaces.js";
 
 export class JobRoleController {
   constructor(private jobRoleService: JobRoleservice) {}
 
   /**
-   * Renders the job roles list page
+   * Renders the job roles list page with server-side filtering
    * GET /job-roles
    */
   public getJobRolesList = async (
-    _req: Request,
+    req: Request,
     res: Response
   ): Promise<void> => {
     try {
-      const jobRoles = await this.jobRoleService.getAllJobs();
+      // Extract and clean query parameters from the request
+      const filters: JobFilterParams = {};
+
+      if (req.query.capability) {
+        filters.capability = req.query.capability as string;
+      }
+      if (req.query.band) {
+        filters.band = req.query.band as string;
+      }
+      if (req.query.location) {
+        filters.location = req.query.location as string;
+      }
+      if (req.query.status) {
+        filters.status = req.query.status as string;
+      }
+      if (req.query.search) {
+        filters.search = req.query.search as string;
+      }
+      if (req.query.page) {
+        filters.page = parseInt(req.query.page as string, 10);
+      }
+      if (req.query.limit) {
+        filters.limit = parseInt(req.query.limit as string, 10);
+      }
+      if (req.query.sortBy) {
+        filters.sortBy = req.query.sortBy as string;
+      }
+      if (req.query.sortOrder) {
+        filters.sortOrder = req.query.sortOrder as "asc" | "desc";
+      }
+
+      // Call the filtered jobs method
+      const response = await this.jobRoleService.getFilteredJobs(filters);
 
       res.render("job-role-list", {
         title: "Available Job Roles",
-        jobRoles,
+        jobRoles: response.jobs,
+        pagination: response.pagination,
+        appliedFilters: response.filters,
+        currentFilters: filters,
         timestamp: new Date().toISOString(),
       });
     } catch (error) {

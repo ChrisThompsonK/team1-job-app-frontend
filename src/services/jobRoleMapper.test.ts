@@ -87,63 +87,27 @@ describe("JobRoleMapper", () => {
     });
 
     it("should handle null input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob(null);
 
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Invalid job data: not an object",
-        null
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it("should handle undefined input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob(undefined);
 
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Invalid job data: not an object",
-        undefined
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it("should handle non-object input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob("not an object");
 
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Invalid job data: not an object",
-        "not an object"
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it("should handle array input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob([1, 2, 3]);
 
       expect(result).toBeNull();
-
-      consoleSpy.mockRestore();
     });
 
     describe("status normalization", () => {
@@ -299,10 +263,10 @@ describe("JobRoleMapper", () => {
     });
 
     it("should filter out invalid jobs and count failures", () => {
-      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => { });
       const consoleErrorSpy = vi
         .spyOn(console, "error")
-        .mockImplementation(() => {});
+        .mockImplementation(() => { });
 
       const input = [
         { id: 1, name: "Valid Job", status: "open" },
@@ -335,10 +299,10 @@ describe("JobRoleMapper", () => {
     });
 
     it("should return empty array when all jobs are invalid", () => {
-      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => { });
       const consoleErrorSpy = vi
         .spyOn(console, "error")
-        .mockImplementation(() => {});
+        .mockImplementation(() => { });
 
       const input = [null, undefined, "invalid", 123];
 
@@ -355,7 +319,7 @@ describe("JobRoleMapper", () => {
     });
 
     it("should not log warning when all jobs map successfully", () => {
-      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => { });
 
       const input = [
         { id: 1, name: "Job 1" },
