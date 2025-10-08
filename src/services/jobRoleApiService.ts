@@ -42,23 +42,28 @@ export class JobRoleApiService implements JobRoleservice {
   }
 
   // Helper method to map backend job data to frontend structure
-  private mapJobData(job: unknown): JobRole {
-    const jobData = job as Partial<JobRole> & { jobRoleName?: string };
-    return {
-      id: jobData.id ?? 0,
-      name: jobData.name ?? jobData.jobRoleName ?? "Untitled Job",
-      status: this.normalizeStatus((jobData.status as string) ?? ""),
-      closingDate:
-        typeof jobData.closingDate === "string"
-          ? new Date(jobData.closingDate)
-          : (jobData.closingDate ?? new Date()),
-      numberOfOpenPositions: jobData.numberOfOpenPositions ?? 1,
-      description: jobData.description ?? "",
-      responsibilities: jobData.responsibilities ?? [],
-      location: jobData.location ?? "",
-      capability: jobData.capability ?? ("" as never),
-      band: jobData.band ?? ("" as never),
-    };
+  private mapJobData(job: unknown): JobRole | null {
+    try {
+      const jobData = job as Partial<JobRole> & { jobRoleName?: string };
+      return {
+        id: jobData.id ?? 0,
+        name: jobData.name ?? jobData.jobRoleName ?? "Untitled Job",
+        status: this.normalizeStatus((jobData.status as string) ?? ""),
+        closingDate:
+          typeof jobData.closingDate === "string"
+            ? new Date(jobData.closingDate)
+            : (jobData.closingDate ?? new Date()),
+        numberOfOpenPositions: jobData.numberOfOpenPositions ?? 1,
+        description: jobData.description ?? "",
+        responsibilities: jobData.responsibilities ?? [],
+        location: jobData.location ?? "",
+        capability: jobData.capability ?? ("" as never),
+        band: jobData.band ?? ("" as never),
+      };
+    } catch (error) {
+      console.error("Error mapping job data:", error, "Job data:", job);
+      return null;
+    }
   }
 
   async getAllJobs(): Promise<JobRole[]> {
@@ -67,7 +72,18 @@ export class JobRoleApiService implements JobRoleservice {
         `${this.baseURL}/jobs`
       );
       const jobs = response.data.data || [];
-      return jobs.map((job) => this.mapJobData(job));
+      const mappedJobs = jobs
+        .map((job) => this.mapJobData(job))
+        .filter((job): job is JobRole => job !== null);
+      
+      // Log warning if some jobs failed to map
+      if (mappedJobs.length < jobs.length) {
+        console.warn(
+          `Failed to map ${jobs.length - mappedJobs.length} out of ${jobs.length} jobs due to invalid data format`
+        );
+      }
+      
+      return mappedJobs;
     } catch (error) {
       console.error("Error fetching jobs from API:", error);
       return [];
@@ -79,11 +95,19 @@ export class JobRoleApiService implements JobRoleservice {
       const response = await axios.get<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`
       );
-      return response.data.data
+      const mappedJob = response.data.data
         ? this.mapJobData(response.data.data)
         : undefined;
+      
+      // Return undefined if mapping failed
+      if (mappedJob === null) {
+        console.error(`Failed to map job with ID ${id} due to invalid data format`);
+        return undefined;
+      }
+      
+      return mappedJob;
     } catch (error) {
-      console.error("Error fetching job by ID from API:", error);
+      console.error(`Error fetching job with ID ${id} from API:`, error);
       return undefined;
     }
   }
@@ -136,10 +160,21 @@ export class JobRoleApiService implements JobRoleservice {
 
       const response = await axios.get<FilteredApiResponse>(url);
 
+      const mappedJobs = response.data.data
+        ? response.data.data
+            .map((job) => this.mapJobData(job))
+            .filter((job): job is JobRole => job !== null)
+        : [];
+      
+      // Log warning if some jobs failed to map
+      if (response.data.data && mappedJobs.length < response.data.data.length) {
+        console.warn(
+          `Failed to map ${response.data.data.length - mappedJobs.length} out of ${response.data.data.length} filtered jobs due to invalid data format`
+        );
+      }
+
       return {
-        jobs: response.data.data
-          ? response.data.data.map((job) => this.mapJobData(job))
-          : [],
+        jobs: mappedJobs,
         pagination: response.data.pagination,
         filters: response.data.filters,
       };
