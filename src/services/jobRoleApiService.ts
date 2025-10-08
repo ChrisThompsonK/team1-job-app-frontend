@@ -1,11 +1,11 @@
 import axios from "axios";
 import type { JobRole } from "../models/job-role.js";
-import { JobStatus } from "../models/job-role.js";
 import type {
   FilteredJobsResponse,
   JobFilterParams,
   JobRoleservice,
 } from "./interfaces.js";
+import { JobRoleMapper } from "./jobRoleMapper.js";
 
 interface FilteredApiResponse {
   success: boolean;
@@ -26,44 +26,11 @@ interface ApiResponse<T> {
 
 export class JobRoleApiService implements JobRoleservice {
   private baseURL: string;
+  private mapper: JobRoleMapper;
 
   constructor(baseURL: string = "http://localhost:3001/api") {
     this.baseURL = baseURL;
-  }
-
-  // Helper method to normalize status values between backend and frontend
-  private normalizeStatus(status: string): JobStatus {
-    if (!status) return JobStatus.Open;
-    const lowerStatus = status.toLowerCase();
-    if (lowerStatus === "open") return JobStatus.Open;
-    if (lowerStatus === "closed") return JobStatus.Closed;
-    if (lowerStatus === "draft") return JobStatus.Open; // Map draft to Open for frontend
-    return JobStatus.Open; // Default fallback
-  }
-
-  // Helper method to map backend job data to frontend structure
-  private mapJobData(job: unknown): JobRole | null {
-    try {
-      const jobData = job as Partial<JobRole> & { jobRoleName?: string };
-      return {
-        id: jobData.id ?? 0,
-        name: jobData.name ?? jobData.jobRoleName ?? "Untitled Job",
-        status: this.normalizeStatus((jobData.status as string) ?? ""),
-        closingDate:
-          typeof jobData.closingDate === "string"
-            ? new Date(jobData.closingDate)
-            : (jobData.closingDate ?? new Date()),
-        numberOfOpenPositions: jobData.numberOfOpenPositions ?? 1,
-        description: jobData.description ?? "",
-        responsibilities: jobData.responsibilities ?? [],
-        location: jobData.location ?? "",
-        capability: jobData.capability ?? ("" as never),
-        band: jobData.band ?? ("" as never),
-      };
-    } catch (error) {
-      console.error("Error mapping job data:", error, "Job data:", job);
-      return null;
-    }
+    this.mapper = new JobRoleMapper();
   }
 
   async getAllJobs(): Promise<JobRole[]> {
@@ -72,16 +39,7 @@ export class JobRoleApiService implements JobRoleservice {
         `${this.baseURL}/jobs`
       );
       const jobs = response.data.data || [];
-      const mappedJobs = jobs
-        .map((job) => this.mapJobData(job))
-        .filter((job): job is JobRole => job !== null);
-
-      // Log warning if some jobs failed to map
-      if (mappedJobs.length < jobs.length) {
-        console.warn(
-          `Failed to map ${jobs.length - mappedJobs.length} out of ${jobs.length} jobs due to invalid data format`
-        );
-      }
+      const { mappedJobs } = this.mapper.mapJobs(jobs);
 
       return mappedJobs;
     } catch (error) {
@@ -95,9 +53,11 @@ export class JobRoleApiService implements JobRoleservice {
       const response = await axios.get<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`
       );
-      const mappedJob = response.data.data
-        ? this.mapJobData(response.data.data)
-        : undefined;
+      if (!response.data.data) {
+        return undefined;
+      }
+
+      const mappedJob = this.mapper.mapJob(response.data.data);
 
       // Return undefined if mapping failed
       if (mappedJob === null) {
@@ -162,18 +122,8 @@ export class JobRoleApiService implements JobRoleservice {
 
       const response = await axios.get<FilteredApiResponse>(url);
 
-      const mappedJobs = response.data.data
-        ? response.data.data
-            .map((job) => this.mapJobData(job))
-            .filter((job): job is JobRole => job !== null)
-        : [];
-
-      // Log warning if some jobs failed to map
-      if (response.data.data && mappedJobs.length < response.data.data.length) {
-        console.warn(
-          `Failed to map ${response.data.data.length - mappedJobs.length} out of ${response.data.data.length} filtered jobs due to invalid data format`
-        );
-      }
+      const jobs = response.data.data || [];
+      const { mappedJobs } = this.mapper.mapJobs(jobs);
 
       return {
         jobs: mappedJobs,
