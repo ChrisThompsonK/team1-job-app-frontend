@@ -83,6 +83,9 @@ dist
 .cache/
 # Public folder - contains generated/built assets
 public/
+!public/favicon.ico
+!public/favicon.png
+!public/apple-touch-icon.png
 
 # Vuepress build output
 .vuepress/dist
