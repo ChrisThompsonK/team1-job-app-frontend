@@ -1,7 +1,14 @@
 export enum Capability {
-  Data = "Data",
+  Data = "Data & Analytics",
   Workday = "Workday",
   Engineering = "Engineering",
+  Product = "Product",
+  Design = "Design",
+  Platform = "Platform",
+  Quality = "Quality",
+  Architecture = "Architecture",
+  BusinessAnalysis = "Business Analysis",
+  Security = "Security",
 }
 
 export enum Band {

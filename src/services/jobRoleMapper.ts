@@ -11,10 +11,9 @@ export class JobRoleMapper {
    */
   private normalizeStatus(status: string): JobStatus {
     if (!status) return JobStatus.Open;
-    const lowerStatus = status.toLowerCase();
+    const lowerStatus = status.toLowerCase().trim();
     if (lowerStatus === "open") return JobStatus.Open;
     if (lowerStatus === "closed") return JobStatus.Closed;
-    if (lowerStatus === "draft") return JobStatus.Open; // Map draft to Open for frontend
     return JobStatus.Open; // Default fallback
   }
 
@@ -43,15 +42,36 @@ export class JobRoleMapper {
     try {
       // Validate that job is an object (but not an array or null)
       if (!job || typeof job !== "object" || Array.isArray(job)) {
-        console.error("Invalid job data: not an object", job);
         return null;
       }
 
       const jobData = job as Partial<JobRole> & { jobRoleName?: string };
 
+      // Extract and validate ID - handle both string and number IDs
+      let jobId: number;
+
+      if (jobData.id === undefined || jobData.id === null) {
+        return null;
+      }
+
+      // Convert string IDs to numbers
+      if (typeof jobData.id === "string") {
+        jobId = parseInt(jobData.id, 10);
+        if (Number.isNaN(jobId)) {
+          return null;
+        }
+      } else if (typeof jobData.id === "number") {
+        jobId = jobData.id;
+        if (Number.isNaN(jobId)) {
+          return null;
+        }
+      } else {
+        return null;
+      }
+
       // Create the mapped job
       const mappedJob: JobRole = {
-        id: jobData.id ?? 0,
+        id: jobId,
         name: jobData.name ?? jobData.jobRoleName ?? "Untitled Job",
         status: this.normalizeStatus((jobData.status as string) ?? ""),
         closingDate: this.parseDate(jobData.closingDate),
@@ -66,8 +86,7 @@ export class JobRoleMapper {
       };
 
       return mappedJob;
-    } catch (error) {
-      console.error("Error mapping job data:", error, "Job data:", job);
+    } catch (_error) {
       return null;
     }
   }

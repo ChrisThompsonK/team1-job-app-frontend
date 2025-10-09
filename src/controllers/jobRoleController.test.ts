@@ -45,7 +45,9 @@ describe("JobRoleController", () => {
     controller = new JobRoleController(mockJobRoleService);
 
     // Setup mock request and response
-    mockRequest = {};
+    mockRequest = {
+      query: {}, // Initialize empty query object
+    };
     mockResponse = {
       render: vi.fn(),
       json: vi.fn(),
@@ -55,6 +57,18 @@ describe("JobRoleController", () => {
 
   describe("getJobRolesList", () => {
     it("should render job-role-list template with job roles", async () => {
+      // Mock getFilteredJobs to return properly structured response
+      vi.spyOn(mockJobRoleService, "getFilteredJobs").mockResolvedValue({
+        jobs: mockJobRoles,
+        pagination: {
+          currentPage: 1,
+          totalPages: 1,
+          totalItems: 1,
+          itemsPerPage: 10,
+        },
+        filters: {},
+      });
+
       await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
@@ -63,11 +77,44 @@ describe("JobRoleController", () => {
       expect(mockResponse.render).toHaveBeenCalledWith("job-role-list", {
         title: "Available Job Roles",
         jobRoles: mockJobRoles,
+        pagination: {
+          currentPage: 1,
+          totalPages: 1,
+          totalItems: 1,
+          itemsPerPage: 10,
+        },
+        paginationData: expect.objectContaining({
+          currentPage: 1,
+          totalPages: 1,
+          totalItems: 1,
+          hasNext: false,
+          hasPrevious: false,
+        }),
+        appliedFilters: {},
+        currentFilters: {},
+        filterOptions: expect.objectContaining({
+          locations: expect.any(Array),
+          capabilities: expect.any(Array),
+          bands: expect.any(Array),
+          statuses: expect.any(Array),
+        }),
         timestamp: expect.any(String),
       });
     });
 
     it("should include timestamp in ISO format", async () => {
+      // Mock getFilteredJobs to return properly structured response
+      vi.spyOn(mockJobRoleService, "getFilteredJobs").mockResolvedValue({
+        jobs: mockJobRoles,
+        pagination: {
+          currentPage: 1,
+          totalPages: 1,
+          totalItems: 1,
+          itemsPerPage: 10,
+        },
+        filters: {},
+      });
+
       await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
@@ -79,6 +126,7 @@ describe("JobRoleController", () => {
         expect.objectContaining({
           title: "Available Job Roles",
           jobRoles: mockJobRoles,
+          pagination: expect.any(Object),
           timestamp: expect.any(String),
         })
       );
@@ -92,25 +140,14 @@ describe("JobRoleController", () => {
       );
     });
 
-    it("should handle service errors gracefully", () => {
+    it("should handle service errors gracefully", async () => {
       // Mock service to throw error
       const errorMockService = {
-        getAllJobs: vi.fn().mockImplementation(() => {
-          throw new Error("Service error");
-        }),
+        getAllJobs: vi.fn().mockResolvedValue([]),
         getJobById: vi.fn().mockReturnValue(undefined),
         getJobByName: vi.fn().mockReturnValue(undefined),
         deleteJobById: vi.fn().mockResolvedValue(false),
-        getFilteredJobs: vi.fn().mockResolvedValue({
-          jobs: [],
-          pagination: {
-            currentPage: 1,
-            totalPages: 0,
-            totalItems: 0,
-            itemsPerPage: 10,
-          },
-          filters: {},
-        }),
+        getFilteredJobs: vi.fn().mockRejectedValue(new Error("Service error")),
       } as JobRoleservice;
 
       const errorController = new JobRoleController(errorMockService);
@@ -118,8 +155,13 @@ describe("JobRoleController", () => {
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      errorController.getJobRolesList(
-        mockRequest as Request,
+      // Create request with query object
+      const errorRequest = {
+        query: {},
+      } as Partial<Request>;
+
+      await errorController.getJobRolesList(
+        errorRequest as Request,
         mockResponse as Response
       );
 
@@ -139,15 +181,27 @@ describe("JobRoleController", () => {
   });
 
   describe("dependency injection", () => {
-    it("should use the injected service", () => {
-      const serviceSpy = vi.spyOn(mockJobRoleService, "getAllJobs");
+    it("should use the injected service", async () => {
+      const serviceSpy = vi
+        .spyOn(mockJobRoleService, "getFilteredJobs")
+        .mockResolvedValue({
+          jobs: mockJobRoles,
+          pagination: {
+            currentPage: 1,
+            totalPages: 1,
+            totalItems: 1,
+            itemsPerPage: 10,
+          },
+          filters: {},
+        });
 
-      controller.getJobRolesList(
+      await controller.getJobRolesList(
         mockRequest as Request,
         mockResponse as Response
       );
 
       expect(serviceSpy).toHaveBeenCalledOnce();
+      expect(serviceSpy).toHaveBeenCalledWith({});
     });
   });
 });
