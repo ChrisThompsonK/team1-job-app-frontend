@@ -116,7 +116,11 @@
   "footer": {
     "madeWith": "Stworzone z ❤️ przez Kainos",
     "copyright": "© 2025 System Aplikacji o Pracę. Wszelkie prawa zastrzeżone.",
-    "allRightsReserved": "Wszelkie prawa zastrzeżone"
+    "allRightsReserved": "Wszelkie prawa zastrzeżone",
+    "contactUs": "Skontaktuj się z nami",
+    "followUs": "Śledź nas",
+    "phone": "Telefon",
+    "email": "E-mail"
   },
   "common": {
     "error": "Błąd",

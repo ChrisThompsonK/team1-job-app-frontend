@@ -1,129 +1,201 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-    {{ title }}
+  {{ title }}
 {% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="/css/job-roles.css">
-{% endblock %}
-{% block body_attributes %}
+  <link rel="stylesheet" href="/css/job-roles.css">
+  {% endblock %}
+  {% block body_attributes %}
     class="job-roles-page"{% endblock %}
-{% block main_attributes %}
+  {% block main_attributes %}
     class="container mx-auto px-4 py-8"{% endblock %}
-{% block content %}
-        <!-- Page Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-base-content mb-2">{{ t('jobRoles.title') }}</h1>
-            <p class="text-base-content/70">{{ t('jobRoles.explore') }}</p>
-            
-            <!-- Admin Add Button -->
-            <div class="mt-6">
-                <button class="btn btn-primary btn-lg gap-2" title="{{ t('jobRoles.addJobRole') }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    {{ t('jobRoles.addJobRole') }}
-                </button>
+  {% block content %}
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
+      <p class="text-base-content/70">Explore exciting career opportunities</p>
+      <!-- Admin Add Button -->
+      <div class="mt-6">
+        <button class="btn btn-primary btn-lg gap-2" title="Add New Job Role">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Add Job Role
+        </button>
+      </div>
+    </div>
+    <!-- Search and Filter Section -->
+    <div class="card bg-base-100 shadow-lg mb-8">
+      <div class="card-body">
+        <h2 class="card-title text-lg mb-4">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          Search & Filter Jobs
+        </h2>
+        <!-- Filter Form -->
+        <form
+          method="GET" action="/job-roles" id="filter-form">
+          <!-- Search Bar -->
+          <div class="form-control w-full mb-4">
+            <label class="label">
+              <span class="label-text font-medium">Search Job Roles</span>
+            </label>
+            <div class="relative">
+              <input type="text" id="search-input" name="search" value="{{ currentFilters.search if currentFilters.search else '' }}" placeholder="Search by job title or keywords..." class="input input-bordered w-full pr-10"/>
+              <svg
+                class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/60"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
             </div>
+          </div>
+          <!-- Filter Controls -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <!-- Location Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Location</span>
+              </label>
+              <select id="location-filter" name="location" class="select select-bordered w-full">
+                {% for option in filterOptions.locations %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.location == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Capability Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Capability</span>
+              </label>
+              <select id="capability-filter" name="capability" class="select select-bordered w-full">
+                {% for option in filterOptions.capabilities %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.capability == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Band Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Band Level</span>
+              </label>
+              <select id="band-filter" name="band" class="select select-bordered w-full">
+                {% for option in filterOptions.bands %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.band == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Status Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Status</span>
+              </label>
+              <select id="status-filter" name="status" class="select select-bordered w-full">
+                {% for option in filterOptions.statuses %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.status == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <!-- Action Buttons -->
+          <div class="flex justify-end gap-2 mt-4">
+            <a href="/job-roles" class="btn btn-outline btn-sm gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Clear Filters
+            </a>
+            <button type="submit" class="btn btn-primary btn-sm gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              Apply Filters
+            </button>
+          </div>
+        </form>
+        <!-- Results Summary -->
+        <div class="divider"></div>
+        <div id="results-summary" class="text-sm text-base-content/60">
+          {% if pagination %}
+            Showing {{ jobRoles.length }} of {{ pagination.totalItems }} job role(s)
+            {% if pagination.totalPages > 1 %}
+              (Page {{ pagination.currentPage }} of {{ pagination.totalPages }})
+            {% endif %}
+          {% else %}
+            {{ jobRoles.length if jobRoles else 0 }} job role(s) found
+          {% endif %}
         </div>
-
-        <!-- Search and Filter Section -->
-        <div class="card bg-base-100 shadow-lg mb-8">
-            <div class="card-body">
-                <h2 class="card-title text-lg mb-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                    {{ t('jobRoles.searchFilter') }}
-                </h2>
-                
-                <!-- Search Bar -->
-                <div class="form-control w-full mb-4">
-                    <label class="label">
-                        <span class="label-text font-medium">{{ t('jobRoles.searchLabel') }}</span>
-                    </label>
-                    <div class="relative">
-                        <input type="text" id="search-input" placeholder="{{ t('jobRoles.searchPlaceholder') }}" 
-                               class="input input-bordered w-full pr-10" />
-                        <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/60" 
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </div>
+      </div>
+    </div>
+    <!-- Job Roles Grid -->
+    {% if jobRoles and jobRoles.length > 0 %}
+      <div id="job-roles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for job in jobRoles %}
+          <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 job-role-card">
+            <div
+              class="card-body">
+              <!-- Job Title -->
+              <h2 class="card-title text-xl font-semibold text-primary">
+                {{ job.name }}
+                <!-- Status Badge -->
+                <div class="badge badge-sm {{ 'badge-success' if job.status == 'Open' else 'badge-error' }}">
+                  {{ job.status }}
                 </div>
-
-                <!-- Filter Controls -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                    <!-- Location Filter -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobRoles.location') }}</span>
-                        </label>
-                        <select id="location-filter" class="select select-bordered w-full">
-                            <option value="">{{ t('jobRoles.allLocations') }}</option>
-                            <option value="London">London</option>
-                            <option value="Manchester">Manchester</option>
-                            <option value="Birmingham">Birmingham</option>
-                            <option value="Edinburgh">Edinburgh</option>
-                            <option value="Remote">Remote</option>
-                        </select>
-                    </div>
-
-                    <!-- Capability Filter -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobRoles.capability') }}</span>
-                        </label>
-                        <select id="capability-filter" class="select select-bordered w-full">
-                            <option value="">{{ t('jobRoles.allCapabilities') }}</option>
-                            <option value="Data">Data</option>
-                            <option value="Workday">Workday</option>
-                            <option value="Engineering">Engineering</option>
-                        </select>
-                    </div>
-
-                    <!-- Band Filter -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobRoles.band') }}</span>
-                        </label>
-                        <select id="band-filter" class="select select-bordered w-full">
-                            <option value="">{{ t('jobRoles.allBands') }}</option>
-                            <option value="E1">E1</option>
-                            <option value="E2">E2</option>
-                            <option value="E3">E3</option>
-                            <option value="E4">E4</option>
-                            <option value="E5">E5</option>
-                        </select>
-                    </div>
-
-                    <!-- Status Filter -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobRoles.status') }}</span>
-                        </label>
-                        <select id="status-filter" class="select select-bordered w-full">
-                            <option value="">{{ t('jobRoles.allStatuses') }}</option>
-                            <option value="Open">{{ t('jobRoles.open') }}</option>
-                            <option value="Closed">{{ t('jobRoles.closed') }}</option>
-                        </select>
-                    </div>
+              </h2>
+              <!-- Job Details -->
+              <div
+                class="space-y-3 mt-4">
+                <!-- Location -->
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  <span class="text-base-content/80">{{ job.location }}</span>
                 </div>
-
-                <!-- Action Buttons -->
-                <div class="flex justify-end mt-4">
-                    <button id="clear-filters" class="btn btn-outline btn-sm gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                        {{ t('jobRoles.clearFilters') }}
-                    </button>
+                <!-- Capability Badge -->
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1
+                        1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  <span class="badge badge-secondary">{{ job.capability }}</span>
                 </div>
-
-                <!-- Results Summary -->
-                <div class="divider"></div>
-                <div id="results-summary" class="text-sm text-base-content/60">
-                    <span id="results-count">{{ jobRoles.length if jobRoles else 0 }}</span> {{ t('jobRoles.jobRolesFound') }}
+                <!-- Band -->
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138
+                        3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0
+                        00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42
+                        3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span class="text-base-content/80">Band:
+                    <span class="font-semibold">{{ job.band }}</span>
+                  </span>
                 </div>
             </div>
         </div>
@@ -257,201 +329,167 @@
                     <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noJobsAvailable') }}</h3>
                     <p class="text-base-content/60">{{ t('jobRoles.noJobsMessage') }}</p>
                 </div>
-            </div>
-
-            <!-- No Results State (hidden by default) -->
-            <div id="no-results-state" class="text-center py-16 hidden">
-                <div class="max-w-md mx-auto">
-                    <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                    <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noMatchFilters') }}</h3>
-                    <p class="text-base-content/60 mb-4">{{ t('jobRoles.noMatchMessage') }}</p>
-                    <button id="clear-filters-empty" class="btn btn-primary btn-sm gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                        {{ t('jobRoles.clearAllFilters') }}
-                    </button>
+                <!-- Number of Positions -->
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7
+                        20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014
+                        0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                  <span class="text-base-content/80">
+                    <span class="font-semibold">{{ job.numberOfOpenPositions }}</span>
+                    position{{ 's' if job.numberOfOpenPositions != 1 else '' }} available
+                  </span>
                 </div>
+              </div>
+              <!-- Action Buttons -->
+              <div class="card-actions justify-end mt-6 gap-2">
+                <button class="btn btn-sm btn-outline btn-warning" title="Edit Job Role">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828
+                        15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Edit
+                </button>
+                <form
+                  method="POST"
+                  action="/job-roles/{{ job.id }}/delete"
+                  style="display: inline;"
+                  onsubmit="return confirm('Are you sure you want to delete {{ job.name }}?')">
+                  <button type="submit" class="btn btn-sm btn-outline btn-error" title="Delete Job Role">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1
+                          1v3M4 7h16"></path>
+                    </svg>
+                    Delete
+                  </button>
+                </form>
+                <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
+                  View Details
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
             </div>
-        {% endif %}
-    {% endblock %}
-
-    {% block scripts %}
+          </div>
+        {% endfor %}
+      </div>
+      <!-- Pagination Controls -->
+      {% if paginationData and paginationData.totalPages > 1 %}
+        <div
+          class="flex justify-center items-center gap-2 mt-8">
+          <!-- Previous Button -->
+          {% if paginationData.hasPrevious %}
+            <a href="{{ paginationData.previousUrl }}" class="btn btn-outline btn-sm gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Previous
+            </a>
+          {% else %}
+            <button class="btn btn-outline btn-sm gap-2 btn-disabled" disabled>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Previous
+            </button>
+          {% endif %}
+          <!-- Page Numbers -->
+          <div class="flex gap-1">
+            {% for pageLink in paginationData.pageLinks %}
+              {% if pageLink.isEllipsis %}
+                <span class="btn btn-sm btn-ghost btn-disabled">...</span>
+              {% elif pageLink.isActive %}
+                <button class="btn btn-primary btn-sm">{{ pageLink.page }}</button>
+              {% else %}
+                <a href="{{ pageLink.url }}" class="btn btn-outline btn-sm">
+                  {{ pageLink.page }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <!-- Next Button -->
+          {% if paginationData.hasNext %}
+            <a href="{{ paginationData.nextUrl }}" class="btn btn-outline btn-sm gap-2">
+              Next
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          {% else %}
+            <button class="btn btn-outline btn-sm gap-2 btn-disabled" disabled>
+              Next
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <!-- Empty State -->
+      <div id="empty-state" class="text-center py-16">
+        <div class="max-w-md mx-auto">
+          <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <h3 class="text-xl font-semibold text-base-content mb-2">No Jobs Match Your Filters</h3>
+          <p class="text-base-content/60 mb-4">Try adjusting your search criteria or clearing some filters to see more results.</p>
+          <a href="/job-roles" class="btn btn-primary btn-sm gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+            Clear All Filters
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  {% endblock %}
+  {% block scripts %}
     <script>
-        // Real-time filtering functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all filter elements
-            const searchInput = document.getElementById('search-input');
-            const locationFilter = document.getElementById('location-filter');
-            const capabilityFilter = document.getElementById('capability-filter');
-            const bandFilter = document.getElementById('band-filter');
-            const statusFilter = document.getElementById('status-filter');
-            const clearFiltersBtn = document.getElementById('clear-filters');
-            const clearFiltersEmptyBtn = document.getElementById('clear-filters-empty');
-            const resultsCount = document.getElementById('results-count');
-            const jobRolesGrid = document.getElementById('job-roles-grid');
-            const emptyState = document.getElementById('empty-state');
-            const noResultsState = document.getElementById('no-results-state');
-
-            // Get all job cards
-            const jobCards = document.querySelectorAll('.job-role-card');
-            const totalJobs = jobCards.length;
-
-            // Function to filter jobs
-            function filterJobs() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const selectedLocation = locationFilter.value;
-                const selectedCapability = capabilityFilter.value;
-                const selectedBand = bandFilter.value;
-                const selectedStatus = statusFilter.value;
-
-                let visibleCount = 0;
-
-                jobCards.forEach(card => {
-                    let isVisible = true;
-
-                    // Search filter (job name)
-                    if (searchTerm && !card.dataset.jobName.includes(searchTerm)) {
-                        isVisible = false;
-                    }
-
-                    // Location filter
-                    if (selectedLocation && card.dataset.location !== selectedLocation) {
-                        isVisible = false;
-                    }
-
-                    // Capability filter
-                    if (selectedCapability && card.dataset.capability !== selectedCapability) {
-                        isVisible = false;
-                    }
-
-                    // Band filter
-                    if (selectedBand && card.dataset.band !== selectedBand) {
-                        isVisible = false;
-                    }
-
-                    // Status filter
-                    if (selectedStatus && card.dataset.status !== selectedStatus) {
-                        isVisible = false;
-                    }
-
-                    // Show/hide card with animation
-                    if (isVisible) {
-                        card.style.display = 'block';
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                        visibleCount++;
-                    } else {
-                        card.style.opacity = '0';
-                        card.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            if (card.style.opacity === '0') {
-                                card.style.display = 'none';
-                            }
-                        }, 200);
-                    }
-                });
-
-                // Update results count
-                resultsCount.textContent = visibleCount;
-
-                // Show/hide empty states
-                if (totalJobs === 0) {
-                    // No jobs at all - show original empty state
-                    emptyState.style.display = 'block';
-                    noResultsState.style.display = 'none';
-                    jobRolesGrid.style.display = 'none';
-                } else if (visibleCount === 0) {
-                    // Jobs exist but none match filters - show no results state
-                    emptyState.style.display = 'none';
-                    noResultsState.style.display = 'block';
-                    jobRolesGrid.style.display = 'none';
-                } else {
-                    // Show jobs grid
-                    emptyState.style.display = 'none';
-                    noResultsState.style.display = 'none';
-                    jobRolesGrid.style.display = 'grid';
-                }
-            }
-
-            // Function to clear all filters
-            function clearAllFilters() {
-                searchInput.value = '';
-                locationFilter.value = '';
-                capabilityFilter.value = '';
-                bandFilter.value = '';
-                statusFilter.value = '';
-                
-                // Trigger filtering to update display
-                filterJobs();
-                
-                // Add visual feedback
-                const buttons = [clearFiltersBtn, clearFiltersEmptyBtn];
-                buttons.forEach(btn => {
-                    if (btn) {
-                        btn.classList.add('loading');
-                        setTimeout(() => {
-                            btn.classList.remove('loading');
-                        }, 500);
-                    }
-                });
-            }
-
-            // Add event listeners for real-time filtering
-            searchInput.addEventListener('input', filterJobs);
-            locationFilter.addEventListener('change', filterJobs);
-            capabilityFilter.addEventListener('change', filterJobs);
-            bandFilter.addEventListener('change', filterJobs);
-            statusFilter.addEventListener('change', filterJobs);
-
-            // Add event listeners for clear buttons
-            clearFiltersBtn.addEventListener('click', clearAllFilters);
-            if (clearFiltersEmptyBtn) {
-                clearFiltersEmptyBtn.addEventListener('click', clearAllFilters);
-            }
-
-            // Add CSS transitions for smooth animations
-            const style = document.createElement('style');
-            style.textContent = `
+      // Auto-submit form on filter change for better UX
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("filter-form");
+        const searchInput = document.getElementById("search-input");
+        const selectFilters = form.querySelectorAll("select");
+        let searchTimeout;
+        // Auto-submit on select change
+        selectFilters.forEach((select) => {
+          select.addEventListener("change", () => {
+            form.submit();
+          });
+        });
+        // Debounced auto-submit for search input
+        searchInput.addEventListener("input", () => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            form.submit();
+          }, 500); // Wait 500ms after user stops typing
+        });
+        // Add smooth hover effect for job cards
+        const style = document.createElement("style");
+        style.textContent = `
                 .job-role-card {
-                    transition: opacity 0.2s ease, transform 0.2s ease;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
                 }
                 .job-role-card:hover {
-                    transform: translateY(-4px) scale(1.02) !important;
+                    transform: translateY(-4px);
                 }
             `;
-            document.head.appendChild(style);
-
-            // Initial filter application (in case there are URL parameters or pre-set values)
-            filterJobs();
-
-            // Add keyboard shortcut for clearing filters (Ctrl/Cmd + K)
-            document.addEventListener('keydown', function(e) {
-                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                    e.preventDefault();
-                    clearAllFilters();
-                    searchInput.focus();
-                }
-            });
-
-            // Add accessibility improvements
-            searchInput.addEventListener('focus', function() {
-                this.setAttribute('aria-expanded', 'true');
-            });
-
-            searchInput.addEventListener('blur', function() {
-                this.setAttribute('aria-expanded', 'false');
-            });
-
-            // Debounce search input for better performance with large datasets
-            let searchTimeout;
-            searchInput.removeEventListener('input', filterJobs);
-            searchInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(filterJobs, 150);
-            });
-        });
+        document.head.appendChild(style);
+      });
     </script>
-    {% endblock %}
+  {% endblock %}

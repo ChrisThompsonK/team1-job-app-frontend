@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Configure Nunjucks
-nunjucks.configure(path.join(process.cwd(), "views"), {
+const _nunjucksEnv = nunjucks.configure(path.join(process.cwd(), "views"), {
   autoescape: true,
   express: app,
 });
@@ -37,6 +37,20 @@ app.use(i18nextHandle(i18next));
 app.use((req, res, next) => {
   res.locals.t = req.t.bind(req);
   res.locals.currentLanguage = req.language || "en";
+  next();
+});
+
+// Middleware to ensure res.locals are passed to all Nunjucks renders
+app.use((_req, res, next) => {
+  const originalRender = res.render.bind(res);
+  res.render = (
+    view: string,
+    locals?: object,
+    callback?: (err: Error, html: string) => void
+  ) => {
+    const mergedLocals = { ...res.locals, ...(locals || {}) };
+    return originalRender(view, mergedLocals, callback);
+  };
   next();
 });
 // Initialize services and controllers with dependency injection

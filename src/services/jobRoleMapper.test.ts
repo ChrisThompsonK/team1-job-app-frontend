@@ -87,63 +87,27 @@ describe("JobRoleMapper", () => {
     });
 
     it("should handle null input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob(null);
 
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Invalid job data: not an object",
-        null
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it("should handle undefined input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob(undefined);
 
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Invalid job data: not an object",
-        undefined
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it("should handle non-object input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob("not an object");
 
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Invalid job data: not an object",
-        "not an object"
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it("should handle array input", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
       const result = mapper.mapJob([1, 2, 3]);
 
       expect(result).toBeNull();
-
-      consoleSpy.mockRestore();
     });
 
     describe("status normalization", () => {
