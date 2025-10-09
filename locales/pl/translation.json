@@ -6,7 +6,14 @@
     "openMenu": "Otwórz menu nawigacji",
     "toggleTheme": "Przełącz tryb ciemny",
     "changeLanguage": "Zmień język",
-    "siteTitle": "System Aplikacji o Pracę"
+    "changeTextSize": "Zmień rozmiar tekstu",
+    "siteTitle": "System Aplikacji o Pracę",
+    "textSize": {
+      "small": "Mały",
+      "medium": "Średni",
+      "large": "Duży",
+      "xLarge": "Bardzo duży"
+    }
   },
   "home": {
     "title": "Portal rekrutacyjny",

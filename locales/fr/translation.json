@@ -6,7 +6,14 @@
     "openMenu": "Ouvrir le menu de navigation",
     "toggleTheme": "Basculer le mode sombre",
     "changeLanguage": "Changer de langue",
-    "siteTitle": "Système de Candidature"
+    "changeTextSize": "Changer la taille du texte",
+    "siteTitle": "Système de Candidature",
+    "textSize": {
+      "small": "Petit",
+      "medium": "Moyen",
+      "large": "Grand",
+      "xLarge": "Très Grand"
+    }
   },
   "home": {
     "title": "Portail d'Emploi",
