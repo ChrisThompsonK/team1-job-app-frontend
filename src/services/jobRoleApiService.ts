@@ -1,6 +1,6 @@
 import axios from "axios";
 import { PAGINATION_CONFIG } from "../config/pagination.js";
-import type { JobRole } from "../models/job-role.js";
+import type { CreateJobRoleData, JobRole } from "../models/job-role.js";
 import type {
   FilteredJobsResponse,
   JobFilterParams,
@@ -95,7 +95,10 @@ export class JobRoleApiService implements JobRoleservice {
     }
   }
 
-  async updateJobById(id: number, jobData: any): Promise<JobRole | null> {
+  async updateJobById(
+    id: number,
+    jobData: CreateJobRoleData
+  ): Promise<JobRole | null> {
     try {
       console.log(`[API] Updating job ${id} with data:`, jobData);
 
@@ -109,7 +112,7 @@ export class JobRoleApiService implements JobRoleservice {
       console.log(`[API] Response status:`, response.status);
 
       // Check if the response has data property
-      if (response.data && response.data.data) {
+      if (response.data?.data) {
         const mappedJob = this.mapper.mapJob(response.data.data);
         console.log(`[API] Mapped job:`, mappedJob);
         return mappedJob || null;

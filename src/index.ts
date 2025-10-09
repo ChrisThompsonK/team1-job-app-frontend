@@ -9,7 +9,6 @@ import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
-import { JobRoleValidator } from "./validators/JobRoleValidator.js";
 
 const app = express();
 const port = env.port;
@@ -59,11 +58,7 @@ app.use((_req, res, next) => {
 // SWITCHED TO API SERVICE TO CONNECT TO BACKEND
 const backendURL = process.env.BACKEND_URL || "http://localhost:3001/api";
 const jobRoleService = new JobRoleApiService(backendURL);
-const jobRoleValidator = new JobRoleValidator();
-const jobRoleController = new JobRoleController(
-  jobRoleService,
-  jobRoleValidator
-);
+const jobRoleController = new JobRoleController(jobRoleService);
 
 // Language change endpoint
 app.post("/change-language", (req: Request, res: Response) => {

@@ -1,4 +1,4 @@
-import type { JobRole } from "../models/job-role.js";
+import type { CreateJobRoleData, JobRole } from "../models/job-role.js";
 
 export interface JobFilterParams {
   capability?: string;
@@ -36,7 +36,10 @@ export interface JobRoleservice {
     name: string
   ): JobRole | undefined | Promise<JobRole | undefined>;
   deleteJobById(id: string): Promise<boolean>;
-  updateJobById(id: number, jobData: any): Promise<JobRole | null>;
+  updateJobById(
+    id: number,
+    jobData: CreateJobRoleData
+  ): Promise<JobRole | null>;
   getFilteredJobs(
     filters?: JobFilterParams
   ): Promise<FilteredJobsResponse> | FilteredJobsResponse;
