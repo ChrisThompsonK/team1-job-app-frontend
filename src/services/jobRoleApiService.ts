@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type { JobRole } from "../models/job-role.js";
 import type {
   FilteredJobsResponse,
@@ -175,7 +176,7 @@ export class JobRoleApiService implements JobRoleservice {
           currentPage: 1,
           totalPages: 0,
           totalItems: 0,
-          itemsPerPage: 10,
+          itemsPerPage: PAGINATION_CONFIG.defaultItemsPerPage,
         },
         filters: {},
       };

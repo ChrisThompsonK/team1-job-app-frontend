@@ -5,13 +5,14 @@ import type { Request, Response } from "express";
 import express from "express";
 import { handle as i18nextHandle } from "i18next-http-middleware";
 import nunjucks from "nunjucks";
+import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import { JobRoleValidator } from "./validators/JobRoleValidator.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = env.port;
 
 // Configure Nunjucks
 const _nunjucksEnv = nunjucks.configure(path.join(process.cwd(), "views"), {
