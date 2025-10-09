@@ -109,6 +109,36 @@
               </select>
             </div>
           </div>
+          <!-- Sort Controls -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <!-- Sort By Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Sort By</span>
+              </label>
+              <select id="sort-by-filter" name="sortBy" class="select select-bordered w-full">
+                {% for option in filterOptions.sortOptions %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortBy == option.value }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Sort Order Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Sort Order</span>
+              </label>
+              <select id="sort-order-filter" name="sortOrder" class="select select-bordered w-full">
+                {% for option in filterOptions.sortOrders %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortOrder == option.value }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
           <!-- Action Buttons -->
           <div class="flex justify-end gap-2 mt-4">
             <a href="/job-roles" class="btn btn-outline btn-sm gap-2">
