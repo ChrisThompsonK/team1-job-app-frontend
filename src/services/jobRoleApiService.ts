@@ -95,6 +95,43 @@ export class JobRoleApiService implements JobRoleservice {
     }
   }
 
+  async updateJobById(id: number, jobData: any): Promise<JobRole | null> {
+    try {
+      console.log(`[API] Updating job ${id} with data:`, jobData);
+
+      // The jobData is already in the backend format from the controller
+      const response = await axios.put<ApiResponse<JobRole>>(
+        `${this.baseURL}/jobs/${id}`,
+        jobData
+      );
+
+      console.log(`[API] Response from backend:`, response.data);
+      console.log(`[API] Response status:`, response.status);
+
+      // Check if the response has data property
+      if (response.data && response.data.data) {
+        const mappedJob = this.mapper.mapJob(response.data.data);
+        console.log(`[API] Mapped job:`, mappedJob);
+        return mappedJob || null;
+      } else {
+        console.log(
+          `[API] No data in response, checking if update was successful`
+        );
+        // If no data but successful response, try to fetch the updated job
+        if (response.status === 200) {
+          console.log(`[API] Update successful, fetching updated job`);
+          const fetchedJob = await this.getJobById(id);
+          return fetchedJob || null;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error(`Error updating job with ID ${id}:`, error);
+      return null;
+    }
+  }
+
   async getFilteredJobs(
     filters?: JobFilterParams
   ): Promise<FilteredJobsResponse> {

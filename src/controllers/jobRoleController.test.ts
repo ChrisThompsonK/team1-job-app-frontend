@@ -8,11 +8,13 @@ import {
 } from "../models/job-role.js";
 import type { JobRoleservice } from "../services/interfaces.js";
 import { JobRoleMemoryService } from "../services/jobRoleMemoryService.js";
+import { JobRoleValidator } from "../validators/JobRoleValidator.js";
 import { JobRoleController } from "./jobRoleController.js";
 
 describe("JobRoleController", () => {
   let controller: JobRoleController;
   let mockJobRoleService: JobRoleMemoryService;
+  let mockJobRoleValidator: JobRoleValidator;
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let mockJobRoles: JobRole[];
@@ -41,8 +43,14 @@ describe("JobRoleController", () => {
     // Create mock service
     mockJobRoleService = new JobRoleMemoryService(mockJobRoles);
 
-    // Create controller with mock service
-    controller = new JobRoleController(mockJobRoleService);
+    // Create mock validator
+    mockJobRoleValidator = new JobRoleValidator();
+
+    // Create controller with mock service and validator
+    controller = new JobRoleController(
+      mockJobRoleService,
+      mockJobRoleValidator
+    );
 
     // Setup mock request and response
     mockRequest = {
@@ -147,10 +155,14 @@ describe("JobRoleController", () => {
         getJobById: vi.fn().mockReturnValue(undefined),
         getJobByName: vi.fn().mockReturnValue(undefined),
         deleteJobById: vi.fn().mockResolvedValue(false),
+        updateJobById: vi.fn().mockResolvedValue(undefined),
         getFilteredJobs: vi.fn().mockRejectedValue(new Error("Service error")),
       } as JobRoleservice;
 
-      const errorController = new JobRoleController(errorMockService);
+      const errorController = new JobRoleController(
+        errorMockService,
+        mockJobRoleValidator
+      );
       const consoleSpy = vi
         .spyOn(console, "error")
         .mockImplementation(() => {});

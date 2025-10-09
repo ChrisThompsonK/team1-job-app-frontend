@@ -3,12 +3,13 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import type { Request, Response } from "express";
 import express from "express";
-import * as middleware from "i18next-http-middleware";
+import { handle as i18nextHandle } from "i18next-http-middleware";
 import nunjucks from "nunjucks";
 import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
+import { JobRoleValidator } from "./validators/JobRoleValidator.js";
 
 const app = express();
 const port = env.port;
@@ -32,7 +33,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // Add i18n middleware
-app.use(middleware.handle(i18next));
+app.use(i18nextHandle(i18next));
 
 // Middleware to expose i18n to templates via res.locals
 app.use((req, res, next) => {
@@ -56,8 +57,13 @@ app.use((_req, res, next) => {
 });
 // Initialize services and controllers with dependency injection
 // SWITCHED TO API SERVICE TO CONNECT TO BACKEND
-const jobRoleService = new JobRoleApiService(env.backendUrl);
-const jobRoleController = new JobRoleController(jobRoleService);
+const backendURL = process.env.BACKEND_URL || "http://localhost:3001/api";
+const jobRoleService = new JobRoleApiService(backendURL);
+const jobRoleValidator = new JobRoleValidator();
+const jobRoleController = new JobRoleController(
+  jobRoleService,
+  jobRoleValidator
+);
 
 // Language change endpoint
 app.post("/change-language", (req: Request, res: Response) => {
@@ -92,6 +98,10 @@ app.get("/health", (_req: Request, res: Response) => {
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/:id", jobRoleController.getJobRoleDetail);
+app.get("/job-roles/:id/edit", jobRoleController.getJobRoleEdit);
+app.post("/job-roles/:id/edit", (req, res, next) => {
+  jobRoleController.updateJobRole(req, res).catch(next);
+});
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
 app.listen(port, () => {
