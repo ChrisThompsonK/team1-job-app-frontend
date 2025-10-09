@@ -35,4 +35,33 @@ export interface JobRole {
   status: JobStatus;
   description: string;
   responsibilities: string[];
+  jobSpecLink?: string; // Optional job specification link
+}
+
+// Interface for job role form data/request body
+export interface JobRoleFormData {
+  jobRoleName: string;
+  location: string;
+  capability: Capability | string;
+  band: Band | string;
+  status: JobStatus | string;
+  numberOfOpenPositions: number | string;
+  closingDate: string; // Date as string from form input
+  jobSpecLink?: string; // Optional job specification link
+  description: string;
+  responsibilities: string | string[]; // Can be string or array depending on form processing
+}
+
+// Interface for creating/updating job roles (excludes id)
+export interface CreateJobRoleData {
+  name: string;
+  location: string;
+  capability: Capability;
+  band: Band;
+  status: JobStatus;
+  numberOfOpenPositions: number;
+  closingDate: Date;
+  jobSpecLink?: string;
+  description: string;
+  responsibilities: string[];
 }

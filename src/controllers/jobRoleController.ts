@@ -1,13 +1,18 @@
 import type { Request, Response } from "express";
 import { FILTER_OPTIONS } from "../config/filterOptions.js";
+import type { JobRoleFormData } from "../models/job-role.js";
 import type {
   JobFilterParams,
   JobRoleservice,
 } from "../services/interfaces.js";
 import { buildPaginationData } from "../utils/urlBuilder.js";
+import type { JobRoleValidator } from "../validators/JobRoleValidator.js";
 
 export class JobRoleController {
-  constructor(private jobRoleService: JobRoleservice) {}
+  constructor(
+    private jobRoleService: JobRoleservice,
+    private jobRoleValidator: JobRoleValidator
+  ) {}
 
   /**
    * Renders the job roles list page with server-side filtering
@@ -239,7 +244,10 @@ export class JobRoleController {
    * Handles job role edit form submission
    * POST /job-roles/:id/edit
    */
-  public updateJobRole = async (req: Request, res: Response): Promise<void> => {
+  public updateJobRole = async (
+    req: Request<{ id: string }, any, JobRoleFormData>,
+    res: Response
+  ): Promise<void> => {
     try {
       const jobIdParam = req.params.id;
 
@@ -263,7 +271,7 @@ export class JobRoleController {
         return;
       }
 
-      // Extract form data
+      // Extract form data with proper type handling
       const {
         jobRoleName,
         location,
@@ -277,42 +285,38 @@ export class JobRoleController {
         responsibilities,
       } = req.body;
 
-      // Validate required fields (jobSpecLink is now optional)
-      if (
-        !jobRoleName ||
-        !location ||
-        !capability ||
-        !band ||
-        !status ||
-        !numberOfOpenPositions ||
-        !closingDate ||
-        !description ||
-        !responsibilities
-      ) {
+      // Validate form data using the validator
+      const validationResult = this.jobRoleValidator.validateRequiredFields(
+        req.body
+      );
+      if (!validationResult.isValid) {
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {
           title: `Edit ${jobRole?.name || "Job Role"}`,
           job: jobRole,
-          error:
-            "Required fields are missing. Please fill in all required form fields.",
+          error: validationResult.errors.join(", "),
           timestamp: new Date().toISOString(),
         });
         return;
       }
 
-      // Prepare job data for update
+      // Prepare job data for update with proper type conversions
       const jobData = {
         jobRoleName,
         location,
         capability,
         band,
         status,
-        numberOfOpenPositions: parseInt(numberOfOpenPositions, 10),
+        numberOfOpenPositions:
+          typeof numberOfOpenPositions === "string"
+            ? parseInt(numberOfOpenPositions, 10)
+            : numberOfOpenPositions,
         closingDate: closingDate, // Keep as string, don't convert to Date object
         description,
-        responsibilities: responsibilities
-          .split(",")
-          .map((r: string) => r.trim()),
+        responsibilities:
+          typeof responsibilities === "string"
+            ? responsibilities.split(",").map((r: string) => r.trim())
+            : responsibilities,
       };
 
       // Add jobSpecLink only if provided
