@@ -1,0 +1,820 @@
+
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    
+    
+<title>404</title>
+<link rel="canonical" href="https://www.kainos.com/404" />
+<meta property="og:title" content="404">
+<meta property="og:url" content="https://www.kainos.com/404">
+<meta name="twitter:title" content="404">
+
+
+
+
+
+
+
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/Static/dist/styles.css">
+    <link rel="preload" href="/Static/dist/styles.css" as="style">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N3QJF3F');</script>
+    <!-- End Google Tag Manager -->
+    
+    <script type="text/javascript">
+	(function() {
+	  var didInit = false;
+	  function initMunchkin() {
+		if(didInit === false) {
+		  didInit = true;
+		  Munchkin.init('935-JPR-705');
+		}
+	  }
+	  var s = document.createElement('script');
+	  s.type = 'text/javascript';
+	  s.async = true;
+	  s.src = '//munchkin.marketo.net/munchkin.js';
+	  s.onreadystatechange = function() {
+		if (this.readyState == 'complete' || this.readyState == 'loaded') {
+		  initMunchkin();
+		}
+	  };
+	  s.onload = initMunchkin;
+	  document.getElementsByTagName('head')[0].appendChild(s);
+	})();
+	</script>
+<script>
+!function(T,l,y){var S=T.location,k="script",D="instrumentationKey",C="ingestionendpoint",I="disableExceptionTracking",E="ai.device.",b="toLowerCase",w="crossOrigin",N="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"5",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[b](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,u,p,l;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][b]()]=i[1])}if(!e[C]){var r=e.endpointsuffix,o=r?e.location:null;e[C]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[D]||d[D]||"",u=s[C],p=u?u+"/v2/track":d.endpointUrl,(l=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=p,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),l.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,p)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:N,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(N,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(l,p))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(k);n.src=h;var e=y[w];return!e&&""!==e||"undefined"==n[w]||(n[w]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(k)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[I]&&!0!==s[I]){var c="onerror";t(["_"+c]);var u=T[c];T[c]=function(e,t,n,a,i){var r=u&&u(e,t,n,a,i);return!0!==r&&m["_"+c]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);function a(){y.onInit&&y.onInit(n)}(T[t]=n).queue&&0===n.queue.length?(n.queue.push(a),n.trackPageView({})):a()}(window,document,{src: "https://js.monitor.azure.com/scripts/b/ai.2.gbl.min.js", crossOrigin: "anonymous", cfg: {instrumentationKey: 'd3ee9728-4459-4845-9883-5826245685ee', disableCookiesUsage: false }});
+</script>
+
+    
+<script>
+
+	(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date(); a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+	ga('create', '', '');
+	ga('send', 'pageview');
+
+</script>
+    
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3QJF3F"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    
+
+<!-- Header -->
+<header class="header" id="header">
+    <div class="container">
+        <div class="header__container">
+                <div class="header__logo-wrap">
+                    <a href="/">
+                        <picture><source srcset="/globalassets/images/5_logos/kainos_logo.png?width=100&quality=80 100w, /globalassets/images/5_logos/kainos_logo.png?width=200&quality=80 200w" sizes="" /><img alt="logo" src="/globalassets/images/5_logos/kainos_logo.png?width=200&quality=80" loading="lazy" decoding="async" class="header__logo-img"/></picture>
+                        <span class="sr-only">Logo</span>
+                    </a>
+                </div>
+
+                <div class="mega-menu__holder js-mega-menu-holder">
+                    <div class="mega-menu js-mega-menu">
+                        <div class="mega-menu__back-holder js-menu-back-holder">
+                            <div class="mega-menu__back js-menu-back">
+                                <i class="icon-arrow icon-arrow--left"></i>
+                                <button class="mega-menu__link">Back</button>
+                            </div>
+                        </div>
+
+
+                        <ul class="mega-menu__items js-menu-items">
+                                <li class='mega-menu__primary-item js-primary-menu-item '>
+                                    
+
+
+<div class="mega-menu__primary-item-label">
+    <a href="/digital-services" class="mega-menu__link mega-menu__title">Digital Services</a>
+    <i class="icon-arrow"></i>
+</div>
+
+<div class="mega-menu__secondary-item js-secondary-menu-item">
+    <div class="mega-menu__back-holder js-menu-back-holder"></div>
+    <div class="mega-menu__preview">
+        <div class="mega-menu__mobile-title">Digital Services</div>
+        <div class="mega-menu__desc">
+            Build the digital services and capabilities you need for ongoing growth so your organisation can thrive in today&#x2019;s new reality.
+        </div>
+
+        <div class="js-sectional-link">
+            
+
+        <a href="/digital-services" class="link cta-block ">
+            Discover Digital Services
+        </a>
+
+
+        </div>
+        
+    </div>
+
+        <div class="mega-menu__secondary-right">
+                <div class="mega-menu__secondary-right-wrap">
+                    
+    <h3 class="mega-menu__secondary-column-title">Services</h3>
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/services/digital-advisory" class="link cta-block ">
+            Digital Advisory
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/services/cloud-and-engineering" class="link cta-block ">
+            Cloud and engineering
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/services/ai-and-data" class="link cta-block ">
+            Data and AI
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/services/microsoft-ai-business-solutions" class="link cta-block ">
+            AI Business Solutions
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/services/user-centred-design" class="link cta-block ">
+            User-centred design
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/services/managed-services" class="link cta-block ">
+            Managed services
+        </a>
+
+</div></div>
+
+                </div>
+                <div class="mega-menu__secondary-right-wrap">
+                    
+    <h3 class="mega-menu__secondary-column-title">Impacts</h3>
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/impacts/digital-transformation" class="link cta-block ">
+            Building digital transformation
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/impacts/driving-continuous-improvement" class="link cta-block ">
+            Driving continuous improvement
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/impacts/business-performance-management" class="link cta-block ">
+            Improving business performance
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/digital-services/impacts/improving-customer-engagement" class="link cta-block ">
+            Improving customer engagement
+        </a>
+
+</div></div>
+
+                </div>
+        </div>
+</div>
+
+
+
+                                </li>
+                                <li class='mega-menu__primary-item js-primary-menu-item '>
+                                    
+
+
+<div class="mega-menu__primary-item-label">
+    <a href="/workday" class="mega-menu__link mega-menu__title">Workday</a>
+    <i class="icon-arrow"></i>
+</div>
+
+<div class="mega-menu__secondary-item js-secondary-menu-item">
+    <div class="mega-menu__back-holder js-menu-back-holder"></div>
+    <div class="mega-menu__preview">
+        <div class="mega-menu__mobile-title">Workday</div>
+        <div class="mega-menu__desc">
+            Introduce, embed, and amplify the power of Workday across your business to your precise strategic needs, today and for the future.
+        </div>
+
+        <div class="js-sectional-link">
+            
+
+        <a href="/workday" class="link cta-block ">
+            Discover Workday
+        </a>
+
+
+        </div>
+        
+    </div>
+
+        <div class="mega-menu__secondary-right">
+                <div class="mega-menu__secondary-right-wrap">
+                    
+    <h3 class="mega-menu__secondary-column-title">Services</h3>
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/deployment" class="link cta-block ">
+            Deploy Workday
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/testing" class="link cta-block ">
+            Test Workday
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/auditing-workday" class="link cta-block ">
+            Audit Workday
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/spark-and-grow" class="link cta-block ">
+            Spark&amp;Grow
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/expertise/workday-extend" class="link cta-block ">
+            Workday Extend
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/adaptive-planning-software" class="link cta-block ">
+            Workday Adaptive Planning
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/workday-peakon-employee-voice" class="link cta-block ">
+            Workday Peakon Employee Voice
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/services/pulsora" class="link cta-block ">
+            Pulsora
+        </a>
+
+</div></div>
+
+                </div>
+                <div class="mega-menu__secondary-right-wrap">
+                    
+    <h3 class="mega-menu__secondary-column-title">Products</h3>
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/workday/products/smart" class="link cta-block ">
+            Kainos Smart
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/products/smart-test" class="link cta-block ">
+            Smart Test
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/products/Smart-Audit-for-Workday" class="link cta-block ">
+            Smart Audit
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/products/smart-shield" class="link cta-block ">
+            Smart Shield
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/products/kainos-employee-document-management-for-workday" class="link cta-block ">
+            Employee Document Management
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/workday/products/pay-transparency" class="link cta-block ">
+            EU Pay Transparency
+        </a>
+
+</div></div>
+
+                </div>
+        </div>
+</div>
+
+
+
+                                </li>
+                                <li class='mega-menu__primary-item js-primary-menu-item '>
+                                    
+
+
+<div class="mega-menu__primary-item-label">
+    <a href="/industries" class="mega-menu__link mega-menu__title">Industries</a>
+    <i class="icon-arrow"></i>
+</div>
+
+<div class="mega-menu__secondary-item js-secondary-menu-item">
+    <div class="mega-menu__back-holder js-menu-back-holder"></div>
+    <div class="mega-menu__preview">
+        <div class="mega-menu__mobile-title">Industries</div>
+        <div class="mega-menu__desc">
+            With over 30 years of digital design, development, and delivery under our belts, if you&#x2019;ve got a digital challenge, we&#x2019;ll work with you to get game-changing results.
+        </div>
+
+        <div class="js-sectional-link">
+            
+
+        <a href="/industries" class="link cta-block ">
+            Industries
+        </a>
+
+
+        </div>
+        
+    </div>
+
+        <div class="mega-menu__secondary-right">
+                <div class="mega-menu__secondary-right-wrap">
+                    
+    <h3 class="mega-menu__secondary-column-title">Industries</h3>
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/industries/financial-services" class="link cta-block ">
+            Financial services
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/industries/insurance-digital-transformation" class="link cta-block ">
+            Insurance
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/industries/payments" class="link cta-block ">
+            Payments
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/industries/higher-education" class="link cta-block ">
+            Education
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/industries/government" class="link cta-block ">
+            Government
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/industries/healthcare-and-life-sciences" class="link cta-block ">
+            Healthcare and life sciences
+        </a>
+
+</div></div>
+
+                </div>
+        </div>
+</div>
+
+
+
+                                </li>
+                                <li class='mega-menu__primary-item js-primary-menu-item '>
+                                    
+
+
+<div class="mega-menu__primary-item-label">
+    <a href="/insights" class="mega-menu__link mega-menu__title">Insights</a>
+    <i class="icon-arrow"></i>
+</div>
+
+<div class="mega-menu__secondary-item js-secondary-menu-item">
+    <div class="mega-menu__back-holder js-menu-back-holder"></div>
+    <div class="mega-menu__preview">
+        <div class="mega-menu__mobile-title">Insights</div>
+        <div class="mega-menu__desc">
+            The latest news, developments and insights from our experts.
+        </div>
+
+        <div class="js-sectional-link">
+            
+
+        <a href="/insights" class="link cta-block ">
+            Insights
+        </a>
+
+
+        </div>
+        
+    </div>
+
+        <div class="mega-menu__secondary-right">
+                <div class="mega-menu__secondary-right-wrap">
+                    
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=11395" class="link cta-block ">
+            Workday collection
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=5012" class="link cta-block ">
+            Business
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=5419" class="link cta-block ">
+            Diversity and inclusion 
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=4996" class="link cta-block ">
+            People
+        </a>
+
+</div></div>
+
+                </div>
+                <div class="mega-menu__secondary-right-wrap">
+                    
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=5280" class="link cta-block ">
+            Technology
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=5331" class="link cta-block ">
+            Trends
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=4977" class="link cta-block ">
+            Testing and assurance
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="/insights/?sort=Latest&amp;topics=4985" class="link cta-block ">
+            Transformation
+        </a>
+
+</div></div>
+
+                </div>
+        </div>
+</div>
+
+
+
+                                </li>
+                                <li class='mega-menu__primary-item js-primary-menu-item '>
+                                    
+
+
+<div class="mega-menu__primary-item-label">
+    <a href="https://careers.kainos.com/gb/en" class="mega-menu__link mega-menu__title">Careers</a>
+    <i class="icon-arrow"></i>
+</div>
+
+<div class="mega-menu__secondary-item js-secondary-menu-item">
+    <div class="mega-menu__back-holder js-menu-back-holder"></div>
+    <div class="mega-menu__preview">
+        <div class="mega-menu__mobile-title">Careers</div>
+        <div class="mega-menu__desc">
+            At Kainos, our people are at the heart of everything and once you&#x27;re here there&#x27;s no limit to how far you can go.
+        </div>
+
+        <div class="js-sectional-link">
+            
+
+        <a href="https://careers.kainos.com/gb/en" class="link cta-block ">
+            Careers
+        </a>
+
+
+        </div>
+        
+    </div>
+
+        <div class="mega-menu__secondary-right">
+                <div class="mega-menu__secondary-right-wrap">
+                    
+
+
+<div class="mega-menu__secondary-column js-secondary-column"><div class="mega-menu__secondary-column-link">
+        <a href="https://careers.kainos.com/gb/en/life-at-kainos" class="link cta-block ">
+            Our culture
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="https://careers.kainos.com/gb/en/graduates-and-placements" class="link cta-block ">
+            Graduates and students
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="https://careers.kainos.com/gb/en/academy" class="link cta-block ">
+            Kainos Academy
+        </a>
+
+</div><div class="mega-menu__secondary-column-link">
+        <a href="https://careers.kainos.com/gb/en" class="link cta-block ">
+            Opportunities
+        </a>
+
+</div></div>
+
+                </div>
+        </div>
+</div>
+
+
+
+                                </li>
+                        </ul>
+
+                        <div class="mega-menu__button js-mega-menu-buttons"></div>
+                    </div>
+                </div>
+
+            <div class="header__right-panel js-header-right-panel">
+
+
+    <modal-social-share title="Share" :buttons='{"Text":"Share this success story","SocialMediaList":["linkedin","twitter"]}'></modal-social-share>
+
+                <div class="js-get-in-touch-container header__get-in-touch-container">
+                        <a href="/contact-us" class="header__get-in-touch btn btn--cta js-get-in-touch">Get in touch</a>
+                </div>
+
+                <div class="header__search">
+                    <button class="header__search-link js-header__search" title="Search"><i class="icon-search icon-round"></i><span class="sr-only">Search</span></button>
+
+                        <div class="search__bar search__bar--hidden js-search__bar">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 col-md-8">
+                                        <form action="/search" class="search__row">
+  <input class="search__input js-search__input" aria-label="Start your search..." placeholder='Start your search...' name="q">
+  <button class="btn btn--icon-right search__btn-submit js-search__btn-submit" type="submit">
+    <span>Search</span>    
+  </button>
+  <button class="search__btn-close js-search__btn-close"><i class="icon-close"></i><span class="sr-only">Close</span></button>
+</form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="header__menu">
+                    <button title="Menu Button"><i class="icon-menu js-mega-menu-btn"></i><span class="sr-only">Menu Button</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- Header -->
+
+
+    <!-- Content -->
+    <main id="main-content">
+        
+<script>
+    var GLOBAL_PAGE = '404';
+</script>
+<div id="error-404-page">
+    <div class="container error__container">
+        <div class="row">
+            <div class="col-12 col-md-6 error__col-image">
+                <picture><source srcset="/globalassets/images/error404.jpg?format=webp&width=400&quality=80 400w, /globalassets/images/error404.jpg?format=webp&width=600&quality=80 600w, /globalassets/images/error404.jpg?format=webp&width=800&quality=80 800w, /globalassets/images/error404.jpg?format=webp&width=1000&quality=80 1000w, /globalassets/images/error404.jpg?format=webp&width=1200&quality=80 1200w" sizes="" type="image/webp"/><source srcset="/globalassets/images/error404.jpg?width=400&quality=80 400w, /globalassets/images/error404.jpg?width=600&quality=80 600w, /globalassets/images/error404.jpg?width=800&quality=80 800w, /globalassets/images/error404.jpg?width=1000&quality=80 1000w, /globalassets/images/error404.jpg?width=1200&quality=80 1200w" sizes="" /><img alt="404-image" src="/globalassets/images/error404.jpg?width=1200&quality=80" loading="lazy" decoding="async" class="error__image"/></picture>
+            </div>
+            <div class="col-12 col-md-6 error__col-info">
+                <h2 class="error__message">It looks like something&#x27;s gone wrong. We can&#x27;t find the page you are looking for.</h2>
+                    <div class="error__search-message">Try searching our website for what you’re looking for:</div>
+<form action="/search" class="search__row">
+  <input class="search__input js-search__input" aria-label="Start your search..." placeholder='Start your search...' name="q">
+  <button class="btn btn--icon-right search__btn-submit js-search__btn-submit" type="submit">
+    <span>Search</span>    
+  </button>
+  <button class="search__btn-close js-search__btn-close"><i class="icon-close"></i><span class="sr-only">Close</span></button>
+</form>
+                <div class="error__help typography">
+                    
+<p>Try searching our website for what you are looking for:</p>
+<p>Or, if you're interested in the services we provide visit out <a href="/workday">Workday</a> area or&nbsp; our <a href="/digital-services">Digital Services</a> area.</p>
+<p>If that's not what you're after then maybe our <a href="/insights">insights</a> section can help you learn about digital transformation?</p>
+<p>And if none of that helps then visit our <a href="/">home page</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    </main>
+    <!-- Content -->
+    
+<!-- Footer -->
+<footer class="footer" id="footer">
+    <div class="footer__container container">
+            <div class="footer__nav row">
+                    <div class="footer__nav-column col-12 col-md-3">
+                        
+    <h6 class="footer__nav-title">Navigation</h6>
+
+<ul class="footer__nav-list">
+        <li class="footer__nav-list-item">
+            <a href="/digital-services" class="footer__nav-list-link">Digital Services</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/workday" class="footer__nav-list-link">Workday</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/industries" class="footer__nav-list-link">Industries</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/insights" class="footer__nav-list-link">Insights</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="https://careers.kainos.com/gb/en" class="footer__nav-list-link">Careers</a>
+        </li>
+</ul>
+
+
+                    </div>
+                    <div class="footer__nav-column col-12 col-md-3">
+                        
+    <h6 class="footer__nav-title">About Kainos</h6>
+
+<ul class="footer__nav-list">
+        <li class="footer__nav-list-item">
+            <a href="/about-us" class="footer__nav-list-link">About us</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="https://careers.kainos.com/gb/en/life-at-kainos" class="footer__nav-list-link">Our culture</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/about-us/our-approach" class="footer__nav-list-link">Our approach</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/about-us/diversity-and-inclusion" class="footer__nav-list-link">Diversity and inclusion</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/about-us/sustainability" class="footer__nav-list-link">Sustainability</a>
+        </li>
+</ul>
+
+
+                    </div>
+                    <div class="footer__nav-column col-12 col-md-3">
+                        
+    <h6 class="footer__nav-title">Investor Relations</h6>
+
+<ul class="footer__nav-list">
+        <li class="footer__nav-list-item">
+            <a href="/investor-relations" class="footer__nav-list-link">Investor relations home</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/investor-relations/investor-tools" class="footer__nav-list-link">Investor tools</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/investor-relations/results-and-presentations" class="footer__nav-list-link">Results and presentations</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/investor-relations/regulatory-news-and-events" class="footer__nav-list-link">Regulatory news and events</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/investor-relations/people-and-policies" class="footer__nav-list-link">People and policies</a>
+        </li>
+</ul>
+
+
+                    </div>
+                    <div class="footer__nav-column col-12 col-md-3">
+                        
+    <h6 class="footer__nav-title">Legal</h6>
+
+<ul class="footer__nav-list">
+        <li class="footer__nav-list-item">
+            <a href="/information/privacy-notice" class="footer__nav-list-link">Privacy notice</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/information/corporate-information" class="footer__nav-list-link">Corporate information</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/information/modern-slavery-statement" class="footer__nav-list-link">Modern slavery statement</a>
+        </li>
+        <li class="footer__nav-list-item">
+            <a href="/information/recruitment-notice" class="footer__nav-list-link">Recruitment notice</a>
+        </li>
+</ul>
+
+
+                    </div>
+            </div>
+            <div class="footer__socials">
+                <span class="footer__socials-title">Social links</span>
+                
+<ul class="footer__socials-list"><li class="footer__socials-list-item">
+<a href="https://www.linkedin.com/company/kainos/" class="footer__socials-list-link " title="LinkedIn">
+    <i class="icon-linkedin"></i>
+    <span class="sr-only">LinkedIn</span>
+</a>
+</li><li class="footer__socials-list-item">
+<a href="https://twitter.com/KainosSoftware" class="footer__socials-list-link " title="Twitter">
+    <i class="icon-twitter"></i>
+    <span class="sr-only">Twitter</span>
+</a>
+</li><li class="footer__socials-list-item">
+<a href="https://www.facebook.com/KainosSoftware/" class="footer__socials-list-link " title="Facebook">
+    <i class="icon-facebook"></i>
+    <span class="sr-only">Facebook</span>
+</a>
+</li></ul>
+            </div>
+        <div class="footer__logo">
+            <a href="/" class="footer__logo-link">
+                <picture><source srcset="/globalassets/images/5_logos/kainos_transparent.png?width=100&quality=80 100w, /globalassets/images/5_logos/kainos_transparent.png?width=200&quality=80 200w" sizes="" /><img alt="logo" src="/globalassets/images/5_logos/kainos_transparent.png?width=200&quality=80" loading="lazy" decoding="async" class="footer__logo-image"/></picture>
+                <span class="sr-only">Logo</span>
+            </a>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <div class="footer__bg-image footer__bg-image--desktop" style="background-image: url('/globalassets/images/6_flux/flux_white_footer.png?width=1200&amp;height=0&amp;rmode=crop&amp;rsampler=bicubic&amp;compand=true&amp;quality=80');"></div>
+            <div class="footer__bg-image footer__bg-image--mobile" style="background-image: url('/globalassets/images/6_flux/flux_white_footer.png?width=1200&amp;height=0&amp;rmode=crop&amp;rsampler=bicubic&amp;compand=true&amp;quality=80');"></div>
+        <div class="footer__container footer__container--image container">
+            <div class="footer__slogan">
+                <b>Thinking</b>
+                <span>beyond</span>
+                <b>limitations</b>
+            </div>
+                <div class="footer__copyrights">Copyright &#xA9; 2025 Kainos. Registered in NI NI019370</div>
+        </div>
+    </div>
+
+    <svg class="svg">
+        <clipPath id="curve" clipPathUnits="objectBoundingBox">
+            <path d="M0,0.16 C0.167,0.053,0.333,0,0.5,0 C0.667,0,0.833,0.053,1,0.16 L1,1 L0,1 L0,0.16"></path>
+        </clipPath>
+    </svg>
+    <svg class="svg">
+        <clipPath id="curve-desk" clipPathUnits="objectBoundingBox">
+            <path d="M1,0 L1,1 L0.157,1 C0.06,0.868,0,0.693,0,0.5 C0,0.307,0.06,0.132,0.157,0 L1,0"></path>
+        </clipPath>
+    </svg>
+</footer>
+<!-- Footer -->
+
+    
+    <script src="/Static/dist/app.js"></script>
+    <script type="text/javascript">
+    // need to be sure that the script loads after the bundle
+        setTimeout(function() {
+            var headID = document.getElementsByTagName("head")[0];         
+            var newScript = document.createElement('script');
+            newScript.type = 'text/javascript';
+            newScript.charset = 'ISO-8859-1';
+            newScript.src='https://fast.wistia.com/assets/external/E-v1.js';
+            headID.appendChild(newScript);
+        }, 500);
+    </script>
+    <script>
+        var LOCALIZATION_DATA = {"kainos.Web.Constants.Resources.Page.SortingLabel":"Sort by","kainos.Web.Constants.Resources.Vacancies.Search.FilterLabel":"filter","kainos.Web.Constants.Resources.Page.ResultsNumber":"of","kainos.Web.Constants.Resources.Page.ActionReading":"Reading","kainos.Web.Constants.Resources.Vacancies.Search.FilterNames.Type":"Type","kainos.Web.Constants.Resources.Page.DateYesterday":"Yesterday","kainos.Web.Constants.Resources.SearchPage.JobPage.Label":"Vacancy","kainos.Web.Constants.Resources.Page.ResultsFor":"results returned for","kainos.Web.Constants.Resources.Vacancies.Search.FilterNames.Category":"Category","kainos.Web.Constants.Resources.Header.Banner.WelcomePart2":"Kainos website","kainos.Web.Constants.Resources.Insights.Search.Keywords":"Keywords","kainos.Web.Constants.Resources.Block.RelatedLinkLabel":"See more insights","kainos.Web.Constants.Resources.Vacancies.Search.SortingLatestLabel":"Latest","kainos.Web.Constants.Resources.Page.ActionWatch":"Watch","kainos.Web.Constants.Resources.Insights.Search.FilterLabel":"filter","kainos.Web.Constants.Resources.Page.Location":"Location","kainos.Web.Constants.Resources.Header.Banner.BannerQuestionPart2":"website instead?","kainos.Web.Constants.Resources.Insights.Search.FilterNames.SiteArea":"Site area","kainos.Web.Constants.Resources.Insights.Search.ApplyLabel":"Apply","kainos.Web.Constants.Resources.Header.Banner.QuestionPart1":"Would you like to visit our","kainos.Web.Constants.Resources.Insights.Search.FilterNames.Type":"Type","kainos.Web.Constants.Resources.Page.DatePosted":"Date posted","kainos.Web.Constants.Resources.Page.EventTime":"Time","kainos.Web.Constants.Resources.Page.SearchBtn":"Search","kainos.Web.Constants.Resources.Vacancies.Search.ApplyLabel":"Apply","kainos.Web.Constants.Resources.Page.DateToday":"Today","kainos.Web.Constants.Resources.Common.GenericMessageError":"Something wrong.","kainos.Web.Constants.Resources.Vacancies.Search.ClearFiltersBtn":"Clear all filters","kainos.Web.Constants.Resources.Insights.Search.SortingLabel":"Sort by","kainos.Web.Constants.Resources.Insights.Search.BtnLoadMore":"Load more insights","kainos.Web.Constants.Resources.Vacancies.Search.FiltersDeskLabel":"Filter results by","kainos.Web.Constants.Resources.Page.SearchPlaceholder":"Start your search...","kainos.Web.Constants.Resources.Page.SearchSortingNameDescending":"Z - A","kainos.Web.Constants.Resources.Page.TypeEvent":"Event","kainos.Web.Constants.Resources.Vacancies.Search.JobLink":"Apply Now","kainos.Web.Constants.Resources.Insights.Search.FiltersDeskLabel":"Filter results by","kainos.Web.Constants.Resources.Page.SearchSortingRelevance":"Most relevant","kainos.Web.Constants.Resources.Page.TypeWebinar":"Webinar","kainos.Web.Constants.Resources.Vacancies.Search.ZA":"Z - A","kainos.Web.Constants.Resources.Page.EventDate":"date","kainos.Web.Constants.Resources.Header.CountrySelector.Close":"Close","kainos.Web.Constants.Resources.Vacancies.Search.FilterMobileAppliedLabel":"applied","kainos.Web.Constants.Resources.Insights.Search.SortingFeaturedLabel":"Featured","kainos.Web.Constants.Resources.Header.Banner.ChangeSiteBtn":"Go","kainos.Web.Constants.Resources.Header.Share":"Share","kainos.Web.Constants.Resources.Vacancies.Search.FilterMobileResultLabel":"results","kainos.Web.Constants.Resources.Page.SuggestSearch":"Try searching our website for what you’re looking for:","kainos.Web.Constants.Resources.Insights.Search.FilterMobileAppliedLabel":"applied","kainos.Web.Constants.Resources.Page.DateDaysAgo":"Days Ago","kainos.Web.Constants.Resources.Header.CountrySelector.ConfirmRegion":"Confirm","kainos.Web.Constants.Resources.Insights.Search.FilterMobileResultLabel":"results","kainos.Web.Constants.Resources.Header.CountrySelector.ChooseRegion":"Choose your region","kainos.Web.Constants.Resources.Vacancies.Search.FiltersLabel":"filters","kainos.Web.Constants.Resources.Insights.Search.FilterNames.Topic":"Topic","kainos.Web.Constants.Resources.Page.ResultsShowing":"Showing","kainos.Web.Constants.Resources.Header.Banner.StayPart1":"or,","kainos.Web.Constants.Resources.Header.Banner.StayPart3":"website","kainos.Web.Constants.Resources.Insights.Search.SelectedFiltersLabel":"Selected filters","kainos.Web.Constants.Resources.Insights.Search.FilterNames.Expertise":"Expertise","kainos.Web.Constants.Resources.Page.SearchSortingNameAscending":"A - Z","kainos.Web.Constants.Resources.Page.SearchPrevPage":"Previous page","kainos.Web.Constants.Resources.Page.SearchSortingLatest":"Most recent","kainos.Web.Constants.Resources.Header.GetInTouch":"Get in touch","kainos.Web.Constants.Resources.Header.Banner.QuestionPart2":"website instead?","kainos.Web.Constants.Resources.Header.Menu.Back":"Back","kainos.Web.Constants.Resources.Vacancies.Search.NoJobsFound":"No jobs were found.","kainos.Web.Constants.Resources.Page.Delete":"Delete","kainos.Web.Constants.Resources.Insights.Search.FiltersLabel":"filters","kainos.Web.Constants.Resources.Header.CopyLink":"Copy link","kainos.Web.Constants.Resources.Page.ReadingTime":"time","kainos.Web.Constants.Resources.Vacancies.Search.FilterNames.Location":"Location","kainos.Web.Constants.Resources.Header.Menu.MenuButton":"Menu Button","kainos.Web.Constants.Resources.Vacancies.Search.Oldest":"Oldest","kainos.Web.Constants.Resources.Vacancies.Search.AZ":"A - Z","kainos.Web.Constants.Resources.Insights.Search.NoCardsFound":"No cards were found.","kainos.Web.Constants.Resources.Blog.BlogAuthorTitle":"About the author","kainos.Web.Constants.Resources.Page.Close":"Close","kainos.Web.Constants.Resources.Vacancies.Search.SelectedFiltersLabel":"Selected filters","kainos.Web.Constants.Resources.Footer.SocialLinks":"Social links","kainos.Web.Constants.Resources.Insights.Search.FilterNames.Industry":"Industry","kainos.Web.Constants.Resources.Header.Banner.BannerQuestionPart1":"Would you like to visit our","kainos.Web.Constants.Resources.Page.SearchNextPage":"Next page","kainos.Web.Constants.Resources.Insights.Search.FilterNames.Impact":"Impact","kainos.Web.Constants.Resources.Insights.Search.ClearFiltersBtn":"Clear all filters","kainos.Web.Constants.Resources.Header.Banner.WelcomePart1":"Welcome to","kainos.Web.Constants.Resources.Page.AboutAuthor":"About the author","kainos.Web.Constants.Resources.Insights.Search.SortingLatestLabel":"Latest","kainos.Web.Constants.Resources.Vacancies.Search.FilterMobileLabel":"Filter","kainos.Web.Constants.Resources.Insights.Search.FilterMobileLabel":"Filter","kainos.Web.Constants.Resources.Vacancies.Search.SortingFeaturedLabel":"Featured","kainos.Web.Constants.Resources.Header.OpenShare":"Open Share icons modal window","kainos.Web.Constants.Resources.Vacancies.Search.SortingLabel":"Sort by","kainos.Web.Constants.Resources.Insight.ArticleAuthorTitle":"About the author","kainos.Web.Constants.Resources.Header.Banner.StayPart2":"stay on","kainos.Web.Constants.Resources.Insights.Search.FilterNames.Service":"Service","kainos.Web.Constants.Resources.Vacancies.Search.Jobs":"jobs"}
+    </script>
+    <script defer="defer" src="/Util/Find/epi-util/find.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){if(typeof FindApi === 'function'){var api = new FindApi();api.setApplicationUrl('/');api.setServiceApiBaseUrl('/find_v2/');api.processEventFromCurrentUri();api.bindWindowEvents();api.bindAClickEvent();api.sendBufferedEvents();}})
+</script>
+
+</body>
+</html>
