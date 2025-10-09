@@ -13,6 +13,8 @@ export interface FilterOptions {
   capabilities: FilterOption[];
   bands: FilterOption[];
   statuses: FilterOption[];
+  sortOptions: FilterOption[];
+  sortOrders: FilterOption[];
 }
 
 export const FILTER_OPTIONS: FilterOptions = {
@@ -61,5 +63,18 @@ export const FILTER_OPTIONS: FilterOptions = {
     { value: "", label: "All Status" },
     { value: "open", label: "Open" },
     { value: "closed", label: "Closed" },
+  ],
+  sortOptions: [
+    { value: "", label: "Default" },
+    { value: "jobRoleName", label: "Job Title" },
+    { value: "closingDate", label: "Closing Date" },
+    { value: "band", label: "Band Level" },
+    { value: "capability", label: "Capability" },
+    { value: "location", label: "Location" },
+    { value: "createdDate", label: "Date Posted" },
+  ],
+  sortOrders: [
+    { value: "asc", label: "Ascending (A-Z, 0-9)" },
+    { value: "desc", label: "Descending (Z-A, 9-0)" },
   ],
 };
