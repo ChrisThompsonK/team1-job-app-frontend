@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { FILTER_OPTIONS } from "../config/filterOptions.js";
-import type { JobRoleFormData } from "../models/job-role.js";
 import { PAGINATION_CONFIG } from "../config/pagination.js";
+import type { JobRoleFormData } from "../models/job-role.js";
 import type {
   JobFilterParams,
   JobRoleservice,
