@@ -1,0 +1,141 @@
+{
+  "nav": {
+    "home": "Home",
+    "jobRoles": "Job Roles",
+    "menu": "Menu",
+    "openMenu": "Open navigation menu",
+    "toggleTheme": "Toggle dark mode",
+    "changeLanguage": "Change language",
+    "siteTitle": "Job Application System"
+  },
+  "home": {
+    "title": "Job Application Frontend",
+    "welcome": "Welcome to the Job Application System",
+    "timestamp": "Current time",
+    "exploreJobs": "Explore Job Roles",
+    "learnMore": "Learn More",
+    "lastUpdated": "Last Updated",
+    "featuresTitle": "Powerful Features",
+    "featuresSubtitle": "Built with modern technologies to provide a seamless job application experience",
+    "ctaTitle": "Ready to Start Your Career Journey?",
+    "ctaSubtitle": "Join thousands of professionals who have found their dream job through our platform",
+    "findJob": "Find Your Perfect Job",
+    "contactSupport": "Contact Support",
+    "browseJobs": "Browse Jobs",
+    "featured": "Featured",
+    "features": {
+      "nunjucks": {
+        "title": "Nunjucks Templating",
+        "description": "Dynamic HTML generation with powerful template inheritance and component reusability",
+        "badge": "Template Engine"
+      },
+      "express": {
+        "title": "Express Server",
+        "description": "Fast, unopinionated, minimalist web framework for Node.js applications",
+        "badge": "Backend"
+      },
+      "typescript": {
+        "title": "TypeScript",
+        "description": "Type-safe development with enhanced IDE support and error detection",
+        "badge": "Language"
+      },
+      "assets": {
+        "title": "Asset Management",
+        "description": "Efficient serving of CSS, JavaScript, and static assets with optimization",
+        "badge": "Performance"
+      },
+      "jobs": {
+        "title": "Job Opportunities",
+        "description": "Discover and apply for exciting career opportunities tailored to your skills"
+      },
+      "daisyui": {
+        "title": "DaisyUI Components",
+        "description": "Beautiful, semantic component library built on top of Tailwind CSS",
+        "badge": "UI Framework"
+      }
+    }
+  },
+  "jobRoles": {
+    "title": "Job Roles",
+    "list": "Available Positions",
+    "details": "Job Details",
+    "notFound": "Job role not found",
+    "loading": "Loading job roles...",
+    "explore": "Explore exciting career opportunities",
+    "addJobRole": "Add Job Role",
+    "searchFilter": "Search & Filter Jobs",
+    "searchPlaceholder": "Search by job title or keywords...",
+    "searchLabel": "Search Job Roles",
+    "filterBy": "Filter By",
+    "allCapabilities": "All Capabilities",
+    "allBands": "All Bands",
+    "allLocations": "All Locations",
+    "allStatuses": "All Statuses",
+    "clearFilters": "Clear Filters",
+    "applyFilters": "Apply Filters",
+    "sortBy": "Sort By",
+    "datePosted": "Date Posted",
+    "jobTitle": "Job Title",
+    "capability": "Capability",
+    "band": "Band",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "resultsFound": "Results Found",
+    "noResults": "No Results Found",
+    "noResultsMessage": "No job roles match your criteria. Try adjusting your filters.",
+    "viewDetails": "View Details",
+    "location": "Location",
+    "openPositions": "Open Positions",
+    "status": "Status",
+    "open": "Open",
+    "closed": "Closed",
+    "description": "Description",
+    "responsibilities": "Responsibilities",
+    "requirements": "Requirements",
+    "applyNow": "Apply Now",
+    "shareJob": "Share Job",
+    "backToList": "Back to List",
+    "moreJobs": "More Similar Jobs",
+    "deleteJob": "Delete Job",
+    "confirmDelete": "Are you sure you want to delete this job role?",
+    "loading_details": "Loading job details...",
+    "error_loading": "Error loading job role",
+    "jobRolesFound": "job role(s) found",
+    "closes": "Closes",
+    "positionAvailable": "position available",
+    "positionsAvailable": "positions available",
+    "edit": "Edit",
+    "delete": "Delete",
+    "noJobsAvailable": "No Job Roles Available",
+    "noJobsMessage": "There are currently no job roles to display. Please check back later.",
+    "noMatchFilters": "No Jobs Match Your Filters",
+    "noMatchMessage": "Try adjusting your search criteria or clearing some filters to see more results.",
+    "clearAllFilters": "Clear All Filters",
+    "confirmDeleteJob": "Are you sure you want to delete"
+  },
+  "footer": {
+    "madeWith": "Made with ❤️ by Kainos",
+    "copyright": "© 2025 Job Application System. All rights reserved.",
+    "allRightsReserved": "All rights reserved"
+  },
+  "common": {
+    "error": "Error",
+    "loading": "Loading...",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "apply": "Apply",
+    "clear": "Clear",
+    "yes": "Yes",
+    "no": "No",
+    "or": "OR"
+  }
+}

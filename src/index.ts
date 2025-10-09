@@ -1,8 +1,11 @@
 import path from "node:path";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import type { Request, Response } from "express";
 import express from "express";
+import * as middleware from "i18next-http-middleware";
 import nunjucks from "nunjucks";
+import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 
@@ -24,12 +27,34 @@ app.use(express.static(path.join(process.cwd(), "public")));
 // Middleware to parse JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors());
+
+// Add i18n middleware
+app.use(middleware.handle(i18next));
+
+// Middleware to expose i18n to templates via res.locals
+app.use((req, res, next) => {
+  res.locals.t = req.t.bind(req);
+  res.locals.currentLanguage = req.language || "en";
+  next();
+});
 // Initialize services and controllers with dependency injection
 // SWITCHED TO API SERVICE TO CONNECT TO BACKEND
 const backendURL = process.env.BACKEND_URL || "http://localhost:3001/api";
 const jobRoleService = new JobRoleApiService(backendURL);
 const jobRoleController = new JobRoleController(jobRoleService);
+
+// Language change endpoint
+app.post("/change-language", (req: Request, res: Response) => {
+  const { language } = req.body;
+  if (["en", "es", "fr", "pl"].includes(language)) {
+    res.cookie("i18next", language, { maxAge: 365 * 24 * 60 * 60 * 1000 });
+    res.json({ success: true, language });
+  } else {
+    res.status(400).json({ success: false, error: "Invalid language" });
+  }
+});
 
 // Hello World endpoint
 app.get("/", (_req: Request, res: Response) => {
