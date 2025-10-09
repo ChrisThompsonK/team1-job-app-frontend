@@ -6,7 +6,14 @@
     "openMenu": "Open navigation menu",
     "toggleTheme": "Toggle dark mode",
     "changeLanguage": "Change language",
-    "siteTitle": "Job Application System"
+    "changeTextSize": "Change text size",
+    "siteTitle": "Job Application System",
+    "textSize": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "xLarge": "Extra Large"
+    }
   },
   "home": {
     "title": "Job Application Frontend",
