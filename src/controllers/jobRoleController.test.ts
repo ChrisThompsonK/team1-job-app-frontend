@@ -83,8 +83,21 @@ describe("JobRoleController", () => {
           totalItems: 1,
           itemsPerPage: 10,
         },
+        paginationData: expect.objectContaining({
+          currentPage: 1,
+          totalPages: 1,
+          totalItems: 1,
+          hasNext: false,
+          hasPrevious: false,
+        }),
         appliedFilters: {},
         currentFilters: {},
+        filterOptions: expect.objectContaining({
+          locations: expect.any(Array),
+          capabilities: expect.any(Array),
+          bands: expect.any(Array),
+          statuses: expect.any(Array),
+        }),
         timestamp: expect.any(String),
       });
     });

@@ -62,12 +62,11 @@
                 <span class="label-text font-medium">Location</span>
               </label>
               <select id="location-filter" name="location" class="select select-bordered w-full">
-                <option value="">All Locations</option>
-                <option value="London" {{ 'selected' if currentFilters.location == 'London' }}>London</option>
-                <option value="Manchester" {{ 'selected' if currentFilters.location == 'Manchester' }}>Manchester</option>
-                <option value="Birmingham" {{ 'selected' if currentFilters.location == 'Birmingham' }}>Birmingham</option>
-                <option value="Edinburgh" {{ 'selected' if currentFilters.location == 'Edinburgh' }}>Edinburgh</option>
-                <option value="Remote" {{ 'selected' if currentFilters.location == 'Remote' }}>Remote</option>
+                {% for option in filterOptions.locations %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.location == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
               </select>
             </div>
             <!-- Capability Filter -->
@@ -76,17 +75,11 @@
                 <span class="label-text font-medium">Capability</span>
               </label>
               <select id="capability-filter" name="capability" class="select select-bordered w-full">
-                <option value="">All Capabilities</option>
-                <option value="Data & Analytics" {{ 'selected' if currentFilters.capability == 'Data & Analytics' }}>Data & Analytics</option>
-                <option value="Workday" {{ 'selected' if currentFilters.capability == 'Workday' }}>Workday</option>
-                <option value="Engineering" {{ 'selected' if currentFilters.capability == 'Engineering' }}>Engineering</option>
-                <option value="Product" {{ 'selected' if currentFilters.capability == 'Product' }}>Product</option>
-                <option value="Design" {{ 'selected' if currentFilters.capability == 'Design' }}>Design</option>
-                <option value="Platform" {{ 'selected' if currentFilters.capability == 'Platform' }}>Platform</option>
-                <option value="Quality" {{ 'selected' if currentFilters.capability == 'Quality' }}>Quality</option>
-                <option value="Architecture" {{ 'selected' if currentFilters.capability == 'Architecture' }}>Architecture</option>
-                <option value="Business Analysis" {{ 'selected' if currentFilters.capability == 'Business Analysis' }}>Business Analysis</option>
-                <option value="Security" {{ 'selected' if currentFilters.capability == 'Security' }}>Security</option>
+                {% for option in filterOptions.capabilities %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.capability == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
               </select>
             </div>
             <!-- Band Filter -->
@@ -95,11 +88,11 @@
                 <span class="label-text font-medium">Band Level</span>
               </label>
               <select id="band-filter" name="band" class="select select-bordered w-full">
-                <option value="">All Bands</option>
-                <option value="Junior" {{ 'selected' if currentFilters.band == 'Junior' }}>Junior</option>
-                <option value="Mid" {{ 'selected' if currentFilters.band == 'Mid' }}>Mid</option>
-                <option value="Senior" {{ 'selected' if currentFilters.band == 'Senior' }}>Senior</option>
-                <option value="Principal" {{ 'selected' if currentFilters.band == 'Principal' }}>Principal</option>
+                {% for option in filterOptions.bands %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.band == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
               </select>
             </div>
             <!-- Status Filter -->
@@ -108,9 +101,11 @@
                 <span class="label-text font-medium">Status</span>
               </label>
               <select id="status-filter" name="status" class="select select-bordered w-full">
-                <option value="">All Status</option>
-                <option value="open" {{ 'selected' if currentFilters.status == 'open' }}>Open</option>
-                <option value="closed" {{ 'selected' if currentFilters.status == 'closed' }}>Closed</option>
+                {% for option in filterOptions.statuses %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.status == option.value and option.value != '' }}>
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -275,14 +270,12 @@
         {% endfor %}
       </div>
       <!-- Pagination Controls -->
-      {% if pagination and pagination.totalPages > 1 %}
+      {% if paginationData and paginationData.totalPages > 1 %}
         <div
           class="flex justify-center items-center gap-2 mt-8">
           <!-- Previous Button -->
-          {% if pagination.currentPage > 1 %}
-            <a
-              href="?page={{ pagination.currentPage - 1 }}{% if currentFilters.search %}&search={{ currentFilters.search }}{% endif %}{% if currentFilters.capability %}&capability={{ currentFilters.capability }}{% endif %}{% if currentFilters.band %}&band={{ currentFilters.band }}{% endif %}{% if currentFilters.location %}&location={{ currentFilters.location }}{% endif %}{% if currentFilters.status %}&status={{ currentFilters.status }}{% endif %}{% if currentFilters.sortBy %}&sortBy={{ currentFilters.sortBy }}{% endif %}{% if currentFilters.sortOrder %}&sortOrder={{ currentFilters.sortOrder }}{% endif %}"
-              class="btn btn-outline btn-sm gap-2">
+          {% if paginationData.hasPrevious %}
+            <a href="{{ paginationData.previousUrl }}" class="btn btn-outline btn-sm gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
               </svg>
@@ -298,23 +291,21 @@
           {% endif %}
           <!-- Page Numbers -->
           <div class="flex gap-1">
-            {% for pageNum in range(1, pagination.totalPages + 1) %}
-              {% if pageNum == pagination.currentPage %}
-                <button class="btn btn-primary btn-sm">{{ pageNum }}</button>
-              {% elif pageNum == 1 or pageNum == pagination.totalPages or (pageNum >= pagination.currentPage - 1 and pageNum <= pagination.currentPage + 1) %}
-                <a
-                  href="?page={{ pageNum }}{% if currentFilters.search %}&search={{ currentFilters.search }}{% endif %}{% if currentFilters.capability %}&capability={{ currentFilters.capability }}{% endif %}{% if currentFilters.band %}&band={{ currentFilters.band }}{% endif %}{% if currentFilters.location %}&location={{ currentFilters.location }}{% endif %}{% if currentFilters.status %}&status={{ currentFilters.status }}{% endif %}{% if currentFilters.sortBy %}&sortBy={{ currentFilters.sortBy }}{% endif %}{% if currentFilters.sortOrder %}&sortOrder={{ currentFilters.sortOrder }}{% endif %}"
-                  class="btn btn-outline btn-sm">{{ pageNum }}</a>
-              {% elif pageNum == pagination.currentPage - 2 or pageNum == pagination.currentPage + 2 %}
+            {% for pageLink in paginationData.pageLinks %}
+              {% if pageLink.isEllipsis %}
                 <span class="btn btn-sm btn-ghost btn-disabled">...</span>
+              {% elif pageLink.isActive %}
+                <button class="btn btn-primary btn-sm">{{ pageLink.page }}</button>
+              {% else %}
+                <a href="{{ pageLink.url }}" class="btn btn-outline btn-sm">
+                  {{ pageLink.page }}
+                </a>
               {% endif %}
             {% endfor %}
           </div>
           <!-- Next Button -->
-          {% if pagination.currentPage < pagination.totalPages %}
-            <a
-              href="?page={{ pagination.currentPage + 1 }}{% if currentFilters.search %}&search={{ currentFilters.search }}{% endif %}{% if currentFilters.capability %}&capability={{ currentFilters.capability }}{% endif %}{% if currentFilters.band %}&band={{ currentFilters.band }}{% endif %}{% if currentFilters.location %}&location={{ currentFilters.location }}{% endif %}{% if currentFilters.status %}&status={{ currentFilters.status }}{% endif %}{% if currentFilters.sortBy %}&sortBy={{ currentFilters.sortBy }}{% endif %}{% if currentFilters.sortOrder %}&sortOrder={{ currentFilters.sortOrder }}{% endif %}"
-              class="btn btn-outline btn-sm gap-2">
+          {% if paginationData.hasNext %}
+            <a href="{{ paginationData.nextUrl }}" class="btn btn-outline btn-sm gap-2">
               Next
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

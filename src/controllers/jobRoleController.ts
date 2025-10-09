@@ -1,8 +1,10 @@
 import type { Request, Response } from "express";
+import { FILTER_OPTIONS } from "../config/filterOptions.js";
 import type {
   JobFilterParams,
   JobRoleservice,
 } from "../services/interfaces.js";
+import { buildPaginationData } from "../utils/urlBuilder.js";
 
 export class JobRoleController {
   constructor(private jobRoleService: JobRoleservice) {}
@@ -50,12 +52,24 @@ export class JobRoleController {
       // Call the filtered jobs method
       const response = await this.jobRoleService.getFilteredJobs(filters);
 
+      // Build pagination data with URLs
+      const paginationData = response.pagination
+        ? buildPaginationData(
+            response.pagination.currentPage,
+            response.pagination.totalPages,
+            response.pagination.totalItems,
+            filters
+          )
+        : null;
+
       res.render("job-role-list", {
         title: "Available Job Roles",
         jobRoles: response.jobs,
         pagination: response.pagination,
+        paginationData,
         appliedFilters: response.filters,
         currentFilters: filters,
+        filterOptions: FILTER_OPTIONS,
         timestamp: new Date().toISOString(),
       });
     } catch (error) {
