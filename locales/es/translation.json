@@ -116,7 +116,11 @@
   "footer": {
     "madeWith": "Hecho con ❤️ por Kainos",
     "copyright": "© 2025 Sistema de Solicitud de Empleo. Todos los derechos reservados.",
-    "allRightsReserved": "Todos los derechos reservados"
+    "allRightsReserved": "Todos los derechos reservados",
+    "contactUs": "Contáctanos",
+    "followUs": "Síguenos",
+    "phone": "Teléfono",
+    "email": "Correo Electrónico"
   },
   "common": {
     "error": "Error",

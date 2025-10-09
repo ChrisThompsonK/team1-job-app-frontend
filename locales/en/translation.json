@@ -116,7 +116,11 @@
   "footer": {
     "madeWith": "Made with ❤️ by Kainos",
     "copyright": "© 2025 Job Application System. All rights reserved.",
-    "allRightsReserved": "All rights reserved"
+    "allRightsReserved": "All rights reserved",
+    "contactUs": "Contact Us",
+    "followUs": "Follow Us",
+    "phone": "Phone",
+    "email": "Email"
   },
   "common": {
     "error": "Error",
