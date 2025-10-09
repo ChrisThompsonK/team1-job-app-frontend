@@ -53,6 +53,11 @@ app.get("/health", (_req: Request, res: Response) => {
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/:id", jobRoleController.getJobRoleDetail);
+app.get("/job-roles/:id/edit", jobRoleController.getJobRoleEdit);
+app.post("/job-roles/:id/edit", (req, res, next) => {
+  console.log("[ROUTE] POST /job-roles/:id/edit called with ID:", req.params.id);
+  jobRoleController.updateJobRole(req, res).catch(next);
+});
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
 app.listen(port, () => {

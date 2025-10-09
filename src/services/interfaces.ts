@@ -36,6 +36,7 @@ export interface JobRoleservice {
     name: string
   ): JobRole | undefined | Promise<JobRole | undefined>;
   deleteJobById(id: string): Promise<boolean>;
+  updateJobById(id: number, jobData: any): Promise<JobRole | null>;
   getFilteredJobs(
     filters?: JobFilterParams
   ): Promise<FilteredJobsResponse> | FilteredJobsResponse;

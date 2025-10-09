@@ -31,6 +31,21 @@ export class JobRoleMemoryService implements JobRoleservice {
     return this.jobRoles.length < initialLength;
   }
 
+  async updateJobById(id: number, jobData: any): Promise<JobRole | null> {
+    const jobIndex = this.jobRoles.findIndex((job) => job.id === id);
+    if (jobIndex === -1) {
+      return null;
+    }
+
+    // Update the job with the new data, preserving existing required fields
+    this.jobRoles[jobIndex] = { 
+      ...this.jobRoles[jobIndex], 
+      ...jobData 
+    } as JobRole;
+    
+    return this.jobRoles[jobIndex];
+  }
+
   getFilteredJobs(filters?: JobFilterParams): FilteredJobsResponse {
     // In-memory filtering implementation
     let filteredJobs = [...this.jobRoles];
