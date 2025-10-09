@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { FILTER_OPTIONS } from "../config/filterOptions.js";
 import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type { JobRoleFormData } from "../models/job-role.js";
+import { JobRoleFormProcessor } from "../models/job-role.js";
 import type {
   JobFilterParams,
   JobRoleservice,
@@ -275,63 +276,28 @@ export class JobRoleController {
         return;
       }
 
-      // Extract form data with proper type handling
-      const {
-        jobRoleName,
-        location,
-        capability,
-        band,
-        status,
-        numberOfOpenPositions,
-        closingDate,
-        jobSpecLink,
-        description,
-        responsibilities,
-      } = req.body;
-
-      // Validate form data using the validator
-      const validationResult = this.jobRoleValidator.validateRequiredFields(
+      // Use model-based validation and processing
+      const modelValidationResult = JobRoleFormProcessor.validateFormData(
         req.body
       );
-      if (!validationResult.isValid) {
+      if (!modelValidationResult.isValid) {
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {
           title: `Edit ${jobRole?.name || "Job Role"}`,
           job: jobRole,
-          error: validationResult.errors.join(", "),
+          error: modelValidationResult.errors.join(", "),
           timestamp: new Date().toISOString(),
         });
         return;
       }
 
-      // Prepare job data for update with proper type conversions
-      const jobData = {
-        jobRoleName,
-        location,
-        capability,
-        band,
-        status,
-        numberOfOpenPositions:
-          typeof numberOfOpenPositions === "string"
-            ? parseInt(numberOfOpenPositions, 10)
-            : numberOfOpenPositions,
-        closingDate: closingDate, // Keep as string, don't convert to Date object
-        description,
-        responsibilities:
-          typeof responsibilities === "string"
-            ? responsibilities.split(",").map((r: string) => r.trim())
-            : responsibilities,
-      };
+      // Process form data using the model utility
+      const processedJobData = JobRoleFormProcessor.processFormData(req.body);
 
-      // Add jobSpecLink only if provided
-      if (jobSpecLink && jobSpecLink.trim()) {
-        (jobData as any).jobSpecLink = jobSpecLink.trim();
-      }
-
-      // Update the job
+      // Update the job using the processed data
       const updatedJob = await this.jobRoleService.updateJobById(
         jobId,
-        jobData
+        processedJobData
       );
 
       if (updatedJob) {
