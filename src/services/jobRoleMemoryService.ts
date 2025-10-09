@@ -1,5 +1,5 @@
 import { PAGINATION_CONFIG } from "../config/pagination.js";
-import type { JobRole } from "../models/job-role.js";
+import type { CreateJobRoleData, JobRole } from "../models/job-role.js";
 import type {
   FilteredJobsResponse,
   JobFilterParams,
@@ -32,7 +32,10 @@ export class JobRoleMemoryService implements JobRoleservice {
     return this.jobRoles.length < initialLength;
   }
 
-  async updateJobById(id: number, jobData: any): Promise<JobRole | null> {
+  async updateJobById(
+    id: number,
+    jobData: CreateJobRoleData
+  ): Promise<JobRole | null> {
     const jobIndex = this.jobRoles.findIndex((job) => job.id === id);
     if (jobIndex === -1) {
       return null;

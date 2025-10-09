@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { FILTER_OPTIONS } from "../config/filterOptions.js";
 import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type { JobRoleFormData } from "../models/job-role.js";
-import { JobRoleFormProcessor } from "../models/job-role.js";
+import { processFormData, validateFormData } from "../models/job-role.js";
 import type {
   JobFilterParams,
   JobRoleservice,
@@ -13,7 +13,7 @@ import type { JobRoleValidator } from "../validators/JobRoleValidator.js";
 export class JobRoleController {
   constructor(
     private jobRoleService: JobRoleservice,
-    private jobRoleValidator: JobRoleValidator
+    _jobRoleValidator: JobRoleValidator
   ) {}
 
   /**
@@ -250,7 +250,7 @@ export class JobRoleController {
    * POST /job-roles/:id/edit
    */
   public updateJobRole = async (
-    req: Request<{ id: string }, any, JobRoleFormData>,
+    req: Request<{ id: string }, Record<string, never>, JobRoleFormData>,
     res: Response
   ): Promise<void> => {
     try {
@@ -277,9 +277,7 @@ export class JobRoleController {
       }
 
       // Use model-based validation and processing
-      const modelValidationResult = JobRoleFormProcessor.validateFormData(
-        req.body
-      );
+      const modelValidationResult = validateFormData(req.body);
       if (!modelValidationResult.isValid) {
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {
@@ -292,7 +290,7 @@ export class JobRoleController {
       }
 
       // Process form data using the model utility
-      const processedJobData = JobRoleFormProcessor.processFormData(req.body);
+      const processedJobData = processFormData(req.body);
 
       // Update the job using the processed data
       const updatedJob = await this.jobRoleService.updateJobById(
