@@ -188,12 +188,6 @@ export class JobRoleController {
    * POST /job-roles/:id/edit
    */
   public updateJobRole = async (req: Request, res: Response): Promise<void> => {
-    console.log(
-      "[Controller] updateJobRole called with params:",
-      req.params,
-      "and body:",
-      req.body
-    );
     try {
       const jobIdParam = req.params.id;
 
@@ -275,23 +269,15 @@ export class JobRoleController {
       }
 
       // Update the job
-      console.log(`[Controller] Updating job ${jobId} with data:`, jobData);
       const updatedJob = await this.jobRoleService.updateJobById(
         jobId,
         jobData
       );
-      console.log(`[Controller] Result from service:`, updatedJob);
 
       if (updatedJob) {
         // Success - redirect back to job roles list with success message
-        console.log(
-          `[Controller] Update successful, redirecting to /job-roles`
-        );
         res.redirect("/job-roles?message=Job updated successfully");
       } else {
-        console.log(
-          `[Controller] Update failed - service returned null/undefined`
-        );
         // Error from service - re-render form with error
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {

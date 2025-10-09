@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import type { Request, Response } from "express";
 import express from "express";
-import * as middleware from "i18next-http-middleware";
+import { handle as i18nextHandle } from "i18next-http-middleware";
 import nunjucks from "nunjucks";
 import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // Add i18n middleware
-app.use(middleware.handle(i18next));
+app.use(i18nextHandle(i18next));
 
 // Middleware to expose i18n to templates via res.locals
 app.use((req, res, next) => {
@@ -80,10 +80,6 @@ app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/:id", jobRoleController.getJobRoleDetail);
 app.get("/job-roles/:id/edit", jobRoleController.getJobRoleEdit);
 app.post("/job-roles/:id/edit", (req, res, next) => {
-  console.log(
-    "[ROUTE] POST /job-roles/:id/edit called with ID:",
-    req.params.id
-  );
   jobRoleController.updateJobRole(req, res).catch(next);
 });
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
