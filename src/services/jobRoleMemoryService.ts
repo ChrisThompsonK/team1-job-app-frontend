@@ -1,3 +1,4 @@
+import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type { JobRole } from "../models/job-role.js";
 import type {
   FilteredJobsResponse,
@@ -148,7 +149,7 @@ export class JobRoleMemoryService implements JobRoleservice {
 
     // Pagination
     const page = filters?.page || 1;
-    const limit = filters?.limit || 10;
+    const limit = filters?.limit || PAGINATION_CONFIG.defaultItemsPerPage;
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
     const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
