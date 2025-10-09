@@ -5,12 +5,13 @@ import type { Request, Response } from "express";
 import express from "express";
 import * as middleware from "i18next-http-middleware";
 import nunjucks from "nunjucks";
+import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = env.port;
 
 // Configure Nunjucks
 const _nunjucksEnv = nunjucks.configure(path.join(process.cwd(), "views"), {
@@ -55,8 +56,7 @@ app.use((_req, res, next) => {
 });
 // Initialize services and controllers with dependency injection
 // SWITCHED TO API SERVICE TO CONNECT TO BACKEND
-const backendURL = process.env.BACKEND_URL || "http://localhost:3001/api";
-const jobRoleService = new JobRoleApiService(backendURL);
+const jobRoleService = new JobRoleApiService(env.backendUrl);
 const jobRoleController = new JobRoleController(jobRoleService);
 
 // Language change endpoint
