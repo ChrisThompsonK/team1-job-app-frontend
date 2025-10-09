@@ -97,7 +97,7 @@ export class JobRoleApiService implements JobRoleservice {
   async updateJobById(id: number, jobData: any): Promise<JobRole | null> {
     try {
       console.log(`[API] Updating job ${id} with data:`, jobData);
-      
+
       // The jobData is already in the backend format from the controller
       const response = await axios.put<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`,
@@ -113,7 +113,9 @@ export class JobRoleApiService implements JobRoleservice {
         console.log(`[API] Mapped job:`, mappedJob);
         return mappedJob || null;
       } else {
-        console.log(`[API] No data in response, checking if update was successful`);
+        console.log(
+          `[API] No data in response, checking if update was successful`
+        );
         // If no data but successful response, try to fetch the updated job
         if (response.status === 200) {
           console.log(`[API] Update successful, fetching updated job`);
@@ -121,7 +123,7 @@ export class JobRoleApiService implements JobRoleservice {
           return fetchedJob || null;
         }
       }
-      
+
       return null;
     } catch (error) {
       console.error(`Error updating job with ID ${id}:`, error);

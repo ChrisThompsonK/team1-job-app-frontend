@@ -188,7 +188,12 @@ export class JobRoleController {
    * POST /job-roles/:id/edit
    */
   public updateJobRole = async (req: Request, res: Response): Promise<void> => {
-    console.log("[Controller] updateJobRole called with params:", req.params, "and body:", req.body);
+    console.log(
+      "[Controller] updateJobRole called with params:",
+      req.params,
+      "and body:",
+      req.body
+    );
     try {
       const jobIdParam = req.params.id;
 
@@ -205,7 +210,7 @@ export class JobRoleController {
 
       if (Number.isNaN(jobId)) {
         res.status(400).render("error", {
-          title: "Invalid Request", 
+          title: "Invalid Request",
           message: "Job ID must be a valid number",
           error: "The provided job ID is not a valid number.",
         });
@@ -223,18 +228,27 @@ export class JobRoleController {
         closingDate,
         jobSpecLink,
         description,
-        responsibilities
+        responsibilities,
       } = req.body;
 
       // Validate required fields (jobSpecLink is now optional)
-      if (!jobRoleName || !location || !capability || !band || !status || 
-          !numberOfOpenPositions || !closingDate || 
-          !description || !responsibilities) {
+      if (
+        !jobRoleName ||
+        !location ||
+        !capability ||
+        !band ||
+        !status ||
+        !numberOfOpenPositions ||
+        !closingDate ||
+        !description ||
+        !responsibilities
+      ) {
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {
-          title: `Edit ${jobRole?.name || 'Job Role'}`,
+          title: `Edit ${jobRole?.name || "Job Role"}`,
           job: jobRole,
-          error: "Required fields are missing. Please fill in all required form fields.",
+          error:
+            "Required fields are missing. Please fill in all required form fields.",
           timestamp: new Date().toISOString(),
         });
         return;
@@ -250,7 +264,9 @@ export class JobRoleController {
         numberOfOpenPositions: parseInt(numberOfOpenPositions, 10),
         closingDate: closingDate, // Keep as string, don't convert to Date object
         description,
-        responsibilities: responsibilities.split(',').map((r: string) => r.trim())
+        responsibilities: responsibilities
+          .split(",")
+          .map((r: string) => r.trim()),
       };
 
       // Add jobSpecLink only if provided
@@ -260,19 +276,26 @@ export class JobRoleController {
 
       // Update the job
       console.log(`[Controller] Updating job ${jobId} with data:`, jobData);
-      const updatedJob = await this.jobRoleService.updateJobById(jobId, jobData);
+      const updatedJob = await this.jobRoleService.updateJobById(
+        jobId,
+        jobData
+      );
       console.log(`[Controller] Result from service:`, updatedJob);
 
       if (updatedJob) {
         // Success - redirect back to job roles list with success message
-        console.log(`[Controller] Update successful, redirecting to /job-roles`);
+        console.log(
+          `[Controller] Update successful, redirecting to /job-roles`
+        );
         res.redirect("/job-roles?message=Job updated successfully");
       } else {
-        console.log(`[Controller] Update failed - service returned null/undefined`);
+        console.log(
+          `[Controller] Update failed - service returned null/undefined`
+        );
         // Error from service - re-render form with error
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {
-          title: `Edit ${jobRole?.name || 'Job Role'}`,
+          title: `Edit ${jobRole?.name || "Job Role"}`,
           job: jobRole,
           error: "Failed to update job role. Please try again.",
           timestamp: new Date().toISOString(),
@@ -280,24 +303,27 @@ export class JobRoleController {
       }
     } catch (error) {
       console.error("Error updating job role:", error);
-      
+
       // Try to re-render the form with error message
       try {
         const jobIdParam = req.params.id;
         if (jobIdParam) {
           const jobId = parseInt(jobIdParam, 10);
           const jobRole = await this.jobRoleService.getJobById(jobId);
-          
+
           res.status(500).render("job-role-edit", {
-            title: `Edit ${jobRole?.name || 'Job Role'}`,
+            title: `Edit ${jobRole?.name || "Job Role"}`,
             job: jobRole,
-            error: error instanceof Error ? error.message : "An error occurred while updating the job role",
+            error:
+              error instanceof Error
+                ? error.message
+                : "An error occurred while updating the job role",
             timestamp: new Date().toISOString(),
           });
         } else {
           throw new Error("Missing job ID");
         }
-      } catch (renderError) {
+      } catch (_renderError) {
         // If we can't even render the form, show generic error page
         res.status(500).render("error", {
           title: "Update Failed",

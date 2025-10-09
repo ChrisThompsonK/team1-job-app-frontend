@@ -38,11 +38,11 @@ export class JobRoleMemoryService implements JobRoleservice {
     }
 
     // Update the job with the new data, preserving existing required fields
-    this.jobRoles[jobIndex] = { 
-      ...this.jobRoles[jobIndex], 
-      ...jobData 
+    this.jobRoles[jobIndex] = {
+      ...this.jobRoles[jobIndex],
+      ...jobData,
     } as JobRole;
-    
+
     return this.jobRoles[jobIndex];
   }
 
