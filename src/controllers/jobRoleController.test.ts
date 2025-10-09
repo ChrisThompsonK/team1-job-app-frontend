@@ -91,11 +91,11 @@ describe("JobRoleController", () => {
           hasPrevious: false,
         }),
         appliedFilters: {},
-        currentFilters: {},
+        currentFilters: { limit: 12 },
         filterOptions: expect.objectContaining({
-          locations: expect.any(Array),
           capabilities: expect.any(Array),
           bands: expect.any(Array),
+          locations: expect.any(Array),
           statuses: expect.any(Array),
         }),
         timestamp: expect.any(String),
@@ -201,7 +201,7 @@ describe("JobRoleController", () => {
       );
 
       expect(serviceSpy).toHaveBeenCalledOnce();
-      expect(serviceSpy).toHaveBeenCalledWith({});
+      expect(serviceSpy).toHaveBeenCalledWith({ limit: 12 });
     });
   });
 });

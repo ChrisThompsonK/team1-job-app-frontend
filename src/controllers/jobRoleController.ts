@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { FILTER_OPTIONS } from "../config/filterOptions.js";
+import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type {
   JobFilterParams,
   JobRoleservice,
@@ -41,6 +42,9 @@ export class JobRoleController {
       }
       if (req.query.limit) {
         filters.limit = parseInt(req.query.limit as string, 10);
+      } else {
+        // Use default limit from config if not provided
+        filters.limit = PAGINATION_CONFIG.defaultItemsPerPage;
       }
       if (req.query.sortBy) {
         filters.sortBy = req.query.sortBy as string;
