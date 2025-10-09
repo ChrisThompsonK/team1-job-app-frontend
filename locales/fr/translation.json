@@ -116,7 +116,11 @@
   "footer": {
     "madeWith": "Fait avec ❤️ par Kainos",
     "copyright": "© 2025 Système de Candidature. Tous droits réservés.",
-    "allRightsReserved": "Tous droits réservés"
+    "allRightsReserved": "Tous droits réservés",
+    "contactUs": "Contactez-nous",
+    "followUs": "Suivez-nous",
+    "phone": "Téléphone",
+    "email": "E-mail"
   },
   "common": {
     "error": "Erreur",
