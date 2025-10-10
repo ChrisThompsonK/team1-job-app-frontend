@@ -12,11 +12,10 @@ export enum Capability {
 }
 
 export enum Band {
-  E1 = "E1",
-  E2 = "E2",
-  E3 = "E3",
-  E4 = "E4",
-  E5 = "E5",
+  Junior = "Junior",
+  Mid = "Mid",
+  Senior = "Senior",
+  Principal = "Principal",
 }
 
 export enum JobStatus {
@@ -100,56 +99,4 @@ export function processFormData(formData: JobRoleFormData): CreateJobRoleData {
   }
 
   return processedData;
-}
-
-/**
- * Validates that form data contains all required fields
- * @param formData - Form data to validate
- * @returns Validation result with details
- */
-export function validateFormData(formData: Partial<JobRoleFormData>): {
-  isValid: boolean;
-  errors: string[];
-} {
-  const errors: string[] = [];
-
-  if (!formData.jobRoleName?.trim()) {
-    errors.push("Job role name is required");
-  }
-  if (!formData.location?.trim()) {
-    errors.push("Location is required");
-  }
-  if (!formData.capability) {
-    errors.push("Capability is required");
-  }
-  if (!formData.band) {
-    errors.push("Band is required");
-  }
-  if (!formData.status) {
-    errors.push("Status is required");
-  }
-  if (
-    !formData.numberOfOpenPositions ||
-    parseInt(formData.numberOfOpenPositions.toString(), 10) < 1
-  ) {
-    errors.push("Number of open positions must be a positive number");
-  }
-  if (!formData.closingDate) {
-    errors.push("Closing date is required");
-  }
-  if (!formData.description?.trim()) {
-    errors.push("Description is required");
-  }
-  if (
-    !formData.responsibilities ||
-    (Array.isArray(formData.responsibilities) &&
-      formData.responsibilities.length === 0)
-  ) {
-    errors.push("Responsibilities are required");
-  }
-
-  return {
-    isValid: errors.length === 0,
-    errors,
-  };
 }

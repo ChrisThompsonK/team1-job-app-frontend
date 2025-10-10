@@ -77,8 +77,8 @@ export class JobRoleValidator {
       errors: isValid
         ? []
         : [
-            `Invalid capability. Must be one of: ${validCapabilities.join(", ")}`,
-          ],
+          `Invalid capability. Must be one of: ${validCapabilities.join(", ")}`,
+        ],
     };
   }
 
@@ -106,7 +106,11 @@ export class JobRoleValidator {
    */
   validateStatus(status: string): ValidationResult {
     const validStatuses = Object.values(JobStatus);
-    const isValid = validStatuses.includes(status as JobStatus);
+    // Check case-insensitively since the API accepts lowercase
+    const normalizedStatus = status.toLowerCase();
+    const isValid = validStatuses.some(
+      (validStatus) => validStatus.toLowerCase() === normalizedStatus
+    );
 
     return {
       isValid,

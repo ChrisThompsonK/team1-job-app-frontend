@@ -1,248 +1,206 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-    Edit Job Role - {{ job.name }}
+  Edit Job Role - {{ job.name }}
 {% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="/css/job-roles.css">
-{% endblock %}
-{% block body_attributes %}
+  <link rel="stylesheet" href="/css/job-roles.css">
+  {% endblock %}
+  {% block body_attributes %}
     class="job-roles-page"{% endblock %}
-{% block main_attributes %}
+  {% block main_attributes %}
     class="container mx-auto px-4 py-8"{% endblock %}
-{% block content %}
+  {% block content %}
     <!-- Page Header -->
     <div class="mb-8">
-        <div class="flex items-center gap-4 mb-4">
-            <a href="/job-roles" class="btn btn-ghost btn-sm gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-                Back to Job Roles
-            </a>
-        </div>
-        <h1 class="text-4xl font-bold text-base-content mb-2">Edit Job Role</h1>
-        <p class="text-base-content/70">Update the details for this job role</p>
+      <div class="flex items-center gap-4 mb-4">
+        <a href="/job-roles" class="btn btn-ghost btn-sm gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Job Roles
+        </a>
+      </div>
+      <h1 class="text-4xl font-bold text-base-content mb-2">Edit Job Role</h1>
+      <p class="text-base-content/70">Update the details for this job role</p>
     </div>
-
     <!-- Edit Form -->
     <div class="card bg-base-100 shadow-lg">
-        <div class="card-body">
-            <form id="editJobForm" method="POST" action="/job-roles/{{ job.id }}/edit">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Job Name -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">Job Role Name *</span>
-                        </label>
-                        <input type="text" 
-                               name="jobRoleName" 
-                               id="jobRoleName" 
-                               class="input input-bordered" 
-                               value="{{ job.name }}" 
-                               required />
-                    </div>
-
-                    <!-- Location -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">Location *</span>
-                        </label>
-                        <input type="text" 
-                               name="location" 
-                               id="location" 
-                               class="input input-bordered" 
-                               value="{{ job.location }}" 
-                               required />
-                    </div>
-
-                    <!-- Capability -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">Capability *</span>
-                        </label>
-                        <select name="capability" id="capability" class="select select-bordered" required>
-                            <option value="">Select Capability</option>
-                            <option value="Engineering" {% if job.capability == "Engineering" %}selected{% endif %}>Engineering</option>
-                            <option value="Data" {% if job.capability == "Data" %}selected{% endif %}>Data</option>
-                            <option value="Workday" {% if job.capability == "Workday" %}selected{% endif %}>Workday</option>
-                            <option value="Product" {% if job.capability == "Product" %}selected{% endif %}>Product</option>
-                            <option value="Data & Analytics" {% if job.capability == "Data & Analytics" %}selected{% endif %}>Data & Analytics</option>
-                            <option value="Design" {% if job.capability == "Design" %}selected{% endif %}>Design</option>
-                            <option value="Platform" {% if job.capability == "Platform" %}selected{% endif %}>Platform</option>
-                            <option value="Quality" {% if job.capability == "Quality" %}selected{% endif %}>Quality</option>
-                            <option value="Architecture" {% if job.capability == "Architecture" %}selected{% endif %}>Architecture</option>
-                            <option value="Business Analysis" {% if job.capability == "Business Analysis" %}selected{% endif %}>Business Analysis</option>
-                            <option value="Security" {% if job.capability == "Security" %}selected{% endif %}>Security</option>
-                        </select>
-                    </div>
-
-                    <!-- Band -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">Band *</span>
-                        </label>
-                        <select name="band" id="band" class="select select-bordered" required>
-                            <option value="">Select Band</option>
-                            <option value="Junior" {% if job.band == "Junior" %}selected{% endif %}>Junior</option>
-                            <option value="Mid" {% if job.band == "Mid" %}selected{% endif %}>Mid</option>
-                            <option value="Senior" {% if job.band == "Senior" %}selected{% endif %}>Senior</option>
-                            <option value="Principal" {% if job.band == "Principal" %}selected{% endif %}>Principal</option>
-                        </select>
-                    </div>
-
-                    <!-- Status -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">Status *</span>
-                        </label>
-                        <select name="status" id="status" class="select select-bordered" required>
-                            <option value="">Select Status</option>
-                            <option value="open" {% if job.status == "open" %}selected{% endif %}>Open</option>
-                            <option value="closed" {% if job.status == "closed" %}selected{% endif %}>Closed</option>
-                        </select>
-                    </div>
-
-                    <!-- Number of Positions -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">Number of Positions *</span>
-                        </label>
-                        <input type="number" 
-                               name="numberOfOpenPositions" 
-                               id="numberOfOpenPositions" 
-                               class="input input-bordered" 
-                               value="{{ job.numberOfOpenPositions }}" 
-                               min="0" 
-                               required />
-                    </div>
-
-                    <!-- Closing Date -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">Closing Date *</span>
-                        </label>
-                        <input type="date" 
-                               name="closingDate" 
-                               id="closingDate" 
-                               class="input input-bordered" 
-                               value="{{ job.closingDate.toISOString().split('T')[0] if job.closingDate else '' }}" 
-                               required />
-                    </div>
-
-                    <!-- Job Spec Link -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">Job Specification Link</span>
-                        </label>
-                        <input type="url" 
-                               name="jobSpecLink" 
-                               id="jobSpecLink" 
-                               class="input input-bordered" 
-                               value="{{ job.jobSpecLink }}" 
-                               placeholder="https://company.com/careers/job-spec (optional)" />
-                        <div class="label">
-                            <span class="label-text-alt">Optional - Link to detailed job specification</span>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">Description *</span>
-                        </label>
-                        <textarea name="description" 
-                                  id="description" 
-                                  class="textarea textarea-bordered h-24" 
-                                  required>{{ job.description }}</textarea>
-                    </div>
-
-                    <!-- Responsibilities -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">Responsibilities *</span>
-                        </label>
-                        <textarea name="responsibilities" 
-                                  id="responsibilities" 
-                                  class="textarea textarea-bordered h-32" 
-                                  placeholder="Enter responsibilities separated by commas" 
-                                  required>{% if job.responsibilities %}{{ job.responsibilities.join(', ') if job.responsibilities is iterable else job.responsibilities }}{% endif %}</textarea>
-                        <div class="label">
-                            <span class="label-text-alt">Separate multiple responsibilities with commas</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Actions -->
-                <div class="flex justify-end gap-4 mt-8">
-                    <a href="/job-roles" class="btn btn-outline">Cancel</a>
-                    <button type="submit" class="btn btn-primary gap-2" id="saveBtn">
-                        <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        Save Changes
-                    </button>
-                </div>
-            </form>
-        </div>
+      <div class="card-body">
+        <form id="editJobForm" method="POST" action="/job-roles/{{ job.id }}/edit">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Job Name -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Job Role Name *</span>
+              </label>
+              <input type="text" name="jobRoleName" id="jobRoleName" class="input input-bordered" value="{{ job.name }}" required/>
+            </div>
+            <!-- Location -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Location *</span>
+              </label>
+              <input type="text" name="location" id="location" class="input input-bordered" value="{{ job.location }}" required/>
+            </div>
+            <!-- Capability -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Capability *</span>
+              </label>
+              <select name="capability" id="capability" class="select select-bordered" required>
+                <option value="">Select Capability</option>
+                <option value="Engineering" {% if job.capability == "Engineering" %} selected {% endif %}>Engineering</option>
+                <option value="Data" {% if job.capability == "Data" %} selected {% endif %}>Data</option>
+                <option value="Workday" {% if job.capability == "Workday" %} selected {% endif %}>Workday</option>
+                <option value="Product" {% if job.capability == "Product" %} selected {% endif %}>Product</option>
+                <option value="Data & Analytics" {% if job.capability == "Data & Analytics" %} selected {% endif %}>Data & Analytics</option>
+                <option value="Design" {% if job.capability == "Design" %} selected {% endif %}>Design</option>
+                <option value="Platform" {% if job.capability == "Platform" %} selected {% endif %}>Platform</option>
+                <option value="Quality" {% if job.capability == "Quality" %} selected {% endif %}>Quality</option>
+                <option value="Architecture" {% if job.capability == "Architecture" %} selected {% endif %}>Architecture</option>
+                <option value="Business Analysis" {% if job.capability == "Business Analysis" %} selected {% endif %}>Business Analysis</option>
+                <option value="Security" {% if job.capability == "Security" %} selected {% endif %}>Security</option>
+              </select>
+            </div>
+            <!-- Band -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Band *</span>
+              </label>
+              <select name="band" id="band" class="select select-bordered" required>
+                <option value="">Select Band</option>
+                <option value="Junior" {% if job.band == "Junior" %} selected {% endif %}>Junior</option>
+                <option value="Mid" {% if job.band == "Mid" %} selected {% endif %}>Mid</option>
+                <option value="Senior" {% if job.band == "Senior" %} selected {% endif %}>Senior</option>
+                <option value="Principal" {% if job.band == "Principal" %} selected {% endif %}>Principal</option>
+              </select>
+            </div>
+            <!-- Status -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Status *</span>
+              </label>
+              <select name="status" id="status" class="select select-bordered" required>
+                <option value="">Select Status</option>
+                <option value="open" {% if job.status == "Open" %} selected {% endif %}>Open</option>
+                <option value="closed" {% if job.status == "Closed" %} selected {% endif %}>Closed</option>
+              </select>
+            </div>
+            <!-- Number of Positions -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Number of Positions *</span>
+              </label>
+              <input type="number" name="numberOfOpenPositions" id="numberOfOpenPositions" class="input input-bordered" value="{{ job.numberOfOpenPositions }}" min="0" required/>
+            </div>
+            <!-- Closing Date -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Closing Date *</span>
+              </label>
+              <input type="date" name="closingDate" id="closingDate" class="input input-bordered" value="{{ job.closingDate.toISOString().split('T')[0] if job.closingDate else '' }}" required/>
+            </div>
+            <!-- Job Spec Link -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Job Specification Link</span>
+              </label>
+              <input type="url" name="jobSpecLink" id="jobSpecLink" class="input input-bordered" value="{{ job.jobSpecLink }}" placeholder="https://company.com/careers/job-spec (optional)"/>
+              <div class="label">
+                <span class="label-text-alt">Optional - Link to detailed job specification</span>
+              </div>
+            </div>
+            <!-- Description -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Description *</span>
+              </label>
+              <textarea name="description" id="description" class="textarea textarea-bordered h-24" required>{{ job.description }}</textarea>
+            </div>
+            <!-- Responsibilities -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Responsibilities *</span>
+              </label>
+              <textarea
+                name="responsibilities"
+                id="responsibilities"
+                class="textarea textarea-bordered h-32"
+                placeholder="Enter responsibilities separated by commas"
+                required>
+                {% if job.responsibilities %}
+                  {{ job.responsibilities.join(', ') if job.responsibilities is iterable else job.responsibilities }}
+                {% endif %}
+              </textarea>
+              <div class="label">
+                <span class="label-text-alt">Separate multiple responsibilities with commas</span>
+              </div>
+            </div>
+          </div>
+          <!-- Form Actions -->
+          <div class="flex justify-end gap-4 mt-8">
+            <a href="/job-roles" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-primary gap-2" id="saveBtn">
+              <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-
     <!-- Success/Error Messages -->
     {% if success %}
-        <div class="alert alert-success mt-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span>{{ success }}</span>
-        </div>
+      <div class="alert alert-success mt-6">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span>{{ success }}</span>
+      </div>
     {% endif %}
-
     {% if error %}
-        <div class="alert alert-error mt-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-            <span>{{ error }}</span>
-        </div>
+      <div class="alert alert-error mt-6">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        <span>{{ error }}</span>
+      </div>
     {% endif %}
-{% endblock %}
-
-{% block scripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+  {% endblock %}
+  {% block scripts %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('editJobForm');
         const saveBtn = document.getElementById('saveBtn');
         const loadingSpinner = document.getElementById('loadingSpinner');
-
-        form.addEventListener('submit', function(event) {
-            // Show loading state
-            saveBtn.disabled = true;
-            loadingSpinner.classList.remove('hidden');
+        form.addEventListener('submit', function (event) { // Show loading state
+          saveBtn.disabled = true;
+          loadingSpinner.classList.remove('hidden');
         });
-
         // Form validation
         const requiredFields = form.querySelectorAll('[required]');
         requiredFields.forEach(field => {
-            field.addEventListener('invalid', function() {
-                this.classList.add('input-error');
-            });
-            
-            field.addEventListener('input', function() {
-                if (this.validity.valid) {
-                    this.classList.remove('input-error');
-                }
-            });
+          field.addEventListener('invalid', function () {
+            this.classList.add('input-error');
+          });
+          field.addEventListener('input', function () {
+            if (this.validity.valid) {
+              this.classList.remove('input-error');
+            }
+          });
         });
-
         // Auto-resize textareas
         const textareas = form.querySelectorAll('textarea');
         textareas.forEach(textarea => {
-            textarea.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = this.scrollHeight + 'px';
-            });
+          textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+          });
         });
-    });
-</script>
-{% endblock %}
+      });
+    </script>
+  {% endblock %}

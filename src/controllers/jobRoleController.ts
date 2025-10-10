@@ -2,15 +2,19 @@ import type { Request, Response } from "express";
 import { FILTER_OPTIONS } from "../config/filterOptions.js";
 import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type { JobRoleFormData } from "../models/job-role.js";
-import { processFormData, validateFormData } from "../models/job-role.js";
+import { processFormData } from "../models/job-role.js";
 import type {
   JobFilterParams,
   JobRoleservice,
 } from "../services/interfaces.js";
 import { buildPaginationData } from "../utils/urlBuilder.js";
+import type { JobRoleValidator } from "../validators/JobRoleValidator.js";
 
 export class JobRoleController {
-  constructor(private jobRoleService: JobRoleservice) {}
+  constructor(
+    private jobRoleService: JobRoleservice,
+    private jobRoleValidator: JobRoleValidator
+  ) {}
 
   /**
    * Renders the job roles list page with server-side filtering
@@ -272,14 +276,16 @@ export class JobRoleController {
         return;
       }
 
-      // Use model-based validation and processing
-      const modelValidationResult = validateFormData(req.body);
-      if (!modelValidationResult.isValid) {
+      // Use the comprehensive JobRoleValidator
+      const validationResult = this.jobRoleValidator.validateJobRoleFormData(
+        req.body
+      );
+      if (!validationResult.isValid) {
         const jobRole = await this.jobRoleService.getJobById(jobId);
         res.render("job-role-edit", {
           title: `Edit ${jobRole?.name || "Job Role"}`,
           job: jobRole,
-          error: modelValidationResult.errors.join(", "),
+          error: validationResult.errors.join(", "),
           timestamp: new Date().toISOString(),
         });
         return;
