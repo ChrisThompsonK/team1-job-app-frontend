@@ -77,8 +77,8 @@ export class JobRoleValidator {
       errors: isValid
         ? []
         : [
-          `Invalid capability. Must be one of: ${validCapabilities.join(", ")}`,
-        ],
+            `Invalid capability. Must be one of: ${validCapabilities.join(", ")}`,
+          ],
     };
   }
 
