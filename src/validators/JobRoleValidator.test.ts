@@ -15,7 +15,7 @@ describe("JobRoleValidator", () => {
         jobRoleName: "Software Engineer",
         location: "Belfast",
         capability: Capability.Engineering,
-        band: Band.E1,
+        band: Band.Junior,
         status: JobStatus.Open,
         numberOfOpenPositions: 5,
         closingDate: "2024-12-31",
@@ -76,7 +76,7 @@ describe("JobRoleValidator", () => {
 
   describe("validateBand", () => {
     it("should return valid result for valid band", () => {
-      const result = validator.validateBand(Band.E1);
+      const result = validator.validateBand(Band.Junior);
 
       expect(result.isValid).toBe(true);
       expect(result.errors).toHaveLength(0);
@@ -223,7 +223,7 @@ describe("JobRoleValidator", () => {
         jobRoleName: "Software Engineer",
         location: "Belfast",
         capability: Capability.Engineering,
-        band: Band.E1,
+        band: Band.Junior,
         status: JobStatus.Open,
         numberOfOpenPositions: 5,
         closingDate: futureDate.toISOString().split("T")[0],

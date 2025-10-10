@@ -71,7 +71,7 @@ describe("ProvideJobRoles", () => {
       const result = ProvideJobRoles();
 
       result.forEach((jobRole) => {
-        expect([Band.E1, Band.E2, Band.E3, Band.E4, Band.E5]).toContain(
+        expect([Band.Junior, Band.Mid, Band.Senior, Band.Principal]).toContain(
           jobRole.band
         );
       });
