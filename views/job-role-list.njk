@@ -227,137 +227,19 @@
                     <span class="font-semibold">{{ job.band }}</span>
                   </span>
                 </div>
-            </div>
-        </div>
-        <!-- Job Roles Grid -->
-        {% if jobRoles and jobRoles.length > 0 %}
-            <div id="job-roles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for job in jobRoles %}
-                    <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 job-role-card"
-                         data-job-name="{{ job.name | lower }}"
-                         data-location="{{ job.location }}"
-                         data-capability="{{ job.capability }}"
-                         data-band="{{ job.band }}"
-                         data-status="{{ job.status }}"
-                         data-closing-date="{{ job.closingDate.toISOString() }}">
-                        <div class="card-body">
-                            <!-- Job Title -->
-                            <h2 class="card-title text-xl font-semibold text-primary">
-                                {{ job.name }}
-                                <!-- Status Badge -->
-                                <div class="badge badge-sm {{ 'badge-success' if job.status == 'Open' else 'badge-error' }}">
-                                    {{ job.status }}
-                                </div>
-                            </h2>
-                            <!-- Job Details -->
-                            <div class="space-y-3 mt-4">
-                                <!-- Location -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">{{ job.location }}</span>
-                                </div>
-                                <!-- Capability Badge -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1
-                                                1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    <span class="badge badge-secondary">{{ job.capability }}</span>
-                                </div>
-                                <!-- Band -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138
-                                                3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0
-                                                00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42
-                                                3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">Band:
-                                        <span class="font-semibold">{{ job.band }}</span>
-                                    </span>
-                                </div>
-                                <!-- Closing Date -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">
-                                        {{ t('jobRoles.closes') }}:
-                                        <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
-                                    </span>
-                                </div>
-                                <!-- Number of Positions -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">
-                                        <span class="font-semibold">{{ job.numberOfOpenPositions }}</span>
-                                        {{ t('jobRoles.positionsAvailable') if job.numberOfOpenPositions != 1 else t('jobRoles.positionAvailable') }}
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- Action Buttons -->
-                            <div class="card-actions justify-end mt-6 gap-2">
-                                <a href="/job-roles/{{ job.id }}/edit" class="btn btn-sm btn-outline btn-warning" 
-                                   title="Edit Job Role">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
-                                    Edit
-                                </a>
-                                <form method="POST" action="/job-roles/{{ job.id }}/delete" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete {{ job.name }}?')">
-    <button type="submit" class="btn btn-sm btn-outline btn-error" title="Delete Job Role">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-        </svg>
-        {{ t('jobRoles.delete') }}
-    </button>
-</form>
-                                <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
-                                    {{ t('jobRoles.viewDetails') }}
-                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <!-- Empty State -->
-            <div id="empty-state" class="text-center py-16">
-                <div class="max-w-md mx-auto">
-                    <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2
-                                2H10a2 2 0 00-2-2V6m8 0h2a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h2"></path>
-                    </svg>
-                    <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noJobsAvailable') }}</h3>
-                    <p class="text-base-content/60">{{ t('jobRoles.noJobsMessage') }}</p>
+                <!-- Closing Date -->
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <span class="text-base-content/80">
+                    Closes:
+                    <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
+                  </span>
                 </div>
                 <!-- Number of Positions -->
                 <div class="flex items-center gap-2">
@@ -378,7 +260,7 @@
               </div>
               <!-- Action Buttons -->
               <div class="card-actions justify-end mt-6 gap-2">
-                <button class="btn btn-sm btn-outline btn-warning" title="Edit Job Role">
+                <a href="/job-roles/{{ job.id }}/edit" class="btn btn-sm btn-outline btn-warning" title="Edit Job Role">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                     <path
                       stroke-linecap="round"
@@ -388,7 +270,7 @@
                         15H9v-2.828l8.586-8.586z"></path>
                   </svg>
                   Edit
-                </button>
+                </a>
                 <form
                   method="POST"
                   action="/job-roles/{{ job.id }}/delete"
