@@ -21,7 +21,9 @@ describe("filterOptions", () => {
       expect(FILTER_OPTIONS.capabilities).toBeDefined();
       expect(FILTER_OPTIONS.capabilities.length).toBeGreaterThan(0);
       expect(FILTER_OPTIONS.capabilities[0].value).toBe("");
-      expect(FILTER_OPTIONS.capabilities[0].label).toBe("filters.allCapabilities");
+      expect(FILTER_OPTIONS.capabilities[0].label).toBe(
+        "filters.allCapabilities"
+      );
     });
 
     it("should have at least one real capability option", () => {
