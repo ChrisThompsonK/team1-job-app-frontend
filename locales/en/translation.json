@@ -147,6 +147,48 @@
     "clear": "Clear",
     "yes": "Yes",
     "no": "No",
-    "or": "OR"
+    "or": "OR",
+    "of": "of",
+    "page": "Page"
+  },
+  "filters": {
+    "allLocations": "All Locations",
+    "allCapabilities": "All Capabilities",
+    "allBands": "All Bands",
+    "allStatuses": "All Statuses",
+    "capabilities": {
+      "dataAnalytics": "Data & Analytics",
+      "engineering": "Engineering",
+      "product": "Product",
+      "design": "Design",
+      "platform": "Platform",
+      "quality": "Quality",
+      "architecture": "Architecture",
+      "businessAnalysis": "Business Analysis",
+      "security": "Security"
+    },
+    "bands": {
+      "junior": "Junior",
+      "mid": "Mid",
+      "senior": "Senior",
+      "principal": "Principal"
+    },
+    "statuses": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "sortOptions": {
+      "default": "Default",
+      "jobTitle": "Job Title",
+      "closingDate": "Closing Date",
+      "band": "Band Level",
+      "capability": "Capability",
+      "location": "Location",
+      "datePosted": "Date Posted"
+    },
+    "sortOrders": {
+      "ascending": "Ascending (A-Z, 0-9)",
+      "descending": "Descending (Z-A, 9-0)"
+    }
   }
 }

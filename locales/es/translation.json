@@ -147,6 +147,48 @@
     "clear": "Limpiar",
     "yes": "Sí",
     "no": "No",
-    "or": "O"
+    "or": "O",
+    "of": "de",
+    "page": "Página"
+  },
+  "filters": {
+    "allLocations": "Todas las Ubicaciones",
+    "allCapabilities": "Todas las Capacidades",
+    "allBands": "Todos los Niveles",
+    "allStatuses": "Todos los Estados",
+    "capabilities": {
+      "dataAnalytics": "Datos y Análisis",
+      "engineering": "Ingeniería",
+      "product": "Producto",
+      "design": "Diseño",
+      "platform": "Plataforma",
+      "quality": "Calidad",
+      "architecture": "Arquitectura",
+      "businessAnalysis": "Análisis de Negocio",
+      "security": "Seguridad"
+    },
+    "bands": {
+      "junior": "Junior",
+      "mid": "Medio",
+      "senior": "Senior",
+      "principal": "Principal"
+    },
+    "statuses": {
+      "open": "Abierto",
+      "closed": "Cerrado"
+    },
+    "sortOptions": {
+      "default": "Predeterminado",
+      "jobTitle": "Título del Trabajo",
+      "closingDate": "Fecha de Cierre",
+      "band": "Nivel de Banda",
+      "capability": "Capacidad",
+      "location": "Ubicación",
+      "datePosted": "Fecha de Publicación"
+    },
+    "sortOrders": {
+      "ascending": "Ascendente (A-Z, 0-9)",
+      "descending": "Descendente (Z-A, 9-0)"
+    }
   }
 }

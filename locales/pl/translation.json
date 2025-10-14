@@ -147,6 +147,48 @@
     "clear": "Wyczyść",
     "yes": "Tak",
     "no": "Nie",
-    "or": "LUB"
+    "or": "LUB",
+    "of": "z",
+    "page": "Strona"
+  },
+  "filters": {
+    "allLocations": "Wszystkie Lokalizacje",
+    "allCapabilities": "Wszystkie Możliwości",
+    "allBands": "Wszystkie Poziomy",
+    "allStatuses": "Wszystkie Statusy",
+    "capabilities": {
+      "dataAnalytics": "Dane i Analityka",
+      "engineering": "Inżynieria",
+      "product": "Produkt",
+      "design": "Projektowanie",
+      "platform": "Platforma",
+      "quality": "Jakość",
+      "architecture": "Architektura",
+      "businessAnalysis": "Analiza Biznesowa",
+      "security": "Bezpieczeństwo"
+    },
+    "bands": {
+      "junior": "Junior",
+      "mid": "Średni",
+      "senior": "Senior",
+      "principal": "Główny"
+    },
+    "statuses": {
+      "open": "Otwarty",
+      "closed": "Zamknięty"
+    },
+    "sortOptions": {
+      "default": "Domyślnie",
+      "jobTitle": "Tytuł Stanowiska",
+      "closingDate": "Data Zamknięcia",
+      "band": "Poziom Pasma",
+      "capability": "Możliwość",
+      "location": "Lokalizacja",
+      "datePosted": "Data Publikacji"
+    },
+    "sortOrders": {
+      "ascending": "Rosnąco (A-Z, 0-9)",
+      "descending": "Malejąco (Z-A, 9-0)"
+    }
   }
 }
