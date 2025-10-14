@@ -85,6 +85,33 @@ export class JobRoleApiService implements JobRoleservice {
     }
   }
 
+  async createJob(jobData: CreateJobRoleData): Promise<JobRole | null> {
+    try {
+      console.log(`[API] Creating job with data:`, jobData);
+
+      const response = await axios.post<ApiResponse<JobRole>>(
+        `${this.baseURL}/jobs`,
+        jobData
+      );
+
+      console.log(`[API] Response from backend:`, response.data);
+      console.log(`[API] Response status:`, response.status);
+
+      // Check if the response has data property
+      if (response.data?.data) {
+        const mappedJob = this.mapper.mapJob(response.data.data);
+        console.log(`[API] Mapped job:`, mappedJob);
+        return mappedJob || null;
+      } else {
+        console.log(`[API] No data in response`);
+        return null;
+      }
+    } catch (error) {
+      console.error(`Error creating job:`, error);
+      return null;
+    }
+  }
+
   async deleteJobById(id: string): Promise<boolean> {
     try {
       const response = await axios.delete(`${this.baseURL}/jobs/${id}`);

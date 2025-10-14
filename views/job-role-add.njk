@@ -1,0 +1,201 @@
+{% extends "layouts/base.njk" %}
+{% set currentPage = "job-roles" %}
+{% block title %}
+  Add New Job Role
+{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/css/job-roles.css">
+  {% endblock %}
+  {% block body_attributes %}
+    class="job-roles-page"{% endblock %}
+  {% block main_attributes %}
+    class="container mx-auto px-4 py-8"{% endblock %}
+  {% block content %}
+    <!-- Page Header -->
+    <div class="mb-8">
+      <div class="flex items-center gap-4 mb-4">
+        <a href="/job-roles" class="btn btn-ghost btn-sm gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Job Roles
+        </a>
+      </div>
+      <h1 class="text-4xl font-bold text-base-content mb-2">Add New Job Role</h1>
+      <p class="text-base-content/70">Create a new job role opportunity</p>
+    </div>
+
+    <!-- Error Alert -->
+    {% if error %}
+    <div class="alert alert-error mb-6">
+      <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span>{{ error }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Add Form -->
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body">
+        <form id="addJobForm" method="POST" action="/job-roles/add">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Job Name -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Job Role Name *</span>
+              </label>
+              <input type="text" name="jobRoleName" id="jobRoleName" class="input input-bordered" value="{{ formData.jobRoleName if formData else '' }}" required/>
+            </div>
+            <!-- Location -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Location *</span>
+              </label>
+              <input type="text" name="location" id="location" class="input input-bordered" value="{{ formData.location if formData else '' }}" required/>
+            </div>
+            <!-- Capability -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Capability *</span>
+              </label>
+              <select name="capability" id="capability" class="select select-bordered" required>
+                <option value="">Select Capability</option>
+                <option value="Engineering" {% if formData and formData.capability == "Engineering" %} selected {% endif %}>Engineering</option>
+                <option value="Data" {% if formData and formData.capability == "Data" %} selected {% endif %}>Data</option>
+                <option value="Workday" {% if formData and formData.capability == "Workday" %} selected {% endif %}>Workday</option>
+                <option value="Product" {% if formData and formData.capability == "Product" %} selected {% endif %}>Product</option>
+                <option value="Data & Analytics" {% if formData and formData.capability == "Data & Analytics" %} selected {% endif %}>Data & Analytics</option>
+                <option value="Quality Engineering" {% if formData and formData.capability == "Quality Engineering" %} selected {% endif %}>Quality Engineering</option>
+                <option value="Platform" {% if formData and formData.capability == "Platform" %} selected {% endif %}>Platform</option>
+                <option value="Security" {% if formData and formData.capability == "Security" %} selected {% endif %}>Security</option>
+                <option value="Business Analysis" {% if formData and formData.capability == "Business Analysis" %} selected {% endif %}>Business Analysis</option>
+                <option value="Architecture" {% if formData and formData.capability == "Architecture" %} selected {% endif %}>Architecture</option>
+                <option value="Design" {% if formData and formData.capability == "Design" %} selected {% endif %}>Design</option>
+              </select>
+            </div>
+            <!-- Band -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Band *</span>
+              </label>
+              <select name="band" id="band" class="select select-bordered" required>
+                <option value="">Select Band</option>
+                <option value="Junior" {% if formData and formData.band == "Junior" %} selected {% endif %}>Junior</option>
+                <option value="Mid" {% if formData and formData.band == "Mid" %} selected {% endif %}>Mid</option>
+                <option value="Senior" {% if formData and formData.band == "Senior" %} selected {% endif %}>Senior</option>
+                <option value="Principal" {% if formData and formData.band == "Principal" %} selected {% endif %}>Principal</option>
+              </select>
+            </div>
+            <!-- Status -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Status *</span>
+              </label>
+              <select name="status" id="status" class="select select-bordered" required>
+                <option value="">Select Status</option>
+                <option value="open" {% if formData and formData.status == "Open" %} selected {% endif %}>Open</option>
+                <option value="closed" {% if formData and formData.status == "Closed" %} selected {% endif %}>Closed</option>
+              </select>
+            </div>
+            <!-- Number of Positions -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Number of Positions *</span>
+              </label>
+              <input type="number" name="numberOfOpenPositions" id="numberOfOpenPositions" class="input input-bordered" value="{{ formData.numberOfOpenPositions if formData else '1' }}" min="0" required/>
+            </div>
+            <!-- Closing Date -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Closing Date *</span>
+              </label>
+              <input type="date" name="closingDate" id="closingDate" class="input input-bordered" value="{{ formData.closingDate if formData else '' }}" required/>
+            </div>
+            <!-- Job Spec Link -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Job Specification Link</span>
+              </label>
+              <input type="url" name="jobSpecLink" id="jobSpecLink" class="input input-bordered" value="{{ formData.jobSpecLink if formData else '' }}" placeholder="https://company.com/careers/job-spec (optional)"/>
+              <div class="label">
+                <span class="label-text-alt">Optional - Link to detailed job specification</span>
+              </div>
+            </div>
+            <!-- Description -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Description *</span>
+              </label>
+              <textarea name="description" id="description" class="textarea textarea-bordered h-24" required>{{ formData.description if formData else '' }}</textarea>
+            </div>
+            <!-- Responsibilities -->
+            <div class="form-control col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Responsibilities *</span>
+              </label>
+              <textarea
+                name="responsibilities"
+                id="responsibilities"
+                class="textarea textarea-bordered h-32"
+                placeholder="Enter responsibilities separated by commas"
+                required>{{ formData.responsibilities if formData else '' }}</textarea>
+              <div class="label">
+                <span class="label-text-alt">Separate multiple responsibilities with commas</span>
+              </div>
+            </div>
+          </div>
+          <!-- Form Actions -->
+          <div class="flex justify-end gap-4 mt-8">
+            <a href="/job-roles" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-primary gap-2" id="saveBtn">
+              <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              Create Job Role
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block scripts %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('addJobForm');
+        const saveBtn = document.getElementById('saveBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        form.addEventListener('submit', function (event) { 
+          // Show loading state
+          saveBtn.disabled = true;
+          loadingSpinner.classList.remove('hidden');
+        });
+        
+        // Form validation
+        const requiredFields = form.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+          field.addEventListener('invalid', function () {
+            this.classList.add('input-error');
+          });
+          field.addEventListener('input', function () {
+            if (this.validity.valid) {
+              this.classList.remove('input-error');
+            }
+          });
+        });
+        
+        // Auto-resize textareas
+        const textareas = form.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+          textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+          });
+        });
+      });
+    </script>
+  {% endblock %}
