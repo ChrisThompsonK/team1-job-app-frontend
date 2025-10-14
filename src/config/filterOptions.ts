@@ -49,7 +49,10 @@ export const FILTER_OPTIONS: FilterOptions = {
     { value: "Platform", label: "filters.capabilities.platform" },
     { value: "Quality", label: "filters.capabilities.quality" },
     { value: "Architecture", label: "filters.capabilities.architecture" },
-    { value: "Business Analysis", label: "filters.capabilities.businessAnalysis" },
+    {
+      value: "Business Analysis",
+      label: "filters.capabilities.businessAnalysis",
+    },
     { value: "Security", label: "filters.capabilities.security" },
   ],
   bands: [
