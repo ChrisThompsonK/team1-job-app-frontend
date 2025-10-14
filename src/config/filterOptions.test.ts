@@ -7,7 +7,7 @@ describe("filterOptions", () => {
       expect(FILTER_OPTIONS.locations).toBeDefined();
       expect(FILTER_OPTIONS.locations.length).toBeGreaterThan(0);
       expect(FILTER_OPTIONS.locations[0].value).toBe("");
-      expect(FILTER_OPTIONS.locations[0].label).toBe("All Locations");
+      expect(FILTER_OPTIONS.locations[0].label).toBe("filters.allLocations");
     });
 
     it("should have at least one real location option", () => {
@@ -21,7 +21,7 @@ describe("filterOptions", () => {
       expect(FILTER_OPTIONS.capabilities).toBeDefined();
       expect(FILTER_OPTIONS.capabilities.length).toBeGreaterThan(0);
       expect(FILTER_OPTIONS.capabilities[0].value).toBe("");
-      expect(FILTER_OPTIONS.capabilities[0].label).toBe("All Capabilities");
+      expect(FILTER_OPTIONS.capabilities[0].label).toBe("filters.allCapabilities");
     });
 
     it("should have at least one real capability option", () => {
@@ -35,7 +35,7 @@ describe("filterOptions", () => {
       expect(FILTER_OPTIONS.bands).toBeDefined();
       expect(FILTER_OPTIONS.bands.length).toBeGreaterThan(0);
       expect(FILTER_OPTIONS.bands[0].value).toBe("");
-      expect(FILTER_OPTIONS.bands[0].label).toBe("All Bands");
+      expect(FILTER_OPTIONS.bands[0].label).toBe("filters.allBands");
     });
 
     it("should have at least one real band option", () => {
@@ -49,7 +49,7 @@ describe("filterOptions", () => {
       expect(FILTER_OPTIONS.statuses).toBeDefined();
       expect(FILTER_OPTIONS.statuses.length).toBeGreaterThan(0);
       expect(FILTER_OPTIONS.statuses[0].value).toBe("");
-      expect(FILTER_OPTIONS.statuses[0].label).toBe("All Status");
+      expect(FILTER_OPTIONS.statuses[0].label).toBe("filters.allStatuses");
     });
 
     it("should have at least one real status option", () => {
