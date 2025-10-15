@@ -146,13 +146,10 @@
                     <div class="divider"></div>
                     <div class="space-y-3">
                         {% if jobRole.status == 'Open' %}
-                        <button class="btn btn-primary btn-block">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                            Apply Now
-                        </button>
+                        <a href="/job-roles/{{ jobRole.id }}/apply" class="btn btn-primary btn-block">
+                            <i data-lucide="send" class="h-5 w-5 mr-2"></i>
+                            {{ t('jobRoles.applyNow') }}
+                        </a>
                         {% else %}
                         <div class="alert alert-warning">
                             <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
