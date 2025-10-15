@@ -117,7 +117,7 @@ app.get("/job-roles/:id/apply", (req: Request, res: Response) => {
     location: "Belfast, UK",
     capability: "Engineering",
     band: "Senior",
-    closingDate: new Date("2024-12-31")
+    closingDate: new Date("2024-12-31"),
   };
 
   res.render("job-application", {
@@ -133,9 +133,9 @@ app.post("/job-roles/:id/apply", (req: Request, res: Response) => {
     id: req.params.id,
     name: "Software Developer",
     location: "Belfast, UK",
-    capability: "Engineering", 
+    capability: "Engineering",
     band: "Senior",
-    closingDate: new Date("2024-12-31")
+    closingDate: new Date("2024-12-31"),
   };
 
   // Just show success message without processing anything
@@ -143,7 +143,7 @@ app.post("/job-roles/:id/apply", (req: Request, res: Response) => {
     title: `Apply for ${mockJobRole.name}`,
     jobRole: mockJobRole,
     currentPage: "job-roles",
-    success: req.t('jobApplication.applicationSubmitted'),
+    success: req.t("jobApplication.applicationSubmitted"),
   });
 });
 
