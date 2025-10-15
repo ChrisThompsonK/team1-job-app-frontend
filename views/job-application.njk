@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-    Apply for {{ jobRole.name }}
+    Apply for {{ translateJobTitle(jobRole.name, t) }}
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="/css/job-roles.css">
@@ -16,7 +16,7 @@
         <ul>
             <li><a href="/" class="link link-hover">{{ t('nav.home') }}</a></li>
             <li><a href="/job-roles" class="link link-hover">{{ t('nav.jobRoles') }}</a></li>
-            <li><a href="/job-roles/{{ jobRole.id }}" class="link link-hover">{{ jobRole.name }}</a></li>
+            <li><a href="/job-roles/{{ jobRole.id }}" class="link link-hover">{{ translateJobTitle(jobRole.name, t) }}</a></li>
             <li class="text-base-content/70">{{ t('jobApplication.title') }}</li>
         </ul>
     </div>
@@ -30,7 +30,7 @@
             </a>
         </div>
         <h1 class="text-4xl font-bold text-base-content mb-2">{{ t('jobApplication.title') }}</h1>
-        <p class="text-base-content/70">{{ t('jobApplication.subtitle') }} {{ jobRole.name }}</p>
+        <p class="text-base-content/70">{{ t('jobApplication.subtitle') }} {{ translateJobTitle(jobRole.name, t) }}</p>
     </div>
 
     <!-- Job Summary Card -->
@@ -44,11 +44,11 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <i data-lucide="briefcase" class="h-5 w-5 text-base-content/60"></i>
-                    <span class="text-base-content/80">{{ jobRole.capability }}</span>
+                    <span class="text-base-content/80">{{ translateCapability(jobRole.capability, t) }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <i data-lucide="award" class="h-5 w-5 text-base-content/60"></i>
-                    <span class="text-base-content/80">{{ jobRole.band }}</span>
+                    <span class="text-base-content/80">{{ translateBand(jobRole.band, t) }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <i data-lucide="calendar" class="h-5 w-5 text-base-content/60"></i>
