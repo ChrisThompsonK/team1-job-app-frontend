@@ -10,23 +10,14 @@
             <div class="max-w-lg">
                 <div class="mb-8">
                     <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0
-                                    01-2 2H10a2 2 0 01-2-2V6m8 0H8"/>
-                        </svg>
+                        <i data-lucide="briefcase" class="h-10 w-10"></i>
                     </div>
                     <h1 class="text-6xl font-bold mb-4">{{ t('home.title') }}</h1>
                     <p class="text-xl leading-relaxed opacity-90">{{ t('home.welcome') }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
                     <a href="/job-roles" class="btn btn-accent btn-lg gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
+                        <i data-lucide="search" class="h-5 w-5"></i>
                         {{ t('home.exploreJobs') }}
                     </a>
                     <div class="divider divider-horizontal hidden sm:flex">{{ t('common.or') }}</div>
@@ -57,18 +48,7 @@
                         hover:-translate-y-2">
                     <div class="card-body">
                         <div class="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-primary"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
+                            <i data-lucide="file-text" class="h-6 w-6 text-primary"></i>
                         </div>
                         <h3 class="card-title text-lg">{{ t('home.features.nunjucks.title') }}</h3>
                         <p class="text-base-content/70">{{ t('home.features.nunjucks.description') }}</p>
@@ -80,19 +60,7 @@
                         hover:-translate-y-2">
                     <div class="card-body">
                         <div class="flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-lg mb-4">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-secondary"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0
-                                        002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
-                            </svg>
+                            <i data-lucide="server" class="h-6 w-6 text-secondary"></i>
                         </div>
                         <h3 class="card-title text-lg">{{ t('home.features.express.title') }}</h3>
                         <p class="text-base-content/70">{{ t('home.features.express.description') }}</p>
@@ -104,14 +72,7 @@
                         hover:-translate-y-2">
                     <div class="card-body">
                         <div class="flex items-center justify-center w-12 h-12 bg-accent/10 rounded-lg mb-4">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-accent"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                            </svg>
+                            <i data-lucide="code" class="h-6 w-6 text-accent"></i>
                         </div>
                         <h3 class="card-title text-lg">{{ t('home.features.typescript.title') }}</h3>
                         <p class="text-base-content/70">{{ t('home.features.typescript.description') }}</p>
@@ -123,13 +84,7 @@
                         hover:-translate-y-2">
                     <div class="card-body">
                         <div class="flex items-center justify-center w-12 h-12 bg-info/10 rounded-lg mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                            </svg>
+                            <i data-lucide="folder" class="h-6 w-6 text-info"></i>
                         </div>
                         <h3 class="card-title text-lg">{{ t('home.features.assets.title') }}</h3>
                         <p class="text-base-content/70">{{ t('home.features.assets.description') }}</p>
@@ -141,23 +96,14 @@
                         duration-300 hover:-translate-y-2 md:col-span-2 lg:col-span-1">
                     <div class="card-body">
                         <div class="flex items-center justify-center w-12 h-12 bg-white/20 rounded-lg mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0
-                                        01-2 2H10a2 2 0 01-2-2V6m8 0H8"/>
-                            </svg>
+                            <i data-lucide="briefcase" class="h-6 w-6"></i>
                         </div>
                         <h3 class="card-title text-lg text-white">{{ t('home.features.jobs.title') }}</h3>
                         <p class="text-white/90">{{ t('home.features.jobs.description') }}</p>
                         <div class="card-actions justify-between items-center mt-4">
                             <div class="badge badge-accent">{{ t('home.featured') }}</div>
                             <a href="/job-roles" class="btn btn-accent btn-sm gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                </svg>
+                                <i data-lucide="arrow-right" class="h-4 w-4"></i>
                                 {{ t('home.browseJobs') }}
                             </a>
                         </div>
@@ -168,19 +114,7 @@
                         hover:-translate-y-2">
                     <div class="card-body">
                         <div class="flex items-center justify-center w-12 h-12 bg-success/10 rounded-lg mb-4">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-success"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2
-                                        0 002-2V5z"/>
-                            </svg>
+                            <i data-lucide="palette" class="h-6 w-6 text-success"></i>
                         </div>
                         <h3 class="card-title text-lg">{{ t('home.features.daisyui.title') }}</h3>
                         <p class="text-base-content/70">{{ t('home.features.daisyui.description') }}</p>
@@ -200,9 +134,7 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="/job-roles" class="btn btn-accent btn-lg gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
+                        <i data-lucide="search" class="h-5 w-5"></i>
                         {{ t('home.findJob') }}
                     </a>
                     <button class="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary">

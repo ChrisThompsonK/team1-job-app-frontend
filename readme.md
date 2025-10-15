@@ -11,6 +11,7 @@ A modern Node.js TypeScript project with Express.js, built with ES modules and 3
 - **Express.js** - Fast, unopinionated web framework
 - **3-Tier Architecture** - Separation of concerns with controllers, services, and repositories
 - **Hot Reload** - Development server with automatic restart using `tsx`
+- **Lucide Icons** - Beautiful, customizable SVG icons via CDN
 
 ## Architecture Overview
 
@@ -109,6 +110,47 @@ npm start
   "timestamp": "2025-09-30T10:30:00.000Z"
 }
 ```
+
+## 🎨 Icons with Lucide
+
+This project uses [Lucide](https://lucide.dev/) for all icons, providing a consistent and beautiful icon system.
+
+### Usage in Templates
+
+```html
+<!-- Basic icon -->
+<i data-lucide="heart" class="h-5 w-5"></i>
+
+<!-- Icon with classes -->
+<i data-lucide="user" class="h-6 w-6 text-primary"></i>
+
+<!-- Icon in button -->
+<button class="btn">
+    <i data-lucide="search" class="h-4 w-4"></i>
+    Search
+</button>
+```
+
+### Icon List
+Popular icons used in this project:
+- `menu` - Navigation menu
+- `user` - User account/login
+- `search` - Search functionality  
+- `mail` - Email/contact
+- `phone` - Phone contact
+- `sun`/`moon` - Theme toggle
+- `eye`/`eye-off` - Password visibility
+- `lock` - Password/security
+- `briefcase` - Jobs/career
+- `map-pin` - Location
+- `calendar` - Dates
+- `link` - Copy link
+- `printer` - Print action
+
+### Implementation Notes
+- Icons are loaded via CDN from `https://unpkg.com/lucide@latest/dist/umd/lucide.js`
+- `lucide.createIcons()` is called after page load to render all icons
+- No local installation required - works out of the box
 
 ## 📜 Available Scripts
 
