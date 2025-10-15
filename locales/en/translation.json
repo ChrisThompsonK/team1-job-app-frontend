@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "jobRoles": "Job Roles",
+    "login": "Login",
     "menu": "Menu",
     "openMenu": "Open navigation menu",
     "toggleTheme": "Toggle dark mode",
@@ -189,6 +190,48 @@
     "sortOrders": {
       "ascending": "Ascending (A-Z, 0-9)",
       "descending": "Descending (Z-A, 9-0)"
+    }
+  },
+  "auth": {
+    "pageTitle": "Login & Sign Up",
+    "welcome": "Welcome Back",
+    "subtitle": "Access your account or create a new one to get started",
+    "backToHome": "Back to Home",
+    "login": {
+      "title": "Login",
+      "button": "Sign In",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?"
+    },
+    "signup": {
+      "title": "Sign Up",
+      "button": "Create Account",
+      "termsPrefix": "I agree to the",
+      "termsLink": "Terms of Service",
+      "termsAnd": "and",
+      "privacyLink": "Privacy Policy"
+    },
+    "email": {
+      "label": "Email Address",
+      "placeholder": "Enter your email address"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password",
+      "requirements": "Must be at least 8 characters long"
+    },
+    "confirmPassword": {
+      "label": "Confirm Password",
+      "placeholder": "Confirm your password"
+    },
+    "errors": {
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 8 characters long",
+      "allFieldsRequired": "Please fill in all required fields"
+    },
+    "success": {
+      "loginSuccess": "Login successful! (This is a demo - no backend connection)",
+      "signupSuccess": "Account created successfully! (This is a demo - no backend connection)"
     }
   }
 }
