@@ -27,7 +27,7 @@ describe("JobRoleController", () => {
         name: "Software Engineer",
         location: "London",
         capability: Capability.Engineering,
-        band: Band.E3,
+        band: Band.Senior,
         closingDate: new Date("2024-12-31"),
         numberOfOpenPositions: 2,
         status: JobStatus.Open,
@@ -55,6 +55,13 @@ describe("JobRoleController", () => {
     // Setup mock request and response
     mockRequest = {
       query: {}, // Initialize empty query object
+      t: vi.fn((key: string) => {
+        // Simple mock that returns English translations
+        const translations: Record<string, string> = {
+          "jobRoles.list": "Available Positions",
+        };
+        return translations[key] || key;
+      }) as any,
     };
     mockResponse = {
       render: vi.fn(),
@@ -83,7 +90,7 @@ describe("JobRoleController", () => {
       );
 
       expect(mockResponse.render).toHaveBeenCalledWith("job-role-list", {
-        title: "Available Job Roles",
+        title: "Available Positions",
         jobRoles: mockJobRoles,
         pagination: {
           currentPage: 1,
@@ -132,7 +139,7 @@ describe("JobRoleController", () => {
       expect(renderMock).toHaveBeenCalledWith(
         "job-role-list",
         expect.objectContaining({
-          title: "Available Job Roles",
+          title: "Available Positions",
           jobRoles: mockJobRoles,
           pagination: expect.any(Object),
           timestamp: expect.any(String),
@@ -170,6 +177,7 @@ describe("JobRoleController", () => {
       // Create request with query object
       const errorRequest = {
         query: {},
+        t: vi.fn((key: string) => key) as any,
       } as Partial<Request>;
 
       await errorController.getJobRolesList(

@@ -14,14 +14,18 @@
         <!-- Page Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
-            <p class="text-base-content/70">Explore exciting career opportunities</p>
+            <p class="text-base-content/70">{{ t('jobRoles.explore') }}</p>
             <!-- Admin Add Button -->
             <div class="mt-6">
-                <a href="/job-roles/add" class="btn btn-primary btn-lg gap-2" title="Add New Job Role">
+
+         
+
+                <a href="/job-roles/add" class="btn btn-primary btn-lg gap-2" title="{{ t('jobRoles.addJobRole') }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    Add Job Role
+                    {{ t('jobRoles.addJobRole') }}
+
                 </a>
             </div>
         </div>
@@ -32,7 +36,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    Search & Filter Jobs
+                    {{ t('jobRoles.searchFilter') }}
                 </h2>
                 <!-- Filter Form -->
                 <form
@@ -40,10 +44,10 @@
                     <!-- Search Bar -->
                     <div class="form-control w-full mb-4">
                         <label class="label">
-                            <span class="label-text font-medium">Search Job Roles</span>
+                            <span class="label-text font-medium">{{ t('jobRoles.searchLabel') }}</span>
                         </label>
                         <div class="relative">
-                            <input type="text" id="search-input" name="search" value="{{ currentFilters.search if currentFilters.search else '' }}" placeholder="Search by job title or keywords..." class="input input-bordered w-full pr-10"/>
+                            <input type="text" id="search-input" name="search" value="{{ currentFilters.search if currentFilters.search else '' }}" placeholder="{{ t('jobRoles.searchPlaceholder') }}" class="input input-bordered w-full pr-10"/>
                             <svg
                                 class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/60"
                                 fill="none"
@@ -64,7 +68,7 @@
                             <select id="location-filter" name="location" class="select select-bordered w-full">
                                 {% for option in filterOptions.locations %}
                                     <option value="{{ option.value }}" {{ 'selected' if currentFilters.location == option.value and option.value != '' }}>
-                                        {{ option.label }}
+                                        {{ t(option.label) }}
                                     </option>
                                 {% endfor %}
                             </select>
@@ -77,7 +81,7 @@
                             <select id="capability-filter" name="capability" class="select select-bordered w-full">
                                 {% for option in filterOptions.capabilities %}
                                     <option value="{{ option.value }}" {{ 'selected' if currentFilters.capability == option.value and option.value != '' }}>
-                                        {{ option.label }}
+                                        {{ t(option.label) }}
                                     </option>
                                 {% endfor %}
                             </select>
@@ -90,7 +94,7 @@
                             <select id="band-filter" name="band" class="select select-bordered w-full">
                                 {% for option in filterOptions.bands %}
                                     <option value="{{ option.value }}" {{ 'selected' if currentFilters.band == option.value and option.value != '' }}>
-                                        {{ option.label }}
+                                        {{ t(option.label) }}
                                     </option>
                                 {% endfor %}
                             </select>
@@ -103,7 +107,7 @@
                             <select id="status-filter" name="status" class="select select-bordered w-full">
                                 {% for option in filterOptions.statuses %}
                                     <option value="{{ option.value }}" {{ 'selected' if currentFilters.status == option.value and option.value != '' }}>
-                                        {{ option.label }}
+                                        {{ t(option.label) }}
                                     </option>
                                 {% endfor %}
                             </select>
@@ -120,7 +124,7 @@
                             <select id="sort-by-filter" name="sortBy" class="select select-bordered w-full">
                                 {% for option in filterOptions.sortOptions %}
                                     <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortBy == option.value }}>
-                                        {{ option.label }}
+                                        {{ t(option.label) }}
                                     </option>
                                 {% endfor %}
                             </select>
@@ -133,7 +137,7 @@
                             <select id="sort-order-filter" name="sortOrder" class="select select-bordered w-full">
                                 {% for option in filterOptions.sortOrders %}
                                     <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortOrder == option.value }}>
-                                        {{ option.label }}
+                                        {{ t(option.label) }}
                                     </option>
                                 {% endfor %}
                             </select>
