@@ -108,6 +108,45 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 });
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
+// Job application routes
+app.get("/job-roles/:id/apply", (req: Request, res: Response) => {
+  // Mock job data for demonstration
+  const mockJobRole = {
+    id: req.params.id,
+    name: "Software Developer",
+    location: "Belfast, UK",
+    capability: "Engineering",
+    band: "Senior",
+    closingDate: new Date("2024-12-31")
+  };
+
+  res.render("job-application", {
+    title: `Apply for ${mockJobRole.name}`,
+    jobRole: mockJobRole,
+    currentPage: "job-roles",
+  });
+});
+
+app.post("/job-roles/:id/apply", (req: Request, res: Response) => {
+  // Mock job data for demonstration
+  const mockJobRole = {
+    id: req.params.id,
+    name: "Software Developer",
+    location: "Belfast, UK",
+    capability: "Engineering", 
+    band: "Senior",
+    closingDate: new Date("2024-12-31")
+  };
+
+  // Just show success message without processing anything
+  res.render("job-application", {
+    title: `Apply for ${mockJobRole.name}`,
+    jobRole: mockJobRole,
+    currentPage: "job-roles",
+    success: req.t('jobApplication.applicationSubmitted'),
+  });
+});
+
 // Authentication routes
 app.get("/login", (_req: Request, res: Response) => {
   res.render("login", {
