@@ -7,7 +7,7 @@
 :root,
 [data-theme="light"] {
   --color-primary: #24357a !important;
-  --color-secondary: #61a83f !important;
+  --color-secondary: #7bc74d !important;
   --color-accent: #91da71 !important;
   --color-neutral: #01002d !important;
   --color-base-100: #ffffff !important;
@@ -91,4 +91,13 @@ html[data-text-size="x-large"] {
 
 [data-theme="dark"] .logo-light {
   display: none;
+}
+
+/* Dark mode overlay visibility */
+[data-theme="dark"] [data-dark-only] {
+  display: block !important;
+}
+
+[data-theme="light"] [data-dark-only] {
+  display: none !important;
 }
