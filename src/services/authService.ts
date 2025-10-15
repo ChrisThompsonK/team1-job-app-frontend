@@ -27,15 +27,6 @@ export interface BackendAuthResponse {
   user: User;
 }
 
-export interface AuthStatusResponse {
-  success: boolean;
-  data?: {
-    user: User;
-    authenticated: boolean;
-  };
-  message?: string;
-}
-
 /**
  * Authentication service for handling login, logout, and auth status
  */
@@ -67,53 +58,6 @@ class AuthService {
         throw new Error(axiosError.response?.data?.message || "Login failed");
       }
       throw new Error("Login failed");
-    }
-  }
-
-  /**
-   * Logout the current user
-   */
-  async logout(): Promise<{ success: boolean; message?: string }> {
-    try {
-      await apiService.post("/auth/logout");
-      return { success: true };
-    } catch (error: unknown) {
-      if (error && typeof error === "object" && "response" in error) {
-        const axiosError = error as {
-          response?: { data?: { message?: string } };
-        };
-        return {
-          success: false,
-          message: axiosError.response?.data?.message || "Logout failed",
-        };
-      }
-      return { success: false, message: "Logout failed" };
-    }
-  }
-
-  /**
-   * Check the current authentication status
-   */
-  async checkAuthStatus(): Promise<AuthStatusResponse> {
-    try {
-      const response = await apiService.get<AuthStatusResponse>("/auth/status");
-      return response.data;
-    } catch (error: unknown) {
-      if (error && typeof error === "object" && "response" in error) {
-        const axiosError = error as {
-          response?: { data?: { message?: string } };
-        };
-        return {
-          success: false,
-          message:
-            axiosError.response?.data?.message ||
-            "Unable to check authentication status",
-        };
-      }
-      return {
-        success: false,
-        message: "Unable to check authentication status",
-      };
     }
   }
 }

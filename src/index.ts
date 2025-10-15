@@ -103,12 +103,6 @@ app.get("/health", (_req: Request, res: Response) => {
 app.post("/auth/login", (req, res, next) => {
   authController.login(req, res).catch(next);
 });
-app.post("/auth/logout", (req, res, next) => {
-  authController.logout(req, res).catch(next);
-});
-app.get("/auth/status", (req, res, next) => {
-  authController.status(req, res).catch(next);
-});
 
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
