@@ -97,6 +97,10 @@ app.get("/health", (_req: Request, res: Response) => {
 
 // Job roles routes using dependency injection
 app.get("/job-roles", jobRoleController.getJobRolesList);
+app.get("/job-roles/add", jobRoleController.getJobRoleAdd);
+app.post("/job-roles/add", (req, res, next) => {
+  jobRoleController.createJobRole(req, res).catch(next);
+});
 app.get("/job-roles/:id", jobRoleController.getJobRoleDetail);
 app.get("/job-roles/:id/edit", jobRoleController.getJobRoleEdit);
 app.post("/job-roles/:id/edit", (req, res, next) => {

@@ -234,6 +234,9 @@ export class JobRoleController {
         title: `Edit ${jobRole.name}`,
         job: jobRole,
         timestamp: new Date().toISOString(),
+        capabilities: FILTER_OPTIONS.capabilities.filter(
+          (cap) => cap.value !== ""
+        ), // Exclude the "All Capabilities" option
       });
     } catch (error) {
       console.error("Error fetching job role for edit:", error);
@@ -241,6 +244,98 @@ export class JobRoleController {
         title: "Error",
         message: "Unable to fetch job role for editing",
         error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
+  /**
+   * Renders the job role add page
+   * GET /job-roles/add
+   */
+  public getJobRoleAdd = async (
+    _req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      res.render("job-role-add", {
+        title: "Add New Job Role",
+        timestamp: new Date().toISOString(),
+        capabilities: FILTER_OPTIONS.capabilities.filter(
+          (cap) => cap.value !== ""
+        ), // Exclude the "All Capabilities" option
+      });
+    } catch (error) {
+      console.error("Error rendering add job role page:", error);
+      res.status(500).render("error", {
+        title: "Error",
+        message: "Unable to load add job role form",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
+  /**
+   * Handles job role creation form submission
+   * POST /job-roles/add
+   */
+  public createJobRole = async (
+    req: Request<Record<string, never>, Record<string, never>, JobRoleFormData>,
+    res: Response
+  ): Promise<void> => {
+    try {
+      // Use the comprehensive JobRoleValidator
+      const validationResult = this.jobRoleValidator.validateJobRoleFormData(
+        req.body
+      );
+      if (!validationResult.isValid) {
+        res.render("job-role-add", {
+          title: "Add New Job Role",
+          error: validationResult.errors.join(", "),
+          formData: req.body, // Pass back form data for user convenience
+          timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(
+            (cap) => cap.value !== ""
+          ), // Exclude the "All Capabilities" option
+        });
+        return;
+      }
+
+      // Process form data using the model utility
+      const processedJobData = processFormData(req.body);
+
+      // Create the job using the processed data
+      const createdJob = await this.jobRoleService.createJob(processedJobData);
+
+      if (createdJob) {
+        // Success - redirect back to job roles list with success message
+        res.redirect("/job-roles?message=Job created successfully");
+      } else {
+        // Error from service - re-render form with error
+        res.render("job-role-add", {
+          title: "Add New Job Role",
+          error: "Failed to create job role. Please try again.",
+          formData: req.body,
+          timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(
+            (cap) => cap.value !== ""
+          ), // Exclude the "All Capabilities" option
+        });
+      }
+    } catch (error) {
+      console.error("Error creating job role:", error);
+
+      // Re-render the form with error message
+      res.status(500).render("job-role-add", {
+        title: "Add New Job Role",
+        error:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred. Please try again.",
+        formData: req.body,
+        timestamp: new Date().toISOString(),
+        capabilities: FILTER_OPTIONS.capabilities.filter(
+          (cap) => cap.value !== ""
+        ), // Exclude the "All Capabilities" option
       });
     }
   };
@@ -287,6 +382,9 @@ export class JobRoleController {
           job: jobRole,
           error: validationResult.errors.join(", "),
           timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(
+            (cap) => cap.value !== ""
+          ), // Exclude the "All Capabilities" option
         });
         return;
       }
@@ -311,6 +409,9 @@ export class JobRoleController {
           job: jobRole,
           error: "Failed to update job role. Please try again.",
           timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(
+            (cap) => cap.value !== ""
+          ), // Exclude the "All Capabilities" option
         });
       }
     } catch (error) {
@@ -331,6 +432,9 @@ export class JobRoleController {
                 ? error.message
                 : "An error occurred while updating the job role",
             timestamp: new Date().toISOString(),
+            capabilities: FILTER_OPTIONS.capabilities.filter(
+              (cap) => cap.value !== ""
+            ), // Exclude the "All Capabilities" option
           });
         } else {
           throw new Error("Missing job ID");

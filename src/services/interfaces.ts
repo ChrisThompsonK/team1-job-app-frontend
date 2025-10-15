@@ -35,6 +35,7 @@ export interface JobRoleservice {
   getJobByName(
     name: string
   ): JobRole | undefined | Promise<JobRole | undefined>;
+  createJob(jobData: CreateJobRoleData): Promise<JobRole | null>;
   deleteJobById(id: string): Promise<boolean>;
   updateJobById(
     id: number,

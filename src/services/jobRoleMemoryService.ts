@@ -25,6 +25,33 @@ export class JobRoleMemoryService implements JobRoleservice {
     return this.jobRoles.find((job) => job.name === name);
   }
 
+  async createJob(jobData: CreateJobRoleData): Promise<JobRole | null> {
+    try {
+      // Generate a new ID (simple incrementing based on existing jobs)
+      const newId = Math.max(...this.jobRoles.map((job) => job.id), 0) + 1;
+
+      const newJob: JobRole = {
+        id: newId,
+        name: jobData.jobRoleName,
+        location: jobData.location,
+        capability: jobData.capability,
+        band: jobData.band,
+        closingDate: jobData.closingDate,
+        numberOfOpenPositions: jobData.numberOfOpenPositions,
+        status: jobData.status,
+        description: jobData.description,
+        responsibilities: jobData.responsibilities,
+        ...(jobData.jobSpecLink && { jobSpecLink: jobData.jobSpecLink }),
+      };
+
+      this.jobRoles.push(newJob);
+      return newJob;
+    } catch (error) {
+      console.error("Error creating job in memory service:", error);
+      return null;
+    }
+  }
+
   async deleteJobById(id: string): Promise<boolean> {
     // Just remove from local array (in-memory version)
     const initialLength = this.jobRoles.length;
