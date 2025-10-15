@@ -7,6 +7,7 @@ import { handle as i18nextHandle } from "i18next-http-middleware";
 import nunjucks from "nunjucks";
 import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
+import { AuthController } from "./controllers/authController.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import { JobRoleValidator } from "./validators/JobRoleValidator.js";
@@ -65,6 +66,9 @@ const jobRoleController = new JobRoleController(
   jobRoleValidator
 );
 
+// Initialize auth controller
+const authController = new AuthController();
+
 // Language change endpoint
 app.post("/change-language", (req: Request, res: Response) => {
   const { language } = req.body;
@@ -93,6 +97,17 @@ app.get("/api", (_req: Request, res: Response) => {
 // Health check endpoint
 app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// Authentication routes
+app.post("/auth/login", (req, res, next) => {
+  authController.login(req, res).catch(next);
+});
+app.post("/auth/logout", (req, res, next) => {
+  authController.logout(req, res).catch(next);
+});
+app.get("/auth/status", (req, res, next) => {
+  authController.status(req, res).catch(next);
 });
 
 // Job roles routes using dependency injection
