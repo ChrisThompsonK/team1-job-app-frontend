@@ -234,6 +234,7 @@ export class JobRoleController {
         title: `Edit ${jobRole.name}`,
         job: jobRole,
         timestamp: new Date().toISOString(),
+        capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
       });
     } catch (error) {
       console.error("Error fetching job role for edit:", error);
@@ -257,6 +258,7 @@ export class JobRoleController {
       res.render("job-role-add", {
         title: "Add New Job Role",
         timestamp: new Date().toISOString(),
+        capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
       });
     } catch (error) {
       console.error("Error rendering add job role page:", error);
@@ -287,6 +289,7 @@ export class JobRoleController {
           error: validationResult.errors.join(", "),
           formData: req.body, // Pass back form data for user convenience
           timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
         });
         return;
       }
@@ -307,6 +310,7 @@ export class JobRoleController {
           error: "Failed to create job role. Please try again.",
           formData: req.body,
           timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
         });
       }
     } catch (error) {
@@ -321,6 +325,7 @@ export class JobRoleController {
             : "An unexpected error occurred. Please try again.",
         formData: req.body,
         timestamp: new Date().toISOString(),
+        capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
       });
     }
   };
@@ -367,6 +372,7 @@ export class JobRoleController {
           job: jobRole,
           error: validationResult.errors.join(", "),
           timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
         });
         return;
       }
@@ -391,6 +397,7 @@ export class JobRoleController {
           job: jobRole,
           error: "Failed to update job role. Please try again.",
           timestamp: new Date().toISOString(),
+          capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
         });
       }
     } catch (error) {
@@ -411,6 +418,7 @@ export class JobRoleController {
                 ? error.message
                 : "An error occurred while updating the job role",
             timestamp: new Date().toISOString(),
+            capabilities: FILTER_OPTIONS.capabilities.filter(cap => cap.value !== ""), // Exclude the "All Capabilities" option
           });
         } else {
           throw new Error("Missing job ID");

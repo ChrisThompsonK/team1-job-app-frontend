@@ -62,17 +62,9 @@
               </label>
               <select name="capability" id="capability" class="select select-bordered" required>
                 <option value="">Select Capability</option>
-                <option value="Engineering" {% if formData and formData.capability == "Engineering" %} selected {% endif %}>Engineering</option>
-                <option value="Data" {% if formData and formData.capability == "Data" %} selected {% endif %}>Data</option>
-                <option value="Workday" {% if formData and formData.capability == "Workday" %} selected {% endif %}>Workday</option>
-                <option value="Product" {% if formData and formData.capability == "Product" %} selected {% endif %}>Product</option>
-                <option value="Data & Analytics" {% if formData and formData.capability == "Data & Analytics" %} selected {% endif %}>Data & Analytics</option>
-                <option value="Quality Engineering" {% if formData and formData.capability == "Quality Engineering" %} selected {% endif %}>Quality Engineering</option>
-                <option value="Platform" {% if formData and formData.capability == "Platform" %} selected {% endif %}>Platform</option>
-                <option value="Security" {% if formData and formData.capability == "Security" %} selected {% endif %}>Security</option>
-                <option value="Business Analysis" {% if formData and formData.capability == "Business Analysis" %} selected {% endif %}>Business Analysis</option>
-                <option value="Architecture" {% if formData and formData.capability == "Architecture" %} selected {% endif %}>Architecture</option>
-                <option value="Design" {% if formData and formData.capability == "Design" %} selected {% endif %}>Design</option>
+                {% for capability in capabilities %}
+                <option value="{{ capability.value }}" {% if formData and formData.capability == capability.value %} selected {% endif %}>{{ capability.label }}</option>
+                {% endfor %}
               </select>
             </div>
             <!-- Band -->

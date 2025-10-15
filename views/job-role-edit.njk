@@ -51,17 +51,9 @@
               </label>
               <select name="capability" id="capability" class="select select-bordered" required>
                 <option value="">Select Capability</option>
-                <option value="Engineering" {% if job.capability == "Engineering" %} selected {% endif %}>Engineering</option>
-                <option value="Data" {% if job.capability == "Data" %} selected {% endif %}>Data</option>
-                <option value="Workday" {% if job.capability == "Workday" %} selected {% endif %}>Workday</option>
-                <option value="Product" {% if job.capability == "Product" %} selected {% endif %}>Product</option>
-                <option value="Data & Analytics" {% if job.capability == "Data & Analytics" %} selected {% endif %}>Data & Analytics</option>
-                <option value="Design" {% if job.capability == "Design" %} selected {% endif %}>Design</option>
-                <option value="Platform" {% if job.capability == "Platform" %} selected {% endif %}>Platform</option>
-                <option value="Quality" {% if job.capability == "Quality" %} selected {% endif %}>Quality</option>
-                <option value="Architecture" {% if job.capability == "Architecture" %} selected {% endif %}>Architecture</option>
-                <option value="Business Analysis" {% if job.capability == "Business Analysis" %} selected {% endif %}>Business Analysis</option>
-                <option value="Security" {% if job.capability == "Security" %} selected {% endif %}>Security</option>
+                {% for capability in capabilities %}
+                <option value="{{ capability.value }}" {% if job.capability == capability.value %} selected {% endif %}>{{ capability.label }}</option>
+                {% endfor %}
               </select>
             </div>
             <!-- Band -->
