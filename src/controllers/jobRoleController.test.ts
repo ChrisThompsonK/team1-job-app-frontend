@@ -61,7 +61,7 @@ describe("JobRoleController", () => {
           "jobRoles.list": "Available Positions",
         };
         return translations[key] || key;
-      }) as any,
+      }) as (key: string) => string,
     };
     mockResponse = {
       render: vi.fn(),
@@ -177,7 +177,7 @@ describe("JobRoleController", () => {
       // Create request with query object
       const errorRequest = {
         query: {},
-        t: vi.fn((key: string) => key) as any,
+        t: vi.fn((key: string) => key) as (key: string) => string,
       } as Partial<Request>;
 
       await errorController.getJobRolesList(
