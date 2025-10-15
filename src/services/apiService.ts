@@ -6,12 +6,12 @@ import axios from "axios";
  */
 class ApiService {
   private api = axios.create({
-    baseURL: "http://localhost:3001/api", // External auth API
+    baseURL: process.env.BACKEND_URL || "http://localhost:3001/api", // External auth API
     withCredentials: true, // Essential for session cookies
     headers: {
       "Content-Type": "application/json",
     },
-    timeout: 10000, // 10 second timeout
+    timeout: 10_000, // 10 second timeout
   });
 
   constructor() {
