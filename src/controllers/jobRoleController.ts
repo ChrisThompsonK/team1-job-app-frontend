@@ -73,7 +73,7 @@ export class JobRoleController {
         : null;
 
       res.render("job-role-list", {
-        title: "Available Job Roles",
+        title: req.t("jobRoles.list"),
         jobRoles: response.jobs,
         pagination: response.pagination,
         paginationData,
