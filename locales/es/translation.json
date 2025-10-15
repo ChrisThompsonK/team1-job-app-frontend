@@ -2,6 +2,7 @@
   "nav": {
     "home": "Inicio",
     "jobRoles": "Roles de Trabajo",
+    "login": "Iniciar Sesión",
     "menu": "Menú",
     "openMenu": "Abrir menú de navegación",
     "toggleTheme": "Alternar modo oscuro",
@@ -189,6 +190,48 @@
     "sortOrders": {
       "ascending": "Ascendente (A-Z, 0-9)",
       "descending": "Descendente (Z-A, 9-0)"
+    }
+  },
+  "auth": {
+    "pageTitle": "Iniciar Sesión y Registrarse",
+    "welcome": "Bienvenido de Nuevo",
+    "subtitle": "Accede a tu cuenta o crea una nueva para comenzar",
+    "backToHome": "Volver al Inicio",
+    "login": {
+      "title": "Iniciar Sesión",
+      "button": "Entrar",
+      "rememberMe": "Recordarme",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
+    },
+    "signup": {
+      "title": "Registrarse",
+      "button": "Crear Cuenta",
+      "termsPrefix": "Acepto los",
+      "termsLink": "Términos de Servicio",
+      "termsAnd": "y la",
+      "privacyLink": "Política de Privacidad"
+    },
+    "email": {
+      "label": "Dirección de Correo Electrónico",
+      "placeholder": "Ingresa tu dirección de correo electrónico"
+    },
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Ingresa tu contraseña",
+      "requirements": "Debe tener al menos 8 caracteres"
+    },
+    "confirmPassword": {
+      "label": "Confirmar Contraseña",
+      "placeholder": "Confirma tu contraseña"
+    },
+    "errors": {
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+      "allFieldsRequired": "Por favor completa todos los campos requeridos"
+    },
+    "success": {
+      "loginSuccess": "¡Inicio de sesión exitoso! (Esta es una demostración - sin conexión al backend)",
+      "signupSuccess": "¡Cuenta creada exitosamente! (Esta es una demostración - sin conexión al backend)"
     }
   }
 }

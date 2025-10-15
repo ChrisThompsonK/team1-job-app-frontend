@@ -104,6 +104,14 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 });
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
+// Authentication routes
+app.get("/login", (_req: Request, res: Response) => {
+  res.render("login", {
+    title: "Login & Sign Up",
+    currentPage: "login",
+  });
+});
+
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
 });

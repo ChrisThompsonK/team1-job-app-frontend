@@ -2,12 +2,13 @@
   "nav": {
     "home": "Accueil",
     "jobRoles": "Postes",
+    "login": "Connexion",
     "menu": "Menu",
     "openMenu": "Ouvrir le menu de navigation",
     "toggleTheme": "Basculer le mode sombre",
     "changeLanguage": "Changer de langue",
     "changeTextSize": "Changer la taille du texte",
-    "siteTitle": "Système de Candidature",
+    "siteTitle": "Système de Candidature d'Emploi",
     "textSize": {
       "small": "Petit",
       "medium": "Moyen",
@@ -189,6 +190,48 @@
     "sortOrders": {
       "ascending": "Croissant (A-Z, 0-9)",
       "descending": "Décroissant (Z-A, 9-0)"
+    }
+  },
+  "auth": {
+    "pageTitle": "Connexion et Inscription",
+    "welcome": "Bon Retour",
+    "subtitle": "Accédez à votre compte ou créez-en un nouveau pour commencer",
+    "backToHome": "Retour à l'Accueil",
+    "login": {
+      "title": "Connexion",
+      "button": "Se Connecter",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié ?"
+    },
+    "signup": {
+      "title": "Inscription",
+      "button": "Créer un Compte",
+      "termsPrefix": "J'accepte les",
+      "termsLink": "Conditions de Service",
+      "termsAnd": "et la",
+      "privacyLink": "Politique de Confidentialité"
+    },
+    "email": {
+      "label": "Adresse Email",
+      "placeholder": "Entrez votre adresse email"
+    },
+    "password": {
+      "label": "Mot de Passe",
+      "placeholder": "Entrez votre mot de passe",
+      "requirements": "Doit contenir au moins 8 caractères"
+    },
+    "confirmPassword": {
+      "label": "Confirmer le Mot de Passe",
+      "placeholder": "Confirmez votre mot de passe"
+    },
+    "errors": {
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "allFieldsRequired": "Veuillez remplir tous les champs requis"
+    },
+    "success": {
+      "loginSuccess": "Connexion réussie ! (Ceci est une démonstration - aucune connexion backend)",
+      "signupSuccess": "Compte créé avec succès ! (Ceci est une démonstration - aucune connexion backend)"
     }
   }
 }

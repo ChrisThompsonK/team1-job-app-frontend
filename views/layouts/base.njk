@@ -37,6 +37,9 @@
                             <li>
                                 <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
                             </li>
+                            <li>
+                                <a href="/login" class="{% if currentPage === 'login' %}active{% endif %}">{{ t('nav.login') }}</a>
+                            </li>
                         </ul>
                     </div>
                     <a href="/" class="btn btn-ghost text-xl">
@@ -56,6 +59,14 @@
                     </ul>
                 </div>
                 <div class="navbar-end gap-2">
+                    <!-- Login Button -->
+                    <a href="/login" class="btn btn-ghost gap-2 {% if currentPage === 'login' %}btn-active{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        {{ t('nav.login') }}
+                    </a>
+                    
                     <!-- Text Size Selector -->
                     <div class="dropdown dropdown-end">
                         <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="{{ t('nav.changeTextSize') }}">

@@ -1,7 +1,8 @@
 {
   "nav": {
-    "home": "Strona główna",
-    "jobRoles": "Stanowiska pracy",
+    "home": "Strona Główna",
+    "jobRoles": "Stanowiska Pracy",
+    "login": "Logowanie",
     "menu": "Menu",
     "openMenu": "Otwórz menu nawigacji",
     "toggleTheme": "Przełącz tryb ciemny",
@@ -9,10 +10,10 @@
     "changeTextSize": "Zmień rozmiar tekstu",
     "siteTitle": "System Aplikacji o Pracę",
     "textSize": {
-      "small": "Mały",
-      "medium": "Średni",
-      "large": "Duży",
-      "xLarge": "Bardzo duży"
+      "small": "Małe",
+      "medium": "Średnie",
+      "large": "Duże",
+      "xLarge": "Bardzo Duże"
     }
   },
   "home": {
@@ -189,6 +190,48 @@
     "sortOrders": {
       "ascending": "Rosnąco (A-Z, 0-9)",
       "descending": "Malejąco (Z-A, 9-0)"
+    }
+  },
+  "auth": {
+    "pageTitle": "Logowanie i Rejestracja",
+    "welcome": "Witamy z Powrotem",
+    "subtitle": "Uzyskaj dostęp do swojego konta lub utwórz nowe, aby rozpocząć",
+    "backToHome": "Powrót do Strony Głównej",
+    "login": {
+      "title": "Logowanie",
+      "button": "Zaloguj się",
+      "rememberMe": "Zapamiętaj mnie",
+      "forgotPassword": "Zapomniałeś hasła?"
+    },
+    "signup": {
+      "title": "Rejestracja",
+      "button": "Utwórz Konto",
+      "termsPrefix": "Akceptuję",
+      "termsLink": "Warunki Usługi",
+      "termsAnd": "i",
+      "privacyLink": "Politykę Prywatności"
+    },
+    "email": {
+      "label": "Adres Email",
+      "placeholder": "Wprowadź swój adres email"
+    },
+    "password": {
+      "label": "Hasło",
+      "placeholder": "Wprowadź swoje hasło",
+      "requirements": "Musi mieć co najmniej 8 znaków"
+    },
+    "confirmPassword": {
+      "label": "Potwierdź Hasło",
+      "placeholder": "Potwierdź swoje hasło"
+    },
+    "errors": {
+      "passwordMismatch": "Hasła nie pasują do siebie",
+      "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków",
+      "allFieldsRequired": "Wypełnij wszystkie wymagane pola"
+    },
+    "success": {
+      "loginSuccess": "Logowanie pomyślne! (To jest demo - brak połączenia z backendem)",
+      "signupSuccess": "Konto utworzone pomyślnie! (To jest demo - brak połączenia z backendem)"
     }
   }
 }

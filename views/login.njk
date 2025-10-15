@@ -1,0 +1,345 @@
+{% extends "layouts/base.njk" %}
+{% set currentPage = "login" %}
+{% block title %}
+    {{ t('auth.pageTitle') }} - {{ t('nav.siteTitle') }}
+{% endblock %}
+{% block content %}
+    <!-- Hero Section with Background -->
+    <div class="min-h-screen bg-gradient-to-br from-primary to-secondary">
+        <div class="hero-overlay bg-opacity-20"></div>
+        <div class="container mx-auto px-4 py-8">
+            <!-- Page Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-bold text-white mb-2">{{ t('auth.welcome') }}</h1>
+                <p class="text-white/80 text-lg">{{ t('auth.subtitle') }}</p>
+            </div>
+
+            <!-- Authentication Tabs -->
+            <div class="max-w-md mx-auto">
+                <div class="tabs tabs-boxed bg-white/10 backdrop-blur-sm mb-6">
+                    <button class="tab tab-active text-white" id="login-tab" onclick="switchTab('login')">
+                        {{ t('auth.login.title') }}
+                    </button>
+                    <button class="tab text-white/70" id="signup-tab" onclick="switchTab('signup')">
+                        {{ t('auth.signup.title') }}
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form" class="card bg-white shadow-2xl">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary text-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                            </svg>
+                            {{ t('auth.login.title') }}
+                        </h2>
+                        
+                        <form id="login-form-element" class="space-y-4">
+                            <!-- Email Field -->
+                            <div class="form-control">
+                                <label class="label" for="login-email">
+                                    <span class="label-text font-medium">{{ t('auth.email.label') }}</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="email" 
+                                        id="login-email" 
+                                        name="email" 
+                                        placeholder="{{ t('auth.email.placeholder') }}" 
+                                        class="input input-bordered w-full pl-10" 
+                                        required
+                                    />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="form-control">
+                                <label class="label" for="login-password">
+                                    <span class="label-text font-medium">{{ t('auth.password.label') }}</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="password" 
+                                        id="login-password" 
+                                        name="password" 
+                                        placeholder="{{ t('auth.password.placeholder') }}" 
+                                        class="input input-bordered w-full pl-10 pr-10" 
+                                        required
+                                    />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                    <button 
+                                        type="button" 
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+                                        onclick="togglePassword('login-password')"
+                                    >
+                                        <svg id="login-password-show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        <svg id="login-password-hide" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remember Me & Forgot Password -->
+                            <div class="flex items-center justify-between">
+                                <div class="form-control">
+                                    <label class="label cursor-pointer gap-2">
+                                        <input type="checkbox" id="remember-me" name="remember" class="checkbox checkbox-primary checkbox-sm"/>
+                                        <span class="label-text text-sm">{{ t('auth.login.rememberMe') }}</span>
+                                    </label>
+                                </div>
+                                <a href="#" class="link link-primary text-sm">{{ t('auth.login.forgotPassword') }}</a>
+                            </div>
+
+                            <!-- Login Button -->
+                            <div class="form-control mt-6">
+                                <button type="submit" class="btn btn-primary gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                    </svg>
+                                    {{ t('auth.login.button') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div id="signup-form" class="card bg-white shadow-2xl hidden">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary text-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            </svg>
+                            {{ t('auth.signup.title') }}
+                        </h2>
+                        
+                        <form id="signup-form-element" class="space-y-4">
+                            <!-- Email Field -->
+                            <div class="form-control">
+                                <label class="label" for="signup-email">
+                                    <span class="label-text font-medium">{{ t('auth.email.label') }}</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="email" 
+                                        id="signup-email" 
+                                        name="email" 
+                                        placeholder="{{ t('auth.email.placeholder') }}" 
+                                        class="input input-bordered w-full pl-10" 
+                                        required
+                                    />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="form-control">
+                                <label class="label" for="signup-password">
+                                    <span class="label-text font-medium">{{ t('auth.password.label') }}</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="password" 
+                                        id="signup-password" 
+                                        name="password" 
+                                        placeholder="{{ t('auth.password.placeholder') }}" 
+                                        class="input input-bordered w-full pl-10 pr-10" 
+                                        required
+                                        minlength="8"
+                                    />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                    <button 
+                                        type="button" 
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+                                        onclick="togglePassword('signup-password')"
+                                    >
+                                        <svg id="signup-password-show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        <svg id="signup-password-hide" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <label class="label">
+                                    <span class="label-text-alt text-base-content/60">{{ t('auth.password.requirements') }}</span>
+                                </label>
+                            </div>
+
+                            <!-- Confirm Password Field -->
+                            <div class="form-control">
+                                <label class="label" for="confirm-password">
+                                    <span class="label-text font-medium">{{ t('auth.confirmPassword.label') }}</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="password" 
+                                        id="confirm-password" 
+                                        name="confirmPassword" 
+                                        placeholder="{{ t('auth.confirmPassword.placeholder') }}" 
+                                        class="input input-bordered w-full pl-10 pr-10" 
+                                        required
+                                    />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <button 
+                                        type="button" 
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+                                        onclick="togglePassword('confirm-password')"
+                                    >
+                                        <svg id="confirm-password-show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        <svg id="confirm-password-hide" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="form-control">
+                                <label class="label cursor-pointer gap-2">
+                                    <input type="checkbox" id="terms" name="terms" class="checkbox checkbox-primary checkbox-sm" required/>
+                                    <span class="label-text text-sm">
+                                        {{ t('auth.signup.termsPrefix') }} 
+                                        <a href="#" class="link link-primary">{{ t('auth.signup.termsLink') }}</a>
+                                        {{ t('auth.signup.termsAnd') }}
+                                        <a href="#" class="link link-primary">{{ t('auth.signup.privacyLink') }}</a>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Sign Up Button -->
+                            <div class="form-control mt-6">
+                                <button type="submit" class="btn btn-accent gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                    </svg>
+                                    {{ t('auth.signup.button') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Back to Home Link -->
+                <div class="text-center mt-6">
+                    <a href="/" class="link link-accent text-white/80 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        {{ t('auth.backToHome') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for form interactions -->
+    <script>
+        // Tab switching functionality
+        function switchTab(tab) {
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            if (tab === 'login') {
+                loginTab.classList.add('tab-active');
+                signupTab.classList.remove('tab-active');
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginTab.classList.remove('text-white/70');
+                loginTab.classList.add('text-white');
+                signupTab.classList.remove('text-white');
+                signupTab.classList.add('text-white/70');
+            } else {
+                signupTab.classList.add('tab-active');
+                loginTab.classList.remove('tab-active');
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                signupTab.classList.remove('text-white/70');
+                signupTab.classList.add('text-white');
+                loginTab.classList.remove('text-white');
+                loginTab.classList.add('text-white/70');
+            }
+        }
+
+        // Password visibility toggle
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const showIcon = document.getElementById(inputId + '-show');
+            const hideIcon = document.getElementById(inputId + '-hide');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                showIcon.classList.add('hidden');
+                hideIcon.classList.remove('hidden');
+            } else {
+                input.type = 'password';
+                showIcon.classList.remove('hidden');
+                hideIcon.classList.add('hidden');
+            }
+        }
+
+        // Form validation for signup
+        document.getElementById('signup-form-element').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                alert('{{ t("auth.errors.passwordMismatch") }}');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('{{ t("auth.errors.passwordTooShort") }}');
+                return;
+            }
+            
+            // Here you would typically send the data to your backend
+            alert('{{ t("auth.success.signupSuccess") }}');
+        });
+
+        // Form validation for login
+        document.getElementById('login-form-element').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                alert('{{ t("auth.errors.allFieldsRequired") }}');
+                return;
+            }
+            
+            // Here you would typically send the data to your backend
+            alert('{{ t("auth.success.loginSuccess") }}');
+        });
+    </script>
+{% endblock %}
