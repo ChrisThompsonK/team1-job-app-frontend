@@ -86,6 +86,8 @@ public/
 !public/favicon.ico
 !public/favicon.png
 !public/apple-touch-icon.png
+!public/images/
+!public/css/
 
 # Vuepress build output
 .vuepress/dist
