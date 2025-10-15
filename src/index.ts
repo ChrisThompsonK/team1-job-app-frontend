@@ -9,13 +9,13 @@ import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
-import { JobRoleValidator } from "./validators/JobRoleValidator.js";
-import { 
-  getTranslatedCapability, 
-  getTranslatedBand, 
+import {
+  getTranslatedBand,
+  getTranslatedCapability,
+  getTranslatedJobTitle,
   getTranslatedStatus,
-  getTranslatedJobTitle 
 } from "./utils/jobTranslations.js";
+import { JobRoleValidator } from "./validators/JobRoleValidator.js";
 
 const app = express();
 const port = env.port;
@@ -27,10 +27,10 @@ const nunjucksEnv = nunjucks.configure(path.join(process.cwd(), "views"), {
 });
 
 // Add translation helper functions to Nunjucks global context
-nunjucksEnv.addGlobal('translateCapability', getTranslatedCapability);
-nunjucksEnv.addGlobal('translateBand', getTranslatedBand);
-nunjucksEnv.addGlobal('translateStatus', getTranslatedStatus);
-nunjucksEnv.addGlobal('translateJobTitle', getTranslatedJobTitle);
+nunjucksEnv.addGlobal("translateCapability", getTranslatedCapability);
+nunjucksEnv.addGlobal("translateBand", getTranslatedBand);
+nunjucksEnv.addGlobal("translateStatus", getTranslatedStatus);
+nunjucksEnv.addGlobal("translateJobTitle", getTranslatedJobTitle);
 
 // Set Nunjucks as the view engine
 app.set("view engine", "njk");
