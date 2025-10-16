@@ -14,15 +14,19 @@
         <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6">
           <i data-lucide="user" class="h-10 w-10 text-white"></i>
         </div>
-      </div>
-      <!-- Remember Me & Forgot Password -->
-      <div class="flex items-center justify-between">
-        <div class="form-control">
-          <label class="label cursor-pointer gap-2">
-            <input type="checkbox" id="remember-me" name="remember" class="checkbox checkbox-primary checkbox-sm"/>
-            <span class="label-text text-sm">{{ t('auth.login.rememberMe') }}</span>
-          </label>
+        <!-- Tab Navigation -->
+        <div class="tabs tabs-boxed bg-white/10 backdrop-blur-sm max-w-md mx-auto">
+          <button id="login-tab" class="tab tab-active text-white" onclick="switchTab('login')">
+            {{ t('auth.login.title') }}
+          </button>
+          <button id="signup-tab" class="tab text-white/70" onclick="switchTab('signup')">
+            {{ t('auth.signup.title') }}
+          </button>
         </div>
+      </div>
+      <!-- Forms Container -->
+      <div
+        class="max-w-md mx-auto">
         <!-- Login Form -->
         <div id="login-form" class="card bg-base-100 shadow-2xl">
           <div class="card-body">
@@ -39,7 +43,9 @@
                 </label>
                 <div class="relative">
                   <input type="email" id="login-email" name="email" placeholder="{{ t('auth.email.placeholder') }}" class="input input-bordered w-full pl-10" required/>
-                  <i data-lucide="mail" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+                  <i
+                    data-lucide="mail"
+                    class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
                 </div>
               </div>
               <!-- Password Field -->
@@ -49,11 +55,13 @@
                 </label>
                 <div class="relative">
                   <input type="password" id="login-password" name="password" placeholder="{{ t('auth.password.placeholder') }}" class="input input-bordered w-full pl-10 pr-10" required/>
-                  <i data-lucide="lock" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+                  <i
+                    data-lucide="lock"
+                    class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
                   <button
                     type="button"
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content
-                      transition-colors"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors
+                      z-10"
                     onclick="togglePassword('login-password')">
                     <i id="login-password-show" data-lucide="eye" class="h-5 w-5"></i>
                     <i id="login-password-hide" data-lucide="eye-off" class="h-5 w-5 hidden"></i>
@@ -96,7 +104,9 @@
                 </label>
                 <div class="relative">
                   <input type="email" id="signup-email" name="email" placeholder="{{ t('auth.email.placeholder') }}" class="input input-bordered w-full pl-10" required/>
-                  <i data-lucide="mail" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+                  <i
+                    data-lucide="mail"
+                    class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
                 </div>
               </div>
               <!-- Password Field -->
@@ -106,11 +116,13 @@
                 </label>
                 <div class="relative">
                   <input type="password" id="signup-password" name="password" placeholder="{{ t('auth.password.placeholder') }}" class="input input-bordered w-full pl-10 pr-10" required minlength="8"/>
-                  <i data-lucide="lock" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+                  <i
+                    data-lucide="lock"
+                    class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
                   <button
                     type="button"
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content
-                      transition-colors"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors
+                      z-10"
                     onclick="togglePassword('signup-password')">
                     <i id="signup-password-show" data-lucide="eye" class="h-5 w-5"></i>
                     <i id="signup-password-hide" data-lucide="eye-off" class="h-5 w-5 hidden"></i>
@@ -127,11 +139,13 @@
                 </label>
                 <div class="relative">
                   <input type="password" id="confirm-password" name="confirmPassword" placeholder="{{ t('auth.confirmPassword.placeholder') }}" class="input input-bordered w-full pl-10 pr-10" required/>
-                  <i data-lucide="check" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+                  <i
+                    data-lucide="check"
+                    class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
                   <button
                     type="button"
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content
-                      transition-colors"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors
+                      z-10"
                     onclick="togglePassword('confirm-password')">
                     <i id="confirm-password-show" data-lucide="eye" class="h-5 w-5"></i>
                     <i id="confirm-password-hide" data-lucide="eye-off" class="h-5 w-5 hidden"></i>
@@ -160,111 +174,79 @@
             </form>
           </div>
         </div>
-        <label class="label">
-          <span class="label-text-alt text-base-content/60">{{ t('auth.password.requirements') }}</span>
-        </label>
-      </div>
-      <!-- Confirm Password Field -->
-      <div class="form-control">
-        <label class="label" for="confirm-password">
-          <span class="label-text font-medium">{{ t('auth.confirmPassword.label') }}</span>
-        </label>
-        <div class="relative">
-          <input type="password" id="confirm-password" name="confirmPassword" placeholder="{{ t('auth.confirmPassword.placeholder') }}" class="input input-bordered w-full pl-10 pr-10" required/>
-          <i data-lucide="check" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
-          <button
-            type="button"
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content
-              transition-colors"
-            onclick="togglePassword('confirm-password')">
-            <i data-lucide="eye" id="confirm-password-show" class="h-5 w-5"></i>
-            <i data-lucide="eye-off" id="confirm-password-hide" class="h-5 w-5 hidden"></i>
-          </button>
+        <!-- Back to Home Link -->
+        <div class="text-center mt-6">
+          <a href="/" class="link link-accent text-white/80 hover:text-white">
+            <i data-lucide="arrow-left" class="h-4 w-4 inline mr-1"></i>
+            {{ t('auth.backToHome') }}
+          </a>
         </div>
       </div>
-      <!-- Terms and Conditions -->
-      <div class="form-control">
-        <label class="label cursor-pointer gap-2">
-          <input type="checkbox" id="terms" name="terms" class="checkbox checkbox-primary checkbox-sm" required/>
-          <span class="label-text text-sm">
-            {{ t('auth.signup.termsPrefix') }}
-            <a href="#" class="link link-primary">{{ t('auth.signup.termsLink') }}</a>
-            {{ t('auth.signup.termsAnd') }}
-            <a href="#" class="link link-primary">{{ t('auth.signup.privacyLink') }}</a>
-          </span>
-        </label>
-      </div>
-      <!-- Sign Up Button -->
-      <div class="form-control mt-6">
-        <button type="submit" class="btn btn-accent gap-2">
-          <i data-lucide="user-plus" class="h-5 w-5"></i>
-          {{ t('auth.signup.button') }}
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
-</div>
-<!-- Back to Home Link -->
-<div class="text-center mt-6">
-  <a href="/" class="link link-accent text-white/80 hover:text-white">
-    <i data-lucide="arrow-left" class="h-4 w-4 inline mr-1"></i>
-    {{ t('auth.backToHome') }}
-  </a>
-</div></div></div></div><!-- JavaScript for form interactions --><script>// Tab switching functionality
-function switchTab(tab) {
-  const loginTab = document.getElementById('login-tab');
-  const signupTab = document.getElementById('signup-tab');
-  const loginForm = document.getElementById('login-form');
-  const signupForm = document.getElementById('signup-form');
-  if (tab === 'login') {
-    loginTab.classList.add('tab-active');
-    signupTab.classList.remove('tab-active');
-    loginForm.classList.remove('hidden');
-    signupForm.classList.add('hidden');
-    loginTab.classList.remove('text-white/70');
-    loginTab.classList.add('text-white');
-    signupTab.classList.remove('text-white');
-    signupTab.classList.add('text-white/70');
-  } else {
-    signupTab.classList.add('tab-active');
-    loginTab.classList.remove('tab-active');
-    signupForm.classList.remove('hidden');
-    loginForm.classList.add('hidden');
-    signupTab.classList.remove('text-white/70');
-    signupTab.classList.add('text-white');
-    loginTab.classList.remove('text-white');
-    loginTab.classList.add('text-white/70');
-  }
-}
-// Password visibility toggle
-function togglePassword(inputId) {
-  const input = document.getElementById(inputId);
-  const showIcon = document.getElementById(inputId + '-show');
-  const hideIcon = document.getElementById(inputId + '-hide');
-  if (input.type === 'password') {
-    input.type = 'text';
-    showIcon.classList.add('hidden');
-    hideIcon.classList.remove('hidden');
-  } else {
-    input.type = 'password';
-    showIcon.classList.remove('hidden');
-    hideIcon.classList.add('hidden');
-  }
-}
-// Form validation for signup
-document.getElementById('signup-form-element').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const password = document.getElementById('signup-password').value;
-  const confirmPassword = document.getElementById('confirm-password').value;
-  if (password !== confirmPassword) {
-    alert('{{ t("auth.errors.passwordMismatch") }}');
-    return;
-  }
-  if (password.length < 8) {
-    alert('{{ t("auth.errors.passwordTooShort") }}');
-    return;
-  }
-  // Here you would typically send the data to your backend
-  alert('{{ t("auth.success.signupSuccess") }}');
-});
-// Login form is now handled by auth.js</script>{% endblock %}{% block scripts %}<!-- Authentication JavaScript --><script src="/js/auth.js"></script>{% endblock %}
+  <!-- JavaScript for form interactions -->
+  <script>
+    // Tab switching functionality
+    function switchTab(tab) {
+      const loginTab = document.getElementById("login-tab");
+      const signupTab = document.getElementById("signup-tab");
+      const loginForm = document.getElementById("login-form");
+      const signupForm = document.getElementById("signup-form");
+      if (tab === "login") {
+        loginTab.classList.add("tab-active");
+        signupTab.classList.remove("tab-active");
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        loginTab.classList.remove("text-white/70");
+        loginTab.classList.add("text-white");
+        signupTab.classList.remove("text-white");
+        signupTab.classList.add("text-white/70");
+      } else {
+        signupTab.classList.add("tab-active");
+        loginTab.classList.remove("tab-active");
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+        signupTab.classList.remove("text-white/70");
+        signupTab.classList.add("text-white");
+        loginTab.classList.remove("text-white");
+        loginTab.classList.add("text-white/70");
+      }
+    }
+    // Password visibility toggle
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const showIcon = document.getElementById(inputId + "-show");
+      const hideIcon = document.getElementById(inputId + "-hide");
+      if (input.type === "password") {
+        input.type = "text";
+        showIcon.classList.add("hidden");
+        hideIcon.classList.remove("hidden");
+      } else {
+        input.type = "password";
+        showIcon.classList.remove("hidden");
+        hideIcon.classList.add("hidden");
+      }
+    }
+    // Form validation for signup
+    document.getElementById("signup-form-element").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const password = document.getElementById("signup-password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      if (password !== confirmPassword) {
+        alert('{{ t("auth.errors.passwordMismatch") }}');
+        return;
+      }
+      if (password.length < 8) {
+        alert('{{ t("auth.errors.passwordTooShort") }}');
+        return;
+      }
+      // Here you would typically send the data to your backend
+      alert('{{ t("auth.success.signupSuccess") }}');
+    });
+    // Login form is now handled by auth.js
+  </script>
+{% endblock %}
+{% block scripts %}
+  <!-- Authentication JavaScript -->
+  <script src="/js/auth.js"></script>
+{% endblock %}
