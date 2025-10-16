@@ -16,7 +16,7 @@
         <ul>
             <li><a href="/" class="link link-hover">Home</a></li>
             <li><a href="/job-roles" class="link link-hover">Job Roles</a></li>
-            <li class="text-base-content/70">{{ jobRole.name }}</li>
+            <li class="text-base-content/70">{{ translateJobTitle(jobRole.name, t) }}</li>
         </ul>
     </div>
 
@@ -24,16 +24,16 @@
     <div class="hero bg-base-200 rounded-lg mb-8">
         <div class="hero-content text-center">
             <div class="max-w-4xl">
-                <h1 class="text-5xl font-bold text-primary mb-4">{{ jobRole.name }}</h1>
+                <h1 class="text-5xl font-bold text-primary mb-4">{{ translateJobTitle(jobRole.name, t) }}</h1>
                 <div class="flex flex-wrap justify-center gap-4 mb-6">
                     <!-- Status Badge -->
                     <div class="badge {{ 'badge-success' if jobRole.status == 'Open' else 'badge-error' }} badge-lg">
-                        {{ jobRole.status }}
+                        {{ translateStatus(jobRole.status, t) }}
                     </div>
                     <!-- Capability Badge -->
-                    <div class="badge badge-secondary badge-lg">{{ jobRole.capability }}</div>
+                    <div class="badge badge-secondary badge-lg">{{ translateCapability(jobRole.capability, t) }}</div>
                     <!-- Band Badge -->
-                    <div class="badge badge-outline badge-lg">Band {{ jobRole.band }}</div>
+                    <div class="badge badge-outline badge-lg">Band {{ translateBand(jobRole.band, t) }}</div>
                 </div>
                 <p class="text-lg text-base-content/80 mb-6">{{ jobRole.description }}</p>
                 <div class="flex flex-wrap justify-center gap-6 text-base-content/70">
@@ -115,16 +115,16 @@
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-base-content/70">Capability:</span>
-                            <span class="badge badge-secondary">{{ jobRole.capability }}</span>
+                            <span class="badge badge-secondary">{{ translateCapability(jobRole.capability, t) }}</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-base-content/70">Band:</span>
-                            <span class="font-semibold">{{ jobRole.band }}</span>
+                            <span class="font-semibold">{{ translateBand(jobRole.band, t) }}</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-base-content/70">Status:</span>
                             <span class="badge {{ 'badge-success' if jobRole.status == 'Open' else 'badge-error' }}">
-                                {{ jobRole.status }}
+                                {{ translateStatus(jobRole.status, t) }}
                             </span>
                         </div>
                         <div class="flex justify-between items-center">
