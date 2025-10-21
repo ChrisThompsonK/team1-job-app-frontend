@@ -480,10 +480,11 @@ export class JobRoleController {
 
       // Convert jobs to CSV rows
       const rows = jobsArray.map((job) => {
-        const closingDate = job.closingDate instanceof Date 
-          ? job.closingDate.toLocaleDateString('en-GB')
-          : new Date(job.closingDate).toLocaleDateString('en-GB');
-        
+        const closingDate =
+          job.closingDate instanceof Date
+            ? job.closingDate.toLocaleDateString("en-GB")
+            : new Date(job.closingDate).toLocaleDateString("en-GB");
+
         const responsibilities = Array.isArray(job.responsibilities)
           ? job.responsibilities.join("; ")
           : "";
