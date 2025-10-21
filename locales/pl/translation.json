@@ -1,19 +1,20 @@
 {
   "nav": {
-    "home": "Strona Główna",
-    "jobRoles": "Stanowiska Pracy",
-    "login": "Logowanie",
+    "home": "Strona główna",
+    "jobRoles": "Role zawodowe",
+    "login": "Zaloguj się",
+    "profile": "Profil",
     "menu": "Menu",
     "openMenu": "Otwórz menu nawigacji",
     "toggleTheme": "Przełącz tryb ciemny",
     "changeLanguage": "Zmień język",
     "changeTextSize": "Zmień rozmiar tekstu",
-    "siteTitle": "System Aplikacji o Pracę",
+    "siteTitle": "System Aplikacji Zawodowych",
     "textSize": {
-      "small": "Małe",
-      "medium": "Średnie",
-      "large": "Duże",
-      "xLarge": "Bardzo Duże"
+      "small": "Mały",
+      "medium": "Średni",
+      "large": "Duży",
+      "xLarge": "Extra Duży"
     }
   },
   "home": {

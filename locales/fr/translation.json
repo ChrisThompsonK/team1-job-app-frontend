@@ -1,8 +1,9 @@
 {
   "nav": {
     "home": "Accueil",
-    "jobRoles": "Postes",
+    "jobRoles": "Rôles d'Emploi",
     "login": "Connexion",
+    "profile": "Profil",
     "menu": "Menu",
     "openMenu": "Ouvrir le menu de navigation",
     "toggleTheme": "Basculer le mode sombre",

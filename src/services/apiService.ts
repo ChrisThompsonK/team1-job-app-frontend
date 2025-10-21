@@ -1,4 +1,5 @@
 import axios from "axios";
+import { env } from "../config/env.js";
 
 /**
  * Centralized API service for making HTTP requests
@@ -6,7 +7,7 @@ import axios from "axios";
  */
 class ApiService {
   private api = axios.create({
-    baseURL: process.env.BACKEND_URL || "http://localhost:3001/api", // External auth API
+    baseURL: env.backendUrl, // External auth API
     withCredentials: true, // Essential for session cookies
     headers: {
       "Content-Type": "application/json",
