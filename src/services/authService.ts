@@ -1,3 +1,4 @@
+import { env } from "../config/env.js";
 import { apiService } from "./apiService.js";
 
 export interface LoginCredentials {
@@ -38,16 +39,13 @@ class AuthService {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
       // Use fetch directly to capture cookies from response headers
-      const response = await fetch(
-        "http://localhost:3001/api/auth/sign-in/email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const response = await fetch(`${env.backendUrl}/auth/sign-in/email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -96,40 +94,30 @@ class AuthService {
   }
 
   /**
-   * Check if user is authenticated by checking for session cookie
-   * This avoids making unnecessary API calls
+   * Check if user is authenticated by validating session server-side
+   * This makes a secure server-side validation instead of trusting client cookies
    */
   async checkAuthStatus(): Promise<{ success: boolean; user?: User }> {
-    // Check if we're in browser environment
-    if (typeof document === "undefined") {
-      // Server-side: we can't check cookies here, return false
+    try {
+      // Make a server-side request to validate the session
+      const response = await fetch("/auth/session", {
+        method: "GET",
+        credentials: "include", // Include cookies for validation
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        return { success: false };
+      }
+    } catch (_error) {
+      // If request fails, user is not authenticated
       return { success: false };
     }
-
-    // Check for session cookie
-    const hasSessionCookie = document.cookie
-      .split(";")
-      .some((cookie) => cookie.trim().startsWith("session="));
-
-    if (hasSessionCookie) {
-      // If we have a session cookie, assume user is authenticated
-      // In a real app, you might decode the session or have user data in localStorage
-      return {
-        success: true,
-        user: {
-          id: "unknown",
-          name: "Authenticated User",
-          email: "user@example.com",
-          emailVerified: true,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      };
-    }
-
-    return {
-      success: false,
-    };
   }
 
   /**
@@ -166,16 +154,13 @@ class AuthService {
             .join("; ");
 
           // Call external API with forwarded session cookies
-          const response = await fetch(
-            "http://localhost:3001/api/auth/sign-out",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Cookie: cookieString,
-              },
-            }
-          );
+          const response = await fetch(`${env.backendUrl}/auth/sign-out`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Cookie: cookieString,
+            },
+          });
 
           if (response.ok) {
             return { success: true };
