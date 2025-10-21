@@ -451,6 +451,13 @@ export class JobRoleController {
   };
 
   /**
+   * Helper function to escape CSV field values
+   */
+  private escapeCsvField(value: string): string {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+
+  /**
    * Generates a CSV report of all job roles
    * GET /job-roles/export
    */
@@ -482,8 +489,8 @@ export class JobRoleController {
       const rows = jobsArray.map((job) => {
         const closingDate =
           job.closingDate instanceof Date
-            ? job.closingDate.toLocaleDateString("en-GB")
-            : new Date(job.closingDate).toLocaleDateString("en-GB");
+            ? job.closingDate.toISOString().split("T")[0]
+            : new Date(job.closingDate).toISOString().split("T")[0];
 
         const responsibilities = Array.isArray(job.responsibilities)
           ? job.responsibilities.join("; ")
@@ -491,16 +498,16 @@ export class JobRoleController {
 
         return [
           job.id,
-          `"${job.name.replace(/"/g, '""')}"`,
-          `"${job.location.replace(/"/g, '""')}"`,
-          `"${job.capability.replace(/"/g, '""')}"`,
-          `"${job.band.replace(/"/g, '""')}"`,
-          `"${job.status.replace(/"/g, '""')}"`,
+          this.escapeCsvField(job.name),
+          this.escapeCsvField(job.location),
+          this.escapeCsvField(job.capability),
+          this.escapeCsvField(job.band),
+          this.escapeCsvField(job.status),
           job.numberOfOpenPositions,
           closingDate,
-          `"${job.description.replace(/"/g, '""')}"`,
-          `"${responsibilities.replace(/"/g, '""')}"`,
-          job.jobSpecLink ? `"${job.jobSpecLink.replace(/"/g, '""')}"` : "",
+          this.escapeCsvField(job.description),
+          this.escapeCsvField(responsibilities),
+          job.jobSpecLink ? this.escapeCsvField(job.jobSpecLink) : "",
         ].join(",");
       });
 
@@ -520,6 +527,7 @@ export class JobRoleController {
       // Send CSV content
       res.send(csvContent);
     } catch (error) {
+      // TODO: Replace with proper logging framework (e.g., winston, pino)
       console.error("Error generating CSV report:", error);
       res.status(500).render("error", {
         title: "Export Failed",
