@@ -3,6 +3,7 @@
     "home": "Inicio",
     "jobRoles": "Roles de Trabajo",
     "login": "Iniciar Sesión",
+    "profile": "Perfil",
     "menu": "Menú",
     "openMenu": "Abrir menú de navegación",
     "toggleTheme": "Alternar modo oscuro",
@@ -127,7 +128,17 @@
     "confirmDeleteJob": "¿Está seguro de que desea eliminar",
     "confirmDeletion": "Confirmar Eliminación",
     "deleteWarning": "Esta acción no se puede deshacer y eliminará permanentemente este puesto de trabajo del sistema.",
-    "deleteJobRole": "Eliminar Puesto de Trabajo"
+    "deleteJobRole": "Eliminar Puesto de Trabajo",
+    "jobDescription": "Descripción del Trabajo",
+    "keyResponsibilities": "Responsabilidades Clave",
+    "quickInformation": "Información Rápida",
+    "actions": "Acciones",
+    "positionClosed": "Esta posición está actualmente cerrada para solicitudes.",
+    "backToJobList": "Volver a la Lista de Trabajos",
+    "shareThisJob": "Compartir este Trabajo",
+    "copyLink": "Copiar Enlace",
+    "shareViaEmail": "Compartir por Correo Electrónico",
+    "print": "Imprimir"
   },
   "jobApplication": {
     "title": "Solicitar Puesto",
@@ -274,6 +285,7 @@
     }
   },
   "jobTitles": {
+    "urgent_infrastructure_engineer": "Urgente: Ingeniero de Infraestructura",
     "junior_software_engineer": "Ingeniero de Software Junior",
     "software_engineer": "Ingeniero de Software",
     "senior_software_engineer": "Ingeniero de Software Senior",
@@ -330,5 +342,37 @@
     "security_consultant": "Consultor de Seguridad",
     "penetration_tester": "Probador de Penetración",
     "security_compliance_officer": "Oficial de Cumplimiento de Seguridad"
+  },
+  "jobDescriptions": {
+    "urgent_infrastructure_engineer": "Necesidad inmediata de ingeniero de infraestructura.",
+    "full_stack_engineer": "Trabajar en toda la pila tecnológica.",
+    "data_engineer": "Construir y mantener pipelines de datos.",
+    "workday_project_manager": "Liderar proyectos de implementación de Workday.",
+    "senior_software_engineer": "Liderar el desarrollo de soluciones de software complejas y orientar a desarrolladores junior",
+    "product_manager": "Impulsar la estrategia del producto y trabajar con equipos multifuncionales para ofrecer experiencias excepcionales al usuario",
+    "data_scientist": "Analizar conjuntos de datos complejos para obtener información y construir modelos predictivos",
+    "ux_designer": "Crear experiencias de usuario intuitivas y atractivas para productos digitales",
+    "devops_engineer": "Mantener y mejorar la infraestructura, pipelines CI/CD y procesos de implementación",
+    "frontend_developer": "Construir interfaces de usuario responsivas e interactivas utilizando tecnologías web modernas",
+    "qa_engineer": "Garantizar la calidad del software mediante estrategias de prueba integrales y automatización",
+    "solutions_architect": "Diseñar soluciones técnicas a nivel empresarial y guiar estrategias de implementación",
+    "business_analyst": "Conectar los requisitos empresariales con soluciones técnicas y mejoras de procesos",
+    "cybersecurity_specialist": "Proteger los activos organizacionales mediante monitoreo de seguridad y análisis de amenazas"
+  },
+  "jobResponsibilities": {
+    "urgent_infrastructure_engineer": "Gestión de infraestructura|Planificación de capacidad|Seguridad",
+    "full_stack_engineer": "Desarrollo full stack|Diseño de API|Despliegue",
+    "data_engineer": "Desarrollo ETL|Mantenimiento de pipelines|Automatización",
+    "workday_project_manager": "Gestión de proyectos|Relaciones con clientes|Gestión de riesgos",
+    "senior_software_engineer": "Diseñar e implementar sistemas de software escalables|Revisión de código|Liderazgo técnico|Mentoría a miembros del equipo",
+    "product_manager": "Planificación de la hoja de ruta del producto|Gestión de partes interesadas|Investigación de usuarios|Priorización de características|Análisis de mercado",
+    "data_scientist": "Análisis de datos|Desarrollo de modelos de aprendizaje automático|Análisis estadístico|Visualización de datos|Informes",
+    "ux_designer": "Investigación de usuarios|Wireframing|Prototipado|Pruebas de usabilidad|Sistemas de diseño|Colaboración con desarrolladores",
+    "devops_engineer": "Gestión de infraestructura|Automatización|Monitoreo|Implementación de seguridad|Gestión de servicios en la nube",
+    "frontend_developer": "Desarrollo React/Vue|Diseño responsivo|Optimización del rendimiento|Pruebas|Implementación de accesibilidad",
+    "qa_engineer": "Planificación de pruebas|Pruebas automatizadas|Pruebas manuales|Informes de errores|Procesos de aseguramiento de calidad",
+    "solutions_architect": "Diseño de arquitectura|Documentación técnica|Consultoría con partes interesadas|Evaluación de tecnología",
+    "business_analyst": "Recopilación de requisitos|Análisis de procesos|Gestión de partes interesadas|Documentación|Diseño de soluciones",
+    "cybersecurity_specialist": "Monitoreo de seguridad|Evaluación de vulnerabilidades|Respuesta a incidentes|Desarrollo de políticas de seguridad"
   }
 }

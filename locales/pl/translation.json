@@ -1,19 +1,20 @@
 {
   "nav": {
-    "home": "Strona Główna",
-    "jobRoles": "Stanowiska Pracy",
-    "login": "Logowanie",
+    "home": "Strona główna",
+    "jobRoles": "Role zawodowe",
+    "login": "Zaloguj się",
+    "profile": "Profil",
     "menu": "Menu",
     "openMenu": "Otwórz menu nawigacji",
     "toggleTheme": "Przełącz tryb ciemny",
     "changeLanguage": "Zmień język",
     "changeTextSize": "Zmień rozmiar tekstu",
-    "siteTitle": "System Aplikacji o Pracę",
+    "siteTitle": "System Aplikacji Zawodowych",
     "textSize": {
-      "small": "Małe",
-      "medium": "Średnie",
-      "large": "Duże",
-      "xLarge": "Bardzo Duże"
+      "small": "Mały",
+      "medium": "Średni",
+      "large": "Duży",
+      "xLarge": "Extra Duży"
     }
   },
   "home": {
@@ -127,7 +128,17 @@
     "confirmDeleteJob": "Czy na pewno chcesz usunąć",
     "confirmDeletion": "Potwierdź Usunięcie",
     "deleteWarning": "Ta akcja nie może zostać cofnięta i trwale usunie to stanowisko z systemu.",
-    "deleteJobRole": "Usuń Stanowisko"
+    "deleteJobRole": "Usuń Stanowisko",
+    "jobDescription": "Opis Stanowiska",
+    "keyResponsibilities": "Kluczowe Obowiązki",
+    "quickInformation": "Szybka Informacja",
+    "actions": "Akcje",
+    "positionClosed": "To stanowisko jest obecnie zamknięte dla aplikacji.",
+    "backToJobList": "Powrót do Listy Stanowisk",
+    "shareThisJob": "Udostępnij to Stanowisko",
+    "copyLink": "Kopiuj Link",
+    "shareViaEmail": "Udostępnij przez E-mail",
+    "print": "Drukuj"
   },
   "jobApplication": {
     "title": "Aplikuj na Stanowisko",
@@ -274,6 +285,7 @@
     }
   },
   "jobTitles": {
+    "urgent_infrastructure_engineer": "Pilne: Inżynier Infrastruktury",
     "junior_software_engineer": "Młodszy Inżynier Oprogramowania",
     "software_engineer": "Inżynier Oprogramowania",
     "senior_software_engineer": "Starszy Inżynier Oprogramowania",
@@ -330,5 +342,37 @@
     "security_consultant": "Konsultant Bezpieczeństwa",
     "penetration_tester": "Tester Penetracyjny",
     "security_compliance_officer": "Specjalista ds. Zgodności Bezpieczeństwa"
+  },
+  "jobDescriptions": {
+    "urgent_infrastructure_engineer": "Pilna potrzeba inżyniera infrastruktury.",
+    "full_stack_engineer": "Praca w całym stosie technologicznym.",
+    "data_engineer": "Budowanie i utrzymywanie potoków danych.",
+    "workday_project_manager": "Prowadzenie projektów wdrożeniowych Workday.",
+    "senior_software_engineer": "Kierowanie rozwojem złożonych rozwiązań programistycznych i mentoring młodszych programistów",
+    "product_manager": "Prowadzenie strategii produktowej i praca z zespołami wielofunkcyjnymi w celu dostarczania wyjątkowych doświadczeń użytkownika",
+    "data_scientist": "Analiza złożonych zbiorów danych w celu wyciągania wniosków i tworzenia modeli predykcyjnych",
+    "ux_designer": "Tworzenie intuicyjnych i angażujących doświadczeń użytkownika dla produktów cyfrowych",
+    "devops_engineer": "Utrzymanie i ulepszanie infrastruktury, potoków CI/CD oraz procesów wdrażania",
+    "frontend_developer": "Tworzenie responsywnych i interaktywnych interfejsów użytkownika przy użyciu nowoczesnych technologii webowych",
+    "qa_engineer": "Zapewnianie jakości oprogramowania poprzez kompleksowe strategie testowania i automatyzację",
+    "solutions_architect": "Projektowanie rozwiązań technicznych na poziomie przedsiębiorstwa i prowadzenie strategii wdrożeniowych",
+    "business_analyst": "Łączenie wymagań biznesowych z rozwiązaniami technicznymi i ulepszeniami procesów",
+    "cybersecurity_specialist": "Ochrona zasobów organizacyjnych poprzez monitorowanie bezpieczeństwa i analizę zagrożeń"
+  },
+  "jobResponsibilities": {
+    "urgent_infrastructure_engineer": "Zarządzanie infrastrukturą|Planowanie wydajności|Bezpieczeństwo",
+    "full_stack_engineer": "Rozwój full stack|Projektowanie API|Wdrażanie",
+    "data_engineer": "Rozwój ETL|Utrzymanie potoków|Automatyzacja",
+    "workday_project_manager": "Zarządzanie projektami|Relacje z klientami|Zarządzanie ryzykiem",
+    "senior_software_engineer": "Projektowanie i wdrażanie skalowalnych systemów oprogramowania|Przeglądy kodu|Przywództwo techniczne|Mentoring członków zespołu",
+    "product_manager": "Planowanie mapy drogowej produktu|Zarządzanie interesariuszami|Badania użytkowników|Priorytetyzacja funkcji|Analiza rynku",
+    "data_scientist": "Analiza danych|Rozwój modeli uczenia maszynowego|Analiza statystyczna|Wizualizacja danych|Raportowanie",
+    "ux_designer": "Badania użytkowników|Wireframing|Prototypowanie|Testy użyteczności|Systemy projektowe|Współpraca z programistami",
+    "devops_engineer": "Zarządzanie infrastrukturą|Automatyzacja|Monitorowanie|Wdrażanie bezpieczeństwa|Zarządzanie usługami chmurowymi",
+    "frontend_developer": "Rozwój React/Vue|Projektowanie responsywne|Optymalizacja wydajności|Testowanie|Wdrażanie dostępności",
+    "qa_engineer": "Planowanie testów|Testowanie automatyczne|Testowanie manualne|Raportowanie błędów|Procesy zapewnienia jakości",
+    "solutions_architect": "Projektowanie architektury|Dokumentacja techniczna|Konsultacje z interesariuszami|Ocena technologii",
+    "business_analyst": "Zbieranie wymagań|Analiza procesów|Zarządzanie interesariuszami|Dokumentacja|Projektowanie rozwiązań",
+    "cybersecurity_specialist": "Monitorowanie bezpieczeństwa|Ocena podatności|Reagowanie na incydenty|Rozwój polityk bezpieczeństwa"
   }
 }
