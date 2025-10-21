@@ -344,6 +344,9 @@
   },
   "jobDescriptions": {
     "urgent_infrastructure_engineer": "Pilna potrzeba inżyniera infrastruktury.",
+    "full_stack_engineer": "Praca w całym stosie technologicznym.",
+    "data_engineer": "Budowanie i utrzymywanie potoków danych.",
+    "workday_project_manager": "Prowadzenie projektów wdrożeniowych Workday.",
     "senior_software_engineer": "Kierowanie rozwojem złożonych rozwiązań programistycznych i mentoring młodszych programistów",
     "product_manager": "Prowadzenie strategii produktowej i praca z zespołami wielofunkcyjnymi w celu dostarczania wyjątkowych doświadczeń użytkownika",
     "data_scientist": "Analiza złożonych zbiorów danych w celu wyciągania wniosków i tworzenia modeli predykcyjnych",
@@ -357,6 +360,9 @@
   },
   "jobResponsibilities": {
     "urgent_infrastructure_engineer": "Zarządzanie infrastrukturą|Planowanie wydajności|Bezpieczeństwo",
+    "full_stack_engineer": "Rozwój full stack|Projektowanie API|Wdrażanie",
+    "data_engineer": "Rozwój ETL|Utrzymanie potoków|Automatyzacja",
+    "workday_project_manager": "Zarządzanie projektami|Relacje z klientami|Zarządzanie ryzykiem",
     "senior_software_engineer": "Projektowanie i wdrażanie skalowalnych systemów oprogramowania|Przeglądy kodu|Przywództwo techniczne|Mentoring członków zespołu",
     "product_manager": "Planowanie mapy drogowej produktu|Zarządzanie interesariuszami|Badania użytkowników|Priorytetyzacja funkcji|Analiza rynku",
     "data_scientist": "Analiza danych|Rozwój modeli uczenia maszynowego|Analiza statystyczna|Wizualizacja danych|Raportowanie",

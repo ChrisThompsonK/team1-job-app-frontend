@@ -344,6 +344,9 @@
   },
   "jobDescriptions": {
     "urgent_infrastructure_engineer": "Immediate need for infrastructure engineer.",
+    "full_stack_engineer": "Work across the entire technology stack.",
+    "data_engineer": "Build and maintain data pipelines.",
+    "workday_project_manager": "Lead Workday implementation projects.",
     "senior_software_engineer": "Lead development of complex software solutions and mentor junior developers",
     "product_manager": "Drive product strategy and work with cross-functional teams to deliver exceptional user experiences",
     "data_scientist": "Analyze complex datasets to derive insights and build predictive models",
@@ -357,6 +360,9 @@
   },
   "jobResponsibilities": {
     "urgent_infrastructure_engineer": "Infrastructure management|Capacity planning|Security",
+    "full_stack_engineer": "Full stack development|API design|Deployment",
+    "data_engineer": "ETL development|Pipeline maintenance|Automation",
+    "workday_project_manager": "Project management|Client relations|Risk management",
     "senior_software_engineer": "Design and implement scalable software systems|Code review|Technical leadership|Mentoring team members",
     "product_manager": "Product roadmap planning|Stakeholder management|User research|Feature prioritization|Market analysis",
     "data_scientist": "Data analysis|Machine learning model development|Statistical analysis|Data visualization|Reporting",
