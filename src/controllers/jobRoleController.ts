@@ -449,4 +449,91 @@ export class JobRoleController {
       }
     }
   };
+
+  /**
+   * Helper function to escape CSV field values
+   */
+  private escapeCsvField(value: string): string {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+
+  /**
+   * Generates a CSV report of all job roles
+   * GET /job-roles/export
+   */
+  public exportJobRolesCSV = async (
+    _req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      // Fetch all job roles without pagination
+      const allJobs = await this.jobRoleService.getAllJobs();
+      const jobsArray = Array.isArray(allJobs) ? allJobs : [];
+
+      // Define CSV headers
+      const headers = [
+        "ID",
+        "Job Role Name",
+        "Location",
+        "Capability",
+        "Band",
+        "Status",
+        "Number of Open Positions",
+        "Closing Date",
+        "Description",
+        "Responsibilities",
+        "Job Spec Link",
+      ];
+
+      // Convert jobs to CSV rows
+      const rows = jobsArray.map((job) => {
+        const closingDate =
+          job.closingDate instanceof Date
+            ? job.closingDate.toISOString().split("T")[0]
+            : new Date(job.closingDate).toISOString().split("T")[0];
+
+        const responsibilities = Array.isArray(job.responsibilities)
+          ? job.responsibilities.join("; ")
+          : "";
+
+        return [
+          job.id,
+          this.escapeCsvField(job.name),
+          this.escapeCsvField(job.location),
+          this.escapeCsvField(job.capability),
+          this.escapeCsvField(job.band),
+          this.escapeCsvField(job.status),
+          job.numberOfOpenPositions,
+          closingDate,
+          this.escapeCsvField(job.description),
+          this.escapeCsvField(responsibilities),
+          job.jobSpecLink ? this.escapeCsvField(job.jobSpecLink) : "",
+        ].join(",");
+      });
+
+      // Combine headers and rows
+      const csvContent = [headers.join(","), ...rows].join("\n");
+
+      // Set headers for file download
+      const timestamp = new Date().toISOString().split("T")[0];
+      const filename = `job-roles-report-${timestamp}.csv`;
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${filename}"`
+      );
+
+      // Send CSV content
+      res.send(csvContent);
+    } catch (error) {
+      // TODO: Replace with proper logging framework (e.g., winston, pino)
+      console.error("Error generating CSV report:", error);
+      res.status(500).render("error", {
+        title: "Export Failed",
+        message: "Unable to generate job roles report",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
 }

@@ -311,6 +311,15 @@
                     </div>
                 {% endfor %}
             </div>
+            
+            <!-- Generate Report Button -->
+            <div class="flex justify-center mt-8">
+                <a href="/job-roles/export" class="btn btn-accent gap-2" title="Generate CSV Report">
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                    {{ t('jobRoles.generateReport') or 'Generate Report' }}
+                </a>
+            </div>
+            
             <!-- Pagination Controls -->
             {% if paginationData and paginationData.totalPages > 1 %}
                 <div

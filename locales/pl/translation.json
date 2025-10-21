@@ -138,7 +138,8 @@
     "shareThisJob": "Udostępnij to Stanowisko",
     "copyLink": "Kopiuj Link",
     "shareViaEmail": "Udostępnij przez E-mail",
-    "print": "Drukuj"
+    "print": "Drukuj",
+    "generateReport": "Generuj Raport"
   },
   "jobApplication": {
     "title": "Aplikuj na Stanowisko",

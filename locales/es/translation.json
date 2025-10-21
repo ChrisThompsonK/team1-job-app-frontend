@@ -138,7 +138,8 @@
     "shareThisJob": "Compartir este Trabajo",
     "copyLink": "Copiar Enlace",
     "shareViaEmail": "Compartir por Correo Electrónico",
-    "print": "Imprimir"
+    "print": "Imprimir",
+    "generateReport": "Generar Informe"
   },
   "jobApplication": {
     "title": "Solicitar Puesto",
