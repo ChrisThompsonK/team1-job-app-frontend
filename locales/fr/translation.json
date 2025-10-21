@@ -127,7 +127,17 @@
     "confirmDeleteJob": "Êtes-vous sûr de vouloir supprimer",
     "confirmDeletion": "Confirmer la Suppression",
     "deleteWarning": "Cette action ne peut pas être annulée et supprimera définitivement ce poste du système.",
-    "deleteJobRole": "Supprimer le Poste"
+    "deleteJobRole": "Supprimer le Poste",
+    "jobDescription": "Description du Poste",
+    "keyResponsibilities": "Responsabilités Principales",
+    "quickInformation": "Information Rapide",
+    "actions": "Actions",
+    "positionClosed": "Ce poste est actuellement fermé aux candidatures.",
+    "backToJobList": "Retour à la Liste des Postes",
+    "shareThisJob": "Partager ce Poste",
+    "copyLink": "Copier le Lien",
+    "shareViaEmail": "Partager par E-mail",
+    "print": "Imprimer"
   },
   "jobApplication": {
     "title": "Postuler pour le Poste",
@@ -274,6 +284,7 @@
     }
   },
   "jobTitles": {
+    "urgent_infrastructure_engineer": "Urgent: Ingénieur d'Infrastructure",
     "junior_software_engineer": "Ingénieur Logiciel Junior",
     "software_engineer": "Ingénieur Logiciel",
     "senior_software_engineer": "Ingénieur Logiciel Senior",
@@ -330,5 +341,31 @@
     "security_consultant": "Consultant Sécurité",
     "penetration_tester": "Testeur de Pénétration",
     "security_compliance_officer": "Responsable Conformité Sécurité"
+  },
+  "jobDescriptions": {
+    "urgent_infrastructure_engineer": "Besoin immédiat d'ingénieur d'infrastructure.",
+    "senior_software_engineer": "Diriger le développement de solutions logicielles complexes et encadrer les développeurs juniors",
+    "product_manager": "Piloter la stratégie produit et travailler avec des équipes transversales pour offrir des expériences utilisateur exceptionnelles",
+    "data_scientist": "Analyser des ensembles de données complexes pour en tirer des insights et construire des modèles prédictifs",
+    "ux_designer": "Créer des expériences utilisateur intuitives et engageantes pour les produits numériques",
+    "devops_engineer": "Maintenir et améliorer l'infrastructure, les pipelines CI/CD et les processus de déploiement",
+    "frontend_developer": "Construire des interfaces utilisateur réactives et interactives en utilisant des technologies web modernes",
+    "qa_engineer": "Garantir la qualité logicielle grâce à des stratégies de test complètes et l'automatisation",
+    "solutions_architect": "Concevoir des solutions techniques au niveau entreprise et guider les stratégies de mise en œuvre",
+    "business_analyst": "Faire le lien entre les exigences métier et les solutions techniques et les améliorations de processus",
+    "cybersecurity_specialist": "Protéger les actifs organisationnels grâce à la surveillance de la sécurité et l'analyse des menaces"
+  },
+  "jobResponsibilities": {
+    "urgent_infrastructure_engineer": "Gestion d'infrastructure, planification de capacité, sécurité",
+    "senior_software_engineer": "Concevoir et implémenter des systèmes logiciels évolutifs, revue de code, leadership technique, mentorat des membres de l'équipe",
+    "product_manager": "Planification de la feuille de route produit, gestion des parties prenantes, recherche utilisateur, priorisation des fonctionnalités, analyse de marché",
+    "data_scientist": "Analyse de données, développement de modèles d'apprentissage automatique, analyse statistique, visualisation de données, reporting",
+    "ux_designer": "Recherche utilisateur, wireframing, prototypage, tests d'utilisabilité, systèmes de conception, collaboration avec les développeurs",
+    "devops_engineer": "Gestion d'infrastructure, automatisation, surveillance, implémentation de la sécurité, gestion des services cloud",
+    "frontend_developer": "Développement React/Vue, conception réactive, optimisation des performances, tests, implémentation de l'accessibilité",
+    "qa_engineer": "Planification des tests, tests automatisés, tests manuels, rapport de bugs, processus d'assurance qualité",
+    "solutions_architect": "Conception d'architecture, documentation technique, consultation des parties prenantes, évaluation technologique",
+    "business_analyst": "Collecte des exigences, analyse de processus, gestion des parties prenantes, documentation, conception de solutions",
+    "cybersecurity_specialist": "Surveillance de la sécurité, évaluation des vulnérabilités, réponse aux incidents, développement de politiques de sécurité"
   }
 }

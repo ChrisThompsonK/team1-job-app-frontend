@@ -127,7 +127,17 @@
     "confirmDeleteJob": "Are you sure you want to delete",
     "confirmDeletion": "Confirm Deletion",
     "deleteWarning": "This action cannot be undone and will permanently remove this job role from the system.",
-    "deleteJobRole": "Delete Job Role"
+    "deleteJobRole": "Delete Job Role",
+    "jobDescription": "Job Description",
+    "keyResponsibilities": "Key Responsibilities",
+    "quickInformation": "Quick Information",
+    "actions": "Actions",
+    "positionClosed": "This position is currently closed for applications.",
+    "backToJobList": "Back to Job List",
+    "shareThisJob": "Share this Job",
+    "copyLink": "Copy Link",
+    "shareViaEmail": "Share via Email",
+    "print": "Print"
   },
   "jobApplication": {
     "title": "Apply for Position",
@@ -274,6 +284,7 @@
     }
   },
   "jobTitles": {
+    "urgent_infrastructure_engineer": "Urgent: Infrastructure Engineer",
     "junior_software_engineer": "Junior Software Engineer",
     "software_engineer": "Software Engineer",
     "senior_software_engineer": "Senior Software Engineer",
@@ -330,5 +341,31 @@
     "security_consultant": "Security Consultant",
     "penetration_tester": "Penetration Tester",
     "security_compliance_officer": "Security Compliance Officer"
+  },
+  "jobDescriptions": {
+    "urgent_infrastructure_engineer": "Immediate need for infrastructure engineer.",
+    "senior_software_engineer": "Lead development of complex software solutions and mentor junior developers",
+    "product_manager": "Drive product strategy and work with cross-functional teams to deliver exceptional user experiences",
+    "data_scientist": "Analyze complex datasets to derive insights and build predictive models",
+    "ux_designer": "Create intuitive and engaging user experiences for digital products",
+    "devops_engineer": "Maintain and improve infrastructure, CI/CD pipelines, and deployment processes",
+    "frontend_developer": "Build responsive and interactive user interfaces using modern web technologies",
+    "qa_engineer": "Ensure software quality through comprehensive testing strategies and automation",
+    "solutions_architect": "Design enterprise-level technical solutions and guide implementation strategies",
+    "business_analyst": "Bridge business requirements with technical solutions and process improvements",
+    "cybersecurity_specialist": "Protect organizational assets through security monitoring and threat analysis"
+  },
+  "jobResponsibilities": {
+    "urgent_infrastructure_engineer": "Infrastructure management, capacity planning, security",
+    "senior_software_engineer": "Design and implement scalable software systems, code review, technical leadership, mentoring team members",
+    "product_manager": "Product roadmap planning, stakeholder management, user research, feature prioritization, market analysis",
+    "data_scientist": "Data analysis, machine learning model development, statistical analysis, data visualization, reporting",
+    "ux_designer": "User research, wireframing, prototyping, usability testing, design systems, collaboration with developers",
+    "devops_engineer": "Infrastructure management, automation, monitoring, security implementation, cloud services management",
+    "frontend_developer": "React/Vue development, responsive design, performance optimization, testing, accessibility implementation",
+    "qa_engineer": "Test planning, automated testing, manual testing, bug reporting, quality assurance processes",
+    "solutions_architect": "Architecture design, technical documentation, stakeholder consultation, technology evaluation",
+    "business_analyst": "Requirements gathering, process analysis, stakeholder management, documentation, solution design",
+    "cybersecurity_specialist": "Security monitoring, vulnerability assessment, incident response, security policy development"
   }
 }
