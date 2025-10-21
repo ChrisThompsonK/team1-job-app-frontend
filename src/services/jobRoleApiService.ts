@@ -1,6 +1,7 @@
 import axios from "axios";
 import { PAGINATION_CONFIG } from "../config/pagination.js";
 import type { CreateJobRoleData, JobRole } from "../models/job-role.js";
+import { createHeadersWithAuth } from "../utils/cookieUtils.js";
 import type {
   FilteredJobsResponse,
   JobFilterParams,
@@ -85,71 +86,91 @@ export class JobRoleApiService implements JobRoleservice {
     }
   }
 
-  async createJob(jobData: CreateJobRoleData): Promise<JobRole | null> {
+  async createJob(
+    jobData: CreateJobRoleData,
+    cookies?: { [key: string]: string }
+  ): Promise<JobRole | null> {
     try {
-      console.log(`[API] Creating job with data:`, jobData);
+      // Create headers with authentication cookies
+      const headers = createHeadersWithAuth(cookies, {
+        "Content-Type": "application/json",
+      });
 
       const response = await axios.post<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs`,
-        jobData
+        jobData,
+        { headers }
       );
-
-      console.log(`[API] Response from backend:`, response.data);
-      console.log(`[API] Response status:`, response.status);
 
       // Check if the response has data property
       if (response.data?.data) {
         const mappedJob = this.mapper.mapJob(response.data.data);
-        console.log(`[API] Mapped job:`, mappedJob);
+        if (mappedJob) {
+          console.log(`Job created successfully: ${mappedJob.name}`);
+        }
         return mappedJob || null;
       } else {
-        console.log(`[API] No data in response`);
+        console.log("Job creation failed: No data in response");
         return null;
       }
     } catch (error) {
-      console.error(`Error creating job:`, error);
+      console.error("Error creating job:", error);
       return null;
     }
   }
 
-  async deleteJobById(id: string): Promise<boolean> {
+  async deleteJobById(
+    id: string,
+    cookies?: { [key: string]: string }
+  ): Promise<boolean> {
     try {
-      const response = await axios.delete(`${this.baseURL}/jobs/${id}`);
-      return response.status === 200;
+      // Create headers with authentication cookies
+      const headers = createHeadersWithAuth(cookies);
+
+      const response = await axios.delete(`${this.baseURL}/jobs/${id}`, {
+        headers,
+      });
+
+      if (response.status === 200) {
+        console.log(`Job deleted successfully (ID: ${id})`);
+        return true;
+      }
+      return false;
     } catch (error) {
-      console.error("Error deleting job via API:", error);
+      console.error("Error deleting job:", error);
       return false;
     }
   }
 
   async updateJobById(
     id: number,
-    jobData: CreateJobRoleData
+    jobData: CreateJobRoleData,
+    cookies?: { [key: string]: string }
   ): Promise<JobRole | null> {
     try {
-      console.log(`[API] Updating job ${id} with data:`, jobData);
+      // Create headers with authentication cookies
+      const headers = createHeadersWithAuth(cookies, {
+        "Content-Type": "application/json",
+      });
 
       // The jobData is already in the backend format from the controller
       const response = await axios.put<ApiResponse<JobRole>>(
         `${this.baseURL}/jobs/${id}`,
-        jobData
+        jobData,
+        { headers }
       );
-
-      console.log(`[API] Response from backend:`, response.data);
-      console.log(`[API] Response status:`, response.status);
 
       // Check if the response has data property
       if (response.data?.data) {
         const mappedJob = this.mapper.mapJob(response.data.data);
-        console.log(`[API] Mapped job:`, mappedJob);
+        if (mappedJob) {
+          console.log(`Job updated successfully: ${mappedJob.name}`);
+        }
         return mappedJob || null;
       } else {
-        console.log(
-          `[API] No data in response, checking if update was successful`
-        );
         // If no data but successful response, try to fetch the updated job
         if (response.status === 200) {
-          console.log(`[API] Update successful, fetching updated job`);
+          console.log(`Job updated successfully (ID: ${id})`);
           const fetchedJob = await this.getJobById(id);
           return fetchedJob || null;
         }
@@ -157,7 +178,7 @@ export class JobRoleApiService implements JobRoleservice {
 
       return null;
     } catch (error) {
-      console.error(`Error updating job with ID ${id}:`, error);
+      console.error(`Error updating job (ID: ${id}):`, error);
       return null;
     }
   }
