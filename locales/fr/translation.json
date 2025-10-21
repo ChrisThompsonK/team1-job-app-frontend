@@ -127,7 +127,17 @@
     "confirmDeleteJob": "Êtes-vous sûr de vouloir supprimer",
     "confirmDeletion": "Confirmer la Suppression",
     "deleteWarning": "Cette action ne peut pas être annulée et supprimera définitivement ce poste du système.",
-    "deleteJobRole": "Supprimer le Poste"
+    "deleteJobRole": "Supprimer le Poste",
+    "jobDescription": "Description du Poste",
+    "keyResponsibilities": "Responsabilités Principales",
+    "quickInformation": "Information Rapide",
+    "actions": "Actions",
+    "positionClosed": "Ce poste est actuellement fermé aux candidatures.",
+    "backToJobList": "Retour à la Liste des Postes",
+    "shareThisJob": "Partager ce Poste",
+    "copyLink": "Copier le Lien",
+    "shareViaEmail": "Partager par E-mail",
+    "print": "Imprimer"
   },
   "jobApplication": {
     "title": "Postuler pour le Poste",
@@ -274,6 +284,7 @@
     }
   },
   "jobTitles": {
+    "urgent_infrastructure_engineer": "Urgent: Ingénieur d'Infrastructure",
     "junior_software_engineer": "Ingénieur Logiciel Junior",
     "software_engineer": "Ingénieur Logiciel",
     "senior_software_engineer": "Ingénieur Logiciel Senior",
@@ -330,5 +341,37 @@
     "security_consultant": "Consultant Sécurité",
     "penetration_tester": "Testeur de Pénétration",
     "security_compliance_officer": "Responsable Conformité Sécurité"
+  },
+  "jobDescriptions": {
+    "urgent_infrastructure_engineer": "Besoin immédiat d'ingénieur d'infrastructure.",
+    "full_stack_engineer": "Travailler sur toute la pile technologique.",
+    "data_engineer": "Construire et maintenir des pipelines de données.",
+    "workday_project_manager": "Diriger des projets d'implémentation Workday.",
+    "senior_software_engineer": "Diriger le développement de solutions logicielles complexes et encadrer les développeurs juniors",
+    "product_manager": "Piloter la stratégie produit et travailler avec des équipes transversales pour offrir des expériences utilisateur exceptionnelles",
+    "data_scientist": "Analyser des ensembles de données complexes pour en tirer des insights et construire des modèles prédictifs",
+    "ux_designer": "Créer des expériences utilisateur intuitives et engageantes pour les produits numériques",
+    "devops_engineer": "Maintenir et améliorer l'infrastructure, les pipelines CI/CD et les processus de déploiement",
+    "frontend_developer": "Construire des interfaces utilisateur réactives et interactives en utilisant des technologies web modernes",
+    "qa_engineer": "Garantir la qualité logicielle grâce à des stratégies de test complètes et l'automatisation",
+    "solutions_architect": "Concevoir des solutions techniques au niveau entreprise et guider les stratégies de mise en œuvre",
+    "business_analyst": "Faire le lien entre les exigences métier et les solutions techniques et les améliorations de processus",
+    "cybersecurity_specialist": "Protéger les actifs organisationnels grâce à la surveillance de la sécurité et l'analyse des menaces"
+  },
+  "jobResponsibilities": {
+    "urgent_infrastructure_engineer": "Gestion d'infrastructure|Planification de capacité|Sécurité",
+    "full_stack_engineer": "Développement full stack|Conception d'API|Déploiement",
+    "data_engineer": "Développement ETL|Maintenance des pipelines|Automatisation",
+    "workday_project_manager": "Gestion de projet|Relations clients|Gestion des risques",
+    "senior_software_engineer": "Concevoir et implémenter des systèmes logiciels évolutifs|Revue de code|Leadership technique|Mentorat des membres de l'équipe",
+    "product_manager": "Planification de la feuille de route produit|Gestion des parties prenantes|Recherche utilisateur|Priorisation des fonctionnalités|Analyse de marché",
+    "data_scientist": "Analyse de données|Développement de modèles d'apprentissage automatique|Analyse statistique|Visualisation de données|Reporting",
+    "ux_designer": "Recherche utilisateur|Wireframing|Prototypage|Tests d'utilisabilité|Systèmes de conception|Collaboration avec les développeurs",
+    "devops_engineer": "Gestion d'infrastructure|Automatisation|Surveillance|Implémentation de la sécurité|Gestion des services cloud",
+    "frontend_developer": "Développement React/Vue|Conception réactive|Optimisation des performances|Tests|Implémentation de l'accessibilité",
+    "qa_engineer": "Planification des tests|Tests automatisés|Tests manuels|Rapport de bugs|Processus d'assurance qualité",
+    "solutions_architect": "Conception d'architecture|Documentation technique|Consultation des parties prenantes|Évaluation technologique",
+    "business_analyst": "Collecte des exigences|Analyse de processus|Gestion des parties prenantes|Documentation|Conception de solutions",
+    "cybersecurity_specialist": "Surveillance de la sécurité|Évaluation des vulnérabilités|Réponse aux incidents|Développement de politiques de sécurité"
   }
 }

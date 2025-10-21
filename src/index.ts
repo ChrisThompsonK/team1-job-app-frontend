@@ -13,7 +13,9 @@ import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import {
   getTranslatedBand,
   getTranslatedCapability,
+  getTranslatedDescription,
   getTranslatedJobTitle,
+  getTranslatedResponsibilities,
   getTranslatedStatus,
 } from "./utils/jobTranslations.js";
 import { JobRoleValidator } from "./validators/JobRoleValidator.js";
@@ -32,6 +34,11 @@ nunjucksEnv.addGlobal("translateCapability", getTranslatedCapability);
 nunjucksEnv.addGlobal("translateBand", getTranslatedBand);
 nunjucksEnv.addGlobal("translateStatus", getTranslatedStatus);
 nunjucksEnv.addGlobal("translateJobTitle", getTranslatedJobTitle);
+nunjucksEnv.addGlobal("translateDescription", getTranslatedDescription);
+nunjucksEnv.addGlobal(
+  "translateResponsibilities",
+  getTranslatedResponsibilities
+);
 
 // Set Nunjucks as the view engine
 app.set("view engine", "njk");

@@ -127,7 +127,17 @@
     "confirmDeleteJob": "Are you sure you want to delete",
     "confirmDeletion": "Confirm Deletion",
     "deleteWarning": "This action cannot be undone and will permanently remove this job role from the system.",
-    "deleteJobRole": "Delete Job Role"
+    "deleteJobRole": "Delete Job Role",
+    "jobDescription": "Job Description",
+    "keyResponsibilities": "Key Responsibilities",
+    "quickInformation": "Quick Information",
+    "actions": "Actions",
+    "positionClosed": "This position is currently closed for applications.",
+    "backToJobList": "Back to Job List",
+    "shareThisJob": "Share this Job",
+    "copyLink": "Copy Link",
+    "shareViaEmail": "Share via Email",
+    "print": "Print"
   },
   "jobApplication": {
     "title": "Apply for Position",
@@ -274,6 +284,7 @@
     }
   },
   "jobTitles": {
+    "urgent_infrastructure_engineer": "Urgent: Infrastructure Engineer",
     "junior_software_engineer": "Junior Software Engineer",
     "software_engineer": "Software Engineer",
     "senior_software_engineer": "Senior Software Engineer",
@@ -330,5 +341,37 @@
     "security_consultant": "Security Consultant",
     "penetration_tester": "Penetration Tester",
     "security_compliance_officer": "Security Compliance Officer"
+  },
+  "jobDescriptions": {
+    "urgent_infrastructure_engineer": "Immediate need for infrastructure engineer.",
+    "full_stack_engineer": "Work across the entire technology stack.",
+    "data_engineer": "Build and maintain data pipelines.",
+    "workday_project_manager": "Lead Workday implementation projects.",
+    "senior_software_engineer": "Lead development of complex software solutions and mentor junior developers",
+    "product_manager": "Drive product strategy and work with cross-functional teams to deliver exceptional user experiences",
+    "data_scientist": "Analyze complex datasets to derive insights and build predictive models",
+    "ux_designer": "Create intuitive and engaging user experiences for digital products",
+    "devops_engineer": "Maintain and improve infrastructure, CI/CD pipelines, and deployment processes",
+    "frontend_developer": "Build responsive and interactive user interfaces using modern web technologies",
+    "qa_engineer": "Ensure software quality through comprehensive testing strategies and automation",
+    "solutions_architect": "Design enterprise-level technical solutions and guide implementation strategies",
+    "business_analyst": "Bridge business requirements with technical solutions and process improvements",
+    "cybersecurity_specialist": "Protect organizational assets through security monitoring and threat analysis"
+  },
+  "jobResponsibilities": {
+    "urgent_infrastructure_engineer": "Infrastructure management|Capacity planning|Security",
+    "full_stack_engineer": "Full stack development|API design|Deployment",
+    "data_engineer": "ETL development|Pipeline maintenance|Automation",
+    "workday_project_manager": "Project management|Client relations|Risk management",
+    "senior_software_engineer": "Design and implement scalable software systems|Code review|Technical leadership|Mentoring team members",
+    "product_manager": "Product roadmap planning|Stakeholder management|User research|Feature prioritization|Market analysis",
+    "data_scientist": "Data analysis|Machine learning model development|Statistical analysis|Data visualization|Reporting",
+    "ux_designer": "User research|Wireframing|Prototyping|Usability testing|Design systems|Collaboration with developers",
+    "devops_engineer": "Infrastructure management|Automation|Monitoring|Security implementation|Cloud services management",
+    "frontend_developer": "React/Vue development|Responsive design|Performance optimization|Testing|Accessibility implementation",
+    "qa_engineer": "Test planning|Automated testing|Manual testing|Bug reporting|Quality assurance processes",
+    "solutions_architect": "Architecture design|Technical documentation|Stakeholder consultation|Technology evaluation",
+    "business_analyst": "Requirements gathering|Process analysis|Stakeholder management|Documentation|Solution design",
+    "cybersecurity_specialist": "Security monitoring|Vulnerability assessment|Incident response|Security policy development"
   }
 }

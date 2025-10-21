@@ -99,3 +99,34 @@ export function getTranslatedJobTitle(jobTitle: string, t: any): string {
   const translated = t(translationKey);
   return translated !== translationKey ? translated : jobTitle;
 }
+
+/**
+ * Get translated job description
+ */
+export function getTranslatedDescription(jobTitle: string, t: any): string {
+  if (!jobTitle) return "";
+
+  // Normalize the job title for matching
+  const normalized = jobTitle.toLowerCase().trim();
+  const translationKey = `jobDescriptions.${normalized.replace(/\s+/g, "_").replace(/[^\w_]/g, "")}`;
+
+  const translated = t(translationKey);
+  return translated !== translationKey ? translated : "";
+}
+
+/**
+ * Get translated job responsibilities
+ */
+export function getTranslatedResponsibilities(
+  jobTitle: string,
+  t: any
+): string {
+  if (!jobTitle) return "";
+
+  // Normalize the job title for matching
+  const normalized = jobTitle.toLowerCase().trim();
+  const translationKey = `jobResponsibilities.${normalized.replace(/\s+/g, "_").replace(/[^\w_]/g, "")}`;
+
+  const translated = t(translationKey);
+  return translated !== translationKey ? translated : "";
+}
