@@ -28,6 +28,8 @@ const port = env.port;
 const nunjucksEnv = nunjucks.configure(path.join(process.cwd(), "views"), {
   autoescape: true,
   express: app,
+  noCache: env.nodeEnv === "development",
+  watch: env.nodeEnv === "development",
 });
 
 // Add translation helper functions to Nunjucks global context
