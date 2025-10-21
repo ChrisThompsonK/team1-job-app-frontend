@@ -356,16 +356,16 @@
     "cybersecurity_specialist": "Proteger los activos organizacionales mediante monitoreo de seguridad y análisis de amenazas"
   },
   "jobResponsibilities": {
-    "urgent_infrastructure_engineer": "Gestión de infraestructura, planificación de capacidad, seguridad",
-    "senior_software_engineer": "Diseñar e implementar sistemas de software escalables, revisión de código, liderazgo técnico, mentoría a miembros del equipo",
-    "product_manager": "Planificación de la hoja de ruta del producto, gestión de partes interesadas, investigación de usuarios, priorización de características, análisis de mercado",
-    "data_scientist": "Análisis de datos, desarrollo de modelos de aprendizaje automático, análisis estadístico, visualización de datos, informes",
-    "ux_designer": "Investigación de usuarios, wireframing, prototipado, pruebas de usabilidad, sistemas de diseño, colaboración con desarrolladores",
-    "devops_engineer": "Gestión de infraestructura, automatización, monitoreo, implementación de seguridad, gestión de servicios en la nube",
-    "frontend_developer": "Desarrollo React/Vue, diseño responsivo, optimización del rendimiento, pruebas, implementación de accesibilidad",
-    "qa_engineer": "Planificación de pruebas, pruebas automatizadas, pruebas manuales, informes de errores, procesos de aseguramiento de calidad",
-    "solutions_architect": "Diseño de arquitectura, documentación técnica, consultoría con partes interesadas, evaluación de tecnología",
-    "business_analyst": "Recopilación de requisitos, análisis de procesos, gestión de partes interesadas, documentación, diseño de soluciones",
-    "cybersecurity_specialist": "Monitoreo de seguridad, evaluación de vulnerabilidades, respuesta a incidentes, desarrollo de políticas de seguridad"
+    "urgent_infrastructure_engineer": "Gestión de infraestructura|Planificación de capacidad|Seguridad",
+    "senior_software_engineer": "Diseñar e implementar sistemas de software escalables|Revisión de código|Liderazgo técnico|Mentoría a miembros del equipo",
+    "product_manager": "Planificación de la hoja de ruta del producto|Gestión de partes interesadas|Investigación de usuarios|Priorización de características|Análisis de mercado",
+    "data_scientist": "Análisis de datos|Desarrollo de modelos de aprendizaje automático|Análisis estadístico|Visualización de datos|Informes",
+    "ux_designer": "Investigación de usuarios|Wireframing|Prototipado|Pruebas de usabilidad|Sistemas de diseño|Colaboración con desarrolladores",
+    "devops_engineer": "Gestión de infraestructura|Automatización|Monitoreo|Implementación de seguridad|Gestión de servicios en la nube",
+    "frontend_developer": "Desarrollo React/Vue|Diseño responsivo|Optimización del rendimiento|Pruebas|Implementación de accesibilidad",
+    "qa_engineer": "Planificación de pruebas|Pruebas automatizadas|Pruebas manuales|Informes de errores|Procesos de aseguramiento de calidad",
+    "solutions_architect": "Diseño de arquitectura|Documentación técnica|Consultoría con partes interesadas|Evaluación de tecnología",
+    "business_analyst": "Recopilación de requisitos|Análisis de procesos|Gestión de partes interesadas|Documentación|Diseño de soluciones",
+    "cybersecurity_specialist": "Monitoreo de seguridad|Evaluación de vulnerabilidades|Respuesta a incidentes|Desarrollo de políticas de seguridad"
   }
 }

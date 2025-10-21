@@ -89,12 +89,12 @@
                     </h2>
                     <div class="divider"></div>
                     {% set translatedResp = translateResponsibilities(jobRole.name, t) %}
-                    {% set responsibilitiesList = translatedResp.split(',') if translatedResp else jobRole.responsibilities %}
+                    {% set responsibilitiesList = translatedResp.split('|') if translatedResp else jobRole.responsibilities %}
                     <ul class="space-y-3">
                         {% for responsibility in responsibilitiesList %}
                         <li class="flex items-start gap-3">
                             <div class="badge badge-primary badge-sm mt-1 flex-shrink-0"></div>
-                            <span class="text-base-content/80">{{ responsibility.trim() if responsibility.trim else responsibility }}</span>
+                            <span class="text-base-content/80">{{ responsibility.trim() }}</span>
                         </li>
                         {% endfor %}
                     </ul>

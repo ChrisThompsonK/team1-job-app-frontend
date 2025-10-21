@@ -356,16 +356,16 @@
     "cybersecurity_specialist": "Protect organizational assets through security monitoring and threat analysis"
   },
   "jobResponsibilities": {
-    "urgent_infrastructure_engineer": "Infrastructure management, capacity planning, security",
-    "senior_software_engineer": "Design and implement scalable software systems, code review, technical leadership, mentoring team members",
-    "product_manager": "Product roadmap planning, stakeholder management, user research, feature prioritization, market analysis",
-    "data_scientist": "Data analysis, machine learning model development, statistical analysis, data visualization, reporting",
-    "ux_designer": "User research, wireframing, prototyping, usability testing, design systems, collaboration with developers",
-    "devops_engineer": "Infrastructure management, automation, monitoring, security implementation, cloud services management",
-    "frontend_developer": "React/Vue development, responsive design, performance optimization, testing, accessibility implementation",
-    "qa_engineer": "Test planning, automated testing, manual testing, bug reporting, quality assurance processes",
-    "solutions_architect": "Architecture design, technical documentation, stakeholder consultation, technology evaluation",
-    "business_analyst": "Requirements gathering, process analysis, stakeholder management, documentation, solution design",
-    "cybersecurity_specialist": "Security monitoring, vulnerability assessment, incident response, security policy development"
+    "urgent_infrastructure_engineer": "Infrastructure management|Capacity planning|Security",
+    "senior_software_engineer": "Design and implement scalable software systems|Code review|Technical leadership|Mentoring team members",
+    "product_manager": "Product roadmap planning|Stakeholder management|User research|Feature prioritization|Market analysis",
+    "data_scientist": "Data analysis|Machine learning model development|Statistical analysis|Data visualization|Reporting",
+    "ux_designer": "User research|Wireframing|Prototyping|Usability testing|Design systems|Collaboration with developers",
+    "devops_engineer": "Infrastructure management|Automation|Monitoring|Security implementation|Cloud services management",
+    "frontend_developer": "React/Vue development|Responsive design|Performance optimization|Testing|Accessibility implementation",
+    "qa_engineer": "Test planning|Automated testing|Manual testing|Bug reporting|Quality assurance processes",
+    "solutions_architect": "Architecture design|Technical documentation|Stakeholder consultation|Technology evaluation",
+    "business_analyst": "Requirements gathering|Process analysis|Stakeholder management|Documentation|Solution design",
+    "cybersecurity_specialist": "Security monitoring|Vulnerability assessment|Incident response|Security policy development"
   }
 }

@@ -356,16 +356,16 @@
     "cybersecurity_specialist": "Ochrona zasobów organizacyjnych poprzez monitorowanie bezpieczeństwa i analizę zagrożeń"
   },
   "jobResponsibilities": {
-    "urgent_infrastructure_engineer": "Zarządzanie infrastrukturą, planowanie wydajności, bezpieczeństwo",
-    "senior_software_engineer": "Projektowanie i wdrażanie skalowalnych systemów oprogramowania, przeglądy kodu, przywództwo techniczne, mentoring członków zespołu",
-    "product_manager": "Planowanie mapy drogowej produktu, zarządzanie interesariuszami, badania użytkowników, priorytetyzacja funkcji, analiza rynku",
-    "data_scientist": "Analiza danych, rozwój modeli uczenia maszynowego, analiza statystyczna, wizualizacja danych, raportowanie",
-    "ux_designer": "Badania użytkowników, wireframing, prototypowanie, testy użyteczności, systemy projektowe, współpraca z programistami",
-    "devops_engineer": "Zarządzanie infrastrukturą, automatyzacja, monitorowanie, wdrażanie bezpieczeństwa, zarządzanie usługami chmurowymi",
-    "frontend_developer": "Rozwój React/Vue, projektowanie responsywne, optymalizacja wydajności, testowanie, wdrażanie dostępności",
-    "qa_engineer": "Planowanie testów, testowanie automatyczne, testowanie manualne, raportowanie błędów, procesy zapewnienia jakości",
-    "solutions_architect": "Projektowanie architektury, dokumentacja techniczna, konsultacje z interesariuszami, ocena technologii",
-    "business_analyst": "Zbieranie wymagań, analiza procesów, zarządzanie interesariuszami, dokumentacja, projektowanie rozwiązań",
-    "cybersecurity_specialist": "Monitorowanie bezpieczeństwa, ocena podatności, reagowanie na incydenty, rozwój polityk bezpieczeństwa"
+    "urgent_infrastructure_engineer": "Zarządzanie infrastrukturą|Planowanie wydajności|Bezpieczeństwo",
+    "senior_software_engineer": "Projektowanie i wdrażanie skalowalnych systemów oprogramowania|Przeglądy kodu|Przywództwo techniczne|Mentoring członków zespołu",
+    "product_manager": "Planowanie mapy drogowej produktu|Zarządzanie interesariuszami|Badania użytkowników|Priorytetyzacja funkcji|Analiza rynku",
+    "data_scientist": "Analiza danych|Rozwój modeli uczenia maszynowego|Analiza statystyczna|Wizualizacja danych|Raportowanie",
+    "ux_designer": "Badania użytkowników|Wireframing|Prototypowanie|Testy użyteczności|Systemy projektowe|Współpraca z programistami",
+    "devops_engineer": "Zarządzanie infrastrukturą|Automatyzacja|Monitorowanie|Wdrażanie bezpieczeństwa|Zarządzanie usługami chmurowymi",
+    "frontend_developer": "Rozwój React/Vue|Projektowanie responsywne|Optymalizacja wydajności|Testowanie|Wdrażanie dostępności",
+    "qa_engineer": "Planowanie testów|Testowanie automatyczne|Testowanie manualne|Raportowanie błędów|Procesy zapewnienia jakości",
+    "solutions_architect": "Projektowanie architektury|Dokumentacja techniczna|Konsultacje z interesariuszami|Ocena technologii",
+    "business_analyst": "Zbieranie wymagań|Analiza procesów|Zarządzanie interesariuszami|Dokumentacja|Projektowanie rozwiązań",
+    "cybersecurity_specialist": "Monitorowanie bezpieczeństwa|Ocena podatności|Reagowanie na incydenty|Rozwój polityk bezpieczeństwa"
   }
 }

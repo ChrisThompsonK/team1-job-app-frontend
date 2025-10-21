@@ -356,16 +356,16 @@
     "cybersecurity_specialist": "Protéger les actifs organisationnels grâce à la surveillance de la sécurité et l'analyse des menaces"
   },
   "jobResponsibilities": {
-    "urgent_infrastructure_engineer": "Gestion d'infrastructure, planification de capacité, sécurité",
-    "senior_software_engineer": "Concevoir et implémenter des systèmes logiciels évolutifs, revue de code, leadership technique, mentorat des membres de l'équipe",
-    "product_manager": "Planification de la feuille de route produit, gestion des parties prenantes, recherche utilisateur, priorisation des fonctionnalités, analyse de marché",
-    "data_scientist": "Analyse de données, développement de modèles d'apprentissage automatique, analyse statistique, visualisation de données, reporting",
-    "ux_designer": "Recherche utilisateur, wireframing, prototypage, tests d'utilisabilité, systèmes de conception, collaboration avec les développeurs",
-    "devops_engineer": "Gestion d'infrastructure, automatisation, surveillance, implémentation de la sécurité, gestion des services cloud",
-    "frontend_developer": "Développement React/Vue, conception réactive, optimisation des performances, tests, implémentation de l'accessibilité",
-    "qa_engineer": "Planification des tests, tests automatisés, tests manuels, rapport de bugs, processus d'assurance qualité",
-    "solutions_architect": "Conception d'architecture, documentation technique, consultation des parties prenantes, évaluation technologique",
-    "business_analyst": "Collecte des exigences, analyse de processus, gestion des parties prenantes, documentation, conception de solutions",
-    "cybersecurity_specialist": "Surveillance de la sécurité, évaluation des vulnérabilités, réponse aux incidents, développement de politiques de sécurité"
+    "urgent_infrastructure_engineer": "Gestion d'infrastructure|Planification de capacité|Sécurité",
+    "senior_software_engineer": "Concevoir et implémenter des systèmes logiciels évolutifs|Revue de code|Leadership technique|Mentorat des membres de l'équipe",
+    "product_manager": "Planification de la feuille de route produit|Gestion des parties prenantes|Recherche utilisateur|Priorisation des fonctionnalités|Analyse de marché",
+    "data_scientist": "Analyse de données|Développement de modèles d'apprentissage automatique|Analyse statistique|Visualisation de données|Reporting",
+    "ux_designer": "Recherche utilisateur|Wireframing|Prototypage|Tests d'utilisabilité|Systèmes de conception|Collaboration avec les développeurs",
+    "devops_engineer": "Gestion d'infrastructure|Automatisation|Surveillance|Implémentation de la sécurité|Gestion des services cloud",
+    "frontend_developer": "Développement React/Vue|Conception réactive|Optimisation des performances|Tests|Implémentation de l'accessibilité",
+    "qa_engineer": "Planification des tests|Tests automatisés|Tests manuels|Rapport de bugs|Processus d'assurance qualité",
+    "solutions_architect": "Conception d'architecture|Documentation technique|Consultation des parties prenantes|Évaluation technologique",
+    "business_analyst": "Collecte des exigences|Analyse de processus|Gestion des parties prenantes|Documentation|Conception de solutions",
+    "cybersecurity_specialist": "Surveillance de la sécurité|Évaluation des vulnérabilités|Réponse aux incidents|Développement de politiques de sécurité"
   }
 }

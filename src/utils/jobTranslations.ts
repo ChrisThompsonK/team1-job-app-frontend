@@ -108,7 +108,7 @@ export function getTranslatedDescription(jobTitle: string, t: any): string {
 
   // Normalize the job title for matching
   const normalized = jobTitle.toLowerCase().trim();
-  const translationKey = `jobDescriptions.${normalized.replace(/\s+/g, "_").replace(/[^\w]/g, "")}`;
+  const translationKey = `jobDescriptions.${normalized.replace(/\s+/g, "_").replace(/[^\w_]/g, "")}`;
 
   const translated = t(translationKey);
   return translated !== translationKey ? translated : "";
@@ -125,7 +125,7 @@ export function getTranslatedResponsibilities(
 
   // Normalize the job title for matching
   const normalized = jobTitle.toLowerCase().trim();
-  const translationKey = `jobResponsibilities.${normalized.replace(/\s+/g, "_").replace(/[^\w]/g, "")}`;
+  const translationKey = `jobResponsibilities.${normalized.replace(/\s+/g, "_").replace(/[^\w_]/g, "")}`;
 
   const translated = t(translationKey);
   return translated !== translationKey ? translated : "";
