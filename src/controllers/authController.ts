@@ -12,7 +12,11 @@ export class AuthController {
    */
   public login = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password }: LoginCredentials = req.body;
+      const {
+        email,
+        password,
+        returnTo,
+      }: LoginCredentials & { returnTo?: string } = req.body;
 
       // Validate input
       if (!email || !password) {
@@ -44,7 +48,13 @@ export class AuthController {
           });
         }
 
-        res.status(200).json(result);
+        // Include returnTo URL in the success response
+        const successResponse = {
+          ...result,
+          returnTo: returnTo || "/",
+        };
+
+        res.status(200).json(successResponse);
       } else {
         res.status(401).json({
           success: false,
@@ -234,10 +244,13 @@ export class AuthController {
    * Get login page
    * GET /login
    */
-  public getLogin = (_req: Request, res: Response): void => {
+  public getLogin = (req: Request, res: Response): void => {
+    const returnTo = (req.query.returnTo as string) || "/";
+
     res.render("login", {
       title: "Login & Sign Up",
       currentPage: "login",
+      returnTo: returnTo,
     });
   };
 }
