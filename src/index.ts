@@ -10,6 +10,7 @@ import { AuthController } from "./controllers/authController.js";
 import { HomeController } from "./controllers/homeController.js";
 import { JobApplicationController } from "./controllers/jobApplicationController.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
+import { requireAuth } from "./middleware/authMiddleware.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import {
   getTranslatedBand,
@@ -138,9 +139,9 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 });
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
-// Job application routes
-app.get("/job-roles/:id/apply", jobApplicationController.getJobApplication);
-app.post("/job-roles/:id/apply", jobApplicationController.submitJobApplication);
+// Job application routes - require authentication
+app.get("/job-roles/:id/apply", requireAuth, jobApplicationController.getJobApplication);
+app.post("/job-roles/:id/apply", requireAuth, jobApplicationController.submitJobApplication);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
