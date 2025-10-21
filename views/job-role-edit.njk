@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-  Edit Job Role - {{ job.name }}
+  Edit Job Role - {{ translateJobTitle(job.name, t) }}
 {% endblock %}
 {% block styles %}
   <link rel="stylesheet" href="/css/job-roles.css">
