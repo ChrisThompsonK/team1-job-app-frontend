@@ -1,13 +1,14 @@
 import path from "node:path";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import type { Request, Response } from "express";
 import express from "express";
 import { handle as i18nextHandle } from "i18next-http-middleware";
 import nunjucks from "nunjucks";
 import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { AuthController } from "./controllers/authController.js";
+import { HomeController } from "./controllers/homeController.js";
+import { JobApplicationController } from "./controllers/jobApplicationController.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import {
@@ -88,42 +89,43 @@ const jobRoleController = new JobRoleController(
 // Initialize auth controller
 const authController = new AuthController();
 
+// Initialize home controller
+const homeController = new HomeController();
+
+// Initialize job application controller
+const jobApplicationController = new JobApplicationController();
+
 // Language change endpoint
-app.post("/change-language", (req: Request, res: Response) => {
-  const { language } = req.body;
-  if (["en", "es", "fr", "pl"].includes(language)) {
-    res.cookie("i18next", language, { maxAge: 365 * 24 * 60 * 60 * 1000 });
-    res.json({ success: true, language });
-  } else {
-    res.status(400).json({ success: false, error: "Invalid language" });
-  }
-});
+app.post("/change-language", homeController.changeLanguage);
 
 // Hello World endpoint
-app.get("/", (_req: Request, res: Response) => {
-  res.render("index", {
-    title: "Job Application Frontend",
-    message: "Welcome to the Job Application System",
-    timestamp: new Date().toISOString(),
-  });
-});
+app.get("/", homeController.getHome);
 
 // API Hello World endpoint
-app.get("/api", (_req: Request, res: Response) => {
-  res.json({ message: "Hello World! 🌍" });
-});
+app.get("/api", homeController.getApi);
 
 // Health check endpoint
-app.get("/health", (_req: Request, res: Response) => {
-  res.json({ status: "OK", timestamp: new Date().toISOString() });
-});
+app.get("/health", homeController.getHealth);
 
 // Authentication routes
 app.post("/auth/login", (req, res, next) => {
   authController.login(req, res).catch(next);
 });
 
-// Job roles routes using dependency injection
+app.post("/auth/logout", (req, res, _next) => {
+  authController.logout(req, res);
+});
+
+app.get("/auth/session", (req, res, _next) => {
+  authController.checkAuthStatus(req, res);
+});
+
+app.get("/login", authController.getLogin);
+
+// Profile route - protected endpoint
+app.get("/profile", (req, res, next) => {
+  authController.getProfile(req, res).catch(next);
+});
 app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/add", jobRoleController.getJobRoleAdd);
 app.post("/job-roles/add", (req, res, next) => {
@@ -137,51 +139,8 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
 // Job application routes
-app.get("/job-roles/:id/apply", (req: Request, res: Response) => {
-  // Mock job data for demonstration
-  const mockJobRole = {
-    id: req.params.id,
-    name: "Software Developer",
-    location: "Belfast, UK",
-    capability: "Engineering",
-    band: "Senior",
-    closingDate: new Date("2024-12-31"),
-  };
-
-  res.render("job-application", {
-    title: `Apply for ${mockJobRole.name}`,
-    jobRole: mockJobRole,
-    currentPage: "job-roles",
-  });
-});
-
-app.post("/job-roles/:id/apply", (req: Request, res: Response) => {
-  // Mock job data for demonstration
-  const mockJobRole = {
-    id: req.params.id,
-    name: "Software Developer",
-    location: "Belfast, UK",
-    capability: "Engineering",
-    band: "Senior",
-    closingDate: new Date("2024-12-31"),
-  };
-
-  // Just show success message without processing anything
-  res.render("job-application", {
-    title: `Apply for ${mockJobRole.name}`,
-    jobRole: mockJobRole,
-    currentPage: "job-roles",
-    success: req.t("jobApplication.applicationSubmitted"),
-  });
-});
-
-// Authentication routes
-app.get("/login", (_req: Request, res: Response) => {
-  res.render("login", {
-    title: "Login & Sign Up",
-    currentPage: "login",
-  });
-});
+app.get("/job-roles/:id/apply", jobApplicationController.getJobApplication);
+app.post("/job-roles/:id/apply", jobApplicationController.submitJobApplication);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);

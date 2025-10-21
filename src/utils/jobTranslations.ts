@@ -3,6 +3,11 @@
  */
 
 /**
+ * Translation function type definition
+ */
+type TranslationFunction = (key: string) => string;
+
+/**
  * Normalize capability strings to match translation keys
  */
 function normalizeCapabilityKey(capability: string): string {
@@ -49,7 +54,10 @@ function normalizeStatusKey(status: string): string {
 /**
  * Get translated capability name
  */
-export function getTranslatedCapability(capability: string, t: any): string {
+export function getTranslatedCapability(
+  capability: string,
+  t: TranslationFunction
+): string {
   const key = normalizeCapabilityKey(capability);
   const translationKey = `filters.capabilities.${key}`;
 
@@ -61,7 +69,10 @@ export function getTranslatedCapability(capability: string, t: any): string {
 /**
  * Get translated band name
  */
-export function getTranslatedBand(band: string, t: any): string {
+export function getTranslatedBand(
+  band: string,
+  t: TranslationFunction
+): string {
   const key = normalizeBandKey(band);
   const translationKey = `filters.bands.${key}`;
 
@@ -73,7 +84,10 @@ export function getTranslatedBand(band: string, t: any): string {
 /**
  * Get translated status name
  */
-export function getTranslatedStatus(status: string, t: any): string {
+export function getTranslatedStatus(
+  status: string,
+  t: TranslationFunction
+): string {
   const key = normalizeStatusKey(status);
   const translationKey = `filters.statuses.${key}`;
 
@@ -86,7 +100,10 @@ export function getTranslatedStatus(status: string, t: any): string {
  * Common job titles translations
  * These are for very common job titles that appear frequently
  */
-export function getTranslatedJobTitle(jobTitle: string, t: any): string {
+export function getTranslatedJobTitle(
+  jobTitle: string,
+  t: TranslationFunction
+): string {
   if (!jobTitle) return "";
 
   // Normalize the job title for matching

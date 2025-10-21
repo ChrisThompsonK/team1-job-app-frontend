@@ -1,230 +1,268 @@
 <!DOCTYPE html>
 <html lang="{% block lang %}{{ currentLanguage or 'en' }}{% endblock %}" data-theme="light">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            {% block title %}{{ t('nav.siteTitle') }}{% endblock %}
-        </title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <!-- Base CSS -->
-        <link
-        rel="stylesheet" href="/css/style.css">
-        <!-- Page-specific CSS -->
-        {% block styles %}{% endblock %}
-        <!-- External CSS libraries -->
-        {% block external_styles %}{% endblock %}
-        <!-- Lucide Icons -->
-        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    </head>
-    <body {% block body_attributes %} {% endblock %}>
-        {% block navigation %}
-            <!-- Daisy UI Navigation -->
-            <div class="navbar bg-primary text-primary-content">
-                <div class="navbar-start">
-                    <div class="dropdown">
-                        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                            <i data-lucide="menu" class="h-5 w-5"></i>
-                        </div>
-                        <ul
-                            tabindex="0"
-                            class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li>
-                                <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">{{ t('nav.home') }}</a>
-                            </li>
-                            <li>
-                                <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
-                            </li>
-                            <li>
-                                <a href="/login" class="{% if currentPage === 'login' %}active{% endif %}">{{ t('nav.login') }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <a href="/" class="btn btn-ghost text-xl">
-                        <img src="/images/kainos-logo-light.png" alt="Kainos Logo" class="h-8 logo-light">
-                        <img src="/images/kainos-logo-dark.png" alt="Kainos Logo" class="h-8 logo-dark">
-                        <span class="ml-2">{{ t('nav.siteTitle') }}</span>
-                    </a>
-                </div>
-                <div class="navbar-center hidden lg:flex">
-                    <ul class="menu menu-horizontal px-1">
-                        <li>
-                            <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">{{ t('nav.home') }}</a>
-                        </li>
-                        <li>
-                            <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar-end gap-2">
-                    <!-- Login Button -->
-                    <a href="/login" class="btn btn-ghost gap-2 {% if currentPage === 'login' %}btn-active{% endif %}">
-                        <i data-lucide="user" class="h-4 w-4"></i>
-                        {{ t('nav.login') }}
-                    </a>
-                    
-                    <!-- Text Size Selector -->
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="{{ t('nav.changeTextSize') }}">
-                            <i data-lucide="type" class="h-5 w-5"></i>
-                        </div>
-                        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-40 p-2 shadow">
-                            <li><a href="#" onclick="changeTextSize('small')" class="text-sm" data-size="small">{{ t('nav.textSize.small') }}</a></li>
-                            <li><a href="#" onclick="changeTextSize('medium')" class="text-base" data-size="medium">{{ t('nav.textSize.medium') }}</a></li>
-                            <li><a href="#" onclick="changeTextSize('large')" class="text-lg" data-size="large">{{ t('nav.textSize.large') }}</a></li>
-                            <li><a href="#" onclick="changeTextSize('x-large')" class="text-xl" data-size="x-large">{{ t('nav.textSize.xLarge') }}</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Language Selector -->
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="{{ t('nav.changeLanguage') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-                            </svg>
-                        </div>
-                        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-32 p-2 shadow">
-                            <li><a href="#" onclick="changeLanguage('en')" class="{% if currentLanguage === 'en' %}active{% endif %}">🇬🇧 English</a></li>
-                            <li><a href="#" onclick="changeLanguage('es')" class="{% if currentLanguage === 'es' %}active{% endif %}">🇪🇸 Español</a></li>
-                            <li><a href="#" onclick="changeLanguage('fr')" class="{% if currentLanguage === 'fr' %}active{% endif %}">🇫🇷 Français</a></li>
-                            <li><a href="#" onclick="changeLanguage('pl')" class="{% if currentLanguage === 'pl' %}active{% endif %}">🇵🇱 Polski</a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Theme Toggle Button -->
-                    <label class="swap swap-rotate btn btn-ghost btn-circle" aria-label="{{ t('nav.toggleTheme') }}">
-                        <!-- Hidden checkbox controls the state -->
-                        <input type="checkbox" id="theme-toggle" class="theme-controller" value="dark"/>
-                        <!-- Sun icon (light mode) -->
-                        <i data-lucide="sun" class="swap-off w-6 h-6"></i>
-                        <!-- Moon icon (dark mode) -->
-                        <i data-lucide="moon" class="swap-on w-6 h-6"></i>
-                    </label>
-                </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}
+        {{ t('nav.siteTitle') }}
+      {% endblock %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link
+    rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> <!-- Base CSS -->
+    <link
+    rel="stylesheet" href="/css/style.css">
+    <!-- Page-specific CSS -->
+    {% block styles %}{% endblock %}
+    <!-- External CSS libraries -->
+    {% block external_styles %}{% endblock %}
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  </head>
+  <body {% block body_attributes %} {% endblock %}>
+    {% block navigation %}
+      <!-- Daisy UI Navigation -->
+      <div class="navbar bg-primary text-primary-content">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+              <i data-lucide="menu" class="h-5 w-5"></i>
             </div>
-        {% endblock %}
-        <main {% block main_attributes %} {% endblock %}> {% block content %}{% endblock %}
-            </main>
-            {% block footer %}
-                <!-- Daisy UI Footer -->
-                <footer class="footer footer-center p-10 bg-base-200 text-base-content mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
-                        <!-- Contact Information -->
-                        <div class="text-left">
-                            <h3 class="font-bold text-lg mb-4">{{ t('footer.contactUs') }}</h3>
-                            <div class="space-y-2">
-                                <p class="flex items-center gap-2">
-                                    <i data-lucide="phone" class="h-5 w-5"></i>
-                                    <span class="text-sm">{{ t('footer.phone') }}: <a href="tel:+442890571100" class="link link-hover">028 9057 1100</a></span>
-                                </p>
-                                <p class="flex items-center gap-2">
-                                    <i data-lucide="mail" class="h-5 w-5"></i>
-                                    <span class="text-sm">{{ t('footer.email') }}: <a href="mailto:info@kainos.com" class="link link-hover">info@kainos.com</a></span>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <!-- Social Media -->
-                        <div class="text-left">
-                            <h3 class="font-bold text-lg mb-4">{{ t('footer.followUs') }}</h3>
-                            <div class="flex gap-4">
-                                <a href="https://www.linkedin.com/company/kainos" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-square" aria-label="LinkedIn">
-                                    <i data-lucide="linkedin" class="h-6 w-6"></i>
-                                </a>
-                                <a href="https://x.com/KainosSoftware" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-square" aria-label="X (Twitter)">
-                                    <i data-lucide="twitter" class="h-6 w-6"></i>
-                                </a>
-                                <a href="https://www.instagram.com/kainossoftware/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-square" aria-label="Instagram">
-                                    <i data-lucide="instagram" class="h-6 w-6"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8">
-                        <p class="text-sm">{{ t('footer.copyright') }}</p>
-                    </div>
-                </footer>
-            {% endblock %}
-            <!-- Theme Toggle Script -->
-            <script>
-                // Get theme from localStorage or default to 'light'
-                const currentTheme = localStorage.getItem('theme') || 'light';
-                
-                // Set initial theme
-                document.documentElement.setAttribute('data-theme', currentTheme);
-                
-                // Set checkbox state based on current theme
-                const themeToggle = document.getElementById('theme-toggle');
-                if (themeToggle) {
-                    themeToggle.checked = (currentTheme === 'dark');
-                    
-                    // Add event listener for theme toggle
-                    themeToggle.addEventListener('change', function() {
-                        const newTheme = this.checked ? 'dark' : 'light';
-                        document.documentElement.setAttribute('data-theme', newTheme);
-                        localStorage.setItem('theme', newTheme);
-                    });
-                }
-
-                // Text size functionality
-                const currentTextSize = localStorage.getItem('textSize') || 'medium';
-                
-                // Set initial text size
-                document.documentElement.setAttribute('data-text-size', currentTextSize);
-                
-                // Update active state for text size menu items
-                function updateTextSizeMenu() {
-                    const currentSize = localStorage.getItem('textSize') || 'medium';
-                    document.querySelectorAll('[data-size]').forEach(item => {
-                        const link = item;
-                        if (link.dataset.size === currentSize) {
-                            link.parentElement.classList.add('active');
-                        } else {
-                            link.parentElement.classList.remove('active');
-                        }
-                    });
-                }
-                
-                // Text size change function
-                function changeTextSize(size) {
-                    document.documentElement.setAttribute('data-text-size', size);
-                    localStorage.setItem('textSize', size);
-                    updateTextSizeMenu();
-                }
-                
-                // Initialize text size menu on load
-                document.addEventListener('DOMContentLoaded', updateTextSizeMenu);
-                
-                // Language change function
-                function changeLanguage(language) {
-                    fetch('/change-language', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ language: language })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Reload the page to apply new language
-                            window.location.reload();
-                        }
-                    })
-                    .catch(error => console.error('Error changing language:', error));
-                }
-            </script>
-            
-            <!-- Initialize Lucide Icons -->
-            <script>
-                lucide.createIcons();
-            </script>
-            
-            <!-- Page-specific JavaScript -->
-            {% block scripts %}{% endblock %}
-        </body>
-    </html>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              <li>
+                <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">{{ t('nav.home') }}</a>
+              </li>
+              <li>
+                <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
+              </li>
+            </ul>
+          </div>
+          <a href="/" class="btn btn-ghost text-xl">
+            <img src="/images/kainos-logo-light.png" alt="Kainos Logo" class="h-8 logo-light">
+            <img src="/images/kainos-logo-dark.png" alt="Kainos Logo" class="h-8 logo-dark">
+            <span class="ml-2">{{ t('nav.siteTitle') }}</span>
+          </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1">
+            <li>
+              <a href="/" class="{% if currentPage === 'home' %}active{% endif %}">{{ t('nav.home') }}</a>
+            </li>
+            <li>
+              <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="navbar-end gap-2">
+          <!-- Profile Button -->
+          <a href="/profile" class="btn btn-ghost gap-2 {% if currentPage === 'profile' %}btn-active{% endif %}">
+            <i data-lucide="user" class="h-4 w-4"></i>
+            {{ t('nav.profile') }}
+          </a>
+          <!-- Text Size Selector -->
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="{{ t('nav.changeTextSize') }}">
+              <i data-lucide="type" class="h-5 w-5"></i>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-40 p-2 shadow">
+              <li>
+                <a href="#" onclick="changeTextSize('small')" class="text-sm" data-size="small">{{ t('nav.textSize.small') }}</a>
+              </li>
+              <li>
+                <a href="#" onclick="changeTextSize('medium')" class="text-base" data-size="medium">{{ t('nav.textSize.medium') }}</a>
+              </li>
+              <li>
+                <a href="#" onclick="changeTextSize('large')" class="text-lg" data-size="large">{{ t('nav.textSize.large') }}</a>
+              </li>
+              <li>
+                <a href="#" onclick="changeTextSize('x-large')" class="text-xl" data-size="x-large">{{ t('nav.textSize.xLarge') }}</a>
+              </li>
+            </ul>
+          </div>
+          <!-- Language Selector -->
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="{{ t('nav.changeLanguage') }}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-32 p-2 shadow">
+              <li>
+                <a href="#" onclick="changeLanguage('en')" class="{% if currentLanguage === 'en' %}active{% endif %}">🇬🇧 English</a>
+              </li>
+              <li>
+                <a href="#" onclick="changeLanguage('es')" class="{% if currentLanguage === 'es' %}active{% endif %}">🇪🇸 Español</a>
+              </li>
+              <li>
+                <a href="#" onclick="changeLanguage('fr')" class="{% if currentLanguage === 'fr' %}active{% endif %}">🇫🇷 Français</a>
+              </li>
+              <li>
+                <a href="#" onclick="changeLanguage('pl')" class="{% if currentLanguage === 'pl' %}active{% endif %}">🇵🇱 Polski</a>
+              </li>
+            </ul>
+          </div>
+          <!-- Theme Toggle Button -->
+          <label
+            class="swap swap-rotate btn btn-ghost btn-circle" aria-label="{{ t('nav.toggleTheme') }}">
+            <!-- Hidden checkbox controls the state -->
+            <input
+            type="checkbox" id="theme-toggle" class="theme-controller" value="dark"/>
+            <!-- Sun icon (light mode) -->
+            <i data-lucide="sun" class="swap-off w-6 h-6"></i>
+            <!-- Moon icon (dark mode) -->
+            <i data-lucide="moon" class="swap-on w-6 h-6"></i>
+          </label>
+        </div>
+      </div>
+    {% endblock %}
+    <main {% block main_attributes %} {% endblock %}> {% block content %}{% endblock %}
+      </main>
+      {% block footer %}
+        <!-- Daisy UI Footer -->
+        <footer class="footer footer-center p-10 bg-base-200 text-base-content mt-16">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+            <!-- Contact Information -->
+            <div class="text-left">
+              <h3 class="font-bold text-lg mb-4">{{ t('footer.contactUs') }}</h3>
+              <div class="space-y-2">
+                <p class="flex items-center gap-2">
+                  <i data-lucide="phone" class="h-5 w-5"></i>
+                  <span class="text-sm">{{ t('footer.phone') }}:
+                    <a href="tel:+442890571100" class="link link-hover">028 9057 1100</a>
+                  </span>
+                </p>
+                <p class="flex items-center gap-2">
+                  <i data-lucide="mail" class="h-5 w-5"></i>
+                  <span class="text-sm">{{ t('footer.email') }}:
+                    <a href="mailto:info@kainos.com" class="link link-hover">info@kainos.com</a>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <!-- Social Media -->
+            <div class="text-left">
+              <h3 class="font-bold text-lg mb-4">{{ t('footer.followUs') }}</h3>
+              <div class="flex gap-4">
+                <a
+                  href="https://www.linkedin.com/company/kainos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-ghost btn-square"
+                  aria-label="LinkedIn">
+                  <i data-lucide="linkedin" class="h-6 w-6"></i>
+                </a>
+                <a
+                  href="https://x.com/KainosSoftware"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-ghost btn-square"
+                  aria-label="X (Twitter)">
+                  <i data-lucide="twitter" class="h-6 w-6"></i>
+                </a>
+                <a
+                  href="https://www.instagram.com/kainossoftware/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-ghost btn-square"
+                  aria-label="Instagram">
+                  <i data-lucide="instagram" class="h-6 w-6"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8">
+            <p class="text-sm">{{ t('footer.copyright') }}</p>
+          </div>
+        </footer>
+      {% endblock %}
+      <!-- Theme Toggle Script -->
+      <script>
+        // Get theme from localStorage or default to 'light'
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        // Set checkbox state based on current theme
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          themeToggle.checked = (currentTheme === 'dark');
+          // Add event listener for theme toggle
+          themeToggle.addEventListener('change', function () {
+            const newTheme = this.checked
+              ? 'dark'
+              : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+          });
+        }
+        // Text size functionality
+        const currentTextSize = localStorage.getItem('textSize') || 'medium';
+        // Set initial text size
+        document.documentElement.setAttribute('data-text-size', currentTextSize);
+        // Update active state for text size menu items
+        function updateTextSizeMenu() {
+          const currentSize = localStorage.getItem('textSize') || 'medium';
+          document.querySelectorAll('[data-size]').forEach(item => {
+            const link = item;
+            if (link.dataset.size === currentSize) {
+              link
+                .parentElement
+                .classList
+                .add('active');
+            } else {
+              link
+                .parentElement
+                .classList
+                .remove('active');
+            }
+          });
+        }
+        // Text size change function
+        function changeTextSize(size) {
+          document.documentElement.setAttribute('data-text-size', size);
+          localStorage.setItem('textSize', size);
+          updateTextSizeMenu();
+        }
+        // Initialize text size menu on load
+        document.addEventListener('DOMContentLoaded', updateTextSizeMenu);
+        // Language change function
+        function changeLanguage(language) {
+          fetch('/change-language', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+            {language: language})
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) { // Reload the page to apply new language
+                window.location.reload();
+              }
+            })
+            .catch(error => console.error('Error changing language:', error));
+        }
+      </script>
+      <!-- Initialize Lucide Icons -->
+      <script>
+        lucide.createIcons();
+      </script>
+      <!-- Page-specific JavaScript -->
+      {% block scripts %}{% endblock %}
+    </body>
+  </html>
 </html>
