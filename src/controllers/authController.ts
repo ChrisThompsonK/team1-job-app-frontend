@@ -11,7 +11,7 @@ export class AuthController {
    */
   public login = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password }: LoginCredentials = req.body;
+      const { email, password, returnTo }: LoginCredentials & { returnTo?: string } = req.body;
 
       // Validate input
       if (!email || !password) {
@@ -27,7 +27,19 @@ export class AuthController {
 
       if (result.success) {
         console.log("✅ Login successful for user:", result.data.user.email);
-        res.status(200).json(result);
+        
+        // Set authentication cookie
+        res.cookie('auth_token', 'authenticated', { 
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production'
+        });
+        
+        res.status(200).json({
+          ...result,
+          returnTo: returnTo || '/',
+          token: 'authenticated' // Simple token for demo
+        });
       } else {
         res.status(401).json({
           success: false,

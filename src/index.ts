@@ -9,6 +9,7 @@ import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
 import { AuthController } from "./controllers/authController.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
+import { requireAuth, optionalAuth } from "./middleware/authMiddleware.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import {
   getTranslatedBand,
@@ -136,8 +137,8 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 });
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
-// Job application routes
-app.get("/job-roles/:id/apply", (req: Request, res: Response) => {
+// Job application routes - require authentication
+app.get("/job-roles/:id/apply", requireAuth, (req: Request, res: Response) => {
   // Mock job data for demonstration
   const mockJobRole = {
     id: req.params.id,
@@ -155,7 +156,7 @@ app.get("/job-roles/:id/apply", (req: Request, res: Response) => {
   });
 });
 
-app.post("/job-roles/:id/apply", (req: Request, res: Response) => {
+app.post("/job-roles/:id/apply", requireAuth, (req: Request, res: Response) => {
   // Mock job data for demonstration
   const mockJobRole = {
     id: req.params.id,
@@ -176,11 +177,21 @@ app.post("/job-roles/:id/apply", (req: Request, res: Response) => {
 });
 
 // Authentication routes
-app.get("/login", (_req: Request, res: Response) => {
+app.get("/login", (req: Request, res: Response) => {
+  const returnTo = req.query.returnTo as string || "/";
+  
   res.render("login", {
     title: "Login & Sign Up",
     currentPage: "login",
+    returnTo: returnTo,
   });
+});
+
+// Logout route
+app.post("/auth/logout", (req: Request, res: Response) => {
+  // Clear the authentication cookie
+  res.clearCookie('auth_token');
+  res.json({ success: true, message: "Logged out successfully" });
 });
 
 app.listen(port, () => {
