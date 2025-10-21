@@ -35,7 +35,10 @@ nunjucksEnv.addGlobal("translateBand", getTranslatedBand);
 nunjucksEnv.addGlobal("translateStatus", getTranslatedStatus);
 nunjucksEnv.addGlobal("translateJobTitle", getTranslatedJobTitle);
 nunjucksEnv.addGlobal("translateDescription", getTranslatedDescription);
-nunjucksEnv.addGlobal("translateResponsibilities", getTranslatedResponsibilities);
+nunjucksEnv.addGlobal(
+  "translateResponsibilities",
+  getTranslatedResponsibilities
+);
 
 // Set Nunjucks as the view engine
 app.set("view engine", "njk");

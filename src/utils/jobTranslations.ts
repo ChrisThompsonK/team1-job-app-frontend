@@ -117,7 +117,10 @@ export function getTranslatedDescription(jobTitle: string, t: any): string {
 /**
  * Get translated job responsibilities
  */
-export function getTranslatedResponsibilities(jobTitle: string, t: any): string {
+export function getTranslatedResponsibilities(
+  jobTitle: string,
+  t: any
+): string {
   if (!jobTitle) return "";
 
   // Normalize the job title for matching
