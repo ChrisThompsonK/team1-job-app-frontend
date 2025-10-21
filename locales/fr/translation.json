@@ -138,7 +138,8 @@
     "shareThisJob": "Partager ce Poste",
     "copyLink": "Copier le Lien",
     "shareViaEmail": "Partager par E-mail",
-    "print": "Imprimer"
+    "print": "Imprimer",
+    "generateReport": "Générer un Rapport"
   },
   "jobApplication": {
     "title": "Postuler pour le Poste",

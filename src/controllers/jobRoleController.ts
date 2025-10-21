@@ -449,4 +449,82 @@ export class JobRoleController {
       }
     }
   };
+
+  /**
+   * Generates a CSV report of all job roles
+   * GET /job-roles/export
+   */
+  public exportJobRolesCSV = async (
+    _req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      // Fetch all job roles without pagination
+      const allJobs = await this.jobRoleService.getAllJobs();
+      const jobsArray = Array.isArray(allJobs) ? allJobs : [];
+
+      // Define CSV headers
+      const headers = [
+        "ID",
+        "Job Role Name",
+        "Location",
+        "Capability",
+        "Band",
+        "Status",
+        "Number of Open Positions",
+        "Closing Date",
+        "Description",
+        "Responsibilities",
+        "Job Spec Link",
+      ];
+
+      // Convert jobs to CSV rows
+      const rows = jobsArray.map((job) => {
+        const closingDate = job.closingDate instanceof Date 
+          ? job.closingDate.toLocaleDateString('en-GB')
+          : new Date(job.closingDate).toLocaleDateString('en-GB');
+        
+        const responsibilities = Array.isArray(job.responsibilities)
+          ? job.responsibilities.join("; ")
+          : "";
+
+        return [
+          job.id,
+          `"${job.name.replace(/"/g, '""')}"`,
+          `"${job.location.replace(/"/g, '""')}"`,
+          `"${job.capability.replace(/"/g, '""')}"`,
+          `"${job.band.replace(/"/g, '""')}"`,
+          `"${job.status.replace(/"/g, '""')}"`,
+          job.numberOfOpenPositions,
+          closingDate,
+          `"${job.description.replace(/"/g, '""')}"`,
+          `"${responsibilities.replace(/"/g, '""')}"`,
+          job.jobSpecLink ? `"${job.jobSpecLink.replace(/"/g, '""')}"` : "",
+        ].join(",");
+      });
+
+      // Combine headers and rows
+      const csvContent = [headers.join(","), ...rows].join("\n");
+
+      // Set headers for file download
+      const timestamp = new Date().toISOString().split("T")[0];
+      const filename = `job-roles-report-${timestamp}.csv`;
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${filename}"`
+      );
+
+      // Send CSV content
+      res.send(csvContent);
+    } catch (error) {
+      console.error("Error generating CSV report:", error);
+      res.status(500).render("error", {
+        title: "Export Failed",
+        message: "Unable to generate job roles report",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
 }

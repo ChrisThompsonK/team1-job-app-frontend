@@ -129,6 +129,7 @@ app.get("/profile", (req, res, next) => {
   authController.getProfile(req, res).catch(next);
 });
 app.get("/job-roles", jobRoleController.getJobRolesList);
+app.get("/job-roles/export", jobRoleController.exportJobRolesCSV);
 app.get("/job-roles/add", jobRoleController.getJobRoleAdd);
 app.post("/job-roles/add", (req, res, next) => {
   jobRoleController.createJobRole(req, res).catch(next);
