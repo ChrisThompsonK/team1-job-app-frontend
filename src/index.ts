@@ -140,8 +140,16 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
 // Job application routes - require authentication
-app.get("/job-roles/:id/apply", requireAuth, jobApplicationController.getJobApplication);
-app.post("/job-roles/:id/apply", requireAuth, jobApplicationController.submitJobApplication);
+app.get(
+  "/job-roles/:id/apply",
+  requireAuth,
+  jobApplicationController.getJobApplication
+);
+app.post(
+  "/job-roles/:id/apply",
+  requireAuth,
+  jobApplicationController.submitJobApplication
+);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
