@@ -42,7 +42,7 @@ export const FILTER_OPTIONS: FilterOptions = {
   capabilities: [
     { value: "", label: "filters.allCapabilities" },
     { value: "Data & Analytics", label: "filters.capabilities.dataAnalytics" },
-    { value: "Workday", label: "Workday" },
+    { value: "Workday", label: "filters.capabilities.workday" },
     { value: "Engineering", label: "filters.capabilities.engineering" },
     { value: "Product", label: "filters.capabilities.product" },
     { value: "Design", label: "filters.capabilities.design" },
