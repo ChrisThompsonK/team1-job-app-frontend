@@ -10,6 +10,7 @@ import { AuthController } from "./controllers/authController.js";
 import { HomeController } from "./controllers/homeController.js";
 import { JobApplicationController } from "./controllers/jobApplicationController.js";
 import { JobRoleController } from "./controllers/jobRoleController.js";
+import { requireAuth } from "./middleware/authMiddleware.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
 import {
   getTranslatedBand,
@@ -28,6 +29,8 @@ const port = env.port;
 const nunjucksEnv = nunjucks.configure(path.join(process.cwd(), "views"), {
   autoescape: true,
   express: app,
+  noCache: env.nodeEnv === "development",
+  watch: env.nodeEnv === "development",
 });
 
 // Add translation helper functions to Nunjucks global context
@@ -127,6 +130,7 @@ app.get("/profile", (req, res, next) => {
   authController.getProfile(req, res).catch(next);
 });
 app.get("/job-roles", jobRoleController.getJobRolesList);
+app.get("/job-roles/export", jobRoleController.exportJobRolesCSV);
 app.get("/job-roles/add", jobRoleController.getJobRoleAdd);
 app.post("/job-roles/add", (req, res, next) => {
   jobRoleController.createJobRole(req, res).catch(next);
@@ -138,9 +142,17 @@ app.post("/job-roles/:id/edit", (req, res, next) => {
 });
 app.post("/job-roles/:id/delete", jobRoleController.deleteJobRole);
 
-// Job application routes
-app.get("/job-roles/:id/apply", jobApplicationController.getJobApplication);
-app.post("/job-roles/:id/apply", jobApplicationController.submitJobApplication);
+// Job application routes - require authentication
+app.get(
+  "/job-roles/:id/apply",
+  requireAuth,
+  jobApplicationController.getJobApplication
+);
+app.post(
+  "/job-roles/:id/apply",
+  requireAuth,
+  jobApplicationController.submitJobApplication
+);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);

@@ -138,7 +138,8 @@
     "shareThisJob": "Share this Job",
     "copyLink": "Copy Link",
     "shareViaEmail": "Share via Email",
-    "print": "Print"
+    "print": "Print",
+    "generateReport": "Generate Report"
   },
   "jobApplication": {
     "title": "Apply for Position",

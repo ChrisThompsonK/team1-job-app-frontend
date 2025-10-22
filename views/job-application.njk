@@ -72,75 +72,75 @@
             {% endif %}
 
             <form id="jobApplicationForm" method="POST" action="/job-roles/{{ jobRole.id }}/apply">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Personal Information Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                        <i data-lucide="user" class="h-5 w-5"></i>
+                        {{ t('jobApplication.personalInfo') }}
+                    </h3>
+                    <div class="divider mt-0 mb-6"></div>
                     
-                    <!-- Personal Information Section -->
-                    <div class="col-span-2">
-                        <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                            <i data-lucide="user" class="h-5 w-5"></i>
-                            {{ t('jobApplication.personalInfo') }}
-                        </h3>
-                        <div class="divider"></div>
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- First Name -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.firstName') }} *</span>
+                            </label>
+                            <input type="text" name="firstName" id="firstName" class="input input-bordered w-full" 
+                                   value="{{ formData.firstName if formData else '' }}" required/>
+                        </div>
 
-                    <!-- First Name -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.firstName') }} *</span>
-                        </label>
-                        <input type="text" name="firstName" id="firstName" class="input input-bordered" 
-                               value="{{ formData.firstName if formData else '' }}" required/>
-                    </div>
+                        <!-- Last Name -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.lastName') }} *</span>
+                            </label>
+                            <input type="text" name="lastName" id="lastName" class="input input-bordered w-full" 
+                                   value="{{ formData.lastName if formData else '' }}" required/>
+                        </div>
 
-                    <!-- Last Name -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.lastName') }} *</span>
-                        </label>
-                        <input type="text" name="lastName" id="lastName" class="input input-bordered" 
-                               value="{{ formData.lastName if formData else '' }}" required/>
-                    </div>
+                        <!-- Email -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.email') }} *</span>
+                            </label>
+                            <input type="email" name="email" id="email" class="input input-bordered w-full" 
+                                   value="{{ formData.email if formData else '' }}" required/>
+                        </div>
 
-                    <!-- Email -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.email') }} *</span>
-                        </label>
-                        <input type="email" name="email" id="email" class="input input-bordered" 
-                               value="{{ formData.email if formData else '' }}" required/>
+                        <!-- Phone -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.phone') }} *</span>
+                            </label>
+                            <input type="tel" name="phone" id="phone" class="input input-bordered w-full" 
+                                   value="{{ formData.phone if formData else '' }}" required/>
+                        </div>
                     </div>
-
-                    <!-- Phone -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.phone') }} *</span>
-                        </label>
-                        <input type="tel" name="phone" id="phone" class="input input-bordered" 
-                               value="{{ formData.phone if formData else '' }}" required/>
-                    </div>
-
+                    
                     <!-- Address -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.address') }} *</span>
+                    <div class="form-control w-full mt-6">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.address') }} *</span>
                         </label>
-                        <textarea name="address" id="address" class="textarea textarea-bordered h-24" 
+                        <textarea name="address" id="address" class="textarea textarea-bordered h-24 w-full" 
                                   required>{{ formData.address if formData else '' }}</textarea>
                     </div>
+                </div>
 
-                    <!-- Documents Section -->
-                    <div class="col-span-2 mt-6">
-                        <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                            <i data-lucide="file-text" class="h-5 w-5"></i>
-                            {{ t('jobApplication.documents') }}
-                        </h3>
-                        <div class="divider"></div>
-                    </div>
+                <!-- Documents Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                        <i data-lucide="file-text" class="h-5 w-5"></i>
+                        {{ t('jobApplication.documents') }}
+                    </h3>
+                    <div class="divider mt-0 mb-6"></div>
 
                     <!-- CV Upload -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.cv') }} *</span>
+                    <div class="form-control w-full">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.cv') }} *</span>
                         </label>
                         <input type="file" name="cv" id="cv" 
                                class="file-input file-input-bordered w-full" 
@@ -151,9 +151,9 @@
                     </div>
 
                     <!-- Cover Letter Upload -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.coverLetter') }}</span>
+                    <div class="form-control w-full">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.coverLetter') }}</span>
                         </label>
                         <input type="file" name="coverLetter" id="coverLetter" 
                                class="file-input file-input-bordered w-full" 
@@ -162,67 +162,67 @@
                             <span class="label-text-alt">{{ t('jobApplication.coverLetterHint') }}</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Additional Information Section -->
-                    <div class="col-span-2 mt-6">
-                        <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                            <i data-lucide="info" class="h-5 w-5"></i>
-                            {{ t('jobApplication.additionalInfo') }}
-                        </h3>
-                        <div class="divider"></div>
-                    </div>
+                <!-- Additional Information Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                        <i data-lucide="info" class="h-5 w-5"></i>
+                        {{ t('jobApplication.additionalInfo') }}
+                    </h3>
+                    <div class="divider mt-0 mb-6"></div>
 
                     <!-- Why interested -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.whyInterested') }} *</span>
+                    <div class="form-control w-full mb-6">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.whyInterested') }} *</span>
                         </label>
                         <textarea name="whyInterested" id="whyInterested" 
-                                  class="textarea textarea-bordered h-32" 
+                                  class="textarea textarea-bordered h-32 w-full" 
                                   placeholder="{{ t('jobApplication.whyInterestedPlaceholder') }}" 
                                   required>{{ formData.whyInterested if formData else '' }}</textarea>
                     </div>
 
                     <!-- Relevant Experience -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.relevantExperience') }} *</span>
+                    <div class="form-control w-full mb-6">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.relevantExperience') }} *</span>
                         </label>
                         <textarea name="relevantExperience" id="relevantExperience" 
-                                  class="textarea textarea-bordered h-32" 
+                                  class="textarea textarea-bordered h-32 w-full" 
                                   placeholder="{{ t('jobApplication.relevantExperiencePlaceholder') }}" 
                                   required>{{ formData.relevantExperience if formData else '' }}</textarea>
                     </div>
 
                     <!-- Additional Comments -->
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text font-medium">{{ t('jobApplication.additionalComments') }}</span>
+                    <div class="form-control w-full">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.additionalComments') }}</span>
                         </label>
                         <textarea name="additionalComments" id="additionalComments" 
-                                  class="textarea textarea-bordered h-24" 
+                                  class="textarea textarea-bordered h-24 w-full" 
                                   placeholder="{{ t('jobApplication.additionalCommentsPlaceholder') }}">{{ formData.additionalComments if formData else '' }}</textarea>
                     </div>
+                </div>
 
-                    <!-- Consent and Agreement -->
-                    <div class="col-span-2 mt-6">
-                        <div class="form-control">
-                            <label class="label cursor-pointer justify-start gap-4">
-                                <input type="checkbox" name="dataConsent" id="dataConsent" class="checkbox checkbox-primary" required/>
-                                <span class="label-text">{{ t('jobApplication.dataConsent') }} *</span>
-                            </label>
-                        </div>
-                        <div class="form-control mt-2">
-                            <label class="label cursor-pointer justify-start gap-4">
-                                <input type="checkbox" name="marketingConsent" id="marketingConsent" class="checkbox checkbox-primary"/>
-                                <span class="label-text">{{ t('jobApplication.marketingConsent') }}</span>
-                            </label>
-                        </div>
+                <!-- Consent and Agreement -->
+                <div class="mb-8">
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="dataConsent" id="dataConsent" class="checkbox checkbox-primary" required/>
+                            <span class="label-text">{{ t('jobApplication.dataConsent') }} *</span>
+                        </label>
+                    </div>
+                    <div class="form-control mt-2">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="marketingConsent" id="marketingConsent" class="checkbox checkbox-primary"/>
+                            <span class="label-text">{{ t('jobApplication.marketingConsent') }}</span>
+                        </label>
                     </div>
                 </div>
 
                 <!-- Form Actions -->
-                <div class="flex justify-end gap-4 mt-8">
+                <div class="flex justify-end gap-4">
                     <a href="/job-roles/{{ jobRole.id }}" class="btn btn-outline">{{ t('common.cancel') }}</a>
                     <button type="submit" class="btn btn-primary gap-2" id="submitBtn">
                         <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
