@@ -37,7 +37,7 @@
 /* Custom base layer styles */
 @layer base {
   body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "CenturyGothic", 'CenturyGothic', 'AppleGothic', 'sans-serif';
   }
 }
 
