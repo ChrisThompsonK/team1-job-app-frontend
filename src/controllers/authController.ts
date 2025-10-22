@@ -149,7 +149,9 @@ export class AuthController {
           });
         }
 
-        res.status(200).json(result);
+        // Redirect to returnTo URL after successful login, default to home page
+        const redirectUrl = returnTo && returnTo !== "/" ? returnTo : "/";
+        res.redirect(redirectUrl);
       } else {
         res.status(401).json({
           success: false,
