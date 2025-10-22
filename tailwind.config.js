@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Century Gothic', 'CenturyGothic', 'AppleGothic', 'sans-serif'],
-      }
+        sans: ["Century Gothic", "CenturyGothic", "AppleGothic", "sans-serif"],
+      },
     },
   },
   plugins: [require("daisyui")],
