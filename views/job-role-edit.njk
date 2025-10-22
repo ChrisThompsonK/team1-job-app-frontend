@@ -15,10 +15,8 @@
     <div class="mb-8">
       <div class="flex items-center gap-4 mb-4">
         <a href="/job-roles" class="btn btn-ghost btn-sm gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-          {{ t('jobRoles.editJobRoleForm.backToJobRoles') }}
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          Back to Job Roles
         </a>
       </div>
       <h1 class="text-4xl font-bold text-base-content mb-2">{{ t('jobRoles.editJobRoleForm.title') }}</h1>
@@ -51,7 +49,7 @@
               <select name="capability" id="capability" class="select select-bordered w-full" required>
                 <option value="">{{ t('jobRoles.editJobRoleForm.selectCapability') }}</option>
                 {% for capability in capabilities %}
-                <option value="{{ capability.value }}" {% if job.capability == capability.value %} selected {% endif %}>{{ t(capability.label) }}</option>
+                  <option value="{{ capability.value }}" {% if job.capability == capability.value %} selected {% endif %}>{{ capability.label }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -135,10 +133,8 @@
             <a href="/job-roles" class="btn btn-outline">{{ t('jobRoles.editJobRoleForm.cancel') }}</a>
             <button type="submit" class="btn btn-primary gap-2" id="saveBtn">
               <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              {{ t('jobRoles.editJobRoleForm.saveChanges') }}
+              <i data-lucide="check" class="w-4 h-4"></i>
+              Save Changes
             </button>
           </div>
         </form>
@@ -147,17 +143,13 @@
     <!-- Success/Error Messages -->
     {% if success %}
       <div class="alert alert-success mt-6">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-        </svg>
+        <i data-lucide="check" class="w-6 h-6"></i>
         <span>{{ success }}</span>
       </div>
     {% endif %}
     {% if error %}
       <div class="alert alert-error mt-6">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+        <i data-lucide="x" class="w-6 h-6"></i>
         <span>{{ error }}</span>
       </div>
     {% endif %}

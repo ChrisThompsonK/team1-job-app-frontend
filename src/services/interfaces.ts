@@ -35,11 +35,18 @@ export interface JobRoleservice {
   getJobByName(
     name: string
   ): JobRole | undefined | Promise<JobRole | undefined>;
-  createJob(jobData: CreateJobRoleData): Promise<JobRole | null>;
-  deleteJobById(id: string): Promise<boolean>;
+  createJob(
+    jobData: CreateJobRoleData,
+    cookies?: { [key: string]: string }
+  ): Promise<JobRole | null>;
+  deleteJobById(
+    id: string,
+    cookies?: { [key: string]: string }
+  ): Promise<boolean>;
   updateJobById(
     id: number,
-    jobData: CreateJobRoleData
+    jobData: CreateJobRoleData,
+    cookies?: { [key: string]: string }
   ): Promise<JobRole | null>;
   getFilteredJobs(
     filters?: JobFilterParams
