@@ -39,28 +39,27 @@
     <div class="card bg-base-100 shadow-lg">
       <div class="card-body">
         <form id="addJobForm" method="POST" action="/job-roles/add">
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Job Name -->
-            <div class="form-control col-span-2">
-              <label class="label">
-                <span class="label-text font-medium">Job Role Name *</span>
+            <div class="form-control w-full col-span-2">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Job Role Name *</span>
               </label>
-              <input type="text" name="jobRoleName" id="jobRoleName" class="input input-bordered" value="{{ formData.jobRoleName if formData else '' }}" required/>
+              <input type="text" name="jobRoleName" id="jobRoleName" class="input input-bordered w-full" value="{{ formData.jobRoleName if formData else '' }}" required/>
             </div>
             <!-- Location -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Location *</span>
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Location *</span>
               </label>
-              <input type="text" name="location" id="location" class="input input-bordered" value="{{ formData.location if formData else '' }}" required/>
+              <input type="text" name="location" id="location" class="input input-bordered w-full" value="{{ formData.location if formData else '' }}" required/>
             </div>
             <!-- Capability -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Capability *</span>
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Capability *</span>
               </label>
-              <select name="capability" id="capability" class="select select-bordered" required>
+              <select name="capability" id="capability" class="select select-bordered w-full" required>
                 <option value="">Select Capability</option>
                 {% for capability in capabilities %}
                 <option value="{{ capability.value }}" {% if formData and formData.capability == capability.value %} selected {% endif %}>{{ capability.label }}</option>
@@ -68,11 +67,11 @@
               </select>
             </div>
             <!-- Band -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Band *</span>
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Band *</span>
               </label>
-              <select name="band" id="band" class="select select-bordered" required>
+              <select name="band" id="band" class="select select-bordered w-full" required>
                 <option value="">Select Band</option>
                 <option value="Junior" {% if formData and formData.band == "Junior" %} selected {% endif %}>Junior</option>
                 <option value="Mid" {% if formData and formData.band == "Mid" %} selected {% endif %}>Mid</option>
@@ -81,56 +80,56 @@
               </select>
             </div>
             <!-- Status -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Status *</span>
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Status *</span>
               </label>
-              <select name="status" id="status" class="select select-bordered" required>
+              <select name="status" id="status" class="select select-bordered w-full" required>
                 <option value="">Select Status</option>
                 <option value="open" {% if formData and formData.status == "Open" %} selected {% endif %}>Open</option>
                 <option value="closed" {% if formData and formData.status == "Closed" %} selected {% endif %}>Closed</option>
               </select>
             </div>
             <!-- Number of Positions -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Number of Positions *</span>
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Number of Positions *</span>
               </label>
-              <input type="number" name="numberOfOpenPositions" id="numberOfOpenPositions" class="input input-bordered" value="{{ formData.numberOfOpenPositions if formData else '1' }}" min="0" required/>
+              <input type="number" name="numberOfOpenPositions" id="numberOfOpenPositions" class="input input-bordered w-full" value="{{ formData.numberOfOpenPositions if formData else '1' }}" min="0" required/>
             </div>
             <!-- Closing Date -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Closing Date *</span>
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Closing Date *</span>
               </label>
-              <input type="date" name="closingDate" id="closingDate" class="input input-bordered" value="{{ formData.closingDate if formData else '' }}" required/>
+              <input type="date" name="closingDate" id="closingDate" class="input input-bordered w-full" value="{{ formData.closingDate if formData else '' }}" required/>
             </div>
             <!-- Job Spec Link -->
-            <div class="form-control col-span-2">
-              <label class="label">
-                <span class="label-text font-medium">Job Specification Link</span>
+            <div class="form-control w-full col-span-2">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Job Specification Link</span>
               </label>
-              <input type="url" name="jobSpecLink" id="jobSpecLink" class="input input-bordered" value="{{ formData.jobSpecLink if formData else '' }}" placeholder="https://company.com/careers/job-spec (optional)"/>
+              <input type="url" name="jobSpecLink" id="jobSpecLink" class="input input-bordered w-full" value="{{ formData.jobSpecLink if formData else '' }}" placeholder="https://company.com/careers/job-spec (optional)"/>
               <div class="label">
                 <span class="label-text-alt">Optional - Link to detailed job specification</span>
               </div>
             </div>
             <!-- Description -->
-            <div class="form-control col-span-2">
-              <label class="label">
-                <span class="label-text font-medium">Description *</span>
+            <div class="form-control w-full col-span-2">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Description *</span>
               </label>
-              <textarea name="description" id="description" class="textarea textarea-bordered h-24" required>{{ formData.description if formData else '' }}</textarea>
+              <textarea name="description" id="description" class="textarea textarea-bordered h-24 w-full" required>{{ formData.description if formData else '' }}</textarea>
             </div>
             <!-- Responsibilities -->
-            <div class="form-control col-span-2">
-              <label class="label">
-                <span class="label-text font-medium">Responsibilities *</span>
+            <div class="form-control w-full col-span-2">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">Responsibilities *</span>
               </label>
               <textarea
                 name="responsibilities"
                 id="responsibilities"
-                class="textarea textarea-bordered h-32"
+                class="textarea textarea-bordered h-32 w-full"
                 placeholder="Enter responsibilities separated by commas"
                 required>{{ formData.responsibilities if formData else '' }}</textarea>
               <div class="label">
