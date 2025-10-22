@@ -15,26 +15,20 @@
     <div class="mb-8">
       <div class="flex items-center gap-4 mb-4">
         <a href="/job-roles" class="btn btn-ghost btn-sm gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
           Back to Job Roles
         </a>
       </div>
       <h1 class="text-4xl font-bold text-base-content mb-2">Add New Job Role</h1>
       <p class="text-base-content/70">Create a new job role opportunity</p>
     </div>
-
     <!-- Error Alert -->
     {% if error %}
-    <div class="alert alert-error mb-6">
-      <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <span>{{ error }}</span>
-    </div>
+      <div class="alert alert-error mb-6">
+        <i data-lucide="x-circle" class="w-6 h-6 shrink-0 stroke-current"></i>
+        <span>{{ error }}</span>
+      </div>
     {% endif %}
-
     <!-- Add Form -->
     <div class="card bg-base-100 shadow-lg">
       <div class="card-body">
@@ -63,7 +57,7 @@
               <select name="capability" id="capability" class="select select-bordered" required>
                 <option value="">Select Capability</option>
                 {% for capability in capabilities %}
-                <option value="{{ capability.value }}" {% if formData and formData.capability == capability.value %} selected {% endif %}>{{ capability.label }}</option>
+                  <option value="{{ capability.value }}" {% if formData and formData.capability == capability.value %} selected {% endif %}>{{ capability.label }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -143,9 +137,7 @@
             <a href="/job-roles" class="btn btn-outline">Cancel</a>
             <button type="submit" class="btn btn-primary gap-2" id="saveBtn">
               <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
+              <i data-lucide="plus" class="w-4 h-4"></i>
               Create Job Role
             </button>
           </div>
@@ -153,20 +145,16 @@
       </div>
     </div>
   {% endblock %}
-
   {% block scripts %}
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('addJobForm');
         const saveBtn = document.getElementById('saveBtn');
         const loadingSpinner = document.getElementById('loadingSpinner');
-        
-        form.addEventListener('submit', function (event) { 
-          // Show loading state
+        form.addEventListener('submit', function (event) { // Show loading state
           saveBtn.disabled = true;
           loadingSpinner.classList.remove('hidden');
         });
-        
         // Form validation
         const requiredFields = form.querySelectorAll('[required]');
         requiredFields.forEach(field => {
@@ -179,7 +167,6 @@
             }
           });
         });
-        
         // Auto-resize textareas
         const textareas = form.querySelectorAll('textarea');
         textareas.forEach(textarea => {

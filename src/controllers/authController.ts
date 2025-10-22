@@ -31,8 +31,6 @@ export class AuthController {
       const result = await authService.login({ email, password });
 
       if (result.success) {
-        console.log("User login successful");
-
         // Set our own session cookie for authentication
         res.cookie("session", result.data.user.id, {
           httpOnly: true,
@@ -149,9 +147,22 @@ export class AuthController {
           });
         }
 
-        // Redirect to returnTo URL after successful login, default to home page
-        const redirectUrl = returnTo && returnTo !== "/" ? returnTo : "/";
-        res.redirect(redirectUrl);
+        // Send JSON response instead of redirect for AJAX requests
+        // Determine where to redirect after login
+        let finalRedirectUrl = "/profile"; // Default
+
+        if (returnTo && returnTo.trim() !== "" && returnTo !== "/") {
+          // If we have a valid returnTo that's not just "/" or empty, use it
+          finalRedirectUrl = returnTo;
+        }
+
+        res.json({
+          success: true,
+          data: {
+            user: result.data.user,
+          },
+          redirectUrl: finalRedirectUrl,
+        });
       } else {
         res.status(401).json({
           success: false,
@@ -339,17 +350,22 @@ export class AuthController {
         error: error instanceof Error ? error.message : "Unknown error",
       });
     }
-  }; /**
+  };
+
+  /**
    * Get login page
    * GET /login
    */
   public getLogin = (req: Request, res: Response): void => {
-    const returnTo = (req.query.returnTo as string) || "/";
+    const returnTo = req.query.returnTo as string;
+
+    // Decode the returnTo URL if it's encoded
+    const decodedReturnTo = returnTo ? decodeURIComponent(returnTo) : undefined;
 
     res.render("login", {
       title: "Login & Sign Up",
       currentPage: "login",
-      returnTo: returnTo,
+      returnTo: decodedReturnTo,
     });
   };
 }

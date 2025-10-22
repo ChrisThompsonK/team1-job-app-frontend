@@ -37,7 +37,9 @@
             <form
               id="login-form-element" class="space-y-4">
               <!-- Hidden return URL field -->
-              <input type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
+              {% if returnTo %}
+                <input type="hidden" name="returnTo" value="{{ returnTo }}"/>
+              {% endif %}
               <!-- Email Field -->
               <div class="form-control">
                 <label class="label" for="login-email">
@@ -100,7 +102,8 @@
             <form
               id="signup-form-element" class="space-y-4">
               <!-- Hidden return URL field -->
-              <input type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
+              <input
+              type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
               <!-- Email Field -->
               <div class="form-control">
                 <label class="label" for="signup-email">

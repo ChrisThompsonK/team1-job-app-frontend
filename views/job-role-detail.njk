@@ -1,194 +1,188 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-    {{ title }}
+  {{ title }}
 {% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="/css/job-roles.css">
-{% endblock %}
-{% block body_attributes %}
+  <link rel="stylesheet" href="/css/job-roles.css">
+  {% endblock %}
+  {% block body_attributes %}
     class="job-detail-page"{% endblock %}
-{% block main_attributes %}
+  {% block main_attributes %}
     class="container mx-auto px-4 py-8"{% endblock %}
-{% block content %}
+  {% block content %}
     <!-- Breadcrumb Navigation -->
     <div class="text-sm breadcrumbs mb-6">
-        <ul>
-            <li><a href="/" class="link link-hover">{{ t('nav.home') }}</a></li>
-            <li><a href="/job-roles" class="link link-hover">{{ t('nav.jobRoles') }}</a></li>
-            <li class="text-base-content/70">{{ translateJobTitle(jobRole.name, t) }}</li>
-        </ul>
+      <ul>
+        <li>
+          <a href="/" class="link link-hover">{{ t('nav.home') }}</a>
+        </li>
+        <li>
+          <a href="/job-roles" class="link link-hover">{{ t('nav.jobRoles') }}</a>
+        </li>
+        <li class="text-base-content/70">{{ translateJobTitle(jobRole.name, t) }}</li>
+      </ul>
     </div>
-
     <!-- Job Header Section -->
     <div class="hero bg-base-200 rounded-lg mb-8">
-        <div class="hero-content text-center">
-            <div class="max-w-4xl">
-                <h1 class="text-5xl font-bold text-primary mb-4">{{ translateJobTitle(jobRole.name, t) }}</h1>
-                <div class="flex flex-wrap justify-center gap-4 mb-6">
-                    <!-- Status Badge -->
-                    <div class="badge {{ 'badge-success' if jobRole.status == 'Open' else 'badge-error' }} badge-lg">
-                        {{ translateStatus(jobRole.status, t) }}
-                    </div>
-                    <!-- Capability Badge -->
-                    <div class="badge badge-secondary badge-lg">{{ translateCapability(jobRole.capability, t) }}</div>
-                    <!-- Band Badge -->
-                    <div class="badge badge-outline badge-lg">Band {{ translateBand(jobRole.band, t) }}</div>
-                </div>
-                <p class="text-lg text-base-content/80 mb-6">{{ translateDescription(jobRole.name, t) or jobRole.description }}</p>
-                <div class="flex flex-wrap justify-center gap-6 text-base-content/70">
-                    <!-- Location -->
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="map-pin" class="w-5 h-5"></i>
-                        <span class="font-medium">{{ jobRole.location }}</span>
-                    </div>
-                    <!-- Open Positions -->
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="users" class="w-5 h-5"></i>
-                        <span class="font-medium">{{ jobRole.numberOfOpenPositions }} {{ t('jobRoles.positionAvailable') if jobRole.numberOfOpenPositions == 1 else t('jobRoles.positionsAvailable') }}</span>
-                    </div>
-                    <!-- Closing Date -->
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="calendar" class="w-5 h-5"></i>
-                        <span class="font-medium">{{ t('jobRoles.closes') }} {{ jobRole.closingDate.toLocaleDateString() }}</span>
-                    </div>
-                </div>
+      <div class="hero-content text-center">
+        <div class="max-w-4xl">
+          <h1 class="text-5xl font-bold text-primary mb-4">{{ translateJobTitle(jobRole.name, t) }}</h1>
+          <div
+            class="flex flex-wrap justify-center gap-4 mb-6">
+            <!-- Status Badge -->
+            <div class="badge {{ 'badge-success' if jobRole.status == 'Open' else 'badge-error' }} badge-lg">
+              {{ translateStatus(jobRole.status, t) }}
             </div>
+            <!-- Capability Badge -->
+            <div class="badge badge-secondary badge-lg">{{ translateCapability(jobRole.capability, t) }}</div>
+            <!-- Band Badge -->
+            <div class="badge badge-outline badge-lg">Band {{ translateBand(jobRole.band, t) }}</div>
+          </div>
+          <p class="text-lg text-base-content/80 mb-6">{{ translateDescription(jobRole.name, t) or jobRole.description }}</p>
+          <div
+            class="flex flex-wrap justify-center gap-6 text-base-content/70">
+            <!-- Location -->
+            <div class="flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+              <span class="font-medium">{{ jobRole.location }}</span>
+            </div>
+            <!-- Open Positions -->
+            <div class="flex items-center gap-2">
+              <i data-lucide="users" class="w-5 h-5"></i>
+              <span class="font-medium">{{ jobRole.numberOfOpenPositions }}
+                {{ t('jobRoles.positionAvailable') if jobRole.numberOfOpenPositions == 1 else t('jobRoles.positionsAvailable') }}</span>
+            </div>
+            <!-- Closing Date -->
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar" class="w-5 h-5"></i>
+              <span class="font-medium">{{ t('jobRoles.closes') }}
+                {{ jobRole.closingDate.toLocaleDateString() }}</span>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-
     <!-- Main Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Job Details Section -->
-        <div class="lg:col-span-2 space-y-8">
-            <!-- Job Description -->
-            <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                    <h2 class="card-title text-2xl text-primary flex items-center gap-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        {{ t('jobRoles.jobDescription') }}
-                    </h2>
-                    <div class="divider"></div>
-                    <p class="text-base-content/80 leading-relaxed">{{ translateDescription(jobRole.name, t) or jobRole.description }}</p>
-                </div>
-            </div>
-
-            <!-- Responsibilities Section -->
-            {% if jobRole.responsibilities and jobRole.responsibilities.length > 0 %}
-            <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                    <h2 class="card-title text-2xl text-primary flex items-center gap-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                        {{ t('jobRoles.keyResponsibilities') }}
-                    </h2>
-                    <div class="divider"></div>
-                    {% set translatedResp = translateResponsibilities(jobRole.name, t) %}
-                    {% set responsibilitiesList = translatedResp.split('|') if translatedResp else jobRole.responsibilities %}
-                    <ul class="space-y-3">
-                        {% for responsibility in responsibilitiesList %}
-                        <li class="flex items-start gap-3">
-                            <div class="badge badge-primary badge-sm mt-1 flex-shrink-0"></div>
-                            <span class="text-base-content/80">{{ responsibility.trim() }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% endif %}
+    <div
+      class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Job Details Section -->
+      <div
+        class="lg:col-span-2 space-y-8">
+        <!-- Job Description -->
+        <div class="card bg-base-100 shadow-lg">
+          <div class="card-body">
+            <h2 class="card-title text-2xl text-primary flex items-center gap-2">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+              {{ t('jobRoles.jobDescription') }}
+            </h2>
+            <div class="divider"></div>
+            <p class="text-base-content/80 leading-relaxed">{{ translateDescription(jobRole.name, t) or jobRole.description }}</p>
+          </div>
         </div>
-
-        <!-- Sidebar Information -->
-        <div class="space-y-6">
-            <!-- Quick Info Card -->
-            <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                    <h3 class="card-title text-lg text-primary">{{ t('jobRoles.quickInformation') }}</h3>
-                    <div class="divider"></div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-base-content/70">{{ t('jobRoles.location') }}:</span>
-                            <span class="font-semibold">{{ jobRole.location }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-base-content/70">{{ t('jobRoles.capability') }}:</span>
-                            <span class="badge badge-secondary">{{ translateCapability(jobRole.capability, t) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-base-content/70">{{ t('jobRoles.band') }}:</span>
-                            <span class="font-semibold">{{ translateBand(jobRole.band, t) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-base-content/70">{{ t('jobRoles.status') }}:</span>
-                            <span class="badge {{ 'badge-success' if jobRole.status == 'Open' else 'badge-error' }}">
-                                {{ translateStatus(jobRole.status, t) }}
-                            </span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-base-content/70">{{ t('jobRoles.openPositions') }}:</span>
-                            <span class="font-semibold">{{ jobRole.numberOfOpenPositions }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-base-content/70">{{ t('jobRoles.closes') }}:</span>
-                            <span class="font-semibold">{{ jobRole.closingDate.toLocaleDateString() }}</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Responsibilities Section -->
+        {% if jobRole.responsibilities and jobRole.responsibilities.length > 0 %}
+          <div class="card bg-base-100 shadow-lg">
+            <div class="card-body">
+              <h2 class="card-title text-2xl text-primary flex items-center gap-2">
+                <i data-lucide="clipboard-list" class="w-6 h-6"></i>
+                {{ t('jobRoles.keyResponsibilities') }}
+              </h2>
+              <div class="divider"></div>
+              {% set translatedResp = translateResponsibilities(jobRole.name, t) %}
+              {% set responsibilitiesList = translatedResp.split('|') if translatedResp else jobRole.responsibilities %}
+              <ul class="space-y-3">
+                {% for responsibility in responsibilitiesList %}
+                  <li class="flex items-start gap-3">
+                    <div class="badge badge-primary badge-sm mt-1 flex-shrink-0"></div>
+                    <span class="text-base-content/80">{{ responsibility.trim() }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                    <h3 class="card-title text-lg text-primary">{{ t('jobRoles.actions') }}</h3>
-                    <div class="divider"></div>
-                    <div class="space-y-3">
-                        {% if jobRole.status == 'Open' %}
-                        <a href="/job-roles/{{ jobRole.id }}/apply" class="btn btn-primary btn-block">
-                            <i data-lucide="send" class="h-5 w-5 mr-2"></i>
-                            {{ t('jobRoles.applyNow') }}
-                        </a>
-                        {% else %}
-                        <div class="alert alert-warning">
-                            <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
-                            <span class="text-sm">{{ t('jobRoles.positionClosed') }}</span>
-                        </div>
-                        {% endif %}
-                        <button class="btn btn-ghost btn-block" onclick="window.history.back()">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                            </svg>
-                            {{ t('jobRoles.backToJobList') }}
-                        </button>
-                    </div>
-                </div>
+          </div>
+        {% endif %}
+      </div>
+      <!-- Sidebar Information -->
+      <div
+        class="space-y-6">
+        <!-- Quick Info Card -->
+        <div class="card bg-base-100 shadow-lg">
+          <div class="card-body">
+            <h3 class="card-title text-lg text-primary">{{ t('jobRoles.quickInformation') }}</h3>
+            <div class="divider"></div>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-base-content/70">{{ t('jobRoles.location') }}:</span>
+                <span class="font-semibold">{{ jobRole.location }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-base-content/70">{{ t('jobRoles.capability') }}:</span>
+                <span class="badge badge-secondary">{{ translateCapability(jobRole.capability, t) }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-base-content/70">{{ t('jobRoles.band') }}:</span>
+                <span class="font-semibold">{{ translateBand(jobRole.band, t) }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-base-content/70">{{ t('jobRoles.status') }}:</span>
+                <span class="badge {{ 'badge-success' if jobRole.status == 'Open' else 'badge-error' }}">
+                  {{ translateStatus(jobRole.status, t) }}
+                </span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-base-content/70">{{ t('jobRoles.openPositions') }}:</span>
+                <span class="font-semibold">{{ jobRole.numberOfOpenPositions }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-base-content/70">{{ t('jobRoles.closes') }}:</span>
+                <span class="font-semibold">{{ jobRole.closingDate.toLocaleDateString() }}</span>
+              </div>
             </div>
-
-            <!-- Share Section -->
-            <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                    <h3 class="card-title text-lg text-primary">{{ t('jobRoles.shareThisJob') }}</h3>
-                    <div class="divider"></div>
-                    <div class="flex justify-center gap-3">
-                        <button class="btn btn-circle btn-outline btn-sm" title="{{ t('jobRoles.copyLink') }}">
-                            <i data-lucide="link" class="w-4 h-4"></i>
-                        </button>
-                        <button class="btn btn-circle btn-outline btn-sm" title="{{ t('jobRoles.shareViaEmail') }}">
-                            <i data-lucide="mail" class="w-4 h-4"></i>
-                        </button>
-                        <button class="btn btn-circle btn-outline btn-sm" title="{{ t('jobRoles.print') }}">
-                            <i data-lucide="printer" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <!-- Action Buttons -->
+        <div class="card bg-base-100 shadow-lg">
+          <div class="card-body">
+            <h3 class="card-title text-lg text-primary">{{ t('jobRoles.actions') }}</h3>
+            <div class="divider"></div>
+            <div class="space-y-3">
+              {% if jobRole.status == 'Open' %}
+                <a href="/job-roles/{{ encodeJobId(jobRole.id) }}/apply" class="btn btn-primary btn-block">
+                  <i data-lucide="send" class="h-5 w-5 mr-2"></i>
+                  {{ t('jobRoles.applyNow') }}
+                </a>
+              {% else %}
+                <div class="alert alert-warning">
+                  <i data-lucide="triangle-alert" class="w-6 h-6 shrink-0 stroke-current"></i>
+                  <span class="text-sm">{{ t('jobRoles.positionClosed') }}</span>
+                </div>
+              {% endif %}
+              <button class="btn btn-ghost btn-block" onclick="window.history.back()">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+                {{ t('jobRoles.backToJobList') }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Share Section -->
+        <div class="card bg-base-100 shadow-lg">
+          <div class="card-body">
+            <h3 class="card-title text-lg text-primary">{{ t('jobRoles.shareThisJob') }}</h3>
+            <div class="divider"></div>
+            <div class="flex justify-center gap-3">
+              <button class="btn btn-circle btn-outline btn-sm" title="{{ t('jobRoles.copyLink') }}">
+                <i data-lucide="link" class="w-4 h-4"></i>
+              </button>
+              <button class="btn btn-circle btn-outline btn-sm" title="{{ t('jobRoles.shareViaEmail') }}">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </button>
+              <button class="btn btn-circle btn-outline btn-sm" title="{{ t('jobRoles.print') }}">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-{% endblock %}
+  {% endblock %}
