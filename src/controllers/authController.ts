@@ -90,7 +90,7 @@ export class AuthController {
 
             // Store admin status in cookie for frontend
             res.cookie("isAdmin", isAdmin.toString(), {
-              httpOnly: false, // Allow frontend access
+              httpOnly: true, // Prevent client-side access for security
               secure: process.env.NODE_ENV === "production",
               sameSite: "lax",
               maxAge: 24 * 60 * 60 * 1000, // 24 hours
@@ -114,7 +114,7 @@ export class AuthController {
 
             // Default admin to false if profile call fails
             res.cookie("isAdmin", "false", {
-              httpOnly: false,
+              httpOnly: true,
               secure: process.env.NODE_ENV === "production",
               sameSite: "lax",
               maxAge: 24 * 60 * 60 * 1000,
@@ -138,7 +138,7 @@ export class AuthController {
           });
 
           res.cookie("isAdmin", "false", {
-            httpOnly: false,
+            httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000,
