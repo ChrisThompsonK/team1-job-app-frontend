@@ -89,6 +89,7 @@ public/
 !public/images/
 !public/css/
 !public/fonts/
+public/fonts/README.md
 
 # Vuepress build output
 .vuepress/dist
