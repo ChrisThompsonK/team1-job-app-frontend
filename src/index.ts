@@ -9,6 +9,7 @@ import multer from "multer";
 import nunjucks from "nunjucks";
 import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
+import { ApplicantsController } from "./controllers/applicantsController.js";
 import { AuthController } from "./controllers/authController.js";
 import { HomeController } from "./controllers/homeController.js";
 import { JobApplicationController } from "./controllers/jobApplicationController.js";
@@ -103,6 +104,9 @@ const homeController = new HomeController();
 // Initialize job application controller
 const jobApplicationController = new JobApplicationController(jobRoleService);
 
+// Initialize applicants controller
+const applicantsController = new ApplicantsController();
+
 // Language change endpoint
 app.post("/change-language", homeController.changeLanguage);
 
@@ -138,6 +142,12 @@ app.get("/login", authController.getLogin);
 app.get("/profile", (req, res, next) => {
   authController.getProfile(req, res).catch(next);
 });
+
+// Applicants routes - admin only
+app.get("/applicants", applicantsController.getApplicantsList);
+app.get("/applicants/export", applicantsController.exportApplicantsCSV);
+
+// Job roles routes
 app.get("/job-roles", jobRoleController.getJobRolesList);
 app.get("/job-roles/export", jobRoleController.exportJobRolesCSV);
 app.get("/job-roles/add", jobRoleController.getJobRoleAdd);
