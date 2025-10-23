@@ -149,6 +149,23 @@
       </div>
     </div>
   </div>
+
+  <!-- Admin-only Applicants Card -->
+  {% if isAdmin %}
+    <a href="/applicants" class="card bg-base-100 shadow hover:shadow-lg transition-shadow">
+      <div class="card-body">
+        <div class="flex items-center gap-3">
+          <i data-lucide="users" class="h-6 w-6 text-secondary"></i>
+          <div>
+            <h4 class="font-semibold">Manage Applicants</h4>
+            <p class="text-sm text-base-content/70">
+              Review job applications
+            </p>
+          </div>
+        </div>
+      </div>
+    </a>
+  {% endif %}
 </div></div></div></div><!-- JavaScript for profile actions --><script>function editProfile() { // TODO: Implement profile editing
   alert('Profile editing feature coming soon!');
 }

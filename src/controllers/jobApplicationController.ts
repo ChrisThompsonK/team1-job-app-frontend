@@ -45,15 +45,24 @@ export class JobApplicationController {
       const userName = req.cookies?.userName || "";
       const userEmail = req.cookies?.userEmail || "";
 
-      // Split userName into first and last name (basic implementation)
-      const nameParts = userName.split(" ");
+      // Only use name if it looks like a real name (not email-derived)
+      // Check if userName is empty, contains @ symbol, or looks like email prefix
+      const isRealName =
+        userName &&
+        userName.trim() !== "" &&
+        !userName.includes("@") &&
+        userName.length > 1 &&
+        !/^[a-zA-Z0-9]+$/.test(userName); // Not just alphanumeric (likely email prefix)
+
+      // Split userName into first and last name only if it's a real name
+      const nameParts = isRealName ? userName.split(" ") : [];
       const firstName = nameParts[0] || "";
       const lastName = nameParts.slice(1).join(" ") || "";
 
-      // Prepare user data for autofill
+      // Prepare user data for autofill (only include names if they're real)
       const userData = {
-        firstName,
-        lastName,
+        firstName: firstName,
+        lastName: lastName,
         email: userEmail,
       };
 
@@ -107,8 +116,16 @@ export class JobApplicationController {
       const userName = req.cookies?.userName || "";
       const userEmail = req.cookies?.userEmail || "";
 
-      // Split userName into first and last name (basic implementation)
-      const nameParts = userName.split(" ");
+      // Only use name if it looks like a real name (not email-derived)
+      const isRealName =
+        userName &&
+        userName.trim() !== "" &&
+        !userName.includes("@") &&
+        userName.length > 1 &&
+        !/^[a-zA-Z0-9]+$/.test(userName);
+
+      // Split userName into first and last name only if it's a real name
+      const nameParts = isRealName ? userName.split(" ") : [];
       const firstName = nameParts[0] || "";
       const lastName = nameParts.slice(1).join(" ") || "";
 
