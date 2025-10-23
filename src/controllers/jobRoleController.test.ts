@@ -114,6 +114,9 @@ describe("JobRoleController", () => {
           statuses: expect.any(Array),
         }),
         timestamp: expect.any(String),
+        user: null,
+        isAuthenticated: false,
+        isAdmin: false,
       });
     });
 
@@ -161,6 +164,7 @@ describe("JobRoleController", () => {
         getAllJobs: vi.fn().mockResolvedValue([]),
         getJobById: vi.fn().mockReturnValue(undefined),
         getJobByName: vi.fn().mockReturnValue(undefined),
+        createJob: vi.fn().mockResolvedValue(null),
         deleteJobById: vi.fn().mockResolvedValue(false),
         updateJobById: vi.fn().mockResolvedValue(undefined),
         getFilteredJobs: vi.fn().mockRejectedValue(new Error("Service error")),

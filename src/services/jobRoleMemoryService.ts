@@ -25,7 +25,10 @@ export class JobRoleMemoryService implements JobRoleservice {
     return this.jobRoles.find((job) => job.name === name);
   }
 
-  async createJob(jobData: CreateJobRoleData): Promise<JobRole | null> {
+  async createJob(
+    jobData: CreateJobRoleData,
+    _cookies?: { [key: string]: string }
+  ): Promise<JobRole | null> {
     try {
       // Generate a new ID (simple incrementing based on existing jobs)
       const newId = Math.max(...this.jobRoles.map((job) => job.id), 0) + 1;
@@ -52,7 +55,10 @@ export class JobRoleMemoryService implements JobRoleservice {
     }
   }
 
-  async deleteJobById(id: string): Promise<boolean> {
+  async deleteJobById(
+    id: string,
+    _cookies?: { [key: string]: string }
+  ): Promise<boolean> {
     // Just remove from local array (in-memory version)
     const initialLength = this.jobRoles.length;
     this.jobRoles = this.jobRoles.filter((job) => job.id.toString() !== id);
@@ -61,7 +67,8 @@ export class JobRoleMemoryService implements JobRoleservice {
 
   async updateJobById(
     id: number,
-    jobData: CreateJobRoleData
+    jobData: CreateJobRoleData,
+    _cookies?: { [key: string]: string }
   ): Promise<JobRole | null> {
     const jobIndex = this.jobRoles.findIndex((job) => job.id === id);
     if (jobIndex === -1) {

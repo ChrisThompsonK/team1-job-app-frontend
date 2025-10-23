@@ -36,6 +36,8 @@
             </h2>
             <form
               id="login-form-element" class="space-y-4">
+              <!-- Hidden return URL field -->
+              <input type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
               <!-- Email Field -->
               <div class="form-control">
                 <label class="label" for="login-email">
@@ -97,6 +99,9 @@
             </h2>
             <form
               id="signup-form-element" class="space-y-4">
+              <!-- Hidden return URL field -->
+              <input
+              type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
               <!-- Email Field -->
               <div class="form-control">
                 <label class="label" for="signup-email">

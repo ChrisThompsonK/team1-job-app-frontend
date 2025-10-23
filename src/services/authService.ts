@@ -1,4 +1,5 @@
 import { env } from "../config/env.js";
+import { extractSessionCookies } from "../utils/cookieUtils.js";
 import { apiService } from "./apiService.js";
 
 export interface LoginCredentials {
@@ -13,6 +14,8 @@ export interface User {
   emailVerified: boolean;
   createdAt: string;
   updatedAt: string;
+  role?: string;
+  isAdmin?: boolean;
 }
 
 export interface AuthResponse {
@@ -129,30 +132,10 @@ class AuthService {
     try {
       // If we have cookies from the request, try to forward them to external API
       if (cookies) {
-        // Filter to only include session-related cookies (not language, preferences, etc.)
-        const sessionCookies: { [key: string]: string } = {};
-        for (const [key, value] of Object.entries(cookies)) {
-          // Include Better Auth cookies and other session-related cookies
-          if (
-            key.toLowerCase().includes("session") ||
-            key.toLowerCase().includes("auth") ||
-            key.toLowerCase().includes("token") ||
-            key.toLowerCase().includes("better-auth") ||
-            key.startsWith("better-auth.") ||
-            key.toLowerCase().includes("continue") ||
-            key.toLowerCase().includes("code")
-          ) {
-            sessionCookies[key] = value;
-          }
-        }
+        const cookieString = extractSessionCookies(cookies);
 
         // Only proceed if we have session cookies
-        if (Object.keys(sessionCookies).length > 0) {
-          // Create a cookie string from the session cookies only
-          const cookieString = Object.entries(sessionCookies)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("; ");
-
+        if (cookieString) {
           // Call external API with forwarded session cookies
           const response = await fetch(`${env.backendUrl}/auth/sign-out`, {
             method: "POST",
@@ -178,6 +161,82 @@ class AuthService {
     } catch (_error: unknown) {
       // Log logout failures but don't expose detailed errors
       return { success: false };
+    }
+  }
+
+  /**
+   * Get user profile from backend API
+   */
+  async getProfile(cookies: {
+    [key: string]: string;
+  }): Promise<{ success: boolean; user?: User }> {
+    try {
+      const cookieString = extractSessionCookies(cookies);
+
+      const response = await fetch(`${env.backendUrl}/profile`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieString,
+        },
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        return {
+          success: true,
+          user: userData.data?.user || userData.user || userData,
+        };
+      } else {
+        console.log("Profile fetch failed");
+        return { success: false };
+      }
+    } catch (error) {
+      console.error("Profile fetch error:", error);
+      return { success: false };
+    }
+  }
+
+  /**
+   * Get user session data from cookies without external API calls
+   */
+  async getUserFromSession(cookies: {
+    [key: string]: string;
+  }): Promise<User | null> {
+    try {
+      const cookieString = extractSessionCookies(cookies);
+
+      // Only proceed if we have session cookies
+      if (!cookieString) {
+        return null;
+      }
+
+      // Check if we have a session token - if so, user is authenticated
+      if (cookies["better-auth.session_token"]) {
+        // Get real user data from cookies
+        const isAdminFromCookie = cookies.isAdmin === "true";
+        const userName = cookies.userName || "Unknown User";
+        const userEmail = cookies.userEmail || "unknown@example.com";
+        const userId = cookies.session || "unknown-id";
+
+        // Create user object with real data from cookies
+        const user: User = {
+          id: userId,
+          name: userName,
+          email: userEmail,
+          emailVerified: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          role: isAdminFromCookie ? "admin" : "user",
+          isAdmin: isAdminFromCookie,
+        };
+
+        return user;
+      }
+
+      return null;
+    } catch (_error) {
+      return null;
     }
   }
 }
