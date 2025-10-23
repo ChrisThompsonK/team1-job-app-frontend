@@ -15,18 +15,20 @@ export class AuthController {
    * POST /auth/login
    */
   public login = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const {
-        email,
-        password,
-        returnTo,
-      }: LoginCredentials & { returnTo?: string } = req.body;
+    const {
+      email,
+      password,
+      returnTo,
+    }: LoginCredentials & { returnTo?: string } = req.body;
 
+    try {
       // Validate input
       if (!email || !password) {
-        res.status(400).json({
-          success: false,
-          message: "Email and password are required",
+        res.render("login", {
+          title: "Sign In",
+          error: "Email and password are required",
+          formData: { email },
+          returnTo: returnTo || "/",
         });
         return;
       }
@@ -160,17 +162,15 @@ export class AuthController {
           finalRedirectUrl = returnTo;
         }
 
-        res.json({
-          success: true,
-          data: {
-            user: result.data.user,
-          },
-          redirectUrl: finalRedirectUrl,
-        });
+        // Server-side redirect
+        res.redirect(finalRedirectUrl);
       } else {
-        res.status(401).json({
-          success: false,
-          message: "Invalid credentials",
+        // Re-render login form with error
+        res.render("login", {
+          title: "Sign In",
+          error: "Invalid email or password",
+          formData: { email },
+          returnTo: returnTo || "/",
         });
       }
     } catch (error: unknown) {
@@ -190,9 +190,12 @@ export class AuthController {
         console.error("Login error:", errorMessage);
       }
 
-      res.status(401).json({
-        success: false,
-        message: errorMessage,
+      // Re-render login form with error
+      res.render("login", {
+        title: "Sign In",
+        error: errorMessage,
+        formData: { email },
+        returnTo: returnTo || "/",
       });
     }
   };
@@ -202,29 +205,33 @@ export class AuthController {
    * POST /auth/signup
    */
   public signup = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const {
-        email,
-        password,
-        confirmPassword,
-        returnTo,
-      }: SignupCredentials & { confirmPassword?: string; returnTo?: string } =
-        req.body;
+    const {
+      email,
+      password,
+      confirmPassword,
+      returnTo,
+    }: SignupCredentials & { confirmPassword?: string; returnTo?: string } =
+      req.body;
 
+    try {
       // Validate input
       if (!email || !password) {
-        res.status(400).json({
-          success: false,
-          message: "Email and password are required",
+        res.render("login", {
+          title: "Sign In",
+          signupError: "Email and password are required",
+          signupFormData: { email },
+          returnTo: returnTo || "/",
         });
         return;
       }
 
       // Check password confirmation if provided
       if (confirmPassword && password !== confirmPassword) {
-        res.status(400).json({
-          success: false,
-          message: "Passwords do not match",
+        res.render("login", {
+          title: "Sign In",
+          signupError: "Passwords do not match",
+          signupFormData: { email },
+          returnTo: returnTo || "/",
         });
         return;
       }
@@ -306,17 +313,15 @@ export class AuthController {
           finalRedirectUrl = returnTo;
         }
 
-        res.json({
-          success: true,
-          data: {
-            user: result.data.user,
-          },
-          redirectUrl: finalRedirectUrl,
-        });
+        // Server-side redirect
+        res.redirect(finalRedirectUrl);
       } else {
-        res.status(400).json({
-          success: false,
-          message: "Registration failed",
+        // Re-render login form with signup error
+        res.render("login", {
+          title: "Sign In",
+          signupError: "Registration failed",
+          signupFormData: { email },
+          returnTo: returnTo || "/",
         });
       }
     } catch (error: unknown) {
@@ -335,9 +340,12 @@ export class AuthController {
         console.error("Signup error:", errorMessage);
       }
 
-      res.status(400).json({
-        success: false,
-        message: errorMessage,
+      // Re-render login form with signup error
+      res.render("login", {
+        title: "Sign In",
+        signupError: errorMessage,
+        signupFormData: { email },
+        returnTo: returnTo || "/",
       });
     }
   };
