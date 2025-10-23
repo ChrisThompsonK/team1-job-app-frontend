@@ -14,6 +14,16 @@
       <h1 class="text-4xl font-bold text-primary mb-2">User Profile</h1>
       <p class="text-base-content/70 text-lg">Welcome back, {{ user.name or 'User' }}!</p>
     </div>
+
+    <!-- Success Message -->
+    {% if updated %}
+      <div class="max-w-2xl mx-auto mb-6">
+        <div class="alert alert-success">
+          <i data-lucide="check" class="h-6 w-6 shrink-0"></i>
+          <span>Profile updated successfully!</span>
+        </div>
+      </div>
+    {% endif %}
     <!-- Profile Content -->
     <div class="max-w-2xl mx-auto">
       <div class="card bg-base-100 shadow-lg">
@@ -54,6 +64,26 @@
                     Unverified
                   </div>
                 {% endif %}
+              </div>
+            </div>
+            <!-- Phone Number -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Phone Number</span>
+              </label>
+              <div class="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
+                <i data-lucide="phone" class="h-5 w-5 text-primary"></i>
+                <span class="text-base-content">{{ user.phoneNumber or 'Not provided' }}</span>
+              </div>
+            </div>
+            <!-- Address -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Address</span>
+              </label>
+              <div class="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
+                <i data-lucide="map-pin" class="h-5 w-5 text-primary"></i>
+                <span class="text-base-content">{{ user.address or 'Not provided' }}</span>
               </div>
             </div>
             {% if user.createdAt %}
@@ -166,8 +196,8 @@
       </div>
     </a>
   {% endif %}
-</div></div></div></div><!-- JavaScript for profile actions --><script>function editProfile() { // TODO: Implement profile editing
-  alert('Profile editing feature coming soon!');
+</div></div></div></div><!-- JavaScript for profile actions --><script>function editProfile() {
+  window.location.href = '/profile/edit';
 }
 function showLogoutModal() {
   document.getElementById('logout-modal').showModal();

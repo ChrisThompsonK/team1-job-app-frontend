@@ -3,6 +3,7 @@ import { env } from "../config/env.js";
 import {
   authService,
   type LoginCredentials,
+  type ProfileUpdateData,
   type SignupCredentials,
 } from "../services/authService.js";
 
@@ -492,13 +493,19 @@ export class AuthController {
         return;
       }
 
-      // Render profile page with real user data
+      // Always fetch fresh profile data from the API to show latest updates
+      const profileResult = await authService.getProfile(req.cookies);
+      const freshUserData =
+        profileResult.success && profileResult.user ? profileResult.user : user;
+
+      // Render profile page with fresh user data
       res.render("profile", {
         title: "User Profile",
         currentPage: "profile",
-        user: user,
+        user: freshUserData,
         isAuthenticated: true,
         isAdmin: user.isAdmin || false,
+        updated: req.query.updated === "true",
       });
     } catch (error: unknown) {
       console.error("Profile page error:", error);
@@ -525,5 +532,172 @@ export class AuthController {
       currentPage: "login",
       returnTo: decodedReturnTo,
     });
+  };
+
+  /**
+   * GET /profile/edit
+   */
+  public getProfileEdit = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      // Check for session cookie on server-side
+      const hasSession = req.cookies?.session;
+      const hasBetterAuthSession =
+        req.cookies &&
+        (req.cookies["better-auth.session_data"] ||
+          req.cookies["better-auth.session_token"]);
+
+      if (!hasSession && !hasBetterAuthSession) {
+        // Redirect to login if not authenticated
+        res.redirect("/login?redirect=/profile/edit");
+        return;
+      }
+
+      // Get real user data from session
+      const user = await authService.getUserFromSession(req.cookies);
+
+      if (!user) {
+        // Redirect to login if user data can't be retrieved
+        res.redirect("/login?redirect=/profile/edit");
+        return;
+      }
+
+      // Always fetch fresh profile data from the API to show latest updates
+      const profileResult = await authService.getProfile(req.cookies);
+      const freshUserData =
+        profileResult.success && profileResult.user ? profileResult.user : user;
+
+      // Render profile edit page with fresh user data
+      res.render("profile-edit", {
+        title: "Edit Profile",
+        currentPage: "profile",
+        user: freshUserData,
+        isAuthenticated: true,
+        isAdmin: user.isAdmin || false,
+      });
+    } catch (error: unknown) {
+      console.error("Profile edit page error:", error);
+      res.status(500).render("error", {
+        title: "Error",
+        message: "Unable to load profile edit page",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
+  /**
+   * POST /profile/edit
+   */
+  public postProfileEdit = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      // Check for session cookie on server-side
+      const hasSession = req.cookies?.session;
+      const hasBetterAuthSession =
+        req.cookies &&
+        (req.cookies["better-auth.session_data"] ||
+          req.cookies["better-auth.session_token"]);
+
+      if (!hasSession && !hasBetterAuthSession) {
+        res.status(401).json({ success: false, message: "Not authenticated" });
+        return;
+      }
+
+      // Extract profile data from request body
+      const {
+        name,
+        phoneNumber,
+        address,
+        newEmail,
+        currentPassword,
+        newPassword,
+      } = req.body;
+
+      // Prepare update data (only include fields that were provided)
+      const updateData: ProfileUpdateData = {};
+      if (name !== undefined && name.trim() !== "")
+        updateData.name = name.trim();
+      if (phoneNumber !== undefined) {
+        updateData.phoneNumber =
+          phoneNumber.trim() === "" ? "" : phoneNumber.trim();
+      }
+      if (address !== undefined) {
+        updateData.address = address.trim() === "" ? "" : address.trim();
+      }
+      if (newEmail !== undefined && newEmail.trim() !== "")
+        updateData.newEmail = newEmail.trim();
+
+      // Only include password fields if all password fields have values
+      if (
+        currentPassword &&
+        currentPassword.trim() !== "" &&
+        newPassword &&
+        newPassword.trim() !== ""
+      ) {
+        updateData.currentPassword = currentPassword;
+        updateData.newPassword = newPassword;
+      }
+
+      // Update profile via authService
+      const result = await authService.updateProfile(updateData, req.cookies);
+
+      if (result.success && result.user) {
+        // Update cookies with new user data
+        res.cookie("userName", result.user.name, {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 24 * 60 * 60 * 1000,
+        });
+
+        res.cookie("userEmail", result.user.email, {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 24 * 60 * 60 * 1000,
+        });
+
+        // Redirect to profile page with success message
+        res.redirect("/profile?updated=true");
+      } else {
+        // Re-render edit form with error message
+        const user = await authService.getUserFromSession(req.cookies);
+        const profileResult = await authService.getProfile(req.cookies);
+        const freshUserData =
+          profileResult.success && profileResult.user
+            ? profileResult.user
+            : user;
+
+        res.render("profile-edit", {
+          title: "Edit Profile",
+          currentPage: "profile",
+          user: freshUserData,
+          isAuthenticated: true,
+          isAdmin: freshUserData?.isAdmin || false,
+          error: result.message || "Failed to update profile",
+          formData: req.body,
+        });
+      }
+    } catch (error: unknown) {
+      console.error("Profile update error:", error);
+      const user = await authService.getUserFromSession(req.cookies);
+      const profileResult = await authService.getProfile(req.cookies);
+      const freshUserData =
+        profileResult.success && profileResult.user ? profileResult.user : user;
+
+      res.render("profile-edit", {
+        title: "Edit Profile",
+        currentPage: "profile",
+        user: freshUserData,
+        isAuthenticated: true,
+        isAdmin: freshUserData?.isAdmin || false,
+        error: "An error occurred while updating your profile",
+        formData: req.body,
+      });
+    }
   };
 }

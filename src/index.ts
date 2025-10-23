@@ -143,6 +143,15 @@ app.get("/profile", (req, res, next) => {
   authController.getProfile(req, res).catch(next);
 });
 
+// Profile edit routes - protected endpoints
+app.get("/profile/edit", (req, res, next) => {
+  authController.getProfileEdit(req, res).catch(next);
+});
+
+app.post("/profile/edit", (req, res, next) => {
+  authController.postProfileEdit(req, res).catch(next);
+});
+
 // Applicants routes - admin only
 app.get("/applicants", applicantsController.getApplicantsList);
 app.get("/applicants/export", applicantsController.exportApplicantsCSV);

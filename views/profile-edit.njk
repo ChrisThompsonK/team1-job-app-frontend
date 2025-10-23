@@ -1,0 +1,445 @@
+{% extends "layouts/base.njk" %}
+{% set currentPage = "profile" %}
+{% block title %}
+  Edit Profile - {{ t('nav.siteTitle') }}
+{% endblock %}
+{% block content %}
+  <div class="container mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4">
+        <i data-lucide="edit" class="h-10 w-10 text-primary"></i>
+      </div>
+      <h1 class="text-4xl font-bold text-primary mb-2">Edit Profile</h1>
+      <p class="text-base-content/70 text-lg">Update your personal information</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="max-w-2xl mx-auto mb-6">
+      <div class="breadcrumbs text-sm">
+        <ul>
+          <li>
+            <a href="/profile" class="link link-hover">
+              <i data-lucide="user" class="h-4 w-4 mr-1"></i>
+              Profile
+            </a>
+          </li>
+          <li>Edit Profile</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Profile Edit Form -->
+    <div class="max-w-2xl mx-auto">
+      <div class="card bg-base-100 shadow-lg">
+        <div class="card-body">
+          <h2 class="card-title text-primary mb-6">
+            <i data-lucide="settings" class="h-6 w-6"></i>
+            Profile Settings
+          </h2>
+
+          <!-- Error Alert -->
+          {% if error %}
+            <div class="alert alert-error mb-6">
+              <i data-lucide="alert-circle" class="h-6 w-6 shrink-0"></i>
+              <span>{{ error }}</span>
+            </div>
+          {% endif %}
+
+          <form id="editProfileForm" method="POST" action="/profile/edit">
+            <!-- Basic Information Section -->
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                <i data-lucide="user" class="h-5 w-5"></i>
+                Basic Information
+              </h3>
+              <div class="divider mt-0 mb-6"></div>
+
+              <div class="grid gap-6">
+                <!-- Full Name -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">Full Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    class="input input-bordered w-full"
+                    value="{{ formData.name if formData else (user.name or '') }}"
+                    placeholder="Enter your full name"
+                    maxlength="100"
+                    required/>
+                  <div class="label">
+                    <span class="label-text-alt">This is how your name will appear to others</span>
+                  </div>
+                </div>
+
+                <!-- Email Display (Read-only) -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">Email Address</span>
+                  </label>
+                  <div class="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
+                    <i data-lucide="mail" class="h-5 w-5 text-primary"></i>
+                    <span class="text-base-content">{{ user.email or 'N/A' }}</span>
+                    {% if user.emailVerified %}
+                      <div class="badge badge-success badge-sm gap-1">
+                        <i data-lucide="check" class="h-3 w-3"></i>
+                        Verified
+                      </div>
+                    {% else %}
+                      <div class="badge badge-warning badge-sm gap-1">
+                        <i data-lucide="alert-circle" class="h-3 w-3"></i>
+                        Unverified
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="label">
+                    <span class="label-text-alt">Email cannot be changed through this form</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                <i data-lucide="phone" class="h-5 w-5"></i>
+                Contact Information
+              </h3>
+              <div class="divider mt-0 mb-6"></div>
+
+              <div class="grid gap-6">
+                <!-- Phone Number -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">Phone Number</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    class="input input-bordered w-full"
+                    value="{{ formData.phoneNumber if formData else (user.phoneNumber or '') }}"
+                    placeholder="+44 7123 456789"
+                    pattern="[+]?[\d\s\-\(\)]+"
+                    title="Please enter a valid phone number"/>
+                  <div class="label">
+                    <span class="label-text-alt">Include country code (e.g., +44 for UK)</span>
+                  </div>
+                </div>
+
+                <!-- Address -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">Address</span>
+                  </label>
+                  <textarea
+                    name="address"
+                    id="address"
+                    class="textarea textarea-bordered h-24 w-full"
+                    placeholder="Enter your full address"
+                    maxlength="500">{{ formData.address if formData else (user.address or '') }}</textarea>
+                  <div class="label">
+                    <span class="label-text-alt">Your full address including postcode</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Password Change Section -->
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                <i data-lucide="lock" class="h-5 w-5"></i>
+                Change Password
+              </h3>
+              <div class="divider mt-0 mb-6"></div>
+
+              <div class="alert alert-info mb-6">
+                <i data-lucide="info" class="h-6 w-6 shrink-0"></i>
+                <span>Leave password fields empty if you don't want to change your password</span>
+              </div>
+
+              <div class="grid gap-6">
+                <!-- Current Password -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">Current Password</span>
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="password"
+                      name="currentPassword"
+                      id="currentPassword"
+                      class="input input-bordered w-full pr-10"
+                      placeholder="Enter your current password"/>
+                    <button
+                      type="button"
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+                      onclick="togglePassword('currentPassword')">
+                      <i id="currentPassword-show" data-lucide="eye" class="h-5 w-5"></i>
+                      <i id="currentPassword-hide" data-lucide="eye-off" class="h-5 w-5 hidden"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- New Password -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">New Password</span>
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="password"
+                      name="newPassword"
+                      id="newPassword"
+                      class="input input-bordered w-full pr-10"
+                      placeholder="Enter your new password"
+                      minlength="8"/>
+                    <button
+                      type="button"
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+                      onclick="togglePassword('newPassword')">
+                      <i id="newPassword-show" data-lucide="eye" class="h-5 w-5"></i>
+                      <i id="newPassword-hide" data-lucide="eye-off" class="h-5 w-5 hidden"></i>
+                    </button>
+                  </div>
+                  <div class="label">
+                    <span class="label-text-alt">Password must be at least 8 characters long</span>
+                  </div>
+                </div>
+
+                <!-- Confirm New Password -->
+                <div class="form-control w-full">
+                  <label class="label flex-col items-start">
+                    <span class="label-text font-medium mb-1">Confirm New Password</span>
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      class="input input-bordered w-full pr-10"
+                      placeholder="Confirm your new password"/>
+                    <button
+                      type="button"
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+                      onclick="togglePassword('confirmPassword')">
+                      <i id="confirmPassword-show" data-lucide="eye" class="h-5 w-5"></i>
+                      <i id="confirmPassword-hide" data-lucide="eye-off" class="h-5 w-5 hidden"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="card-actions justify-between mt-8">
+              <a href="/profile" class="btn btn-outline gap-2">
+                <i data-lucide="arrow-left" class="h-4 w-4"></i>
+                Cancel
+              </a>
+              <button type="submit" id="saveBtn" class="btn btn-primary gap-2">
+                <span id="loadingSpinner" class="loading loading-spinner loading-sm hidden"></span>
+                <i data-lucide="save" class="h-4 w-4"></i>
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("editProfileForm");
+      const saveBtn = document.getElementById("saveBtn");
+      const loadingSpinner = document.getElementById("loadingSpinner");
+
+      // Password toggle functionality
+      window.togglePassword = function (fieldId) {
+        const field = document.getElementById(fieldId);
+        const showIcon = document.getElementById(`${fieldId}-show`);
+        const hideIcon = document.getElementById(`${fieldId}-hide`);
+
+        if (field.type === "password") {
+          field.type = "text";
+          showIcon.classList.add("hidden");
+          hideIcon.classList.remove("hidden");
+        } else {
+          field.type = "password";
+          showIcon.classList.remove("hidden");
+          hideIcon.classList.add("hidden");
+        }
+      };
+
+      // Password validation
+      const currentPassword = document.getElementById("currentPassword");
+      const newPassword = document.getElementById("newPassword");
+      const confirmPassword = document.getElementById("confirmPassword");
+
+      function validatePasswords() {
+        const current = currentPassword.value;
+        const newPass = newPassword.value;
+        const confirmPass = confirmPassword.value;
+
+        // If any password field is filled, all password fields must be filled
+        if (current || newPass || confirmPass) {
+          currentPassword.required = true;
+          newPassword.required = true;
+          confirmPassword.required = true;
+
+          // Check if new password matches confirm password
+          if (newPass && confirmPass && newPass !== confirmPass) {
+            confirmPassword.setCustomValidity("Passwords do not match");
+          } else {
+            confirmPassword.setCustomValidity("");
+          }
+        } else {
+          currentPassword.required = false;
+          newPassword.required = false;
+          confirmPassword.required = false;
+          confirmPassword.setCustomValidity("");
+        }
+      }
+
+      // Add event listeners for password validation
+      [currentPassword, newPassword, confirmPassword].forEach((field) => {
+        field.addEventListener("input", validatePasswords);
+      });
+
+      // Phone number formatting
+      const phoneInput = document.getElementById("phoneNumber");
+      phoneInput.addEventListener("input", function () {
+        // Remove any non-digit, non-space, non-dash, non-parentheses, non-plus characters
+        this.value = this.value.replace(/[^\d\s\-\(\)+]/g, "");
+      });
+
+      // Form submission handler
+      form.addEventListener("submit", function (event) {
+        // Validate passwords one more time
+        validatePasswords();
+
+        // Check if form is valid
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          form.reportValidity();
+          return;
+        }
+
+        // Remove password fields from form data if they're empty
+        const currentPasswordField = document.getElementById("currentPassword");
+        const newPasswordField = document.getElementById("newPassword");
+        const confirmPasswordField = document.getElementById("confirmPassword");
+        
+        if (!currentPasswordField.value.trim() || !newPasswordField.value.trim()) {
+          // Remove password fields from submission if they're empty
+          currentPasswordField.removeAttribute("name");
+          newPasswordField.removeAttribute("name");
+          confirmPasswordField.removeAttribute("name");
+        }
+
+        // Show loading state
+        saveBtn.disabled = true;
+        loadingSpinner.classList.remove("hidden");
+        
+        // Let the form submit normally
+      });
+
+      // Function to show messages
+      function showMessage(type, message) {
+        // Remove existing alerts
+        const existingAlerts = document.querySelectorAll(".alert");
+        existingAlerts.forEach((alert) => alert.remove());
+
+        // Create new alert
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `alert alert-${type} mt-6`;
+
+        const icon = type === "success" ? "check" : "alert-circle";
+        alertDiv.innerHTML = `
+          <i data-lucide="${icon}" class="h-6 w-6 shrink-0"></i>
+          <span>${message}</span>
+        `;
+
+        // Insert after the form
+        const cardBody = document.querySelector(".card-body");
+        cardBody.appendChild(alertDiv);
+
+        // Initialize Lucide icons for the new element
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+
+        // Scroll to message
+        alertDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      // Form validation
+      const requiredFields = form.querySelectorAll("[required]");
+      requiredFields.forEach((field) => {
+        field.addEventListener("invalid", function () {
+          this.classList.add("input-error");
+        });
+        field.addEventListener("input", function () {
+          if (this.validity.valid) {
+            this.classList.remove("input-error");
+          }
+        });
+      });
+
+      // Auto-resize textareas
+      const textareas = form.querySelectorAll("textarea");
+      textareas.forEach((textarea) => {
+        textarea.addEventListener("input", function () {
+          this.style.height = "auto";
+          this.style.height = this.scrollHeight + "px";
+        });
+      });
+
+      // Character count for name field
+      const nameField = document.getElementById("name");
+      const nameParent = nameField.parentElement;
+      const nameCounter = document.createElement("div");
+      nameCounter.className = "label";
+      nameCounter.innerHTML = '<span class="label-text-alt text-right"><span id="name-count">0</span>/100 characters</span>';
+      nameParent.appendChild(nameCounter);
+
+      const nameCountSpan = document.getElementById("name-count");
+      nameField.addEventListener("input", function () {
+        nameCountSpan.textContent = this.value.length;
+        if (this.value.length > 90) {
+          nameCountSpan.parentElement.classList.add("text-warning");
+        } else {
+          nameCountSpan.parentElement.classList.remove("text-warning");
+        }
+      });
+
+      // Character count for address field
+      const addressField = document.getElementById("address");
+      const addressParent = addressField.parentElement;
+      const addressCounter = document.createElement("div");
+      addressCounter.className = "label";
+      addressCounter.innerHTML = '<span class="label-text-alt text-right"><span id="address-count">0</span>/500 characters</span>';
+      addressParent.appendChild(addressCounter);
+
+      const addressCountSpan = document.getElementById("address-count");
+      addressField.addEventListener("input", function () {
+        addressCountSpan.textContent = this.value.length;
+        if (this.value.length > 450) {
+          addressCountSpan.parentElement.classList.add("text-warning");
+        } else {
+          addressCountSpan.parentElement.classList.remove("text-warning");
+        }
+      });
+
+      // Initialize character counts
+      nameCountSpan.textContent = nameField.value.length;
+      addressCountSpan.textContent = addressField.value.length;
+    });
+  </script>
+{% endblock %}
