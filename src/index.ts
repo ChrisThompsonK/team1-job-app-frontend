@@ -1,8 +1,11 @@
 import path from "node:path";
+import axios from "axios";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import FormData from "form-data";
 import { handle as i18nextHandle } from "i18next-http-middleware";
+import multer from "multer";
 import nunjucks from "nunjucks";
 import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
@@ -98,7 +101,7 @@ const authController = new AuthController();
 const homeController = new HomeController();
 
 // Initialize job application controller
-const jobApplicationController = new JobApplicationController();
+const jobApplicationController = new JobApplicationController(jobRoleService);
 
 // Language change endpoint
 app.post("/change-language", homeController.changeLanguage);
@@ -158,6 +161,77 @@ app.post(
   "/job-roles/:id/apply",
   requireAuth,
   jobApplicationController.submitJobApplication
+);
+
+// API proxy for application submission
+const upload = multer();
+app.post(
+  "/api/applications",
+  upload.fields([
+    { name: "cv", maxCount: 1 },
+    { name: "coverLetter", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+
+      // Create FormData for the backend request
+      const formData = new FormData();
+
+      // Add regular form fields
+      if (req.body.jobId) formData.append("jobId", req.body.jobId);
+
+      // Add files
+      if (req.files && typeof req.files === "object") {
+        const files = req.files as {
+          [fieldname: string]: Express.Multer.File[];
+        };
+
+        if (files.cv?.[0]) {
+          const cvFile = files.cv[0];
+          formData.append("cv", cvFile.buffer, {
+            filename: cvFile.originalname,
+            contentType: cvFile.mimetype,
+          });
+        }
+
+        if (files.coverLetter?.[0]) {
+          const coverLetterFile = files.coverLetter[0];
+          formData.append("coverLetter", coverLetterFile.buffer, {
+            filename: coverLetterFile.originalname,
+            contentType: coverLetterFile.mimetype,
+          });
+        }
+      }
+
+      // Forward the request to backend with authentication cookies
+      const response = await axios.post(
+        `${backendUrl}/api/applications`,
+        formData,
+        {
+          headers: {
+            ...formData.getHeaders(),
+            Cookie: req.headers.cookie || "",
+          },
+        }
+      );
+
+      res.status(response.status).json(response.data);
+    } catch (error: unknown) {
+      console.error("Error proxying application request:", error);
+      if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as {
+          response: { status: number; data: unknown };
+        };
+        res.status(axiosError.response.status).json(axiosError.response.data);
+      } else {
+        res.status(500).json({
+          success: false,
+          message: "Failed to submit application",
+        });
+      }
+    }
+  }
 );
 
 app.listen(port, () => {

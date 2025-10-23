@@ -65,26 +65,175 @@
     </div>
     <!-- Application Form -->
     <div class="card bg-base-100 shadow-lg">
-      <div class="card-body">
-        <h2 class="card-title text-lg text-primary mb-6">{{ t('jobApplication.formTitle') }}</h2>
-        <!-- Error Alert -->
-        {% if error %}
-          <div class="alert alert-error mb-6">
-            <i data-lucide="alert-circle" class="h-6 w-6 shrink-0"></i>
-            <span>{{ error }}</span>
-          </div>
-        {% endif %}
-        <form
-          id="jobApplicationForm" method="POST" action="/job-roles/{{ jobRole.id }}/apply">
-          <!-- Personal Information Section -->
-          <div class="mb-8">
-            <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-              <i data-lucide="user" class="h-5 w-5"></i>
-              {{ t('jobApplication.personalInfo') }}
-              {% if userData and (userData.firstName or userData.lastName or userData.email) %}
-                <div class="badge badge-success badge-sm gap-1 ml-2">
-                  <i data-lucide="check" class="h-3 w-3"></i>
-                  Auto-filled
+        <div class="card-body">
+            <h2 class="card-title text-lg text-primary mb-6">{{ t('jobApplication.formTitle') }}</h2>
+            
+            <!-- Error Alert -->
+            {% if error %}
+            <div class="alert alert-error mb-6">
+                <i data-lucide="alert-circle" class="h-6 w-6 shrink-0"></i>
+                <span>{{ error }}</span>
+            </div>
+            {% endif %}
+
+            <form id="jobApplicationForm" method="POST" action="/job-roles/{{ jobRole.id }}/apply" enctype="multipart/form-data">
+                
+                <!-- Personal Information Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                        <i data-lucide="user" class="h-5 w-5"></i>
+                        {{ t('jobApplication.personalInfo') }}
+                    </h3>
+                    <div class="divider mt-0 mb-6"></div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- First Name -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.firstName') }} *</span>
+                            </label>
+                            <input type="text" name="firstName" id="firstName" class="input input-bordered w-full" 
+                                   value="{{ formData.firstName if formData else '' }}" required/>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.lastName') }} *</span>
+                            </label>
+                            <input type="text" name="lastName" id="lastName" class="input input-bordered w-full" 
+                                   value="{{ formData.lastName if formData else '' }}" required/>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.email') }} *</span>
+                            </label>
+                            <input type="email" name="email" id="email" class="input input-bordered w-full" 
+                                   value="{{ formData.email if formData else '' }}" required/>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-control w-full">
+                            <label class="label flex-col items-start">
+                                <span class="label-text font-medium mb-1">{{ t('jobApplication.phone') }} *</span>
+                            </label>
+                            <input type="tel" name="phone" id="phone" class="input input-bordered w-full" 
+                                   value="{{ formData.phone if formData else '' }}" required/>
+                        </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <div class="form-control w-full mt-6">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.address') }} *</span>
+                        </label>
+                        <textarea name="address" id="address" class="textarea textarea-bordered h-24 w-full" 
+                                  required>{{ formData.address if formData else '' }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Documents Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                        <i data-lucide="file-text" class="h-5 w-5"></i>
+                        {{ t('jobApplication.documents') }}
+                    </h3>
+                    <div class="divider mt-0 mb-6"></div>
+
+                    <!-- CV Upload -->
+                    <div class="form-control w-full">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.cv') }} *</span>
+                        </label>
+                        <input type="file" name="cv" id="cv" 
+                               class="file-input file-input-bordered w-full" 
+                               accept=".pdf,.doc,.docx" required/>
+                        <div class="label">
+                            <span class="label-text-alt">{{ t('jobApplication.cvHint') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Cover Letter Upload -->
+                    <div class="form-control w-full">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.coverLetter') }}</span>
+                        </label>
+                        <input type="file" name="coverLetter" id="coverLetter" 
+                               class="file-input file-input-bordered w-full" 
+                               accept=".pdf,.doc,.docx"/>
+                        <div class="label">
+                            <span class="label-text-alt">{{ t('jobApplication.coverLetterHint') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+                        <i data-lucide="info" class="h-5 w-5"></i>
+                        {{ t('jobApplication.additionalInfo') }}
+                    </h3>
+                    <div class="divider mt-0 mb-6"></div>
+
+                    <!-- Why interested -->
+                    <div class="form-control w-full mb-6">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.whyInterested') }} *</span>
+                        </label>
+                        <textarea name="whyInterested" id="whyInterested" 
+                                  class="textarea textarea-bordered h-32 w-full" 
+                                  placeholder="{{ t('jobApplication.whyInterestedPlaceholder') }}" 
+                                  required>{{ formData.whyInterested if formData else '' }}</textarea>
+                    </div>
+
+                    <!-- Relevant Experience -->
+                    <div class="form-control w-full mb-6">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.relevantExperience') }} *</span>
+                        </label>
+                        <textarea name="relevantExperience" id="relevantExperience" 
+                                  class="textarea textarea-bordered h-32 w-full" 
+                                  placeholder="{{ t('jobApplication.relevantExperiencePlaceholder') }}" 
+                                  required>{{ formData.relevantExperience if formData else '' }}</textarea>
+                    </div>
+
+                    <!-- Additional Comments -->
+                    <div class="form-control w-full">
+                        <label class="label flex-col items-start">
+                            <span class="label-text font-medium mb-1">{{ t('jobApplication.additionalComments') }}</span>
+                        </label>
+                        <textarea name="additionalComments" id="additionalComments" 
+                                  class="textarea textarea-bordered h-24 w-full" 
+                                  placeholder="{{ t('jobApplication.additionalCommentsPlaceholder') }}">{{ formData.additionalComments if formData else '' }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Consent and Agreement -->
+                <div class="mb-8">
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="dataConsent" id="dataConsent" class="checkbox checkbox-primary" required/>
+                            <span class="label-text">{{ t('jobApplication.dataConsent') }} *</span>
+                        </label>
+                    </div>
+                    <div class="form-control mt-2">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="marketingConsent" id="marketingConsent" class="checkbox checkbox-primary"/>
+                            <span class="label-text">{{ t('jobApplication.marketingConsent') }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex justify-end gap-4">
+                    <a href="/job-roles/{{ jobRole.id }}" class="btn btn-outline">{{ t('common.cancel') }}</a>
+                    <button type="submit" class="btn btn-primary gap-2" id="submitBtn">
+                        <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
+                        <i data-lucide="send" class="h-4 w-4"></i>
+                        {{ t('jobApplication.submitApplication') }}
+                    </button>
                 </div>
               {% endif %}
             </h3>
@@ -233,29 +382,189 @@
   {% endif %}
 {% endblock %}
 {% block scripts %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('jobApplicationForm');
-      const submitBtn = document.getElementById('submitBtn');
-      const loadingSpinner = document.getElementById('loadingSpinner');
-      // Highlight autofilled fields
-      const autofilledFields = ['firstName', 'lastName', 'email'];
-      autofilledFields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (field && field.value && field.value.trim() !== '') {
-          field.classList.add('border-success');
-          field.classList.add('border-2');
-          // Add a small visual indicator
-          const parent = field.parentElement;
-          const indicator = document.createElement('div');
-          indicator.className = 'text-success text-xs mt-1 flex items-center gap-1';
-          indicator.innerHTML = '<i data-lucide="check" class="h-3 w-3"></i> Auto-filled from profile';
-          parent.appendChild(indicator);
-          // Remove the styling when user modifies the field
-          field.addEventListener('input', function () {
-            this.classList.remove('border-success', 'border-2');
-            if (indicator && indicator.parentElement) {
-              indicator.remove();
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('jobApplicationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault(); // Prevent default form submission
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                loadingSpinner.classList.remove('hidden');
+
+                try {
+                    // Collect form data
+                    const formData = new FormData();
+                    
+                    // Add job ID
+                    formData.append('jobId', '{{ jobRole.id }}');
+                    
+                    // Add form fields
+                    const fields = ['firstName', 'lastName', 'email', 'phone', 'address', 
+                                   'whyInterested', 'relevantExperience', 'additionalComments'];
+                    
+                    for (const fieldName of fields) {
+                        const field = document.getElementById(fieldName);
+                        if (field && field.value) {
+                            formData.append(fieldName, field.value);
+                        }
+                    }
+                    
+                    // Add checkbox values
+                    const dataConsent = document.getElementById('dataConsent');
+                    const marketingConsent = document.getElementById('marketingConsent');
+                    
+                    if (dataConsent && dataConsent.checked) {
+                        formData.append('dataConsent', 'true');
+                    }
+                    if (marketingConsent && marketingConsent.checked) {
+                        formData.append('marketingConsent', 'true');
+                    }
+                    
+                    // Add CV file (required)
+                    const cvFile = document.getElementById('cv').files[0];
+                    if (!cvFile) {
+                        throw new Error('CV file is required');
+                    }
+                    formData.append('cv', cvFile);
+                    
+                    // Add cover letter file (optional)
+                    const coverLetterFile = document.getElementById('coverLetter').files[0];
+                    if (coverLetterFile) {
+                        formData.append('coverLetter', coverLetterFile);
+                    }
+
+                    // Submit to backend API
+                    const response = await fetch('/api/applications', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include' // Include cookies for authentication
+                    });
+
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        // Show success message
+                        showMessage('success', '{{ t("jobApplication.applicationSubmitted") }}');
+                        form.reset(); // Clear the form
+                    } else {
+                        // Show error message
+                        throw new Error(result.message || 'Failed to submit application');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error submitting application:', error);
+                    showMessage('error', error.message || 'Failed to submit application. Please try again.');
+                } finally {
+                    // Hide loading state
+                    submitBtn.disabled = false;
+                    loadingSpinner.classList.add('hidden');
+                }
+            });
+
+            // Function to show messages
+            function showMessage(type, message) {
+                // Remove existing alerts
+                const existingAlerts = document.querySelectorAll('.alert');
+                existingAlerts.forEach(alert => alert.remove());
+                
+                // Create new alert
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type} mt-6`;
+                
+                const icon = type === 'success' ? 'check' : 'alert-circle';
+                alertDiv.innerHTML = `
+                    <i data-lucide="${icon}" class="h-6 w-6 shrink-0"></i>
+                    <span>${message}</span>
+                `;
+                
+                // Insert after the form
+                const cardBody = document.querySelector('.card-body');
+                cardBody.appendChild(alertDiv);
+                
+                // Initialize Lucide icons for the new element
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+                
+                // Scroll to message
+                alertDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // Form validation
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('invalid', function () {
+                    this.classList.add('input-error');
+                });
+                field.addEventListener('input', function () {
+                    if (this.validity.valid) {
+                        this.classList.remove('input-error');
+                    }
+                });
+            });
+
+            // Auto-resize textareas
+            const textareas = form.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function () {
+                    this.style.height = 'auto';
+                    this.style.height = this.scrollHeight + 'px';
+                });
+            });
+
+            // File upload validation
+            const cvInput = document.getElementById('cv');
+            const coverLetterInput = document.getElementById('coverLetter');
+
+            function validateFileSize(input, maxSizeMB = 5) {
+                if (input.files.length > 0) {
+                    const file = input.files[0];
+                    const maxSize = maxSizeMB * 1024 * 1024; // Convert to bytes
+                    
+                    if (file.size > maxSize) {
+                        showMessage('error', `File size must be less than ${maxSizeMB}MB`);
+                        input.value = '';
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            cvInput.addEventListener('change', function() {
+                validateFileSize(this);
+            });
+
+            coverLetterInput.addEventListener('change', function() {
+                validateFileSize(this);
+            });
+
+            // Character count for textareas
+            function setupCharacterCount(textareaId, maxLength = 500) {
+                const textarea = document.getElementById(textareaId);
+                if (textarea) {
+                    const parent = textarea.parentElement;
+                    const counter = document.createElement('div');
+                    counter.className = 'label mt-1';
+                    counter.innerHTML = `<span class="label-text-alt"><span id="${textareaId}-count">0</span> / ${maxLength} characters</span>`;
+                    parent.appendChild(counter);
+
+                    const countSpan = document.getElementById(`${textareaId}-count`);
+                    
+                    textarea.addEventListener('input', function() {
+                        const length = this.value.length;
+                        countSpan.textContent = length;
+                        
+                        if (length > maxLength * 0.9) {
+                            countSpan.parentElement.classList.add('text-warning');
+                        } else {
+                            countSpan.parentElement.classList.remove('text-warning');
+                        }
+                    });
+                }
             }
           }, {once: true});
         }
