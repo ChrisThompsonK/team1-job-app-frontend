@@ -7,6 +7,12 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface SignupCredentials {
+  email: string;
+  password: string;
+  name?: string;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -90,6 +96,74 @@ class AuthService {
           throw new Error("Server error. Please try again later.");
         } else {
           throw new Error(message || "Login failed");
+        }
+      }
+      throw new Error("Unable to connect to authentication server");
+    }
+  }
+
+  /**
+   * Register new user with email and password
+   */
+  async signup(credentials: SignupCredentials): Promise<AuthResponse> {
+    try {
+      // Use fetch directly to capture cookies from response headers
+      const response = await fetch(`${env.backendUrl}/auth/sign-up/email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+          name: credentials.name || credentials.email.split("@")[0], // Use email prefix as default name
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || `Request failed with status ${response.status}`
+        );
+      }
+
+      const backendData = await response.json();
+
+      // Capture Set-Cookie headers from Better Auth
+      const setCookieHeaders = response.headers.get("set-cookie");
+
+      return {
+        success: true,
+        data: {
+          user: backendData.user,
+        },
+        cookies: setCookieHeaders ? [setCookieHeaders] : [],
+      };
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as {
+          response?: {
+            status?: number;
+            data?: { message?: string };
+          };
+        };
+
+        // Handle different HTTP status codes appropriately
+        const status = axiosError.response?.status;
+        const message = axiosError.response?.data?.message;
+
+        if (status === 409) {
+          throw new Error("An account with this email already exists");
+        } else if (status === 400) {
+          throw new Error("Invalid email or password format");
+        } else if (status === 429) {
+          throw new Error(
+            "Too many registration attempts. Please try again later."
+          );
+        } else if (status && status >= 500) {
+          throw new Error("Server error. Please try again later.");
+        } else {
+          throw new Error(message || "Registration failed");
         }
       }
       throw new Error("Unable to connect to authentication server");

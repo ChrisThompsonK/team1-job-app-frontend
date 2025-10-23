@@ -117,6 +117,10 @@ app.post("/auth/login", (req, res, next) => {
   authController.login(req, res).catch(next);
 });
 
+app.post("/auth/signup", (req, res, next) => {
+  authController.signup(req, res).catch(next);
+});
+
 app.post("/auth/logout", (req, res, _next) => {
   authController.logout(req, res);
 });
