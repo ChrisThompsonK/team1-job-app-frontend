@@ -6,7 +6,11 @@ module.exports = {
     "./public/**/*.{js,html}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Galano Grotesque", "system-ui", "-apple-system", "sans-serif"],
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

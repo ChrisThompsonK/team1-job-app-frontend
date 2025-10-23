@@ -88,6 +88,9 @@ public/
 !public/apple-touch-icon.png
 !public/images/
 !public/css/
+!public/fonts/
+public/fonts/README.md
+public/fonts/**/.DS_Store
 
 # Vuepress build output
 .vuepress/dist

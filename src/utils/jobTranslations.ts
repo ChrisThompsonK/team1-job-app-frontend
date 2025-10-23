@@ -122,7 +122,7 @@ export function getTranslatedJobTitle(
  */
 export function getTranslatedDescription(
   jobTitle: string,
-  t: (key: string, options?: Record<string, unknown>) => string
+  t: TranslationFunction
 ): string {
   if (!jobTitle) return "";
 
@@ -139,7 +139,7 @@ export function getTranslatedDescription(
  */
 export function getTranslatedResponsibilities(
   jobTitle: string,
-  t: (key: string, options?: Record<string, unknown>) => string
+  t: TranslationFunction
 ): string {
   if (!jobTitle) return "";
 
