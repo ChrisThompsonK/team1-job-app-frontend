@@ -15,13 +15,16 @@ export class AuthController {
    * POST /auth/login
    */
   public login = async (req: Request, res: Response): Promise<void> => {
-    const {
-      email,
-      password,
-      returnTo,
-    }: LoginCredentials & { returnTo?: string } = req.body;
+    let email: string | undefined;
+    let password: string | undefined;
+    let returnTo: string | undefined;
 
     try {
+      ({
+        email,
+        password,
+        returnTo,
+      } = req.body as LoginCredentials & { returnTo?: string });
       // Validate input
       if (!email || !password) {
         res.render("login", {
