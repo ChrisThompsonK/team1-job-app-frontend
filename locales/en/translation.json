@@ -240,7 +240,8 @@
     "submitApplication": "Submit Application",
     "applicationSubmitted": "Your application has been submitted successfully!",
     "thankYou": "Thank you for your interest. We will review your application and contact you soon.",
-    "applicationError": "There was an error submitting your application. Please try again."
+    "applicationError": "There was an error submitting your application. Please try again.",
+    "autofillNotice": "Your personal information has been automatically filled from your profile. You can edit these fields if needed."
   },
   "footer": {
     "madeWith": "Made with ❤️ by Kainos",
