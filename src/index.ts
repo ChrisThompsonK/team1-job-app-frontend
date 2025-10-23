@@ -244,6 +244,36 @@ app.post(
   }
 );
 
+// API proxy for chatbot
+app.post("/api/chat", async (req, res) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+
+    // Forward the request to backend with authentication cookies
+    const response = await axios.post(`${backendUrl}/api/chat`, req.body, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: req.headers.cookie || "",
+      },
+    });
+
+    res.status(response.status).json(response.data);
+  } catch (error: unknown) {
+    console.error("Error proxying chat request:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to process chat message",
+      });
+    }
+  }
+});
+
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
 });
