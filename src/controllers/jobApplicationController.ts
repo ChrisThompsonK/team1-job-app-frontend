@@ -1,15 +1,24 @@
 import type { Request, Response } from "express";
+import type { JobRoleservice } from "../services/interfaces.js";
+import { ApplicationApiService } from "../services/applicationApiService.js";
 import { decodeJobId } from "../utils/jobSecurity.js";
 
 /**
  * Job Application controller for handling job application requests
  */
 export class JobApplicationController {
+  private jobRoleService: JobRoleservice;
+  private applicationService: ApplicationApiService;
+
+  constructor(jobRoleService: JobRoleservice, applicationService: ApplicationApiService) {
+    this.jobRoleService = jobRoleService;
+    this.applicationService = applicationService;
+  }
   /**
    * Show job application form
    * GET /job-roles/:id/apply
    */
-  public getJobApplication = (req: Request, res: Response): void => {
+  public getJobApplication = async (req: Request, res: Response): Promise<void> => {
     try {
       // Decode the job ID from the URL parameter
       const encodedId = req.params.id;
@@ -18,22 +27,25 @@ export class JobApplicationController {
       }
       const decodedJobId = decodeJobId(encodedId);
 
-      // Mock job data for demonstration
-      const mockJobRole = {
-        id: decodedJobId,
-        name: "Software Developer",
-        location: "Belfast, UK",
-        capability: "Engineering",
-        band: "Senior",
-        closingDate: new Date("2024-12-31"),
-      };
+      // Fetch real job data from backend
+      const jobRole = await this.jobRoleService.getJobById(Number(decodedJobId));
+      
+      if (!jobRole) {
+        res.status(404).render("error", {
+          title: "Job Not Found",
+          message: "The job you're looking for could not be found.",
+          error: "Job not found",
+        });
+        return;
+      }
 
       res.render("job-application", {
-        title: `Apply for ${mockJobRole.name}`,
-        jobRole: mockJobRole,
+        title: `Apply for ${jobRole.name}`,
+        jobRole: jobRole,
         currentPage: "job-roles",
       });
-    } catch (_error) {
+    } catch (error) {
+      console.error("Error loading job application form:", error);
       res.status(400).render("error", {
         title: "Invalid Job",
         message: "The job you're looking for could not be found.",
@@ -46,37 +58,61 @@ export class JobApplicationController {
    * Handle job application submission
    * POST /job-roles/:id/apply
    */
-  public submitJobApplication = (req: Request, res: Response): void => {
+  public submitJobApplication = async (req: Request, res: Response): Promise<void> => {
     try {
       // Decode the job ID from the URL parameter
       const encodedId = req.params.id;
       if (!encodedId) {
         throw new Error("No job ID provided");
       }
-      const decodedJobId = decodeJobId(encodedId);
+      const decodedJobId = Number(decodeJobId(encodedId));
 
-      // Mock job data for demonstration
-      const mockJobRole = {
-        id: decodedJobId,
-        name: "Software Developer",
-        location: "Belfast, UK",
-        capability: "Engineering",
-        band: "Senior",
-        closingDate: new Date("2024-12-31"),
-      };
+      // Get the job data to display in case of success or error
+      const jobRole = await this.jobRoleService.getJobById(decodedJobId);
+      
+      if (!jobRole) {
+        res.status(404).render("error", {
+          title: "Job Not Found",
+          message: "The job you're looking for could not be found.",
+          error: "Job not found",
+        });
+        return;
+      }
 
-      // Just show success message without processing anything
+      // This endpoint will be used for non-AJAX fallback
+      // Show success message (the actual submission will be handled by AJAX in the frontend)
       res.render("job-application", {
-        title: `Apply for ${mockJobRole.name}`,
-        jobRole: mockJobRole,
+        title: `Apply for ${jobRole.name}`,
+        jobRole: jobRole,
         currentPage: "job-roles",
         success: req.t("jobApplication.applicationSubmitted"),
       });
-    } catch (_error) {
+
+    } catch (error) {
+      console.error("Error submitting job application:", error);
+      
+      try {
+        const decodedJobId = Number(decodeJobId(req.params.id || ''));
+        const jobRole = await this.jobRoleService.getJobById(decodedJobId);
+        
+        if (jobRole) {
+          res.status(400).render("job-application", {
+            title: `Apply for ${jobRole.name}`,
+            jobRole: jobRole,
+            currentPage: "job-roles",
+            error: error instanceof Error ? error.message : "Failed to submit application",
+            formData: req.body,
+          });
+          return;
+        }
+      } catch {
+        // Fall through to generic error
+      }
+
       res.status(400).render("error", {
-        title: "Invalid Job",
-        message: "The job you're looking for could not be found.",
-        error: "Invalid job ID",
+        title: "Application Error",
+        message: "Failed to submit your application.",
+        error: error instanceof Error ? error.message : "Unknown error",
       });
     }
   };
