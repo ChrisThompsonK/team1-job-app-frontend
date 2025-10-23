@@ -1,6 +1,10 @@
 import type { Request, Response } from "express";
 import { env } from "../config/env.js";
-import { authService, type LoginCredentials } from "../services/authService.js";
+import {
+  authService,
+  type LoginCredentials,
+  type SignupCredentials,
+} from "../services/authService.js";
 
 /**
  * Auth controller for handling authentication requests
@@ -187,6 +191,151 @@ export class AuthController {
       }
 
       res.status(401).json({
+        success: false,
+        message: errorMessage,
+      });
+    }
+  };
+
+  /**
+   * Handle signup request
+   * POST /auth/signup
+   */
+  public signup = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const {
+        email,
+        password,
+        confirmPassword,
+        returnTo,
+      }: SignupCredentials & { confirmPassword?: string; returnTo?: string } =
+        req.body;
+
+      // Validate input
+      if (!email || !password) {
+        res.status(400).json({
+          success: false,
+          message: "Email and password are required",
+        });
+        return;
+      }
+
+      // Check password confirmation if provided
+      if (confirmPassword && password !== confirmPassword) {
+        res.status(400).json({
+          success: false,
+          message: "Passwords do not match",
+        });
+        return;
+      }
+
+      // Attempt signup
+      const result = await authService.signup({ email, password });
+
+      if (result.success) {
+        // Set our own session cookie for authentication
+        res.cookie("session", result.data.user.id, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+
+        // Forward Better Auth cookies if they exist
+        if (result.cookies && result.cookies.length > 0) {
+          result.cookies.forEach((cookieString) => {
+            res.setHeader("Set-Cookie", cookieString);
+          });
+        }
+
+        // Store user data in cookies (similar to login flow)
+        try {
+          // Create a combined cookie object including the new Better Auth cookies
+          const combinedCookies = { ...req.cookies };
+
+          // Parse and add the Better Auth cookies from the response
+          if (result.cookies && result.cookies.length > 0) {
+            result.cookies.forEach((cookieHeader) => {
+              const cookies = cookieHeader.split(", ");
+              cookies.forEach((cookie) => {
+                const cookieParts = cookie.split(";");
+                const firstPart = cookieParts[0];
+                if (firstPart) {
+                  const [name, value] = firstPart.split("=");
+                  if (name && value) {
+                    combinedCookies[name.trim()] = decodeURIComponent(
+                      value.trim()
+                    );
+                  }
+                }
+              });
+            });
+          }
+
+          // Store user data from signup response
+          res.cookie("userName", result.data.user.name, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000,
+          });
+
+          res.cookie("userEmail", result.data.user.email, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000,
+          });
+
+          // Default admin to false for new users
+          res.cookie("isAdmin", "false", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000,
+          });
+        } catch (_profileError) {
+          console.log("Error setting user cookies after signup");
+        }
+
+        // Determine where to redirect after signup
+        let finalRedirectUrl = "/profile"; // Default
+
+        if (returnTo && returnTo.trim() !== "" && returnTo !== "/") {
+          // If we have a valid returnTo that's not just "/" or empty, use it
+          finalRedirectUrl = returnTo;
+        }
+
+        res.json({
+          success: true,
+          data: {
+            user: result.data.user,
+          },
+          redirectUrl: finalRedirectUrl,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "Registration failed",
+        });
+      }
+    } catch (error: unknown) {
+      // Clean error logging for registration failures
+      const errorMessage =
+        error instanceof Error ? error.message : "Signup failed";
+
+      if (
+        errorMessage.includes("already exists") ||
+        errorMessage.includes("409")
+      ) {
+        // Log duplicate account attempts cleanly
+        console.log("Signup failed: Account already exists");
+      } else {
+        // Log other errors with more detail for debugging
+        console.error("Signup error:", errorMessage);
+      }
+
+      res.status(400).json({
         success: false,
         message: errorMessage,
       });

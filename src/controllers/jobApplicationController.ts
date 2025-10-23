@@ -41,10 +41,27 @@ export class JobApplicationController {
         return;
       }
 
+      // Extract user data from cookies for autofill
+      const userName = req.cookies?.userName || "";
+      const userEmail = req.cookies?.userEmail || "";
+
+      // Split userName into first and last name (basic implementation)
+      const nameParts = userName.split(" ");
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      // Prepare user data for autofill
+      const userData = {
+        firstName,
+        lastName,
+        email: userEmail,
+      };
+
       res.render("job-application", {
         title: `Apply for ${jobRole.name}`,
         jobRole: jobRole,
         currentPage: "job-roles",
+        userData,
       });
     } catch (error) {
       console.error("Error loading job application form:", error);
@@ -86,10 +103,28 @@ export class JobApplicationController {
 
       // This endpoint will be used for non-AJAX fallback
       // Show success message (the actual submission will be handled by AJAX in the frontend)
+      // Extract user data from cookies for autofill (in case of re-render)
+      const userName = req.cookies?.userName || "";
+      const userEmail = req.cookies?.userEmail || "";
+
+      // Split userName into first and last name (basic implementation)
+      const nameParts = userName.split(" ");
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      // Prepare user data for autofill
+      const userData = {
+        firstName,
+        lastName,
+        email: userEmail,
+      };
+
+      // Just show success message without processing anything
       res.render("job-application", {
         title: `Apply for ${jobRole.name}`,
         jobRole: jobRole,
         currentPage: "job-roles",
+        userData,
         success: req.t("jobApplication.applicationSubmitted"),
       });
     } catch (error) {

@@ -1,63 +1,68 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-    Apply for {{ translateJobTitle(jobRole.name, t) }}
+  Apply for {{ translateJobTitle(jobRole.name, t) }}
 {% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="/css/job-roles.css">
-{% endblock %}
-{% block body_attributes %}
+  <link rel="stylesheet" href="/css/job-roles.css">
+  {% endblock %}
+  {% block body_attributes %}
     class="job-application-page"{% endblock %}
-{% block main_attributes %}
+  {% block main_attributes %}
     class="container mx-auto px-4 py-8"{% endblock %}
-{% block content %}
+  {% block content %}
     <!-- Breadcrumb Navigation -->
     <div class="text-sm breadcrumbs mb-6">
-        <ul>
-            <li><a href="/" class="link link-hover">{{ t('nav.home') }}</a></li>
-            <li><a href="/job-roles" class="link link-hover">{{ t('nav.jobRoles') }}</a></li>
-            <li><a href="/job-roles/{{ jobRole.id }}" class="link link-hover">{{ translateJobTitle(jobRole.name, t) }}</a></li>
-            <li class="text-base-content/70">{{ t('jobApplication.title') }}</li>
-        </ul>
+      <ul>
+        <li>
+          <a href="/" class="link link-hover">{{ t('nav.home') }}</a>
+        </li>
+        <li>
+          <a href="/job-roles" class="link link-hover">{{ t('nav.jobRoles') }}</a>
+        </li>
+        <li>
+          <a href="/job-roles/{{ jobRole.id }}" class="link link-hover">{{ translateJobTitle(jobRole.name, t) }}</a>
+        </li>
+        <li class="text-base-content/70">{{ t('jobApplication.title') }}</li>
+      </ul>
     </div>
-
     <!-- Page Header -->
     <div class="mb-8">
-        <div class="flex items-center gap-4 mb-4">
-            <a href="/job-roles/{{ jobRole.id }}" class="btn btn-ghost btn-sm gap-2">
-                <i data-lucide="arrow-left" class="h-4 w-4"></i>
-                {{ t('common.back') }}
-            </a>
-        </div>
-        <h1 class="text-4xl font-bold text-base-content mb-2">{{ t('jobApplication.title') }}</h1>
-        <p class="text-base-content/70">{{ t('jobApplication.subtitle') }} {{ translateJobTitle(jobRole.name, t) }}</p>
+      <div class="flex items-center gap-4 mb-4">
+        <a href="/job-roles/{{ jobRole.id }}" class="btn btn-ghost btn-sm gap-2">
+          <i data-lucide="arrow-left" class="h-4 w-4"></i>
+          {{ t('common.back') }}
+        </a>
+      </div>
+      <h1 class="text-4xl font-bold text-base-content mb-2">{{ t('jobApplication.title') }}</h1>
+      <p class="text-base-content/70">{{ t('jobApplication.subtitle') }}
+        {{ translateJobTitle(jobRole.name, t) }}</p>
     </div>
-
     <!-- Job Summary Card -->
     <div class="card bg-base-100 shadow-lg mb-8">
-        <div class="card-body">
-            <h2 class="card-title text-lg text-primary mb-4">{{ t('jobApplication.jobSummary') }}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="map-pin" class="h-5 w-5 text-base-content/60"></i>
-                    <span class="text-base-content/80">{{ jobRole.location }}</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i data-lucide="briefcase" class="h-5 w-5 text-base-content/60"></i>
-                    <span class="text-base-content/80">{{ translateCapability(jobRole.capability, t) }}</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i data-lucide="award" class="h-5 w-5 text-base-content/60"></i>
-                    <span class="text-base-content/80">{{ translateBand(jobRole.band, t) }}</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i data-lucide="calendar" class="h-5 w-5 text-base-content/60"></i>
-                    <span class="text-base-content/80">{{ t('jobRoles.closes') }}: {{ jobRole.closingDate.toLocaleDateString() }}</span>
-                </div>
-            </div>
+      <div class="card-body">
+        <h2 class="card-title text-lg text-primary mb-4">{{ t('jobApplication.jobSummary') }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="map-pin" class="h-5 w-5 text-base-content/60"></i>
+            <span class="text-base-content/80">{{ jobRole.location }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="briefcase" class="h-5 w-5 text-base-content/60"></i>
+            <span class="text-base-content/80">{{ translateCapability(jobRole.capability, t) }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="award" class="h-5 w-5 text-base-content/60"></i>
+            <span class="text-base-content/80">{{ translateBand(jobRole.band, t) }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="calendar" class="h-5 w-5 text-base-content/60"></i>
+            <span class="text-base-content/80">{{ t('jobRoles.closes') }}:
+            {{ jobRole.closingDate.toLocaleDateString() }}</span>
+          </div>
         </div>
+      </div>
     </div>
-
     <!-- Application Form -->
     <div class="card bg-base-100 shadow-lg">
         <div class="card-body">
@@ -230,20 +235,152 @@
                         {{ t('jobApplication.submitApplication') }}
                     </button>
                 </div>
-            </form>
+              {% endif %}
+            </h3>
+            <div class="divider mt-0 mb-6"></div>
+            {% if userData and (userData.firstName or userData.lastName or userData.email) %}
+              <div class="alert alert-info mb-6">
+                <i data-lucide="info" class="h-6 w-6 shrink-0"></i>
+                <span>{{ t('jobApplication.autofillNotice') }}</span>
+              </div>
+            {% endif %}
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- First Name -->
+              <div class="form-control w-full">
+                <label class="label flex-col items-start">
+                  <span class="label-text font-medium mb-1">{{ t('jobApplication.firstName') }} *</span>
+                </label>
+                <input type="text" name="firstName" id="firstName" class="input input-bordered w-full" value="{{ userData.firstName if userData and userData.firstName else (formData.firstName if formData else '') }}" required/>
+              </div>
+              <!-- Last Name -->
+              <div class="form-control w-full">
+                <label class="label flex-col items-start">
+                  <span class="label-text font-medium mb-1">{{ t('jobApplication.lastName') }} *</span>
+                </label>
+                <input type="text" name="lastName" id="lastName" class="input input-bordered w-full" value="{{ userData.lastName if userData and userData.lastName else (formData.lastName if formData else '') }}" required/>
+              </div>
+              <!-- Email -->
+              <div class="form-control w-full">
+                <label class="label flex-col items-start">
+                  <span class="label-text font-medium mb-1">{{ t('jobApplication.email') }} *</span>
+                </label>
+                <input type="email" name="email" id="email" class="input input-bordered w-full" value="{{ userData.email if userData and userData.email else (formData.email if formData else '') }}" required/>
+              </div>
+            </div>
+            <!-- Phone -->
+            <div class="form-control w-full">
+              <label class="label flex-col items-start">
+                <span class="label-text font-medium mb-1">{{ t('jobApplication.phone') }} *</span>
+              </label>
+              <input type="tel" name="phone" id="phone" class="input input-bordered w-full" value="{{ formData.phone if formData else '' }}" required/>
+            </div>
+          </div>
+          <!-- Address -->
+          <div class="form-control w-full mt-6">
+            <label class="label flex-col items-start">
+              <span class="label-text font-medium mb-1">{{ t('jobApplication.address') }} *</span>
+            </label>
+            <textarea name="address" id="address" class="textarea textarea-bordered h-24 w-full" required>{{ formData.address if formData else '' }}</textarea>
+          </div>
         </div>
+        <!-- Documents Section -->
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+            <i data-lucide="file-text" class="h-5 w-5"></i>
+            {{ t('jobApplication.documents') }}
+          </h3>
+          <div class="divider mt-0 mb-6"></div>
+          <!-- CV Upload -->
+          <div class="form-control w-full">
+            <label class="label flex-col items-start">
+              <span class="label-text font-medium mb-1">{{ t('jobApplication.cv') }} *</span>
+            </label>
+            <input type="file" name="cv" id="cv" class="file-input file-input-bordered w-full" accept=".pdf,.doc,.docx" required/>
+            <div class="label">
+              <span class="label-text-alt">{{ t('jobApplication.cvHint') }}</span>
+            </div>
+          </div>
+          <!-- Cover Letter Upload -->
+          <div class="form-control w-full">
+            <label class="label flex-col items-start">
+              <span class="label-text font-medium mb-1">{{ t('jobApplication.coverLetter') }}</span>
+            </label>
+            <input
+              type="file"
+              name="coverLetter"
+              id="coverLetter"
+              class="file-input file-input-bordered w-full"
+              accept=".pdf,.doc,.docx"/>
+            <div class="label">
+              <span class="label-text-alt">{{ t('jobApplication.coverLetterHint') }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- Additional Information Section -->
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
+            <i data-lucide="info" class="h-5 w-5"></i>
+            {{ t('jobApplication.additionalInfo') }}
+          </h3>
+          <div class="divider mt-0 mb-6"></div>
+          <!-- Why interested -->
+          <div class="form-control w-full mb-6">
+            <label class="label flex-col items-start">
+              <span class="label-text font-medium mb-1">{{ t('jobApplication.whyInterested') }} *</span>
+            </label>
+            <textarea name="whyInterested" id="whyInterested" class="textarea textarea-bordered h-32 w-full" placeholder="{{ t('jobApplication.whyInterestedPlaceholder') }}" required>{{ formData.whyInterested if formData else '' }}</textarea>
+          </div>
+          <!-- Relevant Experience -->
+          <div class="form-control w-full mb-6">
+            <label class="label flex-col items-start">
+              <span class="label-text font-medium mb-1">{{ t('jobApplication.relevantExperience') }} *</span>
+            </label>
+            <textarea name="relevantExperience" id="relevantExperience" class="textarea textarea-bordered h-32 w-full" placeholder="{{ t('jobApplication.relevantExperiencePlaceholder') }}" required>{{ formData.relevantExperience if formData else '' }}</textarea>
+          </div>
+          <!-- Additional Comments -->
+          <div class="form-control w-full">
+            <label class="label flex-col items-start">
+              <span class="label-text font-medium mb-1">{{ t('jobApplication.additionalComments') }}</span>
+            </label>
+            <textarea name="additionalComments" id="additionalComments" class="textarea textarea-bordered h-24 w-full" placeholder="{{ t('jobApplication.additionalCommentsPlaceholder') }}">{{ formData.additionalComments if formData else '' }}</textarea>
+          </div>
+        </div>
+        <!-- Consent and Agreement -->
+        <div class="mb-8">
+          <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-4">
+              <input type="checkbox" name="dataConsent" id="dataConsent" class="checkbox checkbox-primary" required/>
+              <span class="label-text">{{ t('jobApplication.dataConsent') }} *</span>
+            </label>
+          </div>
+          <div class="form-control mt-2">
+            <label class="label cursor-pointer justify-start gap-4">
+              <input type="checkbox" name="marketingConsent" id="marketingConsent" class="checkbox checkbox-primary"/>
+              <span class="label-text">{{ t('jobApplication.marketingConsent') }}</span>
+            </label>
+          </div>
+        </div>
+        <!-- Form Actions -->
+        <div class="flex justify-end gap-4">
+          <a href="/job-roles/{{ jobRole.id }}" class="btn btn-outline">{{ t('common.cancel') }}</a>
+          <button type="submit" class="btn btn-primary gap-2" id="submitBtn">
+            <span class="loading loading-spinner loading-sm hidden" id="loadingSpinner"></span>
+            <i data-lucide="send" class="h-4 w-4"></i>
+            {{ t('jobApplication.submitApplication') }}
+          </button>
+        </div>
+      </form>
     </div>
-
-    <!-- Success Message -->
-    {% if success %}
+  </div>
+  <!-- Success Message -->
+  {% if success %}
     <div class="alert alert-success mt-6">
-        <i data-lucide="check" class="h-6 w-6"></i>
-        <span>{{ success }}</span>
+      <i data-lucide="check" class="h-6 w-6"></i>
+      <span>{{ success }}</span>
     </div>
-    {% endif %}
-
+  {% endif %}
 {% endblock %}
-
 {% block scripts %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -429,10 +566,84 @@
                     });
                 }
             }
-
-            setupCharacterCount('whyInterested', 500);
-            setupCharacterCount('relevantExperience', 500);
-            setupCharacterCount('additionalComments', 300);
+          }, {once: true});
+        }
+      });
+      form.addEventListener('submit', function (event) { // Show loading state
+        submitBtn.disabled = true;
+        loadingSpinner.classList.remove('hidden');
+      });
+      // Form validation
+      const requiredFields = form.querySelectorAll('[required]');
+      requiredFields.forEach(field => {
+        field.addEventListener('invalid', function () {
+          this.classList.add('input-error');
         });
-    </script>
+        field.addEventListener('input', function () {
+          if (this.validity.valid) {
+            this.classList.remove('input-error');
+          }
+        });
+      });
+      // Auto-resize textareas
+      const textareas = form.querySelectorAll('textarea');
+      textareas.forEach(textarea => {
+        textarea.addEventListener('input', function () {
+          this.style.height = 'auto';
+          this.style.height = this.scrollHeight + 'px';
+        });
+      });
+      // File upload validation
+      const cvInput = document.getElementById('cv');
+      const coverLetterInput = document.getElementById('coverLetter');
+      function validateFileSize(input, maxSizeMB = 5) {
+        if (input.files.length > 0) {
+          const file = input.files[0];
+          const maxSize = maxSizeMB * 1024 * 1024; // Convert to bytes
+          if (file.size > maxSize) {
+            alert (`File size must be less than ${maxSizeMB}MB`);
+            input.value = '';
+            return false;
+          }
+        }
+        return true;
+      }
+      cvInput.addEventListener('change', function () {
+        validateFileSize(this);
+      });
+      coverLetterInput.addEventListener('change', function () {
+        validateFileSize(this);
+      });
+      // Character count for textareas
+      function setupCharacterCount(textareaId, maxLength = 500) {
+        const textarea = document.getElementById(textareaId);
+        if (textarea) {
+          const parent = textarea.parentElement;
+          const counter = document.createElement('div');
+          counter.className = 'label mt-1';
+          counter.innerHTML = `<span class="label-text-alt"><span id="${textareaId}-count">0</span> / ${maxLength} characters</span>`;
+          parent.appendChild(counter);
+          const countSpan = document.getElementById (`${textareaId}-count`);
+          textarea.addEventListener('input', function () {
+            const length = this.value.length;
+            countSpan.textContent = length;
+            if (length > maxLength * 0.9) {
+              countSpan
+                .parentElement
+                .classList
+                .add('text-warning');
+            } else {
+              countSpan
+                .parentElement
+                .classList
+                .remove('text-warning');
+            }
+          });
+        }
+      }
+      setupCharacterCount('whyInterested', 500);
+      setupCharacterCount('relevantExperience', 500);
+      setupCharacterCount('additionalComments', 300);
+    });
+  </script>
 {% endblock %}
