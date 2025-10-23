@@ -1,0 +1,33 @@
+/* Galano Grotesque Font Family */
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('../fonts/GalanoGrosesque/GalanoGrotesqueRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('../fonts/GalanoGrosesque/GalanoGrotesqueItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('../fonts/GalanoGrosesque/GalanoGrotesqueBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('../fonts/GalanoGrosesque/GalanoGrotesqueBoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}

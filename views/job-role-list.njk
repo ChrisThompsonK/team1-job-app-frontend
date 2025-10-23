@@ -26,154 +26,152 @@
       {% endif %}
     </div>
     <!-- Search and Filter Section -->
-    <div class="card bg-base-100 shadow-lg mb-8">
-      <div class="card-body">
-        <h2 class="card-title text-lg mb-4">
-          <i data-lucide="search" class="w-5 h-5"></i>
-          {{ t('jobRoles.searchFilter') }}
-        </h2>
-        <!-- Filter Form -->
-        <form
-          method="GET" action="/job-roles" id="filter-form">
-          <!-- Search Bar -->
-          <div class="form-control w-full mb-4">
-            <label class="label">
-              <span class="label-text font-medium">{{ t('jobRoles.searchLabel') }}</span>
-            </label>
-            <div class="relative">
-              <input type="text" id="search-input" name="search" value="{{ currentFilters.search if currentFilters.search else '' }}" placeholder="{{ t('jobRoles.searchPlaceholder') }}" class="input input-bordered w-full pr-10"/>
-              <i data-lucide="search" class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/60"></i>
+        <div class="card bg-base-100 shadow-lg mb-8">
+            <div class="card-body">
+                <h2 class="card-title text-lg mb-4">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                    {{ t('jobRoles.searchFilter') }}
+                </h2>
+                <!-- Filter Form -->
+                <form
+                    method="GET" action="/job-roles" id="filter-form">
+                    <!-- Search Bar -->
+                    <div class="form-control w-full mb-4">
+                        <label class="label">
+                            <span class="label-text font-medium">{{ t('jobRoles.searchLabel') }}</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="search-input" name="search" value="{{ currentFilters.search if currentFilters.search else '' }}" placeholder="{{ t('jobRoles.searchPlaceholder') }}" class="input input-bordered w-full pr-10"/>
+                            <i data-lucide="search" class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/60"></i>
+                        </div>
+                    </div>
+                    <!-- Filter Controls -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        <!-- Location Filter -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">{{ t('jobRoles.location') }}</span>
+                            </label>
+                            <select id="location-filter" name="location" class="select select-bordered w-full">
+                                {% for option in filterOptions.locations %}
+                                    <option value="{{ option.value }}" {{ 'selected' if currentFilters.location == option.value and option.value != '' }}>
+                                        {{ t(option.label) }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Capability Filter -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">{{ t('jobRoles.capability') }}</span>
+                            </label>
+                            <select id="capability-filter" name="capability" class="select select-bordered w-full">
+                                {% for option in filterOptions.capabilities %}
+                                    <option value="{{ option.value }}" {{ 'selected' if currentFilters.capability == option.value and option.value != '' }}>
+                                        {{ t(option.label) }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Band Filter -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">{{ t('jobRoles.band') }}</span>
+                            </label>
+                            <select id="band-filter" name="band" class="select select-bordered w-full">
+                                {% for option in filterOptions.bands %}
+                                    <option value="{{ option.value }}" {{ 'selected' if currentFilters.band == option.value and option.value != '' }}>
+                                        {{ t(option.label) }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Status Filter -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">{{ t('jobRoles.status') }}</span>
+                            </label>
+                            <select id="status-filter" name="status" class="select select-bordered w-full">
+                                {% for option in filterOptions.statuses %}
+                                    <option value="{{ option.value }}" {{ 'selected' if currentFilters.status == option.value and option.value != '' }}>
+                                        {{ t(option.label) }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Sort Controls -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <!-- Sort By Filter -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">{{ t('jobRoles.sortBy') }}</span>
+                            </label>
+                            <select id="sort-by-filter" name="sortBy" class="select select-bordered w-full">
+                                {% for option in filterOptions.sortOptions %}
+                                    <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortBy == option.value }}>
+                                        {{ t(option.label) }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Sort Order Filter -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">{{ t('jobRoles.sortOrder') }}</span>
+                            </label>
+                            <select id="sort-order-filter" name="sortOrder" class="select select-bordered w-full">
+                                {% for option in filterOptions.sortOrders %}
+                                    <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortOrder == option.value }}>
+                                        {{ t(option.label) }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button type="reset" class="btn btn-outline btn-sm gap-2" aria-label="{{ t('jobRoles.clearFilters') }}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            {{ t('jobRoles.clearFilters') }}
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            {{ t('jobRoles.applyFilters') }}
+                        </button>
+                    </div>
+                </form>
+                <!-- Results Summary -->
+                <div class="divider"></div>
+                <div id="results-summary" class="text-sm text-base-content/60">
+                    {% if pagination %}
+                        {{ t('jobRoles.showing') }} {{ jobRoles.length }} {{ t('common.of') }} {{ pagination.totalItems }}
+                        {% if pagination.totalItems == 1 %}
+                            {{ t('jobRoles.jobRolesSingle') }}
+                        {% else %}
+                            {{ t('jobRoles.jobRolesPlural') }}
+                        {% endif %}
+                        {% if pagination.totalPages > 1 %}
+                            ({{ t('common.page') }} {{ pagination.currentPage }} {{ t('common.of') }} {{ pagination.totalPages }})
+                        {% endif %}
+                    {% else %}
+                        {{ jobRoles.length if jobRoles else 0 }} 
+                        {% if jobRoles.length == 1 %}
+                            {{ t('jobRoles.jobRolesSingle') }}
+                        {% else %}
+                            {{ t('jobRoles.jobRolesPlural') }}
+                        {% endif %}
+                        {{ t('jobRoles.found') }}
+                    {% endif %}
+                </div>
             </div>
-          </div>
-          <!-- Filter Controls -->
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-            <!-- Location Filter -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">{{ t('jobRoles.location') }}</span>
-              </label>
-              <select id="location-filter" name="location" class="select select-bordered w-full">
-                {% for option in filterOptions.locations %}
-                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.location == option.value and option.value != '' }}>
-                    {{ t(option.label) }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-            <!-- Capability Filter -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">{{ t('jobRoles.capability') }}</span>
-              </label>
-              <select id="capability-filter" name="capability" class="select select-bordered w-full">
-                {% for option in filterOptions.capabilities %}
-                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.capability == option.value and option.value != '' }}>
-                    {{ t(option.label) }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-            <!-- Band Filter -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">{{ t('jobRoles.band') }}</span>
-              </label>
-              <select id="band-filter" name="band" class="select select-bordered w-full">
-                {% for option in filterOptions.bands %}
-                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.band == option.value and option.value != '' }}>
-                    {{ t(option.label) }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-            <!-- Status Filter -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">{{ t('jobRoles.status') }}</span>
-              </label>
-              <select id="status-filter" name="status" class="select select-bordered w-full">
-                {% for option in filterOptions.statuses %}
-                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.status == option.value and option.value != '' }}>
-                    {{ t(option.label) }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <!-- Sort Controls -->
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <!-- Sort By Filter -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">{{ t('jobRoles.sortBy') }}</span>
-              </label>
-              <select id="sort-by-filter" name="sortBy" class="select select-bordered w-full">
-                {% for option in filterOptions.sortOptions %}
-                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortBy == option.value }}>
-                    {{ t(option.label) }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-            <!-- Sort Order Filter -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">{{ t('jobRoles.sortOrder') }}</span>
-              </label>
-              <select id="sort-order-filter" name="sortOrder" class="select select-bordered w-full">
-                {% for option in filterOptions.sortOrders %}
-                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortOrder == option.value }}>
-                    {{ t(option.label) }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <!-- Action Buttons -->
-          <div class="flex justify-end gap-2 mt-4">
-            <a href="/job-roles" class="btn btn-outline btn-sm gap-2">
-              <i data-lucide="x" class="w-4 h-4"></i>
-              Clear Filters
-            </a>
-            <button type="submit" class="btn btn-primary btn-sm gap-2">
-              <i data-lucide="search" class="w-4 h-4"></i>
-              Apply Filters
-            </button>
-          </div>
-        </form>
-        <!-- Results Summary -->
-        <div class="divider"></div>
-        <div id="results-summary" class="text-sm text-base-content/60">
-          {% if pagination %}
-            {{ t('jobRoles.showing') }}
-            {{ jobRoles.length }}
-            {{ t('common.of') }}
-            {{ pagination.totalItems }}
-            {% if pagination.totalItems == 1 %}
-              {{ t('jobRoles.jobRolesSingle') }}
-            {% else %}
-              {{ t('jobRoles.jobRolesPlural') }}
-            {% endif %}
-            {% if pagination.totalPages > 1 %}
-              ({{ t('common.page') }}
-              {{ pagination.currentPage }}
-              {{ t('common.of') }}
-              {{ pagination.totalPages }})
-            {% endif %}
-          {% else %}
-            {{ jobRoles.length if jobRoles else 0 }}
-            {% if jobRoles.length == 1 %}
-              {{ t('jobRoles.jobRolesSingle') }}
-            {% else %}
-              {{ t('jobRoles.jobRolesPlural') }}
-            {% endif %}
-            {{ t('jobRoles.found') }}
-          {% endif %}
         </div>
-      </div>
-    </div>
     <!-- Generate Report Button -->
     <div class="flex justify-end mb-6">
       <a href="/job-roles/export" class="btn btn-accent gap-2" title="Generate CSV Report">
