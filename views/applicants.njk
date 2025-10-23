@@ -1,0 +1,443 @@
+{% extends "layouts/base.njk" %}
+{% set currentPage = "applicants" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <!-- Header Section -->
+  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">{{ title }}</h1>
+      <p class="text-gray-600 mt-2">Manage and review job applications from candidates</p>
+      {% if totalApplications %}
+        <p class="text-sm text-gray-500 mt-1">
+          Total: {{ totalApplications }} application{{ 's' if totalApplications != 1 }}
+          {% if pagination.totalItems < totalApplications %}
+            ({{ pagination.totalItems }} filtered)
+          {% endif %}
+        </p>
+      {% endif %}
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="flex gap-3">
+      <a href="/applicants/export" 
+         class="btn btn-outline btn-secondary">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        Export CSV
+      </a>
+      <a href="/job-roles" 
+         class="btn btn-outline">
+        <i data-lucide="briefcase" class="w-4 h-4"></i>
+        Manage Jobs
+      </a>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="card bg-base-100 shadow-sm mb-6">
+    <div class="card-body">
+      <h3 class="card-title text-lg mb-4">
+        <i data-lucide="filter" class="w-5 h-5"></i>
+        Filter Applications
+      </h3>
+      
+      <form method="GET" action="/applicants" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <!-- Search -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Search</span>
+          </label>
+          <input 
+            type="text" 
+            name="search" 
+            value="{{ filters.search }}"
+            placeholder="Name, email, or job role..."
+            class="input input-bordered input-sm"
+          />
+        </div>
+
+        <!-- Job Role Filter -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Job Role</span>
+          </label>
+          <select name="jobRole" class="select select-bordered select-sm">
+            <option value="">All Roles</option>
+            {% for role in filterOptions.jobRoles %}
+              <option value="{{ role }}" 
+                      {{ 'selected' if filters.jobRole == role }}>
+                {{ role }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Status</span>
+          </label>
+          <select name="status" class="select select-bordered select-sm">
+            <option value="">All Statuses</option>
+            {% for status in filterOptions.statuses %}
+              <option value="{{ status }}" 
+                      {{ 'selected' if filters.status == status }}>
+                {{ status | title }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Capability Filter -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Capability</span>
+          </label>
+          <select name="capability" class="select select-bordered select-sm">
+            <option value="">All Capabilities</option>
+            {% for capability in filterOptions.capabilities %}
+              <option value="{{ capability }}" 
+                      {{ 'selected' if filters.capability == capability }}>
+                {{ capability }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Band Filter -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Band</span>
+          </label>
+          <select name="band" class="select select-bordered select-sm">
+            <option value="">All Bands</option>
+            {% for band in filterOptions.bands %}
+              <option value="{{ band }}" 
+                      {{ 'selected' if filters.band == band }}>
+                {{ band }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="form-control lg:col-span-3 xl:col-span-5">
+          <div class="flex gap-2 mt-6">
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              Apply Filters
+            </button>
+            <a href="/applicants" class="btn btn-ghost btn-sm">
+              <i data-lucide="x" class="w-4 h-4"></i>
+              Clear All
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Applications Table -->
+  {% if applications and applications.length > 0 %}
+    <div class="card bg-base-100 shadow-sm">
+      <div class="card-body p-0">
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th class="text-left">Applicant</th>
+                <th class="text-left">Job Role</th>
+                <th class="text-left">Applied Date</th>
+                <th class="text-left">Status</th>
+                <th class="text-left">Job Details</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for application in applications %}
+                <tr class="hover">
+                  <!-- Applicant Info -->
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-neutral-focus text-neutral-content rounded-full w-8 h-8">
+                          <span class="text-xs">
+                            {{ (application.applicantName or application.applicantEmail | first | upper) }}
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">
+                          {{ application.applicantName or 'N/A' }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                          {{ application.applicantEmail }}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Job Role -->
+                  <td>
+                    <div class="font-medium">{{ application.jobRoleName }}</div>
+                    <div class="text-sm text-gray-500">
+                      {{ application.jobLocation }}
+                    </div>
+                  </td>
+
+                  <!-- Applied Date -->
+                  <td>
+                    {% if application.appliedAt %}
+                      <time class="text-sm" data-timestamp="{{ application.appliedAt }}">
+                        Loading...
+                      </time>
+                    {% else %}
+                      <span class="text-gray-400">N/A</span>
+                    {% endif %}
+                  </td>
+
+                  <!-- Status -->
+                  <td>
+                    {% set statusClass = 'badge-ghost' %}
+                    {% if application.applicationStatus == 'pending' %}
+                      {% set statusClass = 'badge-warning' %}
+                    {% elif application.applicationStatus == 'approved' %}
+                      {% set statusClass = 'badge-success' %}
+                    {% elif application.applicationStatus == 'rejected' %}
+                      {% set statusClass = 'badge-error' %}
+                    {% endif %}
+                    
+                    <span class="badge {{ statusClass }} badge-sm">
+                      {{ application.applicationStatus | title or 'Pending' }}
+                    </span>
+                  </td>
+
+                  <!-- Job Details -->
+                  <td>
+                    <div class="text-sm">
+                      <div>{{ application.jobBand }} • {{ application.jobCapability }}</div>
+                      {% if application.jobClosingDate %}
+                        <div class="text-gray-500" data-timestamp="{{ application.jobClosingDate }}" data-prefix="Closes: ">
+                          Closes: Loading...
+                        </div>
+                      {% endif %}
+                    </div>
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="text-center">
+                    <div class="flex justify-center gap-2">
+                      <!-- View CV Button -->
+                      {% if application.cvPath %}
+                        <button 
+                          class="btn btn-ghost btn-xs tooltip" 
+                          data-tip="Download CV"
+                          onclick="downloadCV('{{ application.cvPath }}', '{{ application.applicantName or application.applicantEmail }}')"
+                        >
+                          <i data-lucide="file-text" class="w-3 h-3"></i>
+                        </button>
+                      {% endif %}
+
+                      <!-- View Details Button -->
+                      <button 
+                        class="btn btn-ghost btn-xs tooltip" 
+                        data-tip="View Details"
+                        onclick="viewApplicationDetails({{ application.id }})"
+                      >
+                        <i data-lucide="eye" class="w-3 h-3"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination.totalPages > 1 %}
+      <div class="flex justify-center mt-6">
+        <div class="join">
+          {% if pagination.hasPrev %}
+            <a href="?page={{ pagination.prevPage }}{{ '&' + (filters | urlencode) if filters }}" 
+               class="join-item btn btn-outline">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              Previous
+            </a>
+          {% endif %}
+
+          {% for pageNum in range(1, pagination.totalPages + 1) %}
+            {% if pageNum == pagination.currentPage %}
+              <span class="join-item btn btn-active">{{ pageNum }}</span>
+            {% elif pageNum == 1 or pageNum == pagination.totalPages or (pageNum >= pagination.currentPage - 2 and pageNum <= pagination.currentPage + 2) %}
+              <a href="?page={{ pageNum }}{{ '&' + (filters | urlencode) if filters }}" 
+                 class="join-item btn btn-outline">{{ pageNum }}</a>
+            {% elif pageNum == pagination.currentPage - 3 or pageNum == pagination.currentPage + 3 %}
+              <span class="join-item btn btn-disabled">...</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if pagination.hasNext %}
+            <a href="?page={{ pagination.nextPage }}{{ '&' + (filters | urlencode) if filters }}" 
+               class="join-item btn btn-outline">
+              Next
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="text-center text-sm text-gray-500 mt-2">
+        Showing {{ pagination.startIndex }}-{{ pagination.endIndex }} of {{ pagination.totalItems }} applications
+      </div>
+    {% endif %}
+
+  {% else %}
+    <!-- Empty State -->
+    <div class="card bg-base-100 shadow-sm">
+      <div class="card-body text-center py-12">
+        <div class="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+          <i data-lucide="users" class="w-8 h-8 text-gray-400"></i>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">No Applications Found</h3>
+        <p class="text-gray-500 mb-4">
+          {% if filters.search or filters.jobRole or filters.status or filters.capability or filters.band %}
+            No applications match your current filters. Try adjusting your search criteria.
+          {% else %}
+            There are no job applications to display yet.
+          {% endif %}
+        </p>
+        {% if filters.search or filters.jobRole or filters.status or filters.capability or filters.band %}
+          <a href="/applicants" class="btn btn-primary">Clear Filters</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Application Details Modal -->
+<dialog id="application-details-modal" class="modal">
+  <div class="modal-box w-11/12 max-w-4xl">
+    <h3 class="font-bold text-lg mb-4">Application Details</h3>
+    <div id="application-details-content">
+      <!-- Content will be loaded here -->
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<!-- JavaScript -->
+<script>
+// Initialize Lucide icons
+lucide.createIcons();
+
+// Download CV function
+function downloadCV(cvPath, applicantName) {
+  // Create a temporary link to download the CV
+  const link = document.createElement('a');
+  link.href = `/api/files/cv/${encodeURIComponent(cvPath.split('/').pop())}`;
+  link.download = `CV_${applicantName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// View application details function
+async function viewApplicationDetails(applicationId) {
+  try {
+    const response = await fetch(`/api/applications/${applicationId}`, {
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch application details');
+    }
+    
+    const data = await response.json();
+    const application = data.data;
+    
+    // Populate modal content
+    const content = document.getElementById('application-details-content');
+    content.innerHTML = `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold mb-3">Applicant Information</h4>
+          <div class="space-y-2">
+            <p><strong>Name:</strong> ${application.applicantName || 'N/A'}</p>
+            <p><strong>Email:</strong> ${application.applicantEmail}</p>
+            <p><strong>Status:</strong> 
+              <span class="badge badge-outline">${application.applicationStatus || 'Pending'}</span>
+            </p>
+            <p><strong>Applied:</strong> ${application.appliedAt ? new Date(application.appliedAt).toLocaleDateString() : 'N/A'}</p>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-3">Job Information</h4>
+          <div class="space-y-2">
+            <p><strong>Role:</strong> ${application.jobRoleName || 'N/A'}</p>
+            <p><strong>Band:</strong> ${application.jobBand || 'N/A'}</p>
+            <p><strong>Capability:</strong> ${application.jobCapability || 'N/A'}</p>
+            <p><strong>Location:</strong> ${application.jobLocation || 'N/A'}</p>
+            <p><strong>Closing Date:</strong> ${application.jobClosingDate ? new Date(application.jobClosingDate).toLocaleDateString() : 'N/A'}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-6">
+        <h4 class="font-semibold mb-3">Actions</h4>
+        <div class="flex gap-2">
+          ${application.cvPath ? `<button class="btn btn-outline btn-sm" onclick="downloadCV('${application.cvPath}', '${application.applicantName || application.applicantEmail}')">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Download CV
+          </button>` : ''}
+          <a href="/job-roles/${application.jobRoleID}" class="btn btn-outline btn-sm">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+            View Job Role
+          </a>
+        </div>
+      </div>
+    `;
+    
+    // Reinitialize icons in the modal
+    lucide.createIcons();
+    
+    // Show modal
+    document.getElementById('application-details-modal').showModal();
+    
+  } catch (error) {
+    console.error('Error fetching application details:', error);
+    alert('Failed to load application details. Please try again.');
+  }
+}
+
+// Format timestamps on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const timestamps = document.querySelectorAll('[data-timestamp]');
+  timestamps.forEach(function(element) {
+    const timestamp = element.getAttribute('data-timestamp');
+    const prefix = element.getAttribute('data-prefix') || '';
+    
+    if (timestamp) {
+      const date = new Date(timestamp);
+      if (!isNaN(date.getTime())) {
+        const formattedDate = date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+        element.textContent = prefix + formattedDate;
+      }
+    }
+  });
+});
+</script>
+{% endblock %}

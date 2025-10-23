@@ -50,6 +50,11 @@
               <li>
                 <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
               </li>
+              {% if isAdmin %}
+                <li>
+                  <a href="/applicants" class="{% if currentPage === 'applicants' %}active{% endif %}">{{ t('nav.applicants') }}</a>
+                </li>
+              {% endif %}
             </ul>
           </div>
           <a href="/" class="btn btn-ghost text-xl">
@@ -66,6 +71,11 @@
             <li>
               <a href="/job-roles" class="{% if currentPage === 'job-roles' %}active{% endif %}">{{ t('nav.jobRoles') }}</a>
             </li>
+            {% if isAdmin %}
+              <li>
+                <a href="/applicants" class="{% if currentPage === 'applicants' %}active{% endif %}">{{ t('nav.applicants') }}</a>
+              </li>
+            {% endif %}
           </ul>
         </div>
         <div
