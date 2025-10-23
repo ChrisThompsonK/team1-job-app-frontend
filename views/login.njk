@@ -34,8 +34,15 @@
               <i data-lucide="log-in" class="h-6 w-6"></i>
               {{ t('auth.login.title') }}
             </h2>
+            <!-- Error Alert -->
+            {% if error %}
+              <div class="alert alert-error mb-4">
+                <i data-lucide="alert-circle" class="h-6 w-6 shrink-0"></i>
+                <span>{{ error }}</span>
+              </div>
+            {% endif %}
             <form
-              id="login-form-element" class="space-y-4">
+              method="POST" action="/auth/login" class="space-y-4">
               <!-- Hidden return URL field -->
               <input
               type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
@@ -45,7 +52,7 @@
                   <span class="label-text font-medium">{{ t('auth.email.label') }}</span>
                 </label>
                 <div class="relative">
-                  <input type="email" id="login-email" name="email" placeholder="{{ t('auth.email.placeholder') }}" class="input input-bordered w-full pl-10" required/>
+                  <input type="email" id="login-email" name="email" placeholder="{{ t('auth.email.placeholder') }}" class="input input-bordered w-full pl-10" value="{{ formData.email if formData else '' }}" required/>
                   <i
                     data-lucide="mail"
                     class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
@@ -98,8 +105,15 @@
               <i data-lucide="user-plus" class="h-6 w-6"></i>
               {{ t('auth.signup.title') }}
             </h2>
+            <!-- Error Alert -->
+            {% if signupError %}
+              <div class="alert alert-error mb-4">
+                <i data-lucide="alert-circle" class="h-6 w-6 shrink-0"></i>
+                <span>{{ signupError }}</span>
+              </div>
+            {% endif %}
             <form
-              id="signup-form-element" class="space-y-4">
+              method="POST" action="/auth/signup" class="space-y-4">
               <!-- Hidden return URL field -->
               <input
               type="hidden" name="returnTo" value="{{ returnTo or '/' }}"/>
@@ -109,7 +123,7 @@
                   <span class="label-text font-medium">{{ t('auth.email.label') }}</span>
                 </label>
                 <div class="relative">
-                  <input type="email" id="signup-email" name="email" placeholder="{{ t('auth.email.placeholder') }}" class="input input-bordered w-full pl-10" required/>
+                  <input type="email" id="signup-email" name="email" placeholder="{{ t('auth.email.placeholder') }}" class="input input-bordered w-full pl-10" value="{{ signupFormData.email if signupFormData else '' }}" required/>
                   <i
                     data-lucide="mail"
                     class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40 z-10 pointer-events-none"></i>
@@ -233,10 +247,8 @@
         hideIcon.classList.add("hidden");
       }
     }
-    // Both login and signup forms are now handled by auth.js
   </script>
 {% endblock %}
 {% block scripts %}
-  <!-- Authentication JavaScript -->
-  <script src="/js/auth.js"></script>
+  <!-- No external JavaScript needed - forms handled server-side -->
 {% endblock %}
