@@ -20,11 +20,9 @@ export class AuthController {
     let returnTo: string | undefined;
 
     try {
-      ({
-        email,
-        password,
-        returnTo,
-      } = req.body as LoginCredentials & { returnTo?: string });
+      ({ email, password, returnTo } = req.body as LoginCredentials & {
+        returnTo?: string;
+      });
       // Validate input
       if (!email || !password) {
         res.render("login", {
