@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import type { JobRoleservice } from "../services/interfaces.js";
-import { ApplicationApiService } from "../services/applicationApiService.js";
 import { decodeJobId } from "../utils/jobSecurity.js";
 
 /**
@@ -8,17 +7,18 @@ import { decodeJobId } from "../utils/jobSecurity.js";
  */
 export class JobApplicationController {
   private jobRoleService: JobRoleservice;
-  private applicationService: ApplicationApiService;
 
-  constructor(jobRoleService: JobRoleservice, applicationService: ApplicationApiService) {
+  constructor(jobRoleService: JobRoleservice) {
     this.jobRoleService = jobRoleService;
-    this.applicationService = applicationService;
   }
   /**
    * Show job application form
    * GET /job-roles/:id/apply
    */
-  public getJobApplication = async (req: Request, res: Response): Promise<void> => {
+  public getJobApplication = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
       // Decode the job ID from the URL parameter
       const encodedId = req.params.id;
@@ -28,8 +28,10 @@ export class JobApplicationController {
       const decodedJobId = decodeJobId(encodedId);
 
       // Fetch real job data from backend
-      const jobRole = await this.jobRoleService.getJobById(Number(decodedJobId));
-      
+      const jobRole = await this.jobRoleService.getJobById(
+        Number(decodedJobId)
+      );
+
       if (!jobRole) {
         res.status(404).render("error", {
           title: "Job Not Found",
@@ -58,7 +60,10 @@ export class JobApplicationController {
    * Handle job application submission
    * POST /job-roles/:id/apply
    */
-  public submitJobApplication = async (req: Request, res: Response): Promise<void> => {
+  public submitJobApplication = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
       // Decode the job ID from the URL parameter
       const encodedId = req.params.id;
@@ -69,7 +74,7 @@ export class JobApplicationController {
 
       // Get the job data to display in case of success or error
       const jobRole = await this.jobRoleService.getJobById(decodedJobId);
-      
+
       if (!jobRole) {
         res.status(404).render("error", {
           title: "Job Not Found",
@@ -87,20 +92,22 @@ export class JobApplicationController {
         currentPage: "job-roles",
         success: req.t("jobApplication.applicationSubmitted"),
       });
-
     } catch (error) {
       console.error("Error submitting job application:", error);
-      
+
       try {
-        const decodedJobId = Number(decodeJobId(req.params.id || ''));
+        const decodedJobId = Number(decodeJobId(req.params.id || ""));
         const jobRole = await this.jobRoleService.getJobById(decodedJobId);
-        
+
         if (jobRole) {
           res.status(400).render("job-application", {
             title: `Apply for ${jobRole.name}`,
             jobRole: jobRole,
             currentPage: "job-roles",
-            error: error instanceof Error ? error.message : "Failed to submit application",
+            error:
+              error instanceof Error
+                ? error.message
+                : "Failed to submit application",
             formData: req.body,
           });
           return;

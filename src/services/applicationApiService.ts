@@ -53,18 +53,18 @@ export class ApplicationApiService {
     try {
       // Create FormData object for multipart/form-data
       const submissionData = new FormData();
-      
+
       // Add job ID
       submissionData.append("jobId", jobId.toString());
-      
+
       // Add CV file (required)
       submissionData.append("cv", cvFile);
-      
+
       // Add cover letter if provided
       if (coverLetterFile) {
         submissionData.append("coverLetter", coverLetterFile);
       }
-      
+
       // Add form data as metadata (optional - for future enhancement)
       submissionData.append("applicationData", JSON.stringify(formData));
 
@@ -81,9 +81,14 @@ export class ApplicationApiService {
       return response.data;
     } catch (error) {
       console.error("Error submitting application:", error);
-      
-      if (error instanceof Error && 'response' in error) {
-        const axiosError = error as any;
+
+      if (error instanceof Error && "response" in error) {
+        const axiosError = error as Error & {
+          response?: {
+            data?: { message?: string };
+            status?: number;
+          };
+        };
         // Handle API error responses
         if (axiosError.response?.data?.message) {
           throw new Error(axiosError.response.data.message);
@@ -92,10 +97,12 @@ export class ApplicationApiService {
           throw new Error("Authentication required. Please log in.");
         }
         if (axiosError.response?.status === 400) {
-          throw new Error("Invalid application data. Please check your form and try again.");
+          throw new Error(
+            "Invalid application data. Please check your form and try again."
+          );
         }
       }
-      
+
       throw new Error("Failed to submit application. Please try again.");
     }
   }
@@ -108,11 +115,10 @@ export class ApplicationApiService {
   async getUserApplications(cookies?: { [key: string]: string }) {
     try {
       const headers = createHeadersWithAuth(cookies);
-      
-      const response = await axios.get(
-        `${this.baseURL}/applications/me`,
-        { headers }
-      );
+
+      const response = await axios.get(`${this.baseURL}/applications/me`, {
+        headers,
+      });
 
       return response.data;
     } catch (error) {
