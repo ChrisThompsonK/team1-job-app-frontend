@@ -116,7 +116,7 @@ class AuthService {
         body: JSON.stringify({
           email: credentials.email,
           password: credentials.password,
-          name: credentials.name || credentials.email.split("@")[0], // Use email prefix as default name
+          name: credentials.name || "", // Send empty string instead of email prefix
         }),
       });
 
