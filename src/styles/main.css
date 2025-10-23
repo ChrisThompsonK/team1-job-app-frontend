@@ -37,7 +37,7 @@
 /* Custom base layer styles */
 @layer base {
   body {
-    font-family: "CenturyGothic", "AppleGothic", sans-serif;
+    font-family: "Galano Grotesque", "system-ui", "-apple-system", sans-serif;
   }
 }
 
