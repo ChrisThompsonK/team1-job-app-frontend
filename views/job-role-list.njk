@@ -1,30 +1,27 @@
 {% extends "layouts/base.njk" %}
 {% set currentPage = "job-roles" %}
 {% block title %}
-    {{ title }}
+  {{ title }}
 {% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="/css/job-roles.css">
-    {% endblock %}
-    {% block body_attributes %}
-        class="job-roles-page"{% endblock %}
-    {% block main_attributes %}
-        class="container mx-auto px-4 py-8"{% endblock %}
-    {% block content %}
-        <!-- Page Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
-            <p class="text-base-content/70">{{ t('jobRoles.explore') }}</p>
-            <!-- Admin Add Button -->
-            <div class="mt-6">       
-            
-                <a href="/job-roles/add" class="btn btn-primary btn-lg gap-2" title="{{ t('jobRoles.addJobRole') }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    {{ t('jobRoles.addJobRole') }}
-                </a>
-            </div>
+  <link rel="stylesheet" href="/css/job-roles.css">
+  {% endblock %}
+  {% block body_attributes %}
+    class="job-roles-page"{% endblock %}
+  {% block main_attributes %}
+    class="container mx-auto px-4 py-8"{% endblock %}
+  {% block content %}
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-base-content mb-2">{{ title }}</h1>
+      <p class="text-base-content/70">{{ t('jobRoles.explore') }}</p>
+      <!-- Admin Add Button -->
+      {% if isAdmin %}
+        <div class="mt-6">
+          <a href="/job-roles/add" class="btn btn-primary btn-lg gap-2" title="{{ t('jobRoles.addJobRole') }}">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            {{ t('jobRoles.addJobRole') }}
+          </a>
         </div>
         <!-- Search and Filter Section -->
         <div class="card bg-base-100 shadow-lg mb-8">
@@ -180,282 +177,331 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
-        
-        <!-- Generate Report Button -->
-        <div class="flex justify-end mb-6">
-            <a href="/job-roles/export" class="btn btn-accent gap-2" title="Generate CSV Report">
-                <i data-lucide="download" class="w-5 h-5"></i>
-                {{ t('jobRoles.generateReport') or 'Generate Report' }}
-            </a>
-        </div>
-        
-        <!-- Job Roles Grid -->
-        {% if jobRoles and jobRoles.length > 0 %}
-            <div id="job-roles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for job in jobRoles %}
-                    <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 job-role-card">
-                        <div
-                            class="card-body">
-                            <!-- Job Title -->
-                            <h2 class="card-title text-xl font-semibold text-primary">
-                                {{ translateJobTitle(job.name, t) }}
-                                <!-- Status Badge -->
-                                <div class="badge badge-sm {{ 'badge-success' if job.status == 'Open' else 'badge-error' }}">
-                                    {{ translateStatus(job.status, t) }}
-                                </div>
-                            </h2>
-                            <!-- Job Details -->
-                            <div
-                                class="space-y-3 mt-4">
-                                <!-- Location -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">{{ job.location }}</span>
-                                </div>
-                                <!-- Capability Badge -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1
-                                                1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    <span class="badge badge-secondary">{{ translateCapability(job.capability, t) }}</span>
-                                </div>
-                                <!-- Band -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138
-                                                3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0
-                                                00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42
-                                                3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">Band:
-                                        <span class="font-semibold">{{ translateBand(job.band, t) }}</span>
-                                    </span>
-                                </div>
-                                <!-- Closing Date -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">
-                                        {{ t('jobRoles.closes') }}:
-                                        <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
-                                    </span>
-                                </div>
-                                <!-- Number of Positions -->
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-base-content/60" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7
-                                                20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014
-                                                0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
-                                    <span class="text-base-content/80">
-                                        <span class="font-semibold">{{ job.numberOfOpenPositions }}</span>
-                                        {% if job.numberOfOpenPositions == 1 %}
-                                            {{ t('jobRoles.positionAvailable') }}
-                                        {% else %}
-                                            {{ t('jobRoles.positionsAvailable') }}
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- Action Buttons -->
-                            <div class="card-actions justify-end mt-6 gap-2">
-                                <a href="/job-roles/{{ job.id }}/edit" class="btn btn-sm btn-outline btn-warning" title="{{ t('jobRoles.edit') }}">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828
-                                                15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
-                                    {{ t('jobRoles.edit') }}
-                                </a>
-                                <form method="POST" action="/job-roles/{{ job.id }}/delete" style="display: inline;" class="delete-form" data-job-name="{{ job.name }}" data-job-id="{{ job.id }}">
-                                    <button type="button" class="btn btn-sm btn-outline btn-error delete-btn" title="{{ t('jobRoles.delete') }}">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1
-                                                    1v3M4 7h16"></path>
-                                        </svg>
-                                        {{ t('jobRoles.delete') }}
-                                    </button>
-                                </form>
-                                <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
-                                    {{ t('jobRoles.viewDetails') }}
-                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+          </div>
+          <!-- Filter Controls -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <!-- Location Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{{ t('jobRoles.location') }}</span>
+              </label>
+              <select id="location-filter" name="location" class="select select-bordered w-full">
+                {% for option in filterOptions.locations %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.location == option.value and option.value != '' }}>
+                    {{ t(option.label) }}
+                  </option>
                 {% endfor %}
+              </select>
             </div>
-            
-            <!-- Pagination Controls -->
-            {% if paginationData and paginationData.totalPages > 1 %}
-                <div
-                    class="flex justify-center items-center gap-2 mt-8">
-                    <!-- Previous Button -->
-                    {% if paginationData.hasPrevious %}
-                        <a href="{{ paginationData.previousUrl }}" class="btn btn-outline btn-sm gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                            {{ t('common.previous') }}
-                        </a>
-                    {% else %}
-                        <button class="btn btn-outline btn-sm gap-2 btn-disabled" disabled>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                            {{ t('common.previous') }}
-                        </button>
-                    {% endif %}
-                    <!-- Page Numbers -->
-                    <div class="flex gap-1">
-                        {% for pageLink in paginationData.pageLinks %}
-                            {% if pageLink.isEllipsis %}
-                                <span class="btn btn-sm btn-ghost btn-disabled">...</span>
-                            {% elif pageLink.isActive %}
-                                <button class="btn btn-primary btn-sm">{{ pageLink.page }}</button>
-                            {% else %}
-                                <a href="{{ pageLink.url }}" class="btn btn-outline btn-sm">
-                                    {{ pageLink.page }}
-                                </a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <!-- Next Button -->
-                    {% if paginationData.hasNext %}
-                        <a href="{{ paginationData.nextUrl }}" class="btn btn-outline btn-sm gap-2">
-                            {{ t('common.next') }}
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    {% else %}
-                        <button class="btn btn-outline btn-sm gap-2 btn-disabled" disabled>
-                            {{ t('common.next') }}
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </button>
-                    {% endif %}
-                </div>
+            <!-- Capability Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{{ t('jobRoles.capability') }}</span>
+              </label>
+              <select id="capability-filter" name="capability" class="select select-bordered w-full">
+                {% for option in filterOptions.capabilities %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.capability == option.value and option.value != '' }}>
+                    {{ t(option.label) }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Band Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{{ t('jobRoles.band') }}</span>
+              </label>
+              <select id="band-filter" name="band" class="select select-bordered w-full">
+                {% for option in filterOptions.bands %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.band == option.value and option.value != '' }}>
+                    {{ t(option.label) }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Status Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{{ t('jobRoles.status') }}</span>
+              </label>
+              <select id="status-filter" name="status" class="select select-bordered w-full">
+                {% for option in filterOptions.statuses %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.status == option.value and option.value != '' }}>
+                    {{ t(option.label) }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <!-- Sort Controls -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <!-- Sort By Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{{ t('jobRoles.sortBy') }}</span>
+              </label>
+              <select id="sort-by-filter" name="sortBy" class="select select-bordered w-full">
+                {% for option in filterOptions.sortOptions %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortBy == option.value }}>
+                    {{ t(option.label) }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Sort Order Filter -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{{ t('jobRoles.sortOrder') }}</span>
+              </label>
+              <select id="sort-order-filter" name="sortOrder" class="select select-bordered w-full">
+                {% for option in filterOptions.sortOrders %}
+                  <option value="{{ option.value }}" {{ 'selected' if currentFilters.sortOrder == option.value }}>
+                    {{ t(option.label) }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <!-- Action Buttons -->
+          <div class="flex justify-end gap-2 mt-4">
+            <a href="/job-roles" class="btn btn-outline btn-sm gap-2">
+              <i data-lucide="x" class="w-4 h-4"></i>
+              Clear Filters
+            </a>
+            <button type="submit" class="btn btn-primary btn-sm gap-2">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              Apply Filters
+            </button>
+          </div>
+        </form>
+        <!-- Results Summary -->
+        <div class="divider"></div>
+        <div id="results-summary" class="text-sm text-base-content/60">
+          {% if pagination %}
+            {{ t('jobRoles.showing') }}
+            {{ jobRoles.length }}
+            {{ t('common.of') }}
+            {{ pagination.totalItems }}
+            {% if pagination.totalItems == 1 %}
+              {{ t('jobRoles.jobRolesSingle') }}
+            {% else %}
+              {{ t('jobRoles.jobRolesPlural') }}
             {% endif %}
-        {% else %}
-            <!-- Empty State -->
-            <div id="empty-state" class="text-center py-16">
-                <div class="max-w-md mx-auto">
-                    <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                    <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noMatchFilters') }}</h3>
-                    <p class="text-base-content/60 mb-4">{{ t('jobRoles.noMatchMessage') }}</p>
-                    <a href="/job-roles" class="btn btn-primary btn-sm gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                        {{ t('jobRoles.clearAllFilters') }}
-                    </a>
+            {% if pagination.totalPages > 1 %}
+              ({{ t('common.page') }}
+              {{ pagination.currentPage }}
+              {{ t('common.of') }}
+              {{ pagination.totalPages }})
+            {% endif %}
+          {% else %}
+            {{ jobRoles.length if jobRoles else 0 }}
+            {% if jobRoles.length == 1 %}
+              {{ t('jobRoles.jobRolesSingle') }}
+            {% else %}
+              {{ t('jobRoles.jobRolesPlural') }}
+            {% endif %}
+            {{ t('jobRoles.found') }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- Generate Report Button -->
+    <div class="flex justify-end mb-6">
+      <a href="/job-roles/export" class="btn btn-accent gap-2" title="Generate CSV Report">
+        <i data-lucide="download" class="w-5 h-5"></i>
+        {{ t('jobRoles.generateReport') or 'Generate Report' }}
+      </a>
+    </div>
+    <!-- Job Roles Grid -->
+    {% if jobRoles and jobRoles.length > 0 %}
+      <div id="job-roles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for job in jobRoles %}
+          <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 job-role-card">
+            <div
+              class="card-body">
+              <!-- Job Title -->
+              <h2 class="card-title text-xl font-semibold text-primary">
+                {{ translateJobTitle(job.name, t) }}
+                <!-- Status Badge -->
+                <div class="badge badge-sm {{ 'badge-success' if job.status == 'Open' else 'badge-error' }}">
+                  {{ translateStatus(job.status, t) }}
                 </div>
-            </div>
-        {% endif %}
-        <!-- Delete Confirmation Modal -->
-        <dialog id="delete-modal" class="modal">
-            <div class="modal-box">
-                <h3 class="font-bold text-lg text-error mb-4">
-                    <svg class="w-6 h-6 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232
-                                15.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                    </svg>
-                    {{ t('jobRoles.confirmDeletion') }}
-                </h3>
-                <p class="text-base-content/80 mb-6">
-                    {{ t('jobRoles.confirmDeleteJob') }}
-                    <span id="job-name-to-delete" class="font-semibold text-primary"></span>?
-                </p>
-                <p class="text-sm text-base-content/60 mb-6">
-                    {{ t('jobRoles.deleteWarning') }}
-                </p>
-                <div class="modal-action">
-                    <button class="btn btn-outline" onclick="closeDeleteModal()">{{ t('common.cancel') }}</button>
-                    <button class="btn btn-error" onclick="confirmDeletion()">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1
-                                    1v3M4 7h16"></path>
-                        </svg>
-                        {{ t('jobRoles.deleteJobRole') }}
+              </h2>
+              <!-- Job Details -->
+              <div
+                class="space-y-3 mt-4">
+                <!-- Location -->
+                <div class="flex items-center gap-2">
+                  <i data-lucide="map-pin" class="w-5 h-5 text-base-content/60"></i>
+                  <span class="text-base-content/80">{{ job.location }}</span>
+                </div>
+                <!-- Capability Badge -->
+                <div class="flex items-center gap-2">
+                  <i data-lucide="building" class="w-5 h-5 text-base-content/60"></i>
+                  <span class="badge badge-secondary">{{ translateCapability(job.capability, t) }}</span>
+                </div>
+                <!-- Band -->
+                <div class="flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-5 h-5 text-base-content/60"></i>
+                  <span class="text-base-content/80">Band:
+                    <span class="font-semibold">{{ translateBand(job.band, t) }}</span>
+                  </span>
+                </div>
+                <!-- Closing Date -->
+                <div class="flex items-center gap-2">
+                  <i data-lucide="calendar" class="w-5 h-5 text-base-content/60"></i>
+                  <span class="text-base-content/80">
+                    {{ t('jobRoles.closes') }}:
+                    <span class="font-semibold">{{ job.closingDate.toLocaleDateString() }}</span>
+                  </span>
+                </div>
+                <!-- Number of Positions -->
+                <div class="flex items-center gap-2">
+                  <i data-lucide="users" class="w-5 h-5 text-base-content/60"></i>
+                  <span class="text-base-content/80">
+                    <span class="font-semibold">{{ job.numberOfOpenPositions }}</span>
+                    {% if job.numberOfOpenPositions == 1 %}
+                      {{ t('jobRoles.positionAvailable') }}
+                    {% else %}
+                      {{ t('jobRoles.positionsAvailable') }}
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+              <!-- Action Buttons -->
+              <div class="card-actions justify-end mt-6 gap-2">
+                {% if isAdmin %}
+                  <a href="/job-roles/{{ job.id }}/edit" class="btn btn-sm btn-outline btn-warning" title="{{ t('jobRoles.edit') }}">
+                    <i data-lucide="edit" class="w-4 h-4"></i>
+                    {{ t('jobRoles.edit') }}
+                  </a>
+                  <form method="POST" action="/job-roles/{{ job.id }}/delete" style="display: inline;" class="delete-form" data-job-name="{{ job.name }}" data-job-id="{{ job.id }}">
+                    <button type="button" class="btn btn-sm btn-outline btn-error delete-btn" title="{{ t('jobRoles.delete') }}">
+                      <i data-lucide="trash-2" class="w-4 h-4"></i>
+                      {{ t('jobRoles.delete') }}
                     </button>
-                </div>
+                  </form>
+                {% endif %}
+                <a href="/job-roles/{{ job.id }}" class="btn btn-primary btn-sm">
+                  {{ t('jobRoles.viewDetails') }}
+                  <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                </a>
+              </div>
             </div>
-            <form method="dialog" class="modal-backdrop">
-                <button>close</button>
-            </form>
-        </dialog>
-    {% endblock %}
-    {% block scripts %}
-        <script>
-            // Auto-submit form on filter change for better UX
-            document.addEventListener("DOMContentLoaded", () => {
-                const form = document.getElementById("filter-form");
-                const searchInput = document.getElementById("search-input");
-                const selectFilters = form.querySelectorAll("select");
-                let searchTimeout;
-                // Auto-submit on select change
-                selectFilters.forEach((select) => {
-                    select.addEventListener("change", () => {
-                        form.submit();
-                    });
-                });
-                // Debounced auto-submit for search input
-                searchInput.addEventListener("input", () => {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        form.submit();
-                    }, 500); // Wait 500ms after user stops typing
-                });
-                // Add smooth hover effect for job cards
-                const style = document.createElement("style");
-                style.textContent = `
+          </div>
+        {% endfor %}
+      </div>
+      <!-- Pagination Controls -->
+      {% if paginationData and paginationData.totalPages > 1 %}
+        <div
+          class="flex justify-center items-center gap-2 mt-8">
+          <!-- Previous Button -->
+          {% if paginationData.hasPrevious %}
+            <a href="{{ paginationData.previousUrl }}" class="btn btn-outline btn-sm gap-2">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              {{ t('common.previous') }}
+            </a>
+          {% else %}
+            <button class="btn btn-outline btn-sm gap-2 btn-disabled" disabled>
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              {{ t('common.previous') }}
+            </button>
+          {% endif %}
+          <!-- Page Numbers -->
+          <div class="flex gap-1">
+            {% for pageLink in paginationData.pageLinks %}
+              {% if pageLink.isEllipsis %}
+                <span class="btn btn-sm btn-ghost btn-disabled">...</span>
+              {% elif pageLink.isActive %}
+                <button class="btn btn-primary btn-sm">{{ pageLink.page }}</button>
+              {% else %}
+                <a href="{{ pageLink.url }}" class="btn btn-outline btn-sm">
+                  {{ pageLink.page }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <!-- Next Button -->
+          {% if paginationData.hasNext %}
+            <a href="{{ paginationData.nextUrl }}" class="btn btn-outline btn-sm gap-2">
+              {{ t('common.next') }}
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </a>
+          {% else %}
+            <button class="btn btn-outline btn-sm gap-2 btn-disabled" disabled>
+              {{ t('common.next') }}
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <!-- Empty State -->
+      <div id="empty-state" class="text-center py-16">
+        <div class="max-w-md mx-auto">
+          <i data-lucide="search" class="w-16 h-16 mx-auto text-base-content/30 mb-4"></i>
+          <h3 class="text-xl font-semibold text-base-content mb-2">{{ t('jobRoles.noMatchFilters') }}</h3>
+          <p class="text-base-content/60 mb-4">{{ t('jobRoles.noMatchMessage') }}</p>
+          <a href="/job-roles" class="btn btn-primary btn-sm gap-2">
+            <i data-lucide="x" class="w-4 h-4"></i>
+            {{ t('jobRoles.clearAllFilters') }}
+          </a>
+        </div>
+      </div>
+    {% endif %}
+    <!-- Delete Confirmation Modal -->
+    <dialog id="delete-modal" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg text-error mb-4">
+          <i data-lucide="triangle-alert" class="w-6 h-6 inline mr-2"></i>
+          {{ t('jobRoles.confirmDeletion') }}
+        </h3>
+        <p class="text-base-content/80 mb-6">
+          {{ t('jobRoles.confirmDeleteJob') }}
+          <span id="job-name-to-delete" class="font-semibold text-primary"></span>?
+        </p>
+        <p class="text-sm text-base-content/60 mb-6">
+          {{ t('jobRoles.deleteWarning') }}
+        </p>
+        <div class="modal-action">
+          <button class="btn btn-outline" onclick="closeDeleteModal()">{{ t('common.cancel') }}</button>
+          <button class="btn btn-error" onclick="confirmDeletion()">
+            <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+            {{ t('jobRoles.deleteJobRole') }}
+          </button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  {% endblock %}
+  {% block scripts %}
+    <script>
+      // Auto-submit form on filter change for better UX
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("filter-form");
+        const searchInput = document.getElementById("search-input");
+        const selectFilters = form.querySelectorAll("select");
+        let searchTimeout;
+        // Auto-submit on select change
+        selectFilters.forEach((select) => {
+          select.addEventListener("change", () => {
+            form.submit();
+          });
+        });
+        // Debounced auto-submit for search input
+        searchInput.addEventListener("input", () => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            form.submit();
+          }, 500); // Wait 500ms after user stops typing
+        });
+        // Add smooth hover effect for job cards
+        const style = document.createElement("style");
+        style.textContent = `
                 .job-role-card {
                     transition: transform 0.2s ease, box-shadow 0.2s ease;
                 }
@@ -463,43 +509,43 @@
                     transform: translateY(-4px);
                 }
             `;
-                document.head.appendChild(style);
-                // Delete modal functionality
-                const deleteModal = document.getElementById("delete-modal");
-                const jobNameSpan = document.getElementById("job-name-to-delete");
-                const deleteBtns = document.querySelectorAll(".delete-btn");
-                let currentFormToSubmit = null;
-                // Add click listeners to all delete buttons
-                deleteBtns.forEach((btn) => {
-                    btn.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        const form = btn.closest(".delete-form");
-                        const jobName = form.dataset.jobName;
-                        // Store reference to the form
-                        currentFormToSubmit = form;
-                        // Update modal content
-                        jobNameSpan.textContent = jobName;
-                        // Show modal
-                        deleteModal.showModal();
-                    });
-                });
-                // Make functions globally available
-                window.closeDeleteModal = () => {
-                    deleteModal.close();
-                    currentFormToSubmit = null;
-                };
-                window.confirmDeletion = () => {
-                    if (currentFormToSubmit) {
-                        currentFormToSubmit.submit();
-                    }
-                    deleteModal.close();
-                };
-                // Close modal when clicking outside
-                deleteModal.addEventListener("click", (e) => {
-                    if (e.target === deleteModal) {
-                        window.closeDeleteModal();
-                    }
-                });
-            });
-        </script>
-    {% endblock %}
+        document.head.appendChild(style);
+        // Delete modal functionality
+        const deleteModal = document.getElementById("delete-modal");
+        const jobNameSpan = document.getElementById("job-name-to-delete");
+        const deleteBtns = document.querySelectorAll(".delete-btn");
+        let currentFormToSubmit = null;
+        // Add click listeners to all delete buttons
+        deleteBtns.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const form = btn.closest(".delete-form");
+            const jobName = form.dataset.jobName;
+            // Store reference to the form
+            currentFormToSubmit = form;
+            // Update modal content
+            jobNameSpan.textContent = jobName;
+            // Show modal
+            deleteModal.showModal();
+          });
+        });
+        // Make functions globally available
+        window.closeDeleteModal = () => {
+          deleteModal.close();
+          currentFormToSubmit = null;
+        };
+        window.confirmDeletion = () => {
+          if (currentFormToSubmit) {
+            currentFormToSubmit.submit();
+          }
+          deleteModal.close();
+        };
+        // Close modal when clicking outside
+        deleteModal.addEventListener("click", (e) => {
+          if (e.target === deleteModal) {
+            window.closeDeleteModal();
+          }
+        });
+      });
+    </script>
+  {% endblock %}

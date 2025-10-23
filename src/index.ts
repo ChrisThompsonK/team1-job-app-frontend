@@ -12,6 +12,7 @@ import { JobApplicationController } from "./controllers/jobApplicationController
 import { JobRoleController } from "./controllers/jobRoleController.js";
 import { requireAuth } from "./middleware/authMiddleware.js";
 import { JobRoleApiService } from "./services/jobRoleApiService.js";
+import { encodeJobId } from "./utils/jobSecurity.js";
 import {
   getTranslatedBand,
   getTranslatedCapability,
@@ -43,6 +44,7 @@ nunjucksEnv.addGlobal(
   "translateResponsibilities",
   getTranslatedResponsibilities
 );
+nunjucksEnv.addGlobal("encodeJobId", encodeJobId);
 
 // Set Nunjucks as the view engine
 app.set("view engine", "njk");
