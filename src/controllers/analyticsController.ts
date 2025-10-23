@@ -28,8 +28,7 @@ export class AnalyticsController {
 
       res.json({
         pageViews: pageViews.rows || [],
-        activeUsers:
-          activeUsers.rows?.[0]?.metricValues?.[0]?.value || "0",
+        activeUsers: activeUsers.rows?.[0]?.metricValues?.[0]?.value || "0",
         topJobRoles: jobRoleAnalytics.rows || [],
       });
     } catch (error) {
@@ -117,8 +116,11 @@ export class AnalyticsController {
         return;
       }
 
-      const { eventName, startDate = "7daysAgo", endDate = "today" } =
-        req.query;
+      const {
+        eventName,
+        startDate = "7daysAgo",
+        endDate = "today",
+      } = req.query;
 
       if (!eventName || typeof eventName !== "string") {
         res.status(400).json({
