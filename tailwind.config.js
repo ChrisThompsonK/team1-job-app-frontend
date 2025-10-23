@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Century Gothic", "CenturyGothic", "AppleGothic", "sans-serif"],
+        sans: ["Galano Grotesque", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },
