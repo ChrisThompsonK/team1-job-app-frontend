@@ -27,7 +27,7 @@ export class AnalyticsController {
 
       res.json({
         pageViews: pageViews.rows || [],
-        activeUsers: activeUsers.rows?.[0]?.metricValues?.[0]?.value || "0",
+        activeUsers: Number(activeUsers.rows?.[0]?.metricValues?.[0]?.value) || 0,
         topJobRoles: jobRoleAnalytics.rows || [],
       });
     } catch (error) {
