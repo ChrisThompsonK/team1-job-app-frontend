@@ -89,6 +89,7 @@ public/
 !public/images/
 !public/css/
 !public/fonts/
+!public/js/
 public/fonts/README.md
 public/fonts/**/.DS_Store
 
