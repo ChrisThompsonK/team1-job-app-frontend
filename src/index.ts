@@ -278,17 +278,21 @@ app.post(
 
 // API proxy for chatbot
 app.post("/api/chat", async (req, res) => {
+  console.log("Chat endpoint hit with body:", req.body);
   try {
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001/api";
+    console.log("Backend URL:", backendUrl);
+    console.log("Full URL being called:", `${backendUrl}/chat`);
 
     // Forward the request to backend with authentication cookies
-    const response = await axios.post(`${backendUrl}/api/chat`, req.body, {
+    const response = await axios.post(`${backendUrl}/chat`, req.body, {
       headers: {
         "Content-Type": "application/json",
         Cookie: req.headers.cookie || "",
       },
     });
 
+    console.log("Backend response status:", response.status);
     res.status(response.status).json(response.data);
   } catch (error: unknown) {
     console.error("Error proxying chat request:", error);
