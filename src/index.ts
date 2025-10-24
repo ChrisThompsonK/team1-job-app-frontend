@@ -278,11 +278,8 @@ app.post(
 
 // API proxy for chatbot
 app.post("/api/chat", async (req, res) => {
-  console.log("Chat endpoint hit with body:", req.body);
   try {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:3001/api";
-    console.log("Backend URL:", backendUrl);
-    console.log("Full URL being called:", `${backendUrl}/chat`);
 
     // Forward the request to backend with authentication cookies
     const response = await axios.post(`${backendUrl}/chat`, req.body, {
@@ -292,7 +289,6 @@ app.post("/api/chat", async (req, res) => {
       },
     });
 
-    console.log("Backend response status:", response.status);
     res.status(response.status).json(response.data);
   } catch (error: unknown) {
     console.error("Error proxying chat request:", error);
@@ -315,8 +311,6 @@ app.get("/api/applications/:id/details", async (req, res) => {
   try {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
     const applicationId = req.params.id;
-
-    console.log(`Proxying request for application details: ${applicationId}`);
 
     // Forward the request to backend with authentication cookies
     const response = await axios.get(
@@ -351,8 +345,6 @@ app.get("/api/applications", async (req, res) => {
   try {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
 
-    console.log("Proxying request for all applications");
-
     // Forward the request to backend with authentication cookies
     const response = await axios.get(`${backendUrl}/api/applications`, {
       headers: {
@@ -383,11 +375,6 @@ app.patch("/api/applications/:id/status", async (req, res) => {
   try {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
     const applicationId = req.params.id;
-
-    console.log(
-      `Proxying application status update for application ${applicationId}:`,
-      req.body
-    );
 
     // Forward the request to backend with authentication cookies
     const response = await axios.patch(
@@ -424,8 +411,6 @@ app.get("/api/files/cv/:filename", async (req, res) => {
   try {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
     const filename = req.params.filename;
-
-    console.log(`Proxying CV file request: ${filename}`);
 
     // Forward the request to backend with authentication cookies
     const response = await axios.get(`${backendUrl}/api/files/cv/${filename}`, {
