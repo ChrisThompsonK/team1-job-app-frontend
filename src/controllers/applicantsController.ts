@@ -23,9 +23,24 @@ export class ApplicantsController {
     res: Response
   ): Promise<void> => {
     try {
+      console.log("🔍 Applicants page requested:", {
+        url: req.url,
+        cookies: Object.keys(req.cookies || {}),
+        timestamp: new Date().toISOString(),
+      });
+
       // Check admin authentication first
+      console.log("🔐 Checking admin authentication...");
       const user = await authService.getUserFromSession(req.cookies);
+
+      console.log("👤 Authentication result:", {
+        hasUser: !!user,
+        isAdmin: user?.isAdmin || false,
+        userEmail: user?.email || "NO EMAIL",
+      });
+
       if (!user || !user.isAdmin) {
+        console.log("❌ Access denied - not admin");
         res.status(403).render("error", {
           title: "Access Denied",
           message: "Admin access required",
@@ -34,6 +49,7 @@ export class ApplicantsController {
         return;
       }
 
+      console.log("✅ Admin access confirmed, fetching applications...");
       // Fetch all applications from the API
       const response = await this.applicationApiService.getAllApplications(
         req.cookies

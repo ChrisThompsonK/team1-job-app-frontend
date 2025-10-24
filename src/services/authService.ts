@@ -278,20 +278,38 @@ class AuthService {
     [key: string]: string;
   }): Promise<User | null> {
     try {
+      console.log(
+        "🔍 Frontend getUserFromSession called with cookies:",
+        Object.keys(cookies)
+      );
+
       const cookieString = extractSessionCookies(cookies);
+      console.log(
+        "📊 Extracted session cookies:",
+        cookieString ? "FOUND" : "NOT FOUND"
+      );
 
       // Only proceed if we have session cookies
       if (!cookieString) {
+        console.log("❌ No session cookies found");
         return null;
       }
 
       // Check if we have a session token - if so, user is authenticated
       if (cookies["better-auth.session_token"]) {
+        console.log("✅ Better Auth session token found");
         // Get real user data from cookies
         const isAdminFromCookie = cookies.isAdmin === "true";
         const userName = cookies.userName || "Unknown User";
         const userEmail = cookies.userEmail || "unknown@example.com";
         const userId = cookies.session || "unknown-id";
+
+        console.log("👤 User data from cookies:", {
+          userId,
+          userName,
+          userEmail,
+          isAdmin: isAdminFromCookie,
+        });
 
         // Create user object with real data from cookies
         const user: User = {
@@ -308,8 +326,10 @@ class AuthService {
         return user;
       }
 
+      console.log("❌ No Better Auth session token found");
       return null;
-    } catch (_error) {
+    } catch (error) {
+      console.error("🚨 Error in getUserFromSession:", error);
       return null;
     }
   }

@@ -244,6 +244,152 @@ app.post(
   }
 );
 
+// API proxy for getting application details
+app.get("/api/applications/:id/details", async (req, res) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+    const applicationId = req.params.id;
+
+    console.log(`Proxying request for application details: ${applicationId}`);
+
+    // Forward the request to backend with authentication cookies
+    const response = await axios.get(
+      `${backendUrl}/api/applications/${applicationId}/details`,
+      {
+        headers: {
+          Cookie: req.headers.cookie || "",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (error: unknown) {
+    console.error("Error proxying application details request:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch application details",
+      });
+    }
+  }
+});
+
+// API proxy for getting all applications (admin)
+app.get("/api/applications", async (req, res) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+
+    console.log("Proxying request for all applications");
+
+    // Forward the request to backend with authentication cookies
+    const response = await axios.get(`${backendUrl}/api/applications`, {
+      headers: {
+        Cookie: req.headers.cookie || "",
+        Accept: "application/json",
+      },
+    });
+
+    res.status(response.status).json(response.data);
+  } catch (error: unknown) {
+    console.error("Error proxying applications list request:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch applications",
+      });
+    }
+  }
+});
+
+// API proxy for updating application status (admin)
+app.patch("/api/applications/:id/status", async (req, res) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+    const applicationId = req.params.id;
+
+    console.log(
+      `Proxying application status update for application ${applicationId}:`,
+      req.body
+    );
+
+    // Forward the request to backend with authentication cookies
+    const response = await axios.patch(
+      `${backendUrl}/api/applications/${applicationId}/status`,
+      req.body,
+      {
+        headers: {
+          Cookie: req.headers.cookie || "",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (error: unknown) {
+    console.error("Error proxying application status update:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to update application status",
+      });
+    }
+  }
+});
+
+// API proxy for CV file downloads
+app.get("/api/files/cv/:filename", async (req, res) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+    const filename = req.params.filename;
+
+    console.log(`Proxying CV file request: ${filename}`);
+
+    // Forward the request to backend with authentication cookies
+    const response = await axios.get(`${backendUrl}/api/files/cv/${filename}`, {
+      headers: {
+        Cookie: req.headers.cookie || "",
+      },
+      responseType: "stream",
+    });
+
+    // Forward response headers
+    res.set(response.headers);
+
+    // Pipe the file stream to the response
+    (response.data as NodeJS.ReadableStream).pipe(res);
+  } catch (error: unknown) {
+    console.error("Error proxying CV file request:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch CV file",
+      });
+    }
+  }
+});
+
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
 });
