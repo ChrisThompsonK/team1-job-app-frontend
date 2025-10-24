@@ -165,6 +165,7 @@ app.get("/api/analytics/job-roles", requireAuth, (req, res, next) => {
 });
 app.get("/api/analytics/events", requireAuth, (req, res, next) => {
   analyticsController.getEventAnalytics(req, res).catch(next);
+});
 // Profile edit routes - protected endpoints
 app.get("/profile/edit", (req, res, next) => {
   authController.getProfileEdit(req, res).catch(next);
