@@ -196,4 +196,59 @@ export class ApplicationApiService {
       throw new Error("Failed to fetch applications");
     }
   }
+
+  /**
+   * Get application details by ID
+   * @param applicationId - The ID of the application
+   * @param cookies - Authentication cookies
+   * @returns Promise with application details
+   */
+  async getApplicationDetails(
+    applicationId: number,
+    cookies?: { [key: string]: string }
+  ): Promise<{
+    success: boolean;
+    message: string;
+    data: ApplicationWithDetails;
+  }> {
+    try {
+      const headers = createHeadersWithAuth(cookies);
+
+      const response = await axios.get<{
+        success: boolean;
+        message: string;
+        data: ApplicationWithDetails;
+      }>(`${this.baseURL}/applications/${applicationId}/details`, {
+        headers,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching application details:", error);
+
+      if (error instanceof Error && "response" in error) {
+        const axiosError = error as Error & {
+          response?: {
+            data?: { message?: string };
+            status?: number;
+          };
+        };
+        // Handle API error responses
+        if (axiosError.response?.data?.message) {
+          throw new Error(axiosError.response.data.message);
+        }
+        if (axiosError.response?.status === 401) {
+          throw new Error("Authentication required. Please log in.");
+        }
+        if (axiosError.response?.status === 403) {
+          throw new Error("Access denied.");
+        }
+        if (axiosError.response?.status === 404) {
+          throw new Error("Application not found.");
+        }
+      }
+
+      throw new Error("Failed to fetch application details");
+    }
+  }
 }

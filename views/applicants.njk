@@ -321,17 +321,26 @@
 
 <!-- Application Details Modal -->
 <dialog id="application-details-modal" class="modal">
-  <div class="modal-box w-11/12 max-w-4xl">
-    <h3 class="font-bold text-lg mb-4">Application Details</h3>
+  <div class="modal-box w-11/12 max-w-6xl max-h-[90vh] overflow-y-auto">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="font-bold text-xl mb-6">
+      <i data-lucide="user-check" class="w-6 h-6 inline mr-2"></i>
+      Applicant Details
+    </h3>
     <div id="application-details-content">
       <!-- Content will be loaded here -->
     </div>
     <div class="modal-action">
       <form method="dialog">
-        <button class="btn">Close</button>
+        <button class="btn btn-outline">Close</button>
       </form>
     </div>
   </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
 </dialog>
 
 <!-- JavaScript -->
@@ -353,56 +362,189 @@ function downloadCV(cvPath, applicantName) {
 // View application details function
 async function viewApplicationDetails(applicationId) {
   try {
-    const response = await fetch(`/api/applications/${applicationId}`, {
-      credentials: 'include'
+    console.log('Fetching details for application ID:', applicationId);
+    
+    const response = await fetch(`/api/applications/${applicationId}/details`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     });
     
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+    
     if (!response.ok) {
-      throw new Error('Failed to fetch application details');
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
+      throw new Error(`HTTP ${response.status}: ${errorText}`);
     }
     
     const data = await response.json();
+    console.log('Application data received:', data);
+    
+    if (!data.success || !data.data) {
+      throw new Error(data.message || 'Invalid response format');
+    }
+    
     const application = data.data;
     
     // Populate modal content
     const content = document.getElementById('application-details-content');
     content.innerHTML = `
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold mb-3">Applicant Information</h4>
-          <div class="space-y-2">
-            <p><strong>Name:</strong> ${application.applicantName || 'N/A'}</p>
-            <p><strong>Email:</strong> ${application.applicantEmail}</p>
-            <p><strong>Status:</strong> 
-              <span class="badge badge-outline">${application.applicationStatus || 'Pending'}</span>
-            </p>
-            <p><strong>Applied:</strong> ${application.appliedAt ? new Date(application.appliedAt).toLocaleDateString() : 'N/A'}</p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Applicant Information -->
+        <div class="card bg-base-200 shadow-sm">
+          <div class="card-body">
+            <h4 class="card-title text-lg mb-4">
+              <i data-lucide="user" class="w-5 h-5"></i>
+              Applicant Information
+            </h4>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-full w-12 h-12">
+                    <span class="text-lg font-semibold">
+                      ${(application.applicantName || application.applicantEmail.charAt(0)).toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <p class="font-semibold text-lg">${application.applicantName || 'Name not provided'}</p>
+                  <p class="text-sm text-gray-500">${application.applicantEmail}</p>
+                </div>
+              </div>
+              
+              <div class="divider my-2"></div>
+              
+              <div class="grid grid-cols-1 gap-3">
+                <div>
+                  <label class="font-medium text-sm text-gray-600">Application Status</label>
+                  <div class="mt-1">
+                    <span class="badge ${getStatusBadgeClass(application.applicationStatus)} badge-lg">
+                      ${(application.applicationStatus || 'Pending').charAt(0).toUpperCase() + (application.applicationStatus || 'Pending').slice(1)}
+                    </span>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="font-medium text-sm text-gray-600">Applied Date</label>
+                  <p class="text-sm mt-1">${application.appliedAt ? new Date(application.appliedAt).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) : 'N/A'}</p>
+                </div>
+                
+                <div>
+                  <label class="font-medium text-sm text-gray-600">Application ID</label>
+                  <p class="text-sm mt-1 font-mono">#${application.id}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
-        <div>
-          <h4 class="font-semibold mb-3">Job Information</h4>
-          <div class="space-y-2">
-            <p><strong>Role:</strong> ${application.jobRoleName || 'N/A'}</p>
-            <p><strong>Band:</strong> ${application.jobBand || 'N/A'}</p>
-            <p><strong>Capability:</strong> ${application.jobCapability || 'N/A'}</p>
-            <p><strong>Location:</strong> ${application.jobLocation || 'N/A'}</p>
-            <p><strong>Closing Date:</strong> ${application.jobClosingDate ? new Date(application.jobClosingDate).toLocaleDateString() : 'N/A'}</p>
+        <!-- Job Information -->
+        <div class="card bg-base-200 shadow-sm">
+          <div class="card-body">
+            <h4 class="card-title text-lg mb-4">
+              <i data-lucide="briefcase" class="w-5 h-5"></i>
+              Job Information
+            </h4>
+            <div class="space-y-3">
+              <div>
+                <label class="font-medium text-sm text-gray-600">Job Role</label>
+                <p class="text-lg font-semibold mt-1">${application.jobRoleName || 'N/A'}</p>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="font-medium text-sm text-gray-600">Band</label>
+                  <p class="text-sm mt-1">
+                    <span class="badge badge-outline">${application.jobBand || 'N/A'}</span>
+                  </p>
+                </div>
+                <div>
+                  <label class="font-medium text-sm text-gray-600">Capability</label>
+                  <p class="text-sm mt-1">
+                    <span class="badge badge-outline">${application.jobCapability || 'N/A'}</span>
+                  </p>
+                </div>
+              </div>
+              
+              <div>
+                <label class="font-medium text-sm text-gray-600">Location</label>
+                <p class="text-sm mt-1">
+                  <i data-lucide="map-pin" class="w-4 h-4 inline mr-1"></i>
+                  ${application.jobLocation || 'N/A'}
+                </p>
+              </div>
+              
+              <div>
+                <label class="font-medium text-sm text-gray-600">Closing Date</label>
+                <p class="text-sm mt-1">
+                  <i data-lucide="calendar" class="w-4 h-4 inline mr-1"></i>
+                  ${application.jobClosingDate ? new Date(application.jobClosingDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  }) : 'N/A'}
+                </p>
+              </div>
+              
+              <div>
+                <label class="font-medium text-sm text-gray-600">Job Status</label>
+                <p class="text-sm mt-1">
+                  <span class="badge ${getJobStatusBadgeClass(application.jobStatus)}">${application.jobStatus || 'N/A'}</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <div class="mt-6">
-        <h4 class="font-semibold mb-3">Actions</h4>
-        <div class="flex gap-2">
-          ${application.cvPath ? `<button class="btn btn-outline btn-sm" onclick="downloadCV('${application.cvPath}', '${application.applicantName || application.applicantEmail}')">
-            <i data-lucide="download" class="w-4 h-4"></i>
-            Download CV
-          </button>` : ''}
-          <a href="/job-roles/${application.jobRoleID}" class="btn btn-outline btn-sm">
-            <i data-lucide="eye" class="w-4 h-4"></i>
-            View Job Role
-          </a>
+      <!-- Job Description -->
+      <div class="card bg-base-200 shadow-sm mt-6">
+        <div class="card-body">
+          <h4 class="card-title text-lg mb-4">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+            Job Description
+          </h4>
+          <div class="prose prose-sm max-w-none">
+            ${application.jobDescription ? application.jobDescription.replace(/\n/g, '<br>') : 'No description available'}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="card bg-base-200 shadow-sm mt-6">
+        <div class="card-body">
+          <h4 class="card-title text-lg mb-4">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+            Actions
+          </h4>
+          <div class="flex flex-wrap gap-3">
+            ${application.cvPath ? `
+              <button class="btn btn-primary btn-sm" onclick="downloadCV('${application.cvPath}', '${application.applicantName || application.applicantEmail}')">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                Download CV
+              </button>
+            ` : ''}
+            <a href="/job-roles/${application.jobRoleID}" class="btn btn-outline btn-sm">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+              View Job Details
+            </a>
+            <button class="btn btn-outline btn-sm" onclick="copyApplicationLink(${application.id})">
+              <i data-lucide="link" class="w-4 h-4"></i>
+              Copy Link
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -415,8 +557,69 @@ async function viewApplicationDetails(applicationId) {
     
   } catch (error) {
     console.error('Error fetching application details:', error);
-    alert('Failed to load application details. Please try again.');
+    
+    // Show user-friendly error message
+    let errorMessage = 'Failed to load application details.';
+    if (error.message.includes('Authentication required')) {
+      errorMessage = 'Please log in to view application details.';
+    } else if (error.message.includes('Access denied')) {
+      errorMessage = 'You do not have permission to view this application.';
+    } else if (error.message.includes('not found')) {
+      errorMessage = 'Application not found.';
+    } else if (error.message.includes('HTTP')) {
+      errorMessage = `Server error: ${error.message}`;
+    }
+    
+    alert(errorMessage + ' Please try again or contact support if the problem persists.');
   }
+}
+
+// Helper function to get status badge class
+function getStatusBadgeClass(status) {
+  switch(status?.toLowerCase()) {
+    case 'approved':
+      return 'badge-success';
+    case 'rejected':
+      return 'badge-error';
+    case 'pending':
+      return 'badge-warning';
+    default:
+      return 'badge-ghost';
+  }
+}
+
+// Helper function to get job status badge class
+function getJobStatusBadgeClass(status) {
+  switch(status?.toLowerCase()) {
+    case 'open':
+      return 'badge-success';
+    case 'closed':
+      return 'badge-error';
+    case 'draft':
+      return 'badge-warning';
+    default:
+      return 'badge-ghost';
+  }
+}
+
+// Copy application link to clipboard
+function copyApplicationLink(applicationId) {
+  const link = `${window.location.origin}/applicants?applicationId=${applicationId}`;
+  navigator.clipboard.writeText(link).then(() => {
+    // Show success message (you could replace this with a toast notification)
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Copied!';
+    btn.classList.add('btn-success');
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.classList.remove('btn-success');
+      lucide.createIcons();
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy link:', err);
+    alert('Failed to copy link to clipboard');
+  });
 }
 
 // Format timestamps on page load
