@@ -14,8 +14,7 @@ export class AnalyticsController {
       if (!analyticsService.isConfigured()) {
         res.status(503).json({
           error: "Analytics service not configured",
-          message:
-            "Please set GA4_PROPERTY_ID and GOOGLE_APPLICATION_CREDENTIALS",
+          message: "Analytics service is temporarily unavailable",
         });
         return;
       }
