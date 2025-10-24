@@ -64,6 +64,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
+app.use((_req, res, next) => {
+  res.locals.env = {
+    GA4_MEASUREMENT_ID: process.env.GA4_MEASUREMENT_ID,
+    NODE_ENV: process.env.NODE_ENV,
+  };
+  next();
+});
+
 // Add i18n middleware
 app.use(i18nextHandle(i18next));
 
