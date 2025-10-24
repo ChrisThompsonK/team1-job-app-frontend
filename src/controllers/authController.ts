@@ -106,7 +106,6 @@ export class AuthController {
               maxAge: 24 * 60 * 60 * 1000, // 24 hours
             });
           } else {
-            console.log("Profile fetch failed");
             // Fallback to login data if profile fails
             res.cookie("userName", result.data.user.name, {
               httpOnly: false,
