@@ -312,6 +312,47 @@ app.get("/api/applications", async (req, res) => {
   }
 });
 
+// API proxy for updating application status (admin)
+app.patch("/api/applications/:id/status", async (req, res) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+    const applicationId = req.params.id;
+
+    console.log(
+      `Proxying application status update for application ${applicationId}:`,
+      req.body
+    );
+
+    // Forward the request to backend with authentication cookies
+    const response = await axios.patch(
+      `${backendUrl}/api/applications/${applicationId}/status`,
+      req.body,
+      {
+        headers: {
+          Cookie: req.headers.cookie || "",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (error: unknown) {
+    console.error("Error proxying application status update:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to update application status",
+      });
+    }
+  }
+});
+
 // API proxy for CV file downloads
 app.get("/api/files/cv/:filename", async (req, res) => {
   try {
