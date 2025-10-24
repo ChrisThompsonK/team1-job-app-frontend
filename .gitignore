@@ -167,3 +167,13 @@ build/Release
 
 # Biome cache
 .biome/
+
+# Google Cloud credentials (NEVER commit these!)
+credentials/
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!biome.json
+!tailwind.config.js
+!locales/**/*.json

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import path from "node:path";
 import axios from "axios";
 import cookieParser from "cookie-parser";
@@ -9,6 +10,7 @@ import multer from "multer";
 import nunjucks from "nunjucks";
 import { env } from "./config/env.js";
 import i18next from "./config/i18n.js";
+import { analyticsController } from "./controllers/analyticsController.js";
 import { ApplicantsController } from "./controllers/applicantsController.js";
 import { AuthController } from "./controllers/authController.js";
 import { HomeController } from "./controllers/homeController.js";
@@ -61,6 +63,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
+
+app.use((_req, res, next) => {
+  res.locals.env = {
+    GA4_MEASUREMENT_ID: process.env.GA4_MEASUREMENT_ID,
+    NODE_ENV: process.env.NODE_ENV,
+  };
+  next();
+});
 
 // Add i18n middleware
 app.use(i18nextHandle(i18next));
@@ -143,6 +153,19 @@ app.get("/profile", (req, res, next) => {
   authController.getProfile(req, res).catch(next);
 });
 
+// Analytics routes - protected endpoints
+app.get("/api/analytics/dashboard", requireAuth, (req, res, next) => {
+  analyticsController.getDashboard(req, res).catch(next);
+});
+app.get("/api/analytics/page-views", requireAuth, (req, res, next) => {
+  analyticsController.getPageViews(req, res).catch(next);
+});
+app.get("/api/analytics/job-roles", requireAuth, (req, res, next) => {
+  analyticsController.getJobRoleAnalytics(req, res).catch(next);
+});
+app.get("/api/analytics/events", requireAuth, (req, res, next) => {
+  analyticsController.getEventAnalytics(req, res).catch(next);
+});
 // Profile edit routes - protected endpoints
 app.get("/profile/edit", (req, res, next) => {
   authController.getProfileEdit(req, res).catch(next);
