@@ -22,6 +22,17 @@ export interface User {
   updatedAt: string;
   role?: string;
   isAdmin?: boolean;
+  phoneNumber?: string;
+  address?: string;
+}
+
+export interface ProfileUpdateData {
+  name?: string;
+  phoneNumber?: string;
+  address?: string;
+  newEmail?: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 export interface AuthResponse {
@@ -278,20 +289,38 @@ class AuthService {
     [key: string]: string;
   }): Promise<User | null> {
     try {
+      console.log(
+        "🔍 Frontend getUserFromSession called with cookies:",
+        Object.keys(cookies)
+      );
+
       const cookieString = extractSessionCookies(cookies);
+      console.log(
+        "📊 Extracted session cookies:",
+        cookieString ? "FOUND" : "NOT FOUND"
+      );
 
       // Only proceed if we have session cookies
       if (!cookieString) {
+        console.log("❌ No session cookies found");
         return null;
       }
 
       // Check if we have a session token - if so, user is authenticated
       if (cookies["better-auth.session_token"]) {
+        console.log("✅ Better Auth session token found");
         // Get real user data from cookies
         const isAdminFromCookie = cookies.isAdmin === "true";
         const userName = cookies.userName || "Unknown User";
         const userEmail = cookies.userEmail || "unknown@example.com";
         const userId = cookies.session || "unknown-id";
+
+        console.log("👤 User data from cookies:", {
+          userId,
+          userName,
+          userEmail,
+          isAdmin: isAdminFromCookie,
+        });
 
         // Create user object with real data from cookies
         const user: User = {
@@ -308,9 +337,53 @@ class AuthService {
         return user;
       }
 
+      console.log("❌ No Better Auth session token found");
       return null;
-    } catch (_error) {
+    } catch (error) {
+      console.error("🚨 Error in getUserFromSession:", error);
       return null;
+    }
+  }
+
+  /**
+   * Update user profile information
+   */
+  async updateProfile(
+    profileData: ProfileUpdateData,
+    cookies: { [key: string]: string }
+  ): Promise<{ success: boolean; user?: User; message?: string }> {
+    try {
+      const cookieString = extractSessionCookies(cookies);
+
+      const response = await fetch(`${env.backendUrl}/profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieString,
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        return {
+          success: true,
+          user: responseData.data?.user || responseData.user,
+          message: responseData.message || "Profile updated successfully",
+        };
+      } else {
+        return {
+          success: false,
+          message: responseData.message || "Failed to update profile",
+        };
+      }
+    } catch (error) {
+      console.error("Profile update error:", error);
+      return {
+        success: false,
+        message: "An error occurred while updating profile",
+      };
     }
   }
 }
