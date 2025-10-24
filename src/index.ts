@@ -254,6 +254,26 @@ app.post("/api/chat", async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Cookie: req.headers.cookie || "",
+      },
+    });
+
+    res.status(response.status).json(response.data);
+  } catch (error: unknown) {
+    console.error("Error proxying chat request:", error);
+    if (error && typeof error === "object" && "response" in error) {
+      const axiosError = error as {
+        response: { status: number; data: unknown };
+      };
+      res.status(axiosError.response.status).json(axiosError.response.data);
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Failed to send chat message",
+      });
+    }
+  }
+});
+
 // API proxy for getting application details
 app.get("/api/applications/:id/details", async (req, res) => {
   try {
@@ -307,7 +327,6 @@ app.get("/api/applications", async (req, res) => {
 
     res.status(response.status).json(response.data);
   } catch (error: unknown) {
-    console.error("Error proxying chat request:", error);
     console.error("Error proxying applications list request:", error);
     if (error && typeof error === "object" && "response" in error) {
       const axiosError = error as {
@@ -395,7 +414,6 @@ app.get("/api/files/cv/:filename", async (req, res) => {
     } else {
       res.status(500).json({
         success: false,
-        message: "Failed to process chat message",
         message: "Failed to fetch CV file",
       });
     }
