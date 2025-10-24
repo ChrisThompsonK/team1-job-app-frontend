@@ -22,6 +22,17 @@ export interface User {
   updatedAt: string;
   role?: string;
   isAdmin?: boolean;
+  phoneNumber?: string;
+  address?: string;
+}
+
+export interface ProfileUpdateData {
+  name?: string;
+  phoneNumber?: string;
+  address?: string;
+  newEmail?: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 export interface AuthResponse {
@@ -331,6 +342,48 @@ class AuthService {
     } catch (error) {
       console.error("🚨 Error in getUserFromSession:", error);
       return null;
+    }
+  }
+
+  /**
+   * Update user profile information
+   */
+  async updateProfile(
+    profileData: ProfileUpdateData,
+    cookies: { [key: string]: string }
+  ): Promise<{ success: boolean; user?: User; message?: string }> {
+    try {
+      const cookieString = extractSessionCookies(cookies);
+
+      const response = await fetch(`${env.backendUrl}/profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieString,
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        return {
+          success: true,
+          user: responseData.data?.user || responseData.user,
+          message: responseData.message || "Profile updated successfully",
+        };
+      } else {
+        return {
+          success: false,
+          message: responseData.message || "Failed to update profile",
+        };
+      }
+    } catch (error) {
+      console.error("Profile update error:", error);
+      return {
+        success: false,
+        message: "An error occurred while updating profile",
+      };
     }
   }
 }
