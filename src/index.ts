@@ -248,7 +248,7 @@ app.post(
 
       // Forward the request to backend with authentication cookies
       const response = await axios.post(
-        `${backendUrl}/api/applications`,
+        `${backendUrl}/applications`,
         formData,
         {
           headers: {
@@ -314,7 +314,7 @@ app.get("/api/applications/:id/details", async (req, res) => {
 
     // Forward the request to backend with authentication cookies
     const response = await axios.get(
-      `${backendUrl}/api/applications/${applicationId}/details`,
+      `${backendUrl}/applications/${applicationId}/details`,
       {
         headers: {
           Cookie: req.headers.cookie || "",
@@ -346,7 +346,7 @@ app.get("/api/applications", async (req, res) => {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
 
     // Forward the request to backend with authentication cookies
-    const response = await axios.get(`${backendUrl}/api/applications`, {
+    const response = await axios.get(`${backendUrl}/applications`, {
       headers: {
         Cookie: req.headers.cookie || "",
         Accept: "application/json",
@@ -378,7 +378,7 @@ app.patch("/api/applications/:id/status", async (req, res) => {
 
     // Forward the request to backend with authentication cookies
     const response = await axios.patch(
-      `${backendUrl}/api/applications/${applicationId}/status`,
+      `${backendUrl}/applications/${applicationId}/status`,
       req.body,
       {
         headers: {
@@ -413,7 +413,7 @@ app.get("/api/files/cv/:filename", async (req, res) => {
     const filename = req.params.filename;
 
     // Forward the request to backend with authentication cookies
-    const response = await axios.get(`${backendUrl}/api/files/cv/${filename}`, {
+    const response = await axios.get(`${backendUrl}/files/cv/${filename}`, {
       headers: {
         Cookie: req.headers.cookie || "",
       },

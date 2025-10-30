@@ -41,7 +41,7 @@ function parsePort(portStr: string | undefined): number {
  * Validates and parses the BACKEND_URL environment variable
  */
 function parseBackendUrl(urlStr: string | undefined): string {
-  const defaultUrl = "http://localhost:3001/api";
+  const defaultUrl = "http://localhost:3001";
 
   if (!urlStr) {
     return defaultUrl;
