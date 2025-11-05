@@ -169,6 +169,11 @@ build/Release
 # Biome cache
 .biome/
 
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
 # Google Cloud credentials (NEVER commit these!)
 credentials/
 *.json
