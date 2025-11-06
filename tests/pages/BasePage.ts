@@ -24,9 +24,7 @@ export class BasePage {
 
   async waitForElement(selector: string | Locator): Promise<void> {
     const locator =
-      typeof selector === "string"
-        ? this.page.locator(selector)
-        : selector;
+      typeof selector === "string" ? this.page.locator(selector) : selector;
     await locator.waitFor({ state: "visible", timeout: 5000 });
   }
 
@@ -36,9 +34,9 @@ export class BasePage {
     const pageReady = this.page.locator("body");
 
     await Promise.race([
-      errorAlert.waitFor({ state: "visible", timeout: 5000 }).catch(
-        () => undefined
-      ),
+      errorAlert
+        .waitFor({ state: "visible", timeout: 5000 })
+        .catch(() => undefined),
       pageReady.waitFor({ state: "visible", timeout: 5000 }),
     ]);
 
