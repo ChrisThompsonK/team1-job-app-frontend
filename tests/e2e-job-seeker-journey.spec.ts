@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import { JobRolesPage } from "./pages/JobRolesPage";
 import { BasePage } from "./pages/BasePage";
+import { JobRolesPage } from "./pages/JobRolesPage";
 
 /**
  * End-to-End Test: Job Seeker Journey
@@ -23,7 +23,7 @@ test.describe("E2E: Job Seeker Journey", () => {
   });
 
   test("job seeker filters jobs", async ({ page }) => {
-    const basePage = new BasePage(page);
+    const _basePage = new BasePage(page);
     const jobRolesPage = new JobRolesPage(page);
     await jobRolesPage.navigateToJobRoles();
     await jobRolesPage.expectOnJobRolesPage();
@@ -33,7 +33,7 @@ test.describe("E2E: Job Seeker Journey", () => {
   });
 
   test("job seeker navigates pagination", async ({ page }) => {
-    const basePage = new BasePage(page);
+    const _basePage = new BasePage(page);
     const jobRolesPage = new JobRolesPage(page);
     await jobRolesPage.navigateToJobRoles();
     await jobRolesPage.expectOnJobRolesPage();
@@ -44,5 +44,3 @@ test.describe("E2E: Job Seeker Journey", () => {
     await jobRolesPage.goToNextPageIfAvailable();
   });
 });
-
-

@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class JobRolesPage extends BasePage {
@@ -16,7 +16,8 @@ export class JobRolesPage extends BasePage {
     this.applyFiltersButton = page.getByRole("button", {
       name: "Apply Filters",
     });
-    this.viewDetailsLink = page.getByRole("link", { name: "View Details" })
+    this.viewDetailsLink = page
+      .getByRole("link", { name: "View Details" })
       .first();
     this.nextButton = page.getByRole("link", { name: "Next" });
   }

@@ -1,8 +1,8 @@
-import { test, expect } from "@playwright/test";
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
+import { expect, test } from "@playwright/test";
+import { ApplicantsPage } from "./pages/ApplicantsPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ProfilePage } from "./pages/ProfilePage";
-import { ApplicantsPage } from "./pages/ApplicantsPage";
 
 test.describe("E2E: Admin Actions", () => {
   test("admin views job report", async ({ page }) => {

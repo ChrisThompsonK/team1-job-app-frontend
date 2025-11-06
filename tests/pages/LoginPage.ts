@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class LoginPage extends BasePage {
@@ -63,9 +63,7 @@ export class LoginPage extends BasePage {
   }
 
   async acceptTermsIfPresent(): Promise<void> {
-    const isVisible = await this.termsCheckbox
-      .isVisible()
-      .catch(() => false);
+    const isVisible = await this.termsCheckbox.isVisible().catch(() => false);
     if (isVisible) {
       await this.termsCheckbox.check();
     }

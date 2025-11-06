@@ -1,4 +1,4 @@
-import { Page, Locator, Download } from "@playwright/test";
+import type { Download, Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class ApplicantsPage extends BasePage {
