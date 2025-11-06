@@ -5,7 +5,6 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "serve:reports": "npx serve ./public --single --listen 5000",
     "dev": "concurrently \"npm run build:css\" \"tsx watch src/index.ts\"",
     "build": "npm run build:css:prod && tsc",
     "build:css:prod": "tailwindcss -i ./src/styles/main.css -o ./public/css/style.css --minify",
