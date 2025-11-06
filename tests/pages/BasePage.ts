@@ -1,0 +1,62 @@
+import { Page, expect, Locator } from "@playwright/test";
+
+export class BasePage {
+  protected page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+
+  async goto(path: string): Promise<void> {
+    await this.page.goto(path);
+  }
+
+  async expectUrl(url: string | RegExp): Promise<void> {
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.page).toHaveURL(url);
+  }
+
+  async waitForNetworkIdle(): Promise<void> {
+    await this.page.waitForLoadState("networkidle");
+  }
+
+  async clickNavigationLink(linkName: RegExp | string): Promise<void> {
+    const link = this.page.getByRole("link", { name: linkName });
+    await link.click();
+    await this.waitForNetworkIdle();
+  }
+
+  async changeLanguage(languageCode: string): Promise<void> {
+    const languageButton = this.page.getByRole("button", {
+      name: "Change language",
+    });
+    await languageButton.click();
+    await this.page.waitForTimeout(500);
+
+    const languageNames: Record<string, RegExp> = {
+      es: /🇪🇸 Español/,
+      fr: /🇫🇷 Français/,
+      pl: /🇵🇱 Polski/,
+      en: /🇬🇧 English/,
+    };
+
+    const languageName = languageNames[languageCode];
+    if (languageName) {
+      const languageLink = this.page.getByRole("link", { name: languageName });
+      await languageLink.click();
+      await this.waitForNetworkIdle();
+    }
+  }
+
+  getLoginLink(): Locator {
+    return this.page.getByRole("link", { name: /Login/ });
+  }
+
+  getJobRolesLink(): Locator {
+    return this.page.getByRole("link", { name: /Job Roles|Jobs|Browse Jobs/ });
+  }
+
+  getApplicantsLink(): Locator {
+    return this.page.getByRole("link", { name: /Manage Applicants/ });
+  }
+}

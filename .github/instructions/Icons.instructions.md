@@ -1,3 +1,7 @@
+---
+applyTo: '**'
+---
+
 # Icon System Instructions - Lucide Icons Only
 
 ## Overview
