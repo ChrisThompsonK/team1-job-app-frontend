@@ -33,7 +33,6 @@ test.describe("E2E: Job Seeker Journey", () => {
   });
 
   test("job seeker navigates pagination", async ({ page }) => {
-    const _basePage = new BasePage(page);
     const jobRolesPage = new JobRolesPage(page);
     await jobRolesPage.navigateToJobRoles();
     await jobRolesPage.expectOnJobRolesPage();
