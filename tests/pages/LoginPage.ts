@@ -49,7 +49,8 @@ export class LoginPage extends BasePage {
 
   async switchToSignUp(): Promise<void> {
     await this.signUpTabButton.click();
-    await this.page.waitForTimeout(300);
+    // Wait for the signup form to be visible
+    await this.createAccountButton.waitFor({ state: "visible" });
   }
 
   async fillRegistrationForm(
@@ -96,6 +97,6 @@ export class LoginPage extends BasePage {
 
   async submitEmptyForm(): Promise<void> {
     await this.signInButton.click();
-    await this.page.waitForTimeout(500);
+    await this.waitForFormResponse();
   }
 }

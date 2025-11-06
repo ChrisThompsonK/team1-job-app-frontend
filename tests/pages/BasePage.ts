@@ -30,6 +30,22 @@ export class BasePage {
     await locator.waitFor({ state: "visible", timeout: 5000 });
   }
 
+  async waitForFormResponse(): Promise<void> {
+    // Wait for either an error message or page navigation to complete
+    const errorAlert = this.page.locator(".alert.alert-error");
+    const pageReady = this.page.locator("body");
+
+    await Promise.race([
+      errorAlert.waitFor({ state: "visible", timeout: 5000 }).catch(
+        () => undefined
+      ),
+      pageReady.waitFor({ state: "visible", timeout: 5000 }),
+    ]);
+
+    // Brief wait to ensure DOM is settled
+    await this.page.waitForLoadState("networkidle");
+  }
+
   async clickNavigationLink(linkName: RegExp | string): Promise<void> {
     const link = this.page.getByRole("link", { name: linkName });
     await link.click();
