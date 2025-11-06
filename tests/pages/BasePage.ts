@@ -18,6 +18,16 @@ export class BasePage {
 
   async waitForNetworkIdle(): Promise<void> {
     await this.page.waitForLoadState("networkidle");
+    // Ensure DOM is actually rendered, not just network idle
+    await this.page.locator("body").waitFor({ state: "visible" });
+  }
+
+  async waitForElement(selector: string | Locator): Promise<void> {
+    const locator =
+      typeof selector === "string"
+        ? this.page.locator(selector)
+        : selector;
+    await locator.waitFor({ state: "visible", timeout: 5000 });
   }
 
   async clickNavigationLink(linkName: RegExp | string): Promise<void> {
