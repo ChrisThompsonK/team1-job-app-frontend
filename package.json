@@ -11,7 +11,7 @@
     "start": "node dist/index.js",
     "test": "vitest",
     "check": "biome check .",
-    "check:fix": "biome lint --write .",
+    "check:fix": "biome check --write .",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "format:check": "biome format .",

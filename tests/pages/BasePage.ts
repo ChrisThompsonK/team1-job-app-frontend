@@ -55,7 +55,6 @@ export class BasePage {
       name: "Change language",
     });
     await languageButton.click();
-    await this.page.waitForTimeout(500);
 
     const languageNames: Record<string, RegExp> = {
       es: /🇪🇸 Español/,
@@ -67,6 +66,8 @@ export class BasePage {
     const languageName = languageNames[languageCode];
     if (languageName) {
       const languageLink = this.page.getByRole("link", { name: languageName });
+      // Wait for the language link to be visible before clicking
+      await languageLink.waitFor({ state: "visible", timeout: 5000 });
       await languageLink.click();
       await this.waitForNetworkIdle();
     }
