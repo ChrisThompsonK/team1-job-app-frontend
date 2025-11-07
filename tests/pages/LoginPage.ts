@@ -31,11 +31,12 @@ export class LoginPage extends BasePage {
 
   async navigateToLogin(): Promise<void> {
     const loginLink = this.getLoginLink();
-    const isVisible = await loginLink.isVisible().catch(() => false);
-    if (isVisible) {
+    try {
+      await loginLink.waitFor({ state: "visible", timeout: 2000 });
       await loginLink.click();
       await this.waitForNetworkIdle();
-    } else {
+    } catch {
+      // Link not found or not visible, navigate directly
       await this.goto("/login");
     }
   }
@@ -64,9 +65,11 @@ export class LoginPage extends BasePage {
   }
 
   async acceptTermsIfPresent(): Promise<void> {
-    const isVisible = await this.termsCheckbox.isVisible().catch(() => false);
-    if (isVisible) {
+    try {
+      await this.termsCheckbox.waitFor({ state: "visible", timeout: 2000 });
       await this.termsCheckbox.check();
+    } catch {
+      // Terms checkbox not present (optional field)
     }
   }
 
@@ -89,9 +92,11 @@ export class LoginPage extends BasePage {
   async togglePasswordVisibility(): Promise<void> {
     const passwordContainer = this.passwordInput.locator("..");
     const toggleButton = passwordContainer.locator("button").first();
-    const isVisible = await toggleButton.isVisible().catch(() => false);
-    if (isVisible) {
+    try {
+      await toggleButton.waitFor({ state: "visible", timeout: 2000 });
       await toggleButton.click();
+    } catch {
+      // Toggle button not present (optional)
     }
   }
 
