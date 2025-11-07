@@ -24,13 +24,8 @@ export class JobRolesPage extends BasePage {
 
   async navigateToJobRoles(): Promise<void> {
     const jobRolesLink = this.getJobRolesLink();
-    const isVisible = await jobRolesLink.isVisible().catch(() => false);
-    if (isVisible) {
-      await jobRolesLink.click();
-      await this.waitForNetworkIdle();
-    } else {
-      await this.page.goto("/job-roles", { waitUntil: "networkidle" });
-    }
+    await jobRolesLink.click();
+    await this.waitForNetworkIdle();
   }
 
   async selectLocation(index: number): Promise<void> {
@@ -48,11 +43,8 @@ export class JobRolesPage extends BasePage {
   }
 
   async goToNextPageIfAvailable(): Promise<void> {
-    const isVisible = await this.nextButton.isVisible().catch(() => false);
-    if (isVisible) {
-      await this.nextButton.click();
-      await this.waitForNetworkIdle();
-    }
+    await this.nextButton.click();
+    await this.waitForNetworkIdle();
   }
 
   async filterAndApply(locationIndex: number): Promise<void> {

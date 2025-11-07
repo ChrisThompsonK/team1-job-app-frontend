@@ -31,14 +31,8 @@ export class LoginPage extends BasePage {
 
   async navigateToLogin(): Promise<void> {
     const loginLink = this.getLoginLink();
-    try {
-      await loginLink.waitFor({ state: "visible", timeout: 2000 });
-      await loginLink.click();
-      await this.waitForNetworkIdle();
-    } catch {
-      // Link not found or not visible, navigate directly
-      await this.goto("/login");
-    }
+    await loginLink.click();
+    await this.waitForNetworkIdle();
   }
 
   async login(email: string, password: string): Promise<void> {
@@ -65,12 +59,7 @@ export class LoginPage extends BasePage {
   }
 
   async acceptTermsIfPresent(): Promise<void> {
-    try {
-      await this.termsCheckbox.waitFor({ state: "visible", timeout: 2000 });
-      await this.termsCheckbox.check();
-    } catch {
-      // Terms checkbox not present (optional field)
-    }
+    await this.termsCheckbox.check();
   }
 
   async submitRegistration(): Promise<void> {
@@ -92,12 +81,7 @@ export class LoginPage extends BasePage {
   async togglePasswordVisibility(): Promise<void> {
     const passwordContainer = this.passwordInput.locator("..");
     const toggleButton = passwordContainer.locator("button").first();
-    try {
-      await toggleButton.waitFor({ state: "visible", timeout: 2000 });
-      await toggleButton.click();
-    } catch {
-      // Toggle button not present (optional)
-    }
+    await toggleButton.click();
   }
 
   async submitEmptyForm(): Promise<void> {
