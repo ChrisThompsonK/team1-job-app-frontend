@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log
+dist
+coverage
+.git
+.gitignore
+README.md
+.env
+.env.local
+test-results
+playwright-report
+credentials
+.DS_Store
+*.test.ts
+vitest.config.ts
+.next
+
