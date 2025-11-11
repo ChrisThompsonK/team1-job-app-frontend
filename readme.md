@@ -47,7 +47,7 @@ A modern Node.js TypeScript project with Express.js, built with ES modules and 3
 ├── public/              # Static assets
 │   ├── css/            # Stylesheets (includes Tailwind)
 │   └── js/             # Client-side JavaScript
-├── tailwind.config.js   # Tailwind CSS configuration
+├── config/tailwind.config.js   # Tailwind CSS configuration
 ├── postcss.config.js    # PostCSS configuration
 └── package.json         # Dependencies and scripts
 ```
@@ -169,7 +169,7 @@ Popular icons used in this project:
 │   └── index.ts          # Main application entry point
 ├── dist/                 # Built files (generated)
 ├── package.json          # Project dependencies and scripts
-├── tsconfig.json         # TypeScript configuration
+├── config/tsconfig.json         # TypeScript configuration
 └── .gitignore           # Git ignore patterns
 ```
 
