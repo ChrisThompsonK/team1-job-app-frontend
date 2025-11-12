@@ -12,7 +12,6 @@ COPY tailwind.config.js .
 COPY public ./public
 COPY views ./views
 COPY locales ./locales
-COPY .env.docker .env
  
 # Expose the port
 EXPOSE 3000
