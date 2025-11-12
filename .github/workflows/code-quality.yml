@@ -32,3 +32,13 @@ jobs:
         
       - name: Run Biome full check
         run: npm run check
+      
+      - name: Extract version
+        id: version
+        run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+      
+      - name: Build docker image
+        run: docker build -t team1-job-app-frontend . 
+      
+      - name: Tag docker image
+        run: docker tag team1-job-app-frontend aiacademy25-bbaue6bgenhkd0dj.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }}
