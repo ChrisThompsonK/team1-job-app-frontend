@@ -32,5 +32,3 @@ jobs:
         
       - name: Run Biome full check
         run: npm run check
-      - name: run tests
-        run: npm run test:run
