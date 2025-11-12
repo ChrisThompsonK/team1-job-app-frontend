@@ -2,8 +2,8 @@ FROM node:22-alpine
 WORKDIR /app
 # Copy package files
 COPY package*.json ./
-RUN npm ci && npm cache clean --force
 USER 1001:1001
+RUN npm ci && npm cache clean --force
  
 # Copy essential application files
 COPY src ./src
