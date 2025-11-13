@@ -41,6 +41,9 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to ACR
+        run: az acr login --name aiacademy25-bbaue6bgenhkd0dj
       
       - name: Build and push
         uses: docker/build-push-action@v6
