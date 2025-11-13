@@ -58,3 +58,31 @@ jobs:
           context: .
           push: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
           tags: aiacademy25-bbaue6bgenhkd0dj.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }}
+          load: true
+
+      - name: Run Docker container
+        id: docker_run
+        run: |
+          CONTAINER_ID=$(docker run -d -p 3000:3000 aiacademy25-bbaue6bgenhkd0dj.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }})
+          echo "CONTAINER_ID=$CONTAINER_ID" >> $GITHUB_OUTPUT
+          echo "Container started with ID: $CONTAINER_ID"
+          sleep 5
+
+      - name: Inspect Docker container
+        run: |
+          echo "=== Container Inspection ==="
+          docker inspect ${{ steps.docker_run.outputs.CONTAINER_ID }}
+          echo ""
+          echo "=== Container Status ==="
+          docker ps -a --filter id=${{ steps.docker_run.outputs.CONTAINER_ID }}
+          echo ""
+          echo "=== Container Logs ==="
+          docker logs ${{ steps.docker_run.outputs.CONTAINER_ID }}
+
+      - name: Cleanup Docker container
+        if: always()
+        run: |
+          if [ -n "${{ steps.docker_run.outputs.CONTAINER_ID }}" ]; then
+            docker stop ${{ steps.docker_run.outputs.CONTAINER_ID }} || true
+            docker rm ${{ steps.docker_run.outputs.CONTAINER_ID }} || true
+          fi
