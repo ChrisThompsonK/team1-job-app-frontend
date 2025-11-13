@@ -41,8 +41,8 @@ jobs:
       #   uses: docker/login-action@v3
       #   with:
       #     registry: aiacademy25-bbaue6bgenhkd0dj.azurecr.io
-      #     username: ${{ vars.ACR_USERNAME }}
-      #     password: ${{ secrets.ACR_PASSWORD }}
+          # username: ${{ vars.ACR_USERNAME }}
+          # password: ${{ secrets.ACR_PASSWORD }}
       
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
