@@ -82,7 +82,13 @@ jobs:
       - name: Cleanup Docker container
         if: always()
         run: |
+          echo "=== Starting container cleanup ==="
           if [ -n "${{ steps.docker_run.outputs.CONTAINER_ID }}" ]; then
+            echo "Stopping container: ${{ steps.docker_run.outputs.CONTAINER_ID }}"
             docker stop ${{ steps.docker_run.outputs.CONTAINER_ID }} || true
+            echo "Removing container: ${{ steps.docker_run.outputs.CONTAINER_ID }}"
             docker rm ${{ steps.docker_run.outputs.CONTAINER_ID }} || true
+            echo "Cleanup completed successfully"
+          else
+            echo "No container ID found, skipping cleanup"
           fi
