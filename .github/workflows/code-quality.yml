@@ -99,7 +99,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Extract version
         id: version
         run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
