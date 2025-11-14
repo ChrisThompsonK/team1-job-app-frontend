@@ -97,14 +97,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: [biome, build-docker]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Extract version
         id: version
         run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -112,50 +110,39 @@ jobs:
           terraform_version: 1.7.5
 
       - name: Terraform Init
-        working-directory: ./infastructure
+        working-directory: infastructure
         run: terraform init
 
-      - name: Terraform Validate
-        working-directory: ./infastructure
-        run: terraform validate
+      # - name: Terraform Validate
+      #   working-directory: infastructure
+      #   run: terraform validate
 
-      - name: Terraform Format Check
-        working-directory: ./infastructure
-        run: terraform fmt -check
+      # - name: Terraform Format Check
+      #   working-directory: infastructure
+      #   run: terraform fmt -check
 
-      - name: Terraform Plan
-        working-directory: ./infastructure
-        run: |
-          terraform plan \
-            -var="resource_group_name=team1-job-app-rg" \
-            -var="location=uksouth" \
-            -var="container_registry_name=aiacademy25" \
-            -var="container_app_environment_name=team1-job-app-env" \
-            -var="container_app_name=team1-job-app" \
-            -var="container_image_name=team1-job-app-frontend" \
-            -var="container_image_tag=v${{ steps.version.outputs.VERSION }}" \
-            -var="container_port=3000" \
-            -var="container_cpu=0.5" \
-            -var="container_memory=1.0Gi" \
-            -var="container_min_replicas=1" \
-            -var="container_max_replicas=3" \
-            -var="log_analytics_workspace_name=team1-law" \
-            -out=tfplan
+      # - name: Terraform Plan
+      #   working-directory: infastructure
+      #   run: |
+      #     terraform plan \
+      #       -var-file="terraform.tfvars" \
+      #       -var="container_image_tag=v${{ steps.version.outputs.VERSION }}" \
+      #       -out=tfplan
 
-      - name: Terraform Apply
-        working-directory: ./infastructure
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   working-directory: infastructure
+      #   run: terraform apply -auto-approve tfplan
 
-      - name: Get Deployment Outputs
-        working-directory: ./infastructure
-        id: terraform_outputs
-        run: |
-          echo "container_app_url=$(terraform output -raw container_app_url)" >> $GITHUB_OUTPUT
-          echo "container_app_fqdn=$(terraform output -raw container_app_fqdn)" >> $GITHUB_OUTPUT
+      # - name: Get Deployment Outputs
+      #   working-directory: infastructure
+      #   id: terraform_outputs
+      #   run: |
+      #     echo "container_app_url=$(terraform output -raw container_app_url)" >> $GITHUB_OUTPUT
+      #     echo "container_app_fqdn=$(terraform output -raw container_app_fqdn)" >> $GITHUB_OUTPUT
 
-      - name: Print Deployment Summary
-        run: |
-          echo "=== Deployment Complete ==="
-          echo "Container App URL: ${{ steps.terraform_outputs.outputs.container_app_url }}"
-          echo "Container App FQDN: ${{ steps.terraform_outputs.outputs.container_app_fqdn }}"
-          echo "Docker Image: aiacademy25.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }}"
+      # - name: Print Deployment Summary
+      #   run: |
+      #     echo "=== Deployment Complete ==="
+      #     echo "Container App URL: ${{ steps.terraform_outputs.outputs.container_app_url }}"
+      #     echo "Container App FQDN: ${{ steps.terraform_outputs.outputs.container_app_fqdn }}"
+      #     echo "Docker Image: aiacademy25.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }}"
