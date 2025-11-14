@@ -161,9 +161,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
         run: |
           terraform plan \
-            -var-file="dev.tfvars" \
-            -var="container_image_tag=v${{ steps.version.outputs.VERSION }}" \
-            -out=tfplan
+            -var-file="dev.tfvars"
 
       # - name: Terraform Apply
       #   working-directory: infastructure
