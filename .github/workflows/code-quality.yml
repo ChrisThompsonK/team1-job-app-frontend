@@ -36,59 +36,90 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     needs: biome 
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
       - name: Extract version
         id: version
         run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
       
+      - name: Generate Docker metadata (tags and labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: aiacademy25-bbaue6bgenhkd0dj.azurecr.io/team1-job-app-frontend
+          tags: |
+            # Always tag with package.json version
+            type=raw,value=v${{ steps.version.outputs.VERSION }}
+            # Tag with 'latest' on main branch
+            type=raw,value=latest,enable={{is_default_branch}}
+            # Tag with commit SHA on main branch
+            type=sha,prefix=main-,enable={{is_default_branch}}
+            # Tag with PR number for pull requests
+            type=ref,event=pr,prefix=pr-
+      
       - name: Azure login
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Login to ACR
-        run: az acr login --name aiacademy25
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: aiacademy25-bbaue6bgenhkd0dj.azurecr.io
+          username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+          password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
       
-      - name: Build and push
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: ./Dockerfile
+          # Only push to ACR on main branch
           push: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-          tags: aiacademy25-bbaue6bgenhkd0dj.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }}
-          load: true
-
-      - name: Run Docker container
-        id: docker_run
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Show build information
         run: |
-          CONTAINER_ID=$(docker run -d -p 3000:3000 aiacademy25-bbaue6bgenhkd0dj.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }})
-          echo "CONTAINER_ID=$CONTAINER_ID" >> $GITHUB_OUTPUT
-          echo "Container started with ID: $CONTAINER_ID"
-          sleep 5
-
-      - name: Inspect Docker container
-        run: |
-          echo "=== Container Inspection ==="
-          docker inspect ${{ steps.docker_run.outputs.CONTAINER_ID }}
+          echo "✅ Docker build complete!"
+          echo "Branch: ${{ github.ref }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "Pushed to ACR: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}"
           echo ""
-          echo "=== Container Status ==="
-          docker ps -a --filter id=${{ steps.docker_run.outputs.CONTAINER_ID }}
-          echo ""
-          echo "=== Container Logs ==="
-          docker logs ${{ steps.docker_run.outputs.CONTAINER_ID }}
-
-      - name: Cleanup Docker container
-        if: always()
+          echo "Image tags:"
+          echo "${{ steps.meta.outputs.tags }}"
+  
+  verify-acr-push:
+    name: Verify ACR Push
+    runs-on: ubuntu-latest
+    needs: build-docker
+    # Only run verification on main branch pushes
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Verify images in Azure Container Registry
         run: |
-          echo "=== Starting container cleanup ==="
-          if [ -n "${{ steps.docker_run.outputs.CONTAINER_ID }}" ]; then
-            echo "Stopping container: ${{ steps.docker_run.outputs.CONTAINER_ID }}"
-            docker stop ${{ steps.docker_run.outputs.CONTAINER_ID }} || true
-            echo "Removing container: ${{ steps.docker_run.outputs.CONTAINER_ID }}"
-            docker rm ${{ steps.docker_run.outputs.CONTAINER_ID }} || true
-            echo "Cleanup completed successfully"
-          else
-            echo "No container ID found, skipping cleanup"
-          fi
+          echo "📦 Checking Azure Container Registry for images..."
+          echo ""
+          az acr repository show-tags \
+            --name aiacademy25 \
+            --repository team1-job-app-frontend \
+            --orderby time_desc \
+            --output table
+          echo ""
+          echo "✅ Images successfully pushed to ACR!"
