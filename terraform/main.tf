@@ -1,40 +1,55 @@
 # Configure the Azure Provider
 terraform {
   required_version = ">= 1.0"
-  
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
   }
-  
-  # Backend will be configured after storage account is created
-  # For now, using local backend (state stored in terraform/ directory)
+
+  # Remote state backend configuration
+  # This allows team collaboration and CI/CD pipeline usage
+  # Backend config must be provided at init time (cannot use variables)
+  # Use: terraform init -backend-config="key=team1-frontend-dev.tfstate"
+  backend "azurerm" {
+    resource_group_name  = "container-registry"
+    storage_account_name = "tfstateteam2jobappdev"
+    container_name       = "tfstate"
+    # key will be provided via -backend-config at init time
+  }
 }
 
 provider "azurerm" {
   features {}
-  subscription_id = "ef1b41f6-e4b2-41d0-a52d-d279af4a77ab"
-  tenant_id       = "f2ec3ef9-cca6-46ec-be61-845d74fcae94"
+
+  # Service principal authentication for CI/CD
+  # These values come from environment variables:
+  # ARM_CLIENT_ID, ARM_CLIENT_SECRET, ARM_SUBSCRIPTION_ID, ARM_TENANT_ID
+  # Fallback to defaults if not in pipeline
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
 }
 
 # Data source for existing resource group
 data "azurerm_resource_group" "container_registry" {
-  name = "container-registry"
+  name = var.resource_group_name
 }
 
-# Azure Container Registry
+# Azure Container Registry with environment-specific naming
 resource "azurerm_container_registry" "acr" {
-  name                = "aiacademy25"
+  # Name format: aiacademy25dev or aiacademy25prod
+  name                = "${var.acr_name_prefix}${var.environment}"
   resource_group_name = data.azurerm_resource_group.container_registry.name
-  location            = data.azurerm_resource_group.container_registry.location
-  sku                 = "Basic"
-  admin_enabled       = true
-  
+  location            = var.location
+  sku                 = var.acr_sku
+  admin_enabled       = var.admin_enabled
+
   tags = {
-    environment = "learning"
-    project     = "job-app-frontend"
+    environment = var.environment
+    project     = var.project_name
     managed_by  = "terraform"
+    team        = "team1"
   }
 }

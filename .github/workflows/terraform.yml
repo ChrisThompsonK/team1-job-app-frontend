@@ -1,0 +1,182 @@
+name: Terraform Infrastructure
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'terraform/**'
+      - '.github/workflows/terraform.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'terraform/**'
+      - '.github/workflows/terraform.yml'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
+      action:
+        description: 'Terraform action'
+        required: true
+        default: 'plan'
+        type: choice
+        options:
+          - plan
+          - apply
+          - destroy
+
+env:
+  TF_VERSION: '1.5.0'
+  ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
+
+jobs:
+  terraform:
+    name: 'Terraform ${{ github.event.inputs.action || ''plan'' }}'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+    
+    # Only auto-apply on main branch push, otherwise just plan
+    env:
+      TF_ACTION: ${{ github.event.inputs.action || (github.ref == 'refs/heads/main' && github.event_name == 'push' && 'apply') || 'plan' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Set up Terraform credentials
+        run: |
+          echo "Setting up Azure authentication for Terraform..."
+          echo "ARM_CLIENT_ID=${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}" >> $GITHUB_ENV
+      
+      - name: Terraform Format Check
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+      
+      - name: Terraform Init
+        id: init
+        run: |
+          echo "Initializing Terraform for ${{ env.ENVIRONMENT }} environment..."
+          terraform init -backend-config=backend-${{ env.ENVIRONMENT }}.tfvars
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        run: |
+          echo "Planning Terraform changes for ${{ env.ENVIRONMENT }} environment..."
+          terraform plan -var-file=${{ env.ENVIRONMENT }}.tfvars -no-color -out=tfplan
+        continue-on-error: true
+      
+      - name: Create Plan Summary
+        if: always()
+        run: |
+          echo "## Terraform Plan Summary - ${{ env.ENVIRONMENT }} 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** \`${{ env.ENVIRONMENT }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Action:** \`${{ env.TF_ACTION }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.fmt.outcome }}" == "failure" ]; then
+            echo "❌ **Format Check:** Failed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **Format Check:** Passed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ steps.validate.outcome }}" == "success" ]; then
+            echo "✅ **Validation:** Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Validation:** Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ steps.plan.outcome }}" == "success" ]; then
+            echo "✅ **Plan:** Successful" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Plan:** Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Resources" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          terraform show -no-color tfplan | grep -E "Plan:|No changes" || echo "See plan output above"
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Terraform Apply
+        if: env.TF_ACTION == 'apply' && steps.plan.outcome == 'success'
+        run: |
+          echo "Applying Terraform changes for ${{ env.ENVIRONMENT }} environment..."
+          terraform apply -auto-approve tfplan
+      
+      - name: Terraform Destroy
+        if: env.TF_ACTION == 'destroy'
+        run: |
+          echo "⚠️ Destroying infrastructure for ${{ env.ENVIRONMENT }} environment..."
+          terraform destroy -var-file=${{ env.ENVIRONMENT }}.tfvars -auto-approve
+      
+      - name: Output Infrastructure Details
+        if: (env.TF_ACTION == 'apply' || env.TF_ACTION == 'plan') && steps.plan.outcome == 'success'
+        run: |
+          echo "## Infrastructure Outputs 📊" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          terraform output -no-color >> $GITHUB_STEP_SUMMARY || echo "No outputs available yet"
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Upload Terraform Plan
+        if: env.TF_ACTION == 'plan'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-${{ env.ENVIRONMENT }}
+          path: terraform/tfplan
+          retention-days: 5
+      
+      - name: Comment PR with Plan
+        if: github.event_name == 'pull_request' && env.TF_ACTION == 'plan'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `#### Terraform Plan for \`${{ env.ENVIRONMENT }}\` 🚀
+            
+            **Format Check:** \`${{ steps.fmt.outcome }}\`
+            **Validation:** \`${{ steps.validate.outcome }}\`
+            **Plan:** \`${{ steps.plan.outcome }}\`
+            
+            <details><summary>Show Plan</summary>
+            
+            \`\`\`terraform
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+            
+            </details>
+            
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
