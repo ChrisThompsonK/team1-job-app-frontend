@@ -99,11 +99,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Azure login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to ACR
+        run: az acr login --name aiacademy25
+        
       - name: Extract version
         id: version
         run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
