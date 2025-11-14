@@ -105,6 +105,19 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Extract Service Principal credentials
+        id: sp_creds
+        run: |
+          CREDS='${{ secrets.AZURE_CREDENTIALS }}'
+          CLIENT_ID=$(echo $CREDS | jq -r '.clientId')
+          CLIENT_SECRET=$(echo $CREDS | jq -r '.clientSecret')
+          TENANT_ID=$(echo $CREDS | jq -r '.tenantId')
+          SUBSCRIPTION_ID=$(echo $CREDS | jq -r '.subscriptionId')
+          echo "client_id=$CLIENT_ID" >> $GITHUB_OUTPUT
+          echo "client_secret=$CLIENT_SECRET" >> $GITHUB_OUTPUT
+          echo "tenant_id=$TENANT_ID" >> $GITHUB_OUTPUT
+          echo "subscription_id=$SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
+
       - name: Login to ACR
         run: az acr login --name aiacademy25
         
@@ -119,10 +132,20 @@ jobs:
 
       - name: Terraform Init
         working-directory: infastructure
+        env:
+          ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
+          ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
+          ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
         run: terraform init
 
       # - name: Terraform Validate
       #   working-directory: infastructure
+      #   env:
+      #     ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
+      #     ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
+      #     ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
+      #     ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
       #   run: terraform validate
 
       # - name: Terraform Format Check
@@ -131,6 +154,11 @@ jobs:
 
       # - name: Terraform Plan
       #   working-directory: infastructure
+      #   env:
+      #     ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
+      #     ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
+      #     ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
+      #     ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
       #   run: |
       #     terraform plan \
       #       -var-file="terraform.tfvars" \
@@ -139,6 +167,11 @@ jobs:
 
       # - name: Terraform Apply
       #   working-directory: infastructure
+      #   env:
+      #     ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
+      #     ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
+      #     ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
+      #     ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
       #   run: terraform apply -auto-approve tfplan
 
       # - name: Get Deployment Outputs
