@@ -139,14 +139,14 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
         run: terraform init
 
-      # - name: Terraform Validate
-      #   working-directory: infastructure
-      #   env:
-      #     ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
-      #     ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
-      #     ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
-      #     ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
-      #   run: terraform validate
+      - name: Terraform Validate
+        working-directory: infastructure
+        env:
+          ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
+          ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
+          ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
+        run: terraform validate
 
       # - name: Terraform Format Check
       #   working-directory: infastructure
