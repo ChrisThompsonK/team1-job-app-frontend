@@ -1,20 +1,20 @@
-terraform{
-    required_providers {
-      azurerm={
-        source = "hashicorp/azurerm"
-        version = "~>3.0"
-      }
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~>3.0"
     }
-    backend "azurerm"{
-        resource_group_name = "terraform-state-mgmt"
-        storage_account_name = "aistatemgmt"
-        container_name = "terraform-tfstate-ai"
-        key = "team1-job-app-frontend.tfstate"
-    }
+  }
+  backend "azurerm" {
+    resource_group_name  = "terraform-state-mgmt"
+    storage_account_name = "aistatemgmt"
+    container_name       = "terraform-tfstate-ai"
+    key                  = "team1-job-app-frontend.tfstate"
+  }
 }
 
-provider "azurerm"{
-    features{}
+provider "azurerm" {
+  features {}
 }
 
 # Create Resource Group
@@ -58,10 +58,10 @@ resource "azurerm_log_analytics_workspace" "law" {
 
 # Create Container App Environment
 resource "azurerm_container_app_environment" "cae" {
-  name                           = var.container_app_environment_name
-  location                       = azurerm_resource_group.rg.location
-  resource_group_name            = azurerm_resource_group.rg.name
-  log_analytics_workspace_id     = azurerm_log_analytics_workspace.law.id
+  name                       = var.container_app_environment_name
+  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = azurerm_resource_group.rg.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
 
   tags = {
     Environment = "Development"
