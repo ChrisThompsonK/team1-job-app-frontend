@@ -1,7 +1,7 @@
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
-  default     = "team1-job-app-frontend-rg"
+  default     = "team1-job-app-rg"
 }
 
 variable "location" {
@@ -15,6 +15,7 @@ variable "acr_name" {
   type        = string
   default     = "aiacademy25"
 }
+
 variable "acr_resource_group" {
   description = "The resource group name where the ACR is located"
   type        = string
@@ -30,9 +31,11 @@ variable "image_name" {
 variable "existing_container_app_env_name" {
   description = "The name of the existing Container App Environment"
   type        = string
+  default     = "team1-job-app-container-app-environment"
 }
 
 variable "existing_container_app_env_rg" {
   description = "The resource group name where the Container App Environment exists"
   type        = string
+  default     = "team1-job-app-shared-rg"
 }

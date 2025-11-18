@@ -160,8 +160,7 @@ jobs:
           ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
           ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
         run: |
-          terraform plan \
-            -var-file="dev.tfvars"
+          terraform plan"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -171,7 +170,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
           ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
           ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
-        run: terraform apply -var-file="dev.tfvars" -auto-approve
+        run: terraform apply -auto-approve
 
       # - name: Get Deployment Outputs
       #   working-directory: infastructure

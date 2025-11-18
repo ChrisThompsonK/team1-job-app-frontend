@@ -75,7 +75,7 @@ data "azurerm_container_app_environment" "team1-job-app-env" {
 resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
   name                         = "team1-job-app-frontend-container-app"
   container_app_environment_id = data.azurerm_container_app_environment.team1-job-app-env.id
-  resource_group_name          = data.azurerm_resource_group.team1-job-app-env-rg.name
+  resource_group_name          = var.existing_container_app_env_rg
   revision_mode                = "Single"
 
   identity {
@@ -84,14 +84,14 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
   }
 
   registry {
-    server   = azurerm_container_registry.acr.login_server
+    server   = data.azurerm_container_registry.acr.login_server
     identity = azurerm_user_assigned_identity.container_app_identity.id
   }
 
   template {
     container {
       name   = "team1-job-app-frontend-container-app"
-      image  = "${azurerm_container_registry.acr.login_server}/${var.image_name}:${data.external.latest_image_tag.result.tag}"
+      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:${data.external.latest_image_tag.result.tag}"
       cpu    = 0.5
       memory = "1.0Gi"
     }
