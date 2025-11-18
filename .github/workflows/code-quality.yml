@@ -160,7 +160,7 @@ jobs:
           ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
           ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
         run: |
-          terraform plan"
+          terraform plan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
