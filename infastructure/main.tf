@@ -54,12 +54,12 @@ resource "azurerm_role_assignment" "acr_pull" {
 # Get current Azure AD tenant info
 data "azurerm_client_config" "current" {}
 
-# Get the latest image tag from ACR
-data "external" "latest_image_tag" {
-  program = ["bash", "-c", "az acr repository show-tags --name ${var.acr_name} --repository ${var.image_name} --orderby time_desc --top 1 --output json | jq -r '.[0] // \"latest\"' | jq -R '{tag: .}'"]
+# # Get the latest image tag from ACR
+# data "external" "latest_image_tag" {
+#   program = ["bash", "-c", "az acr repository show-tags --name ${var.acr_name} --repository ${var.image_name} --orderby time_desc --top 1 --output json | jq -r '.[0] // \"latest\"' | jq -R '{tag: .}'"]
 
-  depends_on = [data.azurerm_container_registry.acr]
-}
+#   depends_on = [data.azurerm_container_registry.acr]
+# }
 
 # Reference existing Container App Environment Resource Group
 data "azurerm_resource_group" "team1-job-app-rg" {
@@ -91,7 +91,7 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
   template {
     container {
       name   = "team1-job-app-frontend-container-app"
-      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:${data.external.latest_image_tag.result.tag}"
+      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:${var.image_tag}"
       cpu    = 0.5
       memory = "1.0Gi"
     }

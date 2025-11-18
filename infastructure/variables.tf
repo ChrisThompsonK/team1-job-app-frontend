@@ -27,7 +27,11 @@ variable "image_name" {
   type        = string
   default     = "job-app-frontend"
 }
-
+variable "image_tag" {
+  description = "The tag of the container image"
+  type        = string
+  default     = "v1.0.0"
+}
 variable "existing_container_app_env_name" {
   description = "The name of the existing Container App Environment"
   type        = string
