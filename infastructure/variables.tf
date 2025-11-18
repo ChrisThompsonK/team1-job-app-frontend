@@ -9,3 +9,30 @@ variable "location" {
   type        = string
   default     = "uksouth"
 }
+
+variable "acr_name" {
+  description = "The name of the Azure Container Registry"
+  type        = string
+  default     = "aiacademy25"
+}
+variable "acr_resource_group" {
+  description = "The resource group name where the ACR is located"
+  type        = string
+  default     = "container-registry"
+}
+
+variable "image_name" {
+  description = "The name of the container image"
+  type        = string
+  default     = "job-app-frontend"
+}
+
+variable "existing_container_app_env_name" {
+  description = "The name of the existing Container App Environment"
+  type        = string
+}
+
+variable "existing_container_app_env_rg" {
+  description = "The resource group name where the Container App Environment exists"
+  type        = string
+}
