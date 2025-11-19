@@ -87,6 +87,18 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
     identity = azurerm_user_assigned_identity.container_app_identity.id
   }
 
+  ingress {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 3000
+    transport                  = "http2"
+
+    traffic_weight {
+      latest_revision = true
+      percentage      = 100
+    }
+  }
+
   template {
     container {
       name   = "team1-job-app-frontend-container-app"
