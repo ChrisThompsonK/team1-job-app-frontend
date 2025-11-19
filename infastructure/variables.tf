@@ -43,3 +43,8 @@ variable "existing_container_app_env_rg" {
   type        = string
   default     = "team1-job-app-shared-rg"
 }
+variable "key_vault_name" {
+  description = "The name of the Key Vault"
+  type        = string
+  default     = "team1-job-app-keyvault"
+}
