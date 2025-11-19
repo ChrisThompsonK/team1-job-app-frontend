@@ -1,13 +1,3 @@
-# Create Resource Group
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
-
-  tags = {
-    Environment = "Development"
-    Project     = "team1-job-app-frontend"
-  }
-}
 
 # Get current Azure AD tenant info
 data "azurerm_client_config" "current" {}

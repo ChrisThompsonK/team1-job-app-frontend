@@ -25,5 +25,5 @@ output "key_vault_uri" {
 
 output "container_app_id" {
   description = "The ID of the Container App"
-  value       = azurerm_container_app.team1-job-app--frontend-container-app.id
+  value       = azurerm_container_app.team1-job-app-frontend-container-app.id
 }

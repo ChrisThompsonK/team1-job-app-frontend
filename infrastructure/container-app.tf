@@ -1,4 +1,4 @@
-resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
+resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
   name                         = "team1-job-app-frontend-container-app"
   container_app_environment_id = data.azurerm_container_app_environment.team1-job-app-env.id
   resource_group_name          = var.existing_container_app_env_rg
@@ -18,7 +18,7 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
     allow_insecure_connections = false
     external_enabled           = true
     target_port                = 3000
-    transport                  = "http2"
+    transport                  = "http"
 
     traffic_weight {
       latest_revision = true
