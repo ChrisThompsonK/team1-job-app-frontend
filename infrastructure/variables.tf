@@ -25,7 +25,7 @@ variable "acr_resource_group" {
 variable "image_name" {
   description = "The name of the container image"
   type        = string
-  default     = "job-app-frontend"
+  default     = "team1-job-app-frontend"
 }
 variable "image_tag" {
   description = "The tag of the container image"
