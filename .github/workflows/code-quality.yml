@@ -114,9 +114,6 @@ jobs:
           echo "ARM_SUBSCRIPTION_ID=$(jq -r .subscriptionId <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> $GITHUB_ENV
           echo "ARM_TENANT_ID=$(jq -r .tenantId <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> $GITHUB_ENV
 
-      - name: Login to ACR
-        run: az acr login --name aiacademy25
-
       - name: Extract version
         id: version
         run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT

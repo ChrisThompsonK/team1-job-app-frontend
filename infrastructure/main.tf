@@ -153,6 +153,5 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
   }
   depends_on = [
     azurerm_role_assignment.acr_pull,
-    azurerm_key_vault_access_policy.container_app_policy
   ]
 }
