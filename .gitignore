@@ -185,3 +185,11 @@ credentials/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+/infastructure/.terraform.lock.hcl
+ 
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfstate.d/
