@@ -10,6 +10,13 @@ resource "azurerm_user_assigned_identity" "container_app_identity" {
   }
 }
 
+resource "azurerm_role_assignment" "kv_secrets_user" {
+  scope                = data.azurerm_key_vault.key-vault.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = azurerm_user_assigned_identity.container_app_identity.principal_id
+  
+}
+
 # Assign AcrPull role to managed identity
 resource "azurerm_role_assignment" "acr_pull" {
   scope                = data.azurerm_container_registry.acr.id

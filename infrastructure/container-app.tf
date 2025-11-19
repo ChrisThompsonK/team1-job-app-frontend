@@ -92,5 +92,6 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
   }
   depends_on = [
     azurerm_role_assignment.acr_pull,
+    azurerm_role_assignment.kv_secrets_user
   ]
 }
