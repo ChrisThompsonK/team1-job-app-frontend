@@ -122,34 +122,34 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
     }
   }
   secret {
-    name= "node-env"
+    name                = "node-env"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/node-env"
-    identity=  azurerm_user_assigned_identity.container_app_identity.id
+    identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
-    secret {
-    name= "backend_port"
+  secret {
+    name                = "backend_port"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_port"
-    identity=  azurerm_user_assigned_identity.container_app_identity.id
+    identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
-    secret {
-    name= "backend_url"
+  secret {
+    name                = "backend_url"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_url"
-    identity=  azurerm_user_assigned_identity.container_app_identity.id
+    identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
-    secret {
-    name= "ga4-property-id"
+  secret {
+    name                = "ga4-property-id"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/ga4-property-id"
-    identity=  azurerm_user_assigned_identity.container_app_identity.id
+    identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
-    secret {
-    name= "google-application-credentials"
+  secret {
+    name                = "google-application-credentials"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/google-application-credentials"
-    identity=  azurerm_user_assigned_identity.container_app_identity.id
+    identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
-    secret {
-    name= "ga4_measurement-id"
+  secret {
+    name                = "ga4_measurement-id"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/ga4_measurement-id"
-    identity=  azurerm_user_assigned_identity.container_app_identity.id
+    identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
   depends_on = [
     azurerm_role_assignment.acr_pull,
