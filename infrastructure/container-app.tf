@@ -44,7 +44,7 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
       }
       env {
         name        = "BACKEND_URL"
-        secret_name = "backend_url"
+        secret_name = "backend-url"
       }
       env {
         name        = "GA4_PROPERTY_ID"
