@@ -30,7 +30,7 @@ variable "image_name" {
 variable "image_tag" {
   description = "The tag of the container image"
   type        = string
-  default     = "v1.0.0"
+  default     = "v1"
 }
 variable "existing_container_app_env_name" {
   description = "The name of the existing Container App Environment"
