@@ -1,7 +1,7 @@
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
-  default     = "team1-job-app-rg"
+  default     = "team1-job-app-frontend-rg"
 }
 
 variable "location" {
