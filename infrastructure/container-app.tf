@@ -40,11 +40,11 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
       }
       env {
         name        = "PORT"
-        secret_name = "backend_port"
+        secret_name = "backend-port"
       }
       env {
         name        = "BACKEND_URL"
-        secret_name = "backend_url"
+        secret_name = "backend-url"
       }
       env {
         name        = "GA4_PROPERTY_ID"
@@ -56,7 +56,7 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
       }
       env {
         name        = "GA4_MEASUREMENT_ID"
-        secret_name = "ga4_measurement-id"
+        secret_name = "ga4-measurement-id"
       }
     }
   }
@@ -66,12 +66,12 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
   secret {
-    name                = "backend_port"
-    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_port"
+    name                = "backend-port"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend-port"
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
   secret {
-    name                = "backend_url"
+    name                = "backend-url"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_url"
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
@@ -86,8 +86,8 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
   secret {
-    name                = "ga4_measurement-id"
-    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/ga4_measurement-id"
+    name                = "ga4-measurement-id"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/ga4-measurement-id"
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
   depends_on = [
