@@ -71,7 +71,7 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
   secret {
-    name                = "backend_url"
+    name                = "backend-url"
     key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_url"
     identity            = azurerm_user_assigned_identity.container_app_identity.id
   }
