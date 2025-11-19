@@ -105,18 +105,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Extract Service Principal credentials
-        id: sp_creds
+
+      - name: Set Azure credentials as environment variables
         run: |
-          CREDS='${{ secrets.AZURE_CREDENTIALS }}'
-          CLIENT_ID=$(echo $CREDS | jq -r '.clientId')
-          CLIENT_SECRET=$(echo $CREDS | jq -r '.clientSecret')
-          TENANT_ID=$(echo $CREDS | jq -r '.tenantId')
-          SUBSCRIPTION_ID=$(echo $CREDS | jq -r '.subscriptionId')
-          echo "client_id=$CLIENT_ID" >> $GITHUB_OUTPUT
-          echo "client_secret=$CLIENT_SECRET" >> $GITHUB_OUTPUT
-          echo "tenant_id=$TENANT_ID" >> $GITHUB_OUTPUT
-          echo "subscription_id=$SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
+          echo "Setting ARM_* env vars for Terraform..."
+          echo "ARM_CLIENT_ID=$(jq -r .clientId <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=$(jq -r .clientSecret <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=$(jq -r .subscriptionId <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=$(jq -r .tenantId <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> $GITHUB_ENV
 
       - name: Login to ACR
         run: az acr login --name aiacademy25
@@ -131,44 +127,24 @@ jobs:
           terraform_version: 1.7.5
 
       - name: Terraform Init
-        working-directory: infastructure
-        env:
-          ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
-          ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
-          ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
-          ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
+        working-directory: infrastructure
         run: terraform init
 
       - name: Terraform Validate
-        working-directory: infastructure
-        env:
-          ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
-          ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
-          ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
-          ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
+        working-directory: infrastructure
         run: terraform validate
 
       - name: Terraform Format Check
-        working-directory: infastructure
+        working-directory: infrastructure
         run: terraform fmt -check
 
       - name: Terraform Plan
-        working-directory: infastructure
-        env:
-          ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
-          ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
-          ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
-          ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
+        working-directory: infrastructure
         run: |
           terraform plan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        working-directory: infastructure
-        env:
-          ARM_CLIENT_ID: ${{ steps.sp_creds.outputs.client_id }}
-          ARM_CLIENT_SECRET: ${{ steps.sp_creds.outputs.client_secret }}
-          ARM_TENANT_ID: ${{ steps.sp_creds.outputs.tenant_id }}
-          ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
+        working-directory: infrastructure
         run: terraform apply -auto-approve
 

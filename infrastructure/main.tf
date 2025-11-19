@@ -71,17 +71,6 @@ data "azurerm_key_vault" "key-vault" {
   resource_group_name = var.existing_container_app_env_rg
 }
 
-# Grant the container app identity access to the Key Vault
-resource "azurerm_key_vault_access_policy" "container_app_policy" {
-  key_vault_id       = data.azurerm_key_vault.key-vault.id
-  tenant_id          = data.azurerm_client_config.current.tenant_id
-  object_id          = azurerm_user_assigned_identity.container_app_identity.principal_id
-  secret_permissions = ["Get", "List"]
-}
-
-# Example: Reference a secret from the Key Vault
-
-
 resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
   name                         = "team1-job-app-frontend-container-app"
   container_app_environment_id = data.azurerm_container_app_environment.team1-job-app-env.id
@@ -132,7 +121,36 @@ resource "azurerm_container_app" "team1-job-app--frontend-container-app" {
       }
     }
   }
-
+  secret {
+    name= "node-env"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/node-env"
+    identity=  azurerm_user_assigned_identity.container_app_identity.id
+  }
+    secret {
+    name= "backend_port"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_port"
+    identity=  azurerm_user_assigned_identity.container_app_identity.id
+  }
+    secret {
+    name= "backend_url"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/backend_url"
+    identity=  azurerm_user_assigned_identity.container_app_identity.id
+  }
+    secret {
+    name= "ga4-property-id"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/ga4-property-id"
+    identity=  azurerm_user_assigned_identity.container_app_identity.id
+  }
+    secret {
+    name= "google-application-credentials"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/google-application-credentials"
+    identity=  azurerm_user_assigned_identity.container_app_identity.id
+  }
+    secret {
+    name= "ga4_measurement-id"
+    key_vault_secret_id = "${data.azurerm_key_vault.key-vault.vault_uri}secrets/ga4_measurement-id"
+    identity=  azurerm_user_assigned_identity.container_app_identity.id
+  }
   depends_on = [
     azurerm_role_assignment.acr_pull,
     azurerm_key_vault_access_policy.container_app_policy
