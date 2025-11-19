@@ -172,16 +172,3 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ steps.sp_creds.outputs.subscription_id }}
         run: terraform apply -auto-approve
 
-      # - name: Get Deployment Outputs
-      #   working-directory: infastructure
-      #   id: terraform_outputs
-      #   run: |
-      #     echo "container_app_url=$(terraform output -raw container_app_url)" >> $GITHUB_OUTPUT
-      #     echo "container_app_fqdn=$(terraform output -raw container_app_fqdn)" >> $GITHUB_OUTPUT
-
-      # - name: Print Deployment Summary
-      #   run: |
-      #     echo "=== Deployment Complete ==="
-      #     echo "Container App URL: ${{ steps.terraform_outputs.outputs.container_app_url }}"
-      #     echo "Container App FQDN: ${{ steps.terraform_outputs.outputs.container_app_fqdn }}"
-      #     echo "Docker Image: aiacademy25.azurecr.io/team1-job-app-frontend:v${{ steps.version.outputs.VERSION }}"
