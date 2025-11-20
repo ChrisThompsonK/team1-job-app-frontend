@@ -1,7 +1,7 @@
 resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
   name                         = "team1-job-app-frontend"
   container_app_environment_id = data.azurerm_container_app_environment.team1-job-app-env.id
-  resource_group_name          = var.existing_container_app_env_rg
+  resource_group_name          = var.resource_group_name
   revision_mode                = "Single"
 
   identity {
@@ -29,7 +29,7 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
   template {
     container {
       name   = "team1-job-app-frontend"
-      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:${var.image_tag}"
+      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:v${var.image_tag}"
       cpu    = 0.5
       memory = "1.0Gi"
 
