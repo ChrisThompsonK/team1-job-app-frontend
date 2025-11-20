@@ -29,7 +29,7 @@ resource "azurerm_container_app" "team1-job-app-frontend-container-app" {
   template {
     container {
       name   = "team1-job-app-frontend"
-      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:v${var.image_tag}"
+      image  = "${data.azurerm_container_registry.acr.login_server}/${var.image_name}:${var.image_tag}"
       cpu    = 0.5
       memory = "1.0Gi"
 
